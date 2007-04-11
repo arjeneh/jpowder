@@ -150,3 +150,11 @@ Makefile* = svn:mine-type=text/plain;svn:eol-style=native
 
 ### svn config file
 config    = svn:mine-type=text/svn;svn:eol-style=native
+
+###  extra for JPowder project
+*.class   = svn:mine-type=application/java
+*.jar     = svn:mine-type=application/java
+*.war     = svn:mine-type=application/java
+*.zip     = svn:mine-type=application/library
+*.PROPERTIES = svn:mine-type=text/php;svn:eol-style=native
+*.xye     = svn:mine-type=text/php;svn:eol-style=native
