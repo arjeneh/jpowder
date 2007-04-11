@@ -156,5 +156,5 @@ config    = svn:mine-type=text/svn;svn:eol-style=native
 *.jar     = svn:mine-type=application/java
 *.war     = svn:mine-type=application/java
 *.zip     = svn:mine-type=application/library
-*.PROPERTIES = svn:mine-type=text/php;svn:eol-style=native
-*.xye     = svn:mine-type=text/php;svn:eol-style=native
+*.PROPERTIES = svn:mine-type=text/plain;svn:eol-style=native
+*.xye     = svn:mine-type=text/plain;svn:eol-style=native
