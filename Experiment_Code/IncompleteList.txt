@@ -2,3 +2,4 @@
 2. Not working with JSP or server side yet.
 3. No heap space out of memory detection.
 4. No buffer over flow detection.
+5. No file upload
