@@ -1,0 +1,1 @@
+1. Y AXIS no move or scale when scrolling.
