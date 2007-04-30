@@ -1,7 +1,6 @@
 1. Y AXIS no move or scale when scrolling.
 2. Could the X and Y coordinates of the cursor somehow be displayed. 
 3. Delete your current right-click menu option 'Auto Range -> Domain Axis'
-4. Delete your current right-click menu option 'Auto Range -> Both Axes' 
-5. Change your current right-click menu option 'Auto Range -> Range Axis' 
+4. Change your current right-click menu option 'Auto Range -> Range Axis' 
    so that it auto-range the Y-axis with respect to the displayed X-range
    (not the entire X-range as is currently done) 
