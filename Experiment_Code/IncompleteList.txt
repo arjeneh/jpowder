@@ -3,13 +3,13 @@ V.01
 2. Not working with JSP or server side yet.
 3. No heap space out of memory detection.
 4. No buffer over flow detection.
-5. No file upload
 -------------------------------------------------------------
 V.02
 1. No progress bar to indicate the progress of plotting data.
 2. Not working with JSP or server side yet.
 3. No heap space out of memory detection.
 4. No buffer over flow detection.
-5. Done.
-6. The list and table don not share the same data model.
+5. The list and table don not share the same data model.
 -------------------------------------------------------------
+V.03
+6. Not able to edit charts.
