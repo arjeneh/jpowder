@@ -149,7 +149,6 @@ public class LineChartPanel extends JPanel implements Cloneable{
         clone.chart= this.chart;
         clone.chartPanel = this.chartPanel;
         clone.series1 = this.series1;
-        //clone.fileTitle  = fileTitle;
         clone.serial     = this.serial;//class serial number
         
         this.setEnabled(true);
@@ -172,12 +171,12 @@ public class LineChartPanel extends JPanel implements Cloneable{
         this.chart = chart;
     }
     
-    /*protected void finalize()throws Throwable {
+    protected void finalize()throws Throwable {
         data       = null;
         series1    = null;
         chartPanel = null;
         chart      = null;
-    }*/
+    }
     
     private class ChartMouseObserver implements ChartMouseListener {
         public void chartMouseMoved(ChartMouseEvent chartMouseEvent) {}
