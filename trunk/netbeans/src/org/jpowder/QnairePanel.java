@@ -38,13 +38,14 @@ public class QnairePanel extends javax.swing.JPanel {
         questionSize = questions.size();
         
         initComponents();
-        this.setAlignmentX(0.0f);
+        this.setAlignmentX(1.0f);
         
-        for(int x = 0; x < questions.size(); x++){
+        for(int x = 0; x < questionSize; x++){
             QuestionSetPanel questionSet = new QuestionSetPanel(questions.get(x));
             questionSet.setAlignmentX(QuestionSetPanel.LEFT_ALIGNMENT);
-            containerPanel.add(questionSet);
-            
+            containerPanel.setAlignmentX(1.0f);
+            containerPanel.add(questionSet);   
+            containerPanel.validate();
         }//for
     }//QnairePanel
     
@@ -126,12 +127,16 @@ public class QnairePanel extends javax.swing.JPanel {
         add(butPanel, gridBagConstraints);
 
         question_sp.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        question_sp.setAlignmentX(1.0F);
+        question_sp.setAlignmentY(0.0F);
         question_sp.setMinimumSize(new java.awt.Dimension(780, 320));
         question_sp.setPreferredSize(new java.awt.Dimension(780, 320));
 
-        containerPanel.setMaximumSize(new java.awt.Dimension(800, 4400));
-        containerPanel.setMinimumSize(new java.awt.Dimension(800, 4400));
-        containerPanel.setPreferredSize(new java.awt.Dimension(800, 4400));
+        containerPanel.setAlignmentX(1.0F);
+        containerPanel.setAlignmentY(0.0F);
+        containerPanel.setMaximumSize(new java.awt.Dimension(800, 50000));
+        containerPanel.setMinimumSize(new java.awt.Dimension(800, 4700));
+        containerPanel.setPreferredSize(new java.awt.Dimension(800, 4700));
         containerPanel.setLayout(new javax.swing.BoxLayout(containerPanel, javax.swing.BoxLayout.Y_AXIS));
         question_sp.setViewportView(containerPanel);
 
@@ -141,7 +146,7 @@ public class QnairePanel extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         add(question_sp, gridBagConstraints);
 
-        request_tf.setBackground(javax.swing.UIManager.getDefaults().getColor("tab_sel_bottom_border"));
+        request_tf.setBackground(javax.swing.UIManager.getDefaults().getColor("tab_focus_fill_bright"));
         request_tf.setColumns(100);
         request_tf.setEditable(false);
         request_tf.setFont(new java.awt.Font("Tahoma", 0, 11));
@@ -176,9 +181,19 @@ public class QnairePanel extends javax.swing.JPanel {
             }
         } catch (IOException e) {
         }
+        
+        ShowSumiDialog sumi = new ShowSumiDialog( makeStringPattern(answers.toString() )  );
+        //ScreenUtil.centerFrame((javax.swing.JFrame)sumi);
+        
+        //ScreenUtil.centerFrame((javax.swing.JFrame) new ShowSumiDialog( makeStringPattern(answers.toString() )  )  );
     }//GEN-LAST:event_submit_btnActionPerformed
     
-    //for output the binary matrices
+    
+    /**
+     * for output the binary matrices
+     * @param str 
+     * @return 
+     */
     public String makeStringPattern(String str){
         String tmp = str.replaceAll(", " , "");
         String noOpen = removeChar(tmp,'[');

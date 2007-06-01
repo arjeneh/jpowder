@@ -44,7 +44,7 @@ public class JPowder extends JApplet {
     
     private static final String LOG_PANEL = "YOUR LOG";
     private static final String HOME_PANEL = "card5";
-    private static final String EDIT_CHART_PANEL = "YOUR CHART EDITOR";
+    
     private java.awt.CardLayout cl;
     
     public DefaultListModel listModel;
@@ -237,6 +237,16 @@ public class JPowder extends JApplet {
         email_btn = new javax.swing.JButton();
         exit_btn = new javax.swing.JButton();
         home_btn = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        openFileMenuItem = new javax.swing.JMenuItem();
+        saveFileMenuItem = new javax.swing.JMenuItem();
+        editMenu = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        helpMenu = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
         setForeground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
@@ -504,7 +514,48 @@ public class JPowder extends JApplet {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         getContentPane().add(butPanel, gridBagConstraints);
+
+        fileMenu.setText("File");
+
+        openFileMenuItem.setText("Open");
+        openFileMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openFileMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(openFileMenuItem);
+
+        saveFileMenuItem.setText("Save");
+        fileMenu.add(saveFileMenuItem);
+
+        jMenuBar1.add(fileMenu);
+
+        editMenu.setText("Edit Chart");
+
+        jMenuItem3.setText("Edit");
+        editMenu.add(jMenuItem3);
+
+        jMenuItem4.setText("Delete");
+        editMenu.add(jMenuItem4);
+
+        jMenuBar1.add(editMenu);
+
+        helpMenu.setText("Help");
+
+        jMenuItem1.setText("Content");
+        helpMenu.add(jMenuItem1);
+
+        jMenuItem6.setText("About");
+        helpMenu.add(jMenuItem6);
+
+        jMenuBar1.add(helpMenu);
+
+        setJMenuBar(jMenuBar1);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void openFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileMenuItemActionPerformed
+    // TODO add your handling code here:
+}//GEN-LAST:event_openFileMenuItemActionPerformed
     
 private void exit_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit_btnActionPerformed
     // TODO add your handling code here:
@@ -612,15 +663,25 @@ private void exit_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JScrollPane data_sp;
     private javax.swing.JTable data_tb;
     private javax.swing.JButton deleteGraph_btn;
+    private javax.swing.JMenu editMenu;
     private javax.swing.JButton email_btn;
     private javax.swing.JButton exit_btn;
+    private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenu helpMenu;
     private javax.swing.JButton help_btn;
     private javax.swing.JPanel homePanel;
     private javax.swing.JButton home_btn;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel myChartPanel;
     private javax.swing.JButton openApp_btn;
+    private javax.swing.JMenuItem openFileMenuItem;
     private javax.swing.JButton plotFile_btn;
     private javax.swing.JButton print_btn;
+    private javax.swing.JMenuItem saveFileMenuItem;
     private javax.swing.JButton saveStat_btn;
     private javax.swing.JPanel statBluePanel;
     private javax.swing.JButton statCompute_btn;

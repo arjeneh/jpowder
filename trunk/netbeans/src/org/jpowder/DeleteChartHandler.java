@@ -37,7 +37,7 @@ public class DeleteChartHandler implements ActionListener {
     private Vector vecPanel;
     private JPanel chartPanel;
     
-    private JPowder mainApplet;
+    private JPowder jpowder;
     
     public DeleteChartHandler(){
     }
@@ -45,16 +45,16 @@ public class DeleteChartHandler implements ActionListener {
     public DeleteChartHandler(JPowder m){
         this.vecPanel = m.getChartList();
         this.chartPanel = m.getChartPanel();
-        this.mainApplet = m;
+        this.jpowder = m;
     }
     
     //This array of object is put into JOptionPane, since it does not allow Vector
     public Object[] insertChartNames(){
-        int itsNum =  mainApplet.getChartList().size();
+        int itsNum =  jpowder.getChartList().size();
         
         String[] chartArray  = new String[itsNum];
         for (int dex = 0; dex < chartArray.length; dex++) {
-            LineChartPanel jf = (LineChartPanel) mainApplet.getChartList().get(dex);
+            LineChartPanel jf = (LineChartPanel) jpowder.getChartList().get(dex);
             chartArray[dex] = jf.getName();//another way to add number to it + "#" + dex;
         }
 
@@ -78,8 +78,7 @@ public class DeleteChartHandler implements ActionListener {
         displayLocation.x = displayLocation.x - 200;
         
         //Bring up a dialog box for selection.
-        DeleteChartDialog dialog = new DeleteChartDialog((String[]) chartNames,
-                mainApplet,
+        DeleteChartDialog dialog = new DeleteChartDialog((String[]) chartNames,jpowder,
                 displayLocation);
     }
 
@@ -92,7 +91,7 @@ class DeleteChartDialog extends JFrame   {
     private String[] petNames;
     private int selectedIndex;
     private JComboBox petList;
-    private JPowder mainApplet;
+    private JPowder jpowder;
     private JDialog dialog;
     private JOptionPane op;
     
@@ -101,14 +100,16 @@ class DeleteChartDialog extends JFrame   {
      *
      * Let the user select a chart to be deleted.
      *
-     * @param theStrings, the message for the dialog box to be selected.
-     * @param theMainApplet, mainApplet to delete some charts.
-     * @param displayLocation, where to appear.
+     * @param theStrings - the title of the dialog
+     * @param theMainApplet - all data from JPowder 
+     * @param displayLocation - where the dialog display on the screen
+     * 
+     * 
      **/
     
-    public DeleteChartDialog(String[] theStrings,JPowder theMainApplet, Point displayLocation) {
+    public DeleteChartDialog(String[] theStrings, JPowder theMainApplet, Point displayLocation) {
         this.petNames = theStrings;
-        this.mainApplet = theMainApplet;
+        this.jpowder = theMainApplet;
         
         final JComboBox petList = new JComboBox(this.petNames);
         petList.addActionListener(new ActionListener(){
@@ -125,7 +126,7 @@ class DeleteChartDialog extends JFrame   {
         options[0].addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 System.out.println("You selected chart index number " + petList.getSelectedIndex());
-                mainApplet.deleteChartList(selectedIndex);//the KEY CALLING MAINAPPLET TO DELETE CHART
+                jpowder.deleteChartList(selectedIndex);//the KEY CALLING MAINAPPLET TO DELETE CHART
                 setVisible(false);
                 dispose();
             }
