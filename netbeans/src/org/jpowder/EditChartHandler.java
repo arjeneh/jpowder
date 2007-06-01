@@ -12,8 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.util.Vector;
-import javax.swing.JScrollPane;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 
 /**
@@ -91,7 +89,7 @@ class EditChartDialog extends JFrame   {
      * DeleteChartDialog, constructor.
      *
      * Let the user select a chart to be edited.
-     ** @param theStrings
+     * @param theStrings
      * @param theMainApplet
      * @param displayLocation
      */
@@ -100,8 +98,8 @@ class EditChartDialog extends JFrame   {
         this.chartNames = theStrings;
         this.jpowder = theMainApplet;
         
-        final JComboBox petList = new JComboBox(this.chartNames);
-        petList.addActionListener(new ActionListener(){
+        final JComboBox chartNameList = new JComboBox(this.chartNames);
+        chartNameList.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 JComboBox cb = (JComboBox)e.getSource();
                 String chartName = (String)cb.getSelectedItem();
@@ -145,7 +143,7 @@ class EditChartDialog extends JFrame   {
             }
         });
         
-        Object[] msg = {"Which chart would you like to edit?", petList};//this text can be passed in the constructor
+        Object[] msg = {"Which chart would you like to edit?",chartNameList};//this text can be passed in the constructor
         
         JOptionPane op = new JOptionPane(msg,
                 JOptionPane.QUESTION_MESSAGE,
