@@ -351,6 +351,11 @@ public class JPowder extends JApplet {
         print_btn.setMaximumSize(new java.awt.Dimension(100, 23));
         print_btn.setMinimumSize(new java.awt.Dimension(100, 23));
         print_btn.setPreferredSize(new java.awt.Dimension(120, 23));
+        print_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                print_btnActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -552,6 +557,10 @@ public class JPowder extends JApplet {
 
         setJMenuBar(jMenuBar1);
     }// </editor-fold>//GEN-END:initComponents
+
+private void print_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_print_btnActionPerformed
+    // TODO add your handling code here:
+}//GEN-LAST:event_print_btnActionPerformed
 
     private void openFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileMenuItemActionPerformed
     // TODO add your handling code here:
