@@ -171,6 +171,7 @@ public class LineChartPanel extends JPanel implements Cloneable{
         this.chart = chart;
     }
     
+    @Override
     protected void finalize()throws Throwable {
         data       = null;
         series1    = null;
@@ -185,16 +186,17 @@ public class LineChartPanel extends JPanel implements Cloneable{
             if(chartMouseEvent.getTrigger().getClickCount() == 2){
                 try {
                     //----------Copy the chart-------------------
-                    final JFreeChart plot_copy = (JFreeChart) chartMouseEvent.getChart().clone();                           
+                    final JFreeChart plot_copy = (JFreeChart) chartMouseEvent.getChart().clone();
                     //Thread safe by seperating it in case editing and modification.
                     java.awt.EventQueue.invokeLater(new Runnable() {
                         public void run() {
-                            EditChartFrame frame = new EditChartFrame(plot_copy);
+                            EditChartFrameSingleton obj = EditChartFrameSingleton.getSingletonObject(plot_copy);
+                            //EditChartFrameSingleton frame = new EditChartFrameSingleton(plot_copy);
                         }
-                    });                  
+                    });
                 } catch (Exception ex){
                     ex.printStackTrace();
-                }//end catch    
+                }//end catch
             }//end if
         }//end chartMouseClicked
     }//end ChartMouseObserver
