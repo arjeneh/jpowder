@@ -155,6 +155,10 @@ public class JPowder extends JApplet {
     
     //init the Applet
     public void init() {
+        try {
+           javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());                                  
+        } catch (Exception e) {}   
+
         //initURLSource();//my adding for reading a file as an example.
         initComponents();//NetBeans generated.
         setCartLayout();
