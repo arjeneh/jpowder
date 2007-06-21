@@ -1,13 +1,9 @@
 package org.jpowder;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.util.*;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Font;
-import javax.swing.JScrollPane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartMouseListener;
@@ -21,7 +17,6 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.HorizontalAlignment;
 import org.jfree.ui.RectangleEdge;
@@ -199,6 +194,5 @@ public class LineChartPanel extends JPanel implements Cloneable{
                 }//end catch
             }//end if
         }//end chartMouseClicked
-    }//end ChartMouseObserver
-    
+    }//end ChartMouseObserver    
 } //end LineChartPanel class
