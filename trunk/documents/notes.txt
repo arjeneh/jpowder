@@ -1,0 +1,70 @@
+Plot window
+===========
+
+Left mouse
+==========
+
+Click and drag to zoom in, cursor is an arrow
+Click on top of window to change focus
+Click on the X of a plot, removes plot window but data stays in application
+
+
+Middle mouse
+============
+
+Scroll horiz and vertically, cursor is a hand
+
+
+Right mouse
+===========
+
+Brings up menu with options
+
+ - Reset zoom
+ - Mark peak position
+ - Rescale Y data to primary Y data
+     -> Auto
+     -> Manual
+
+
+
+Data visibility panel
+=====================
+
+Left mouse
+==========
+
+Click on a filename to focus on a data set
+
+Click in a box to overlay data set in current plot window
+
+Double-click on a filename to open a plot window if not currently open
+
+
+Right mouse
+===========
+
+Click over a filename to bring up a menu with options 
+
+ - Close plot window [remove plot window if open, leave data in application]
+ - Close data set [remove plot window if open, remove data from application]
+
+
+
+
+
+
+
+Top menu bar
+============
+
+
+File (open, close, export of rescaled data, print, exit)
+
+Edit (copy, to copy a WMF/BMP/SVG/PS of the current plot to the clipboard)
+
+View (peak positons, with option to export to text file)
+
+Plot (plot options such as symbol size, line thickness, colour etc)
+
+
