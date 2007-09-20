@@ -7,7 +7,6 @@ import java.awt.Rectangle;
 import java.util.Vector;
 import java.net.URL;
 import javax.swing.DefaultListModel;
-import java.lang.String ;
 import javax.swing.JApplet;
 import javax.swing.JPanel;
 
@@ -79,8 +78,6 @@ public class JPowder extends JApplet {
     
     //Used by the FileChooserPanel.java for the name
     public void setCurrentFileName(String currentFileName) {
-        // pos = str.lastIndexOf('/');
-        //this.currentFileName = str.substring(pos+1);
         this.currentFileName = currentFileName;
     }
     
@@ -158,8 +155,6 @@ public class JPowder extends JApplet {
         try {
            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());                                  
         } catch (Exception e) {}   
-
-        //initURLSource();//my adding for reading a file as an example.
         initComponents();//NetBeans generated.
         setCartLayout();
     }//end init
@@ -182,16 +177,18 @@ public class JPowder extends JApplet {
      *
      * @param newData the new vector data.
      */
-    public void drawTable(java.util.Vector newData) {
+    public void drawTableAndGraph(java.util.Vector newData) {
         final long s_time =  System.currentTimeMillis();//time of loading
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         
         if(this.model != null){
             this.model.setNewData(newData, currentFileName);
+            plotGraph();
             super.repaint();
         }else{
             this.model = new DataFileTableModel(newData, currentFileName);
             this.data_tb.setModel(model);
+            plotGraph();
             super.repaint();
         }
         //report taken time to plot a graph.
@@ -200,6 +197,7 @@ public class JPowder extends JApplet {
                 setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                 long t = System.currentTimeMillis() - s_time;
                 LogPanel.addLogText("\nElapsed time for loading data of " + currentFileName +" to table is " + t + " milliseconds.");
+                System.out.println("\nElapsed time for loading data of " + currentFileName +" to table is " + t + " milliseconds.");
             }
         });
     }//end drawTable
@@ -630,10 +628,7 @@ private void exit_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         ta.append("\n" + msg);
     }    //end deleteFile_btnActionPerformed
     
-    // When user click they can see the graph from what ever data in the table.
-    private void plotFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotFile_btnActionPerformed
-        if(model==null)return;
-        
+    public void plotGraph(){
         try{
             //TODO: BufferedImage protection.
             setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -656,6 +651,11 @@ private void exit_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         } catch (java.lang.Exception e){
             e.printStackTrace();
         }//end try and catch
+    }
+    // When user click they can see the graph from what ever data in the table.
+    private void plotFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotFile_btnActionPerformed
+        if(model!=null)
+            plotGraph();      
     }//GEN-LAST:event_plotFile_btnActionPerformed
     //end plotFile_btnActionPerformed
     
