@@ -77,6 +77,8 @@ public class DataFileTableModel extends DefaultListModel implements TableModel {
         this.fileName = theFileName;
         LogPanel.addLogText("\nYou have " + this.getRowCount()+ " rows" + " in file "
                 + fileName + ".");
+        System.out.println("\nYou have " + this.getRowCount()+ " rows" + " in file "
+                + fileName + ".");
     }
     
     public void setFileName(String theFileName){
