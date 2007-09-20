@@ -6,8 +6,10 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 /**
- *
- * @author Kreecha Puphaiboon
+ * Loop to enable or disable buttons in the interface.
+ * @author      Kreecha Puphaiboon
+ * @version     0.7
+ * @since       Fabuary 07.
  */
 
 public class MyListDataListener implements ListDataListener {
