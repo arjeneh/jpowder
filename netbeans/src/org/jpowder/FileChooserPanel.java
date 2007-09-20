@@ -3,50 +3,80 @@ package org.jpowder;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
-
-/*
- * FileChooserPanel.java
- *
- * Created on 21 May 2007, 09:53
- */
 import java.awt.dnd.DropTargetListener;
 import java.io.File;
 import java.util.Vector;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.JScrollPane;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
 
 /**
  *
+ * FileChooserPanel.java
+ * Created on 21 May 2007, 09:53
  * @author  Kreecha Puphaiboon
  */
-public class FileChooserPanel extends javax.swing.JPanel implements ListSelectionListener, DropTargetListener {
+public class FileChooserPanel extends javax.swing.JPanel implements DropTargetListener{ //ListSelectionListener,{
     
     private JPowder jpowder;
     private java.awt.dnd.DropTarget dt;
     
-    private Vector<File> fileToReadVector = new Vector<File>();//all actual xye files.
-    private Vector data;
-    private DefaultListModel listModel;
-    private static final String[] ACCEPTED_FILE_TYPE = {"xye", "txt"};//list of acceptable file types    
+    private Vector<File> fileToReadVector = new Vector<File>();         //actual xye files.
+    private Vector data;                                                //data in the file
+    private DefaultListModel listModel;                                 //List model
+    private static final String[] ACCEPTED_FILE_TYPE = {"xye", "txt"};  //list of acceptable file types    
+    
+    private JCheckBoxJList checkboxList;  
+    private javax.swing.JScrollPane file_sp;
+    //List with a checkbox from JCheckJList.java
     
     /** Creates new form FileChooserPanel
      * @param jp JPowder
      */
     public FileChooserPanel(JPowder jp) {
         jpowder = jp;
+
         initComponents();
+        checkboxList = new JCheckBoxJList();
+        checkboxList.setFont(new java.awt.Font("Tahoma", 0, 10));
+        checkboxList.setMinimumSize(new java.awt.Dimension(210, 84));
+        checkboxList.setPreferredSize(new java.awt.Dimension(210, 84));
         
         //create a list model to put in the JList
         listModel = new javax.swing.DefaultListModel();
         //listModel.addListDataListener(new MyListDataListener());
         
-        file_lst.setModel(listModel);
-        file_lst.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        file_lst.addListSelectionListener(this);
+        checkboxList.setModel (listModel);
+        //checkboxList.addListSelectionListener(this);
         
-        dt = new java.awt.dnd.DropTarget(this.file_lst, this);
+        file_sp = new JScrollPane (checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        file_sp.setMinimumSize(new java.awt.Dimension(260, 84));
+        file_sp.setPreferredSize(new java.awt.Dimension(260, 84));
+        file_sp.setViewportView(checkboxList);
+        
+        java.awt.GridBagConstraints gridBagConstraints;
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
+        add(file_sp, gridBagConstraints);
+
+        dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
+    }//FileChooserPanel
+    
+    public Vector getFile(){
+        return fileToReadVector;
+    }
+    
+    public Vector getData(){
+        return data;
     }
     
     /** This method is called from within the constructor to
@@ -58,9 +88,6 @@ public class FileChooserPanel extends javax.swing.JPanel implements ListSelectio
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        file_sp = new javax.swing.JScrollPane();
-        file_lst = new javax.swing.JList();
-
         addFile_btn = new javax.swing.JButton();
         deleteFile_btn = new javax.swing.JButton();
 
@@ -68,21 +95,6 @@ public class FileChooserPanel extends javax.swing.JPanel implements ListSelectio
         setMinimumSize(new java.awt.Dimension(265, 140));
         setPreferredSize(new java.awt.Dimension(265, 140));
         setLayout(new java.awt.GridBagLayout());
-
-        file_sp.setMinimumSize(new java.awt.Dimension(260, 84));
-        file_sp.setPreferredSize(new java.awt.Dimension(260, 84));
-
-        file_lst.setFont(new java.awt.Font("Tahoma", 0, 10));
-        file_lst.setMinimumSize(new java.awt.Dimension(210, 84));
-        file_lst.setPreferredSize(new java.awt.Dimension(210, 84));
-        file_sp.setViewportView(file_lst);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
-        add(file_sp, gridBagConstraints);
 
         addFile_btn.setFont(new java.awt.Font("Tahoma", 0, 10));
         addFile_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/addFile.gif"))); // NOI18N
@@ -167,7 +179,7 @@ public class FileChooserPanel extends javax.swing.JPanel implements ListSelectio
                             if(this.data != null){
                                 jpowder.setDataMatrix(this.data);
                                 jpowder.setCurrentFileName(fileName);
-                                jpowder.drawTable(this.data);
+                                jpowder.drawTableAndGraph(this.data);
                                 
                                 this.fileToReadVector.addElement(file);//was filename (String type)
                                 this.listModel.addElement(fileName);//add to DefaultListModel
@@ -211,7 +223,7 @@ public class FileChooserPanel extends javax.swing.JPanel implements ListSelectio
     
 private void deleteFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFile_btnActionPerformed
     //if no nothing selected then alert.
-    if (file_lst.getSelectedIndex() == -1) {
+    if (checkboxList.getSelectedIndex() == -1) {
         javax.swing.JOptionPane.showMessageDialog(jpowder, "To delete, please select a file first.");
         return;
     }
@@ -224,7 +236,8 @@ private void deleteFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GE
     
     //do the actual deletion.
     if (this.listModel.getSize() > 0){
-        int index = file_lst.getSelectedIndex();
+        System.out.println (this.listModel.getSize());
+        int index = checkboxList.getSelectedIndex();
         this.listModel.removeElementAt(index);
         this.fileToReadVector.removeElementAt(index);
     }
@@ -251,7 +264,7 @@ private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             if(this.data != null){
                 jpowder.setDataMatrix(this.data);
                 jpowder.setCurrentFileName(filename);
-                jpowder.drawTable(this.data);                
+                jpowder.drawTableAndGraph(this.data);                
                 fileToReadVector.addElement(file);//was filename (String type)
                 listModel.addElement(filename);//add to DefaultListModel
             }
@@ -278,27 +291,25 @@ public void setDeleteFile_btn(JButton deleteFile_btn) {
     this.deleteFile_btn = deleteFile_btn;
 }
 //Detecting what user's selected in the JList.
-public void valueChanged(javax.swing.event.ListSelectionEvent e) {
+/*public void valueChanged(javax.swing.event.ListSelectionEvent e) {
     //javax.swing.event.ListSelectionModel lsm = (javax.swing.event.ListSelectionModel)e.getSource();
     if (e.getValueIsAdjusting() == false) {
-        if (file_lst.getSelectedIndex() == -1) {
+        if (checkboxList.getSelectedIndex() == -1) {
             return;
         } else {
-            int selected = file_lst.getSelectedIndex();
-            jpowder.currentFileName = file_lst.getSelectedValue().toString();
+            int selected = checkboxList.getSelectedIndex();
+            jpowder.currentFileName = checkboxList.getSelectedValue().toString();
             this.data = ReadWriteFileUtil.getLocalFileToTable((File)fileToReadVector.get(selected), jpowder);
             if(this.data != null){
                 jpowder.drawTable(this.data);
-            }
-        }
-    }
-}//end valueChanged
+            }//if
+        }//else
+    }//if
+}//end valueChanged*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addFile_btn;
     private javax.swing.JButton deleteFile_btn;
-    private javax.swing.JList file_lst;
-    private javax.swing.JScrollPane file_sp;
     // End of variables declaration//GEN-END:variables
     
 }
