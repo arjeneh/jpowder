@@ -185,8 +185,7 @@ public class LineChartPanel extends JPanel implements Cloneable{
                     //Thread safe by seperating it in case editing and modification.
                     java.awt.EventQueue.invokeLater(new Runnable() {
                         public void run() {
-                            EditChartFrameSingleton obj = EditChartFrameSingleton.getSingletonObject(plot_copy);
-                            //EditChartFrameSingleton frame = new EditChartFrameSingleton(plot_copy);
+                            EditChartFrame obj = new EditChartFrame(plot_copy);
                         }
                     });
                 } catch (Exception ex){
