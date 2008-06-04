@@ -35,7 +35,7 @@ public class JPowder extends JApplet {
     //Initializes the applet JPowderApplet
     
     private URL source;//url of the file.
-    public Vector dataMatrix;
+    public Vector dataMatrix;//
     public Vector<LineChartPanel> chartList = new Vector<LineChartPanel>();//reference of plotted charts.
     
     private LogPanel logPanel = new LogPanel();
@@ -53,8 +53,8 @@ public class JPowder extends JApplet {
     private static final int CHART_HIEGHT_FIX_SIZE = 270;
     private static final int FRAME_WIDTH = 870;
     private static final int FRAME_HIEGHT = 570;
-    
-    public static final String[] ACCEPTED_FILE_TYPE = {"xye", "txt"};//list of acceptable file types
+    //list of acceptable file types
+    //public static final String[] ACCEPTED_FILE_TYPE = {"xy", "xye", "txt"};
     public String currentFileName;
     
     private boolean InBrowser = true;
@@ -73,7 +73,7 @@ public class JPowder extends JApplet {
      * @return currentFileName
      */
     public String getCurrentFileName() {
-        return currentFileName;
+        return this.currentFileName;
     }
     
     //Used by the FileChooserPanel.java for the name
@@ -87,7 +87,7 @@ public class JPowder extends JApplet {
      */
     
     public Vector getDataMatrix() {
-        return dataMatrix;
+        return this.dataMatrix;
     }
     
     public void setDataMatrix(Vector dataMatrix) {
@@ -104,7 +104,7 @@ public class JPowder extends JApplet {
         applet.init();
         
         // Following anonymous class used to close window & exit program
-        javax.swing.JFrame f = new javax.swing.JFrame("Crystallograhy Demo");
+        javax.swing.JFrame f = new javax.swing.JFrame("JPowder Crystallograhy Demo");
         f.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         
         // Add applet to the frame
@@ -129,6 +129,7 @@ public class JPowder extends JApplet {
     public Vector getChartList(){
         return this.chartList;
     }
+    
     //return the panel which has all charts used in EditChartHandler.java.
     public JPanel getChartPanel(){
         return this.myChartPanel;
@@ -169,7 +170,7 @@ public class JPowder extends JApplet {
         buttons[4] = saveStat_btn;
         this.listModel.addListDataListener(new MyListDataListener(buttons));
     }//end setButtonsEnable*/
-    
+
     
     
     /**Use to redraw the table when selection of combobox is activated.
@@ -177,18 +178,21 @@ public class JPowder extends JApplet {
      *
      * @param newData the new vector data.
      */
-    public void drawTableAndGraph(java.util.Vector newData) {
+    public void drawTableAndGraph(java.util.Vector newData, String filename) {
         final long s_time =  System.currentTimeMillis();//time of loading
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         
+        this.setDataMatrix(newData);
+        this.setCurrentFileName(filename);
+        
         if(this.model != null){
             this.model.setNewData(newData, currentFileName);
-            plotGraph();
+            this.plotGraph();
             super.repaint();
         }else{
             this.model = new DataFileTableModel(newData, currentFileName);
             this.data_tb.setModel(model);
-            plotGraph();
+            this.plotGraph();
             super.repaint();
         }
         //report taken time to plot a graph.
@@ -634,7 +638,7 @@ private void exit_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             
             //create the chart
-            realChart = new LineChartPanel(dataMatrix, currentFileName);
+            realChart = new LineChartPanel(this.dataMatrix, currentFileName);
             java.awt.Dimension area = myChartPanel.getSize();
             area.height = area.height + CHART_HIEGHT_FIX_SIZE;//update to a bigger size.
             myChartPanel.setLayout(new java.awt.FlowLayout());

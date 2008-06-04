@@ -7,14 +7,7 @@ import java.awt.dnd.DropTargetListener;
 import java.io.File;
 import java.util.Vector;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.JScrollPane;
-import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
 /**
  *
@@ -22,15 +15,19 @@ import javax.swing.event.*;
  * Created on 21 May 2007, 09:53
  * @author  Kreecha Puphaiboon
  */
-public class FileChooserPanel extends javax.swing.JPanel implements DropTargetListener{ //ListSelectionListener,{
+public class FileChooserPanel extends javax.swing.JPanel
+        implements DropTargetListener{ //ListSelectionListener,{
     
     private JPowder jpowder;
     private java.awt.dnd.DropTarget dt;
     
-    private Vector<File> fileToReadVector = new Vector<File>();         //actual xye files.
-    private Vector data;                                                //data in the file
+    //actual xye files.
+    private Vector<File> fileToReadVector = new Vector<File>();   
+    //data in the file
+    private Vector data;                                                
     private DefaultListModel listModel;                                 //List model
-    private static final String[] ACCEPTED_FILE_TYPE = {"xye", "txt"};  //list of acceptable file types    
+    
+    private static final String[] ACCEPTED_FILE_TYPE = {"xy", "xye", "txt"};  //list of acceptable file types    
     
     private JCheckBoxJList checkboxList;  
     private javax.swing.JScrollPane file_sp;
@@ -177,9 +174,8 @@ public class FileChooserPanel extends javax.swing.JPanel implements DropTargetLi
                         if (checkAcceptedFileType(fileName)){
                             this.data = ReadWriteFileUtil.getLocalFileToTable(file, jpowder);
                             if(this.data != null){
-                                jpowder.setDataMatrix(this.data);
-                                jpowder.setCurrentFileName(fileName);
-                                jpowder.drawTableAndGraph(this.data);
+                                
+                                jpowder.drawTableAndGraph(this.data, fileName);
                                 
                                 this.fileToReadVector.addElement(file);//was filename (String type)
                                 this.listModel.addElement(fileName);//add to DefaultListModel
@@ -209,11 +205,12 @@ public class FileChooserPanel extends javax.swing.JPanel implements DropTargetLi
      *@ param filenames
      **/
     public boolean checkAcceptedFileType(String filenames){
+        System.out.println("\nFile Type = " + filenames);
         boolean result = true;
         for(int i = ACCEPTED_FILE_TYPE.length-1; i>=0;i--){
-            if(filenames.endsWith(ACCEPTED_FILE_TYPE[i])){//ternary ?:
-                //System.out.println("\nAccepted File Type.");
+            if(filenames.endsWith(ACCEPTED_FILE_TYPE[i])){
                 result = true;
+                break;
             } else{
                 result = false;
             }
@@ -262,9 +259,8 @@ private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         if (checkAcceptedFileType(filename)){
             this.data = ReadWriteFileUtil.getLocalFileToTable(file, jpowder);
             if(this.data != null){
-                jpowder.setDataMatrix(this.data);
-                jpowder.setCurrentFileName(filename);
-                jpowder.drawTableAndGraph(this.data);                
+                
+                jpowder.drawTableAndGraph(this.data, filename);                
                 fileToReadVector.addElement(file);//was filename (String type)
                 listModel.addElement(filename);//add to DefaultListModel
             }

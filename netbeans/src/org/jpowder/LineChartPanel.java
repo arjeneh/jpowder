@@ -41,20 +41,20 @@ public class LineChartPanel extends JPanel implements Cloneable{
      * @param theFileTitle  the file name.
      */
     public LineChartPanel(Vector theData, String theFileTitle) {
-        data = theData;
-        fileTitle = theFileTitle;
-        dataset = createDataset(theFileTitle);//1
-        chart = createChart(dataset);//2
+        this.data = theData;
+        this.fileTitle = theFileTitle;
+        this.dataset = createDataset(theFileTitle);//1
+        this.chart = createChart(this.dataset);    //2
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
         
-        chartPanel = new ChartPanel(chart, true);
-        chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
-        chartPanel.setDisplayToolTips(false);
-        chartPanel.getChartRenderingInfo().setEntityCollection(null);
+        this.chartPanel = new ChartPanel(this.chart, true);
+        this.chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
+        this.chartPanel.setDisplayToolTips(false);
+        this.chartPanel.getChartRenderingInfo().setEntityCollection(null);
         
-        chartPanel.addChartMouseListener(new ChartMouseObserver());//user clicks popup a dialog.
+       this. chartPanel.addChartMouseListener(new ChartMouseObserver());//user clicks popup a dialog.
         
-        add(chartPanel);
+        add(this.chartPanel);
         this.setName("Chart number: " + serial);//importantly use in DeleteComponentHandler
     }
     
@@ -68,6 +68,7 @@ public class LineChartPanel extends JPanel implements Cloneable{
         String bottomTitle = name;
         XYSeries series1 = new XYSeries(bottomTitle);//the name at the bottom of the chart.
         
+        //System.out.println(data);
         //-------------------------------------------------------------
         for (int rowIndex = 0; rowIndex < data.size(); rowIndex++) {
             Vector row = (Vector)data.elementAt(rowIndex);
