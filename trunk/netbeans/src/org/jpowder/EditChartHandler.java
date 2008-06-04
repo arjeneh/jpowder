@@ -31,8 +31,7 @@ public class EditChartHandler implements ActionListener {
     
     private JPowder jpowder;
     
-    public EditChartHandler(){
-    }
+    public EditChartHandler(){}
     
     public EditChartHandler(JPowder m){
         this.vecPanel = m.getChartList();

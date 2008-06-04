@@ -51,7 +51,8 @@ public class ReadWriteFileUtil {
                 Vector newRow = new Vector();
                 StringTokenizer st2 =  new StringTokenizer(aLine);
                 int numToken = st2.countTokens();
-                for (int i = 0 ; i < numToken-1; i++){//ignore the last STD by minusing 1.
+                for (int i = 0 ; i < numToken; i++){ //< numtoken -1
+                    //ignore the last STD by minusing 1.
                     String stoken = st2.nextToken();
                     compare = Double.parseDouble(stoken);//check number or not, if yes add element
                     if(compare >= filter) {
