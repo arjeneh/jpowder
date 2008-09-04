@@ -5,6 +5,9 @@ import java.awt.Color;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
@@ -21,15 +24,16 @@ import org.jfree.chart.renderer.xy.XYErrorRenderer;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.YIntervalSeries;
 import org.jfree.data.xy.YIntervalSeriesCollection;
-import org.jfree.ui.RefineryUtilities;
+
 
 /**
  * A line chart with error bars.
  */
+
 public class XYEChartPanel extends JPanel {
 
     //private XYE dataset;
-    private Vector data;
+    private List<DataPoint> data;
     private final String fileName;
     private ChartPanel chartPanel;
     private JFreeChart chart;
@@ -40,9 +44,9 @@ public class XYEChartPanel extends JPanel {
      *
      * @param title  the frame title.
      */
-    public XYEChartPanel(Vector theData, String theFileitle) {
+    public XYEChartPanel(List<DataPoint> theData, String theFileTitle) {
         data = theData;
-        fileName = theFileitle;
+        fileName = theFileTitle;
 
         chart = createChart(createDataset(this.data));
         chartPanel = new ChartPanel(this.chart);
@@ -57,7 +61,7 @@ public class XYEChartPanel extends JPanel {
         JMenuItem item = new JMenuItem("Disable");
         popup.add(item);
 
-        add(chartPanel);
+        this.add(chartPanel);
         //importantly use in DeleteComponentHandler
         this.setName("Chart number: " + serial);
     }
@@ -103,51 +107,40 @@ public class XYEChartPanel extends JPanel {
      * @param v1[] is the vector of file names
      * @param v2 is the dataset
      * */
-    private IntervalXYDataset createDataset(Vector theData) {
+    private IntervalXYDataset createDataset(List<DataPoint> theData) {
         
         //IntervalXYDataset is an interface.
         YIntervalSeriesCollection dataset = new YIntervalSeriesCollection();
 
         YIntervalSeries s1 = new YIntervalSeries("Dataset 1"); //(x,y, -y, +y)
-
-        //-- TESTING PROTOCAL ---------------------------------------
-        Vector thedata = theData;
-        Vector last = VectorMiscUtil.getLastColumnOf2DVector(thedata);
-        Vector twoColumn = VectorMiscUtil.copyBeforeLastColumnsOf2DVector(thedata);
-        Vector outputOfMinusAdd = VectorMiscUtil.do_Minus_Addition_Y(twoColumn, last);
-        Vector result = VectorMiscUtil.getResultOfAddingTwoVectors(twoColumn, outputOfMinusAdd);
-
-        for (int rowIndex = 0; rowIndex < result.size(); rowIndex++) {
-            Vector row = (Vector) result.elementAt(rowIndex);
-            for (int colIndex = 0; colIndex < row.size(); colIndex++) {
-                Double x = Double.parseDouble(row.elementAt(0).toString()); //works
-                Double y = Double.parseDouble(row.elementAt(1).toString());  //works
-                Double minusY = Double.parseDouble(row.elementAt(2).toString());  //works
-                Double addY = Double.parseDouble(row.elementAt(3).toString());  //works
-                s1.add(x, y, minusY, addY);
-            }//end for 2
-        }//end for 1
-        //END --TESTING
+        
+        for (DataPoint p : theData){
+          s1.add(p.x , p.y, p.y-p.e, p.y+p.e);  
+        }
 
         //add data to dataset
         dataset.addSeries(s1);
 
         return dataset;
     }
-
+    
+    
     /**
      * Starting point for the demonstration application.
      *
      * @param args  ignored.
-     */
+     */    
     public static void main(String[] args) {
         
-        Vector xy = VectorMiscUtil.initXYData();
-        Vector xye = VectorMiscUtil.initXYEData();
+        List<DataPoint> xye = new ArrayList<DataPoint>();
         
-        Vector all = new Vector();
-        all.add(xy);
-        all.add(xye);
+        // here simply for demonstrating the use of the
+        // the collector declared above just added some
+        // data point for testing. 
+        xye.add(new DataPoint(3.000, 171.863, 14.82657));
+        xye.add(new DataPoint(3.005, 163.572, 14.43149));
+        xye.add(new DataPoint(3.010, 211.015, 15.85440));      
+        
         
         XYEChartPanel demo = new XYEChartPanel(xye,
                 "XYErrorRenderer Test 1");
@@ -167,6 +160,7 @@ public class XYEChartPanel extends JPanel {
     //make sure the method fires a DatasetChangeEvent to all registered listeners. The 
     }
 
+    
     private class ChartMouseObserver implements ChartMouseListener {
 
         public void chartMouseMoved(ChartMouseEvent chartMouseEvent) {
