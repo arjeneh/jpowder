@@ -1,13 +1,10 @@
 package org.jpowder;
 
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.dnd.DnDConstants;
+import org.jpowder.fileCabinet.Subject;
+import org.jpowder.fileCabinet.PowderFileCabinet;
+import org.jpowder.fileCabinet.PowderFileObserver;
+//
 import java.awt.dnd.DropTargetListener;
-import java.io.File;
-import java.util.Vector;
-
-import javax.swing.*;
 
 /**
  *
@@ -15,48 +12,41 @@ import javax.swing.*;
  * Created on 21 May 2007, 09:53
  * @author  Kreecha Puphaiboon
  */
-public class FileChooserPanel extends javax.swing.JPanel
-        implements DropTargetListener{ //ListSelectionListener,{
-    
-    private JPowder jpowder;
-    private java.awt.dnd.DropTarget dt;
-    
-    //actual xye files.
-    private Vector<File> fileToReadVector = new Vector<File>();   
-    //data in the file
-    private Vector data;                                                
-    private DefaultListModel listModel;                                 //List model
-    
-    private static final String[] ACCEPTED_FILE_TYPE = {"xy", "xye", "txt"};  //list of acceptable file types    
-    
-    private JCheckBoxJList checkboxList;  
-    private javax.swing.JScrollPane file_sp;
-    //List with a checkbox from JCheckJList.java
-    
-    /** Creates new form FileChooserPanel
-     * @param jp JPowder
-     */
-    public FileChooserPanel(JPowder jp) {
-        jpowder = jp;
+public class FileChooserPanel extends javax.swing.JPanel implements PowderFileObserver, DropTargetListener { //ListSelectionListener
 
+    private java.awt.dnd.DropTarget dt;
+    //
+    private PowderFileCabinet mPowderFileCabinet;    
+    private FileNameListModel listModel;
+    //
+    private JCheckBoxJList checkboxList;
+    private javax.swing.JScrollPane file_sp;
+    private JPowder jPowderMain;//where this class located in
+    
+
+    //This constructor is for self-testing in the main method of this file.
+    public FileChooserPanel() {
+        try {
+            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+        }
+        //
         initComponents();
         checkboxList = new JCheckBoxJList();
         checkboxList.setFont(new java.awt.Font("Tahoma", 0, 10));
         checkboxList.setMinimumSize(new java.awt.Dimension(210, 84));
         checkboxList.setPreferredSize(new java.awt.Dimension(210, 84));
-        
+
         //create a list model to put in the JList
-        listModel = new javax.swing.DefaultListModel();
-        //listModel.addListDataListener(new MyListDataListener());
-        
-        checkboxList.setModel (listModel);
+        listModel = new FileNameListModel();
+        checkboxList.setModel(listModel);
         //checkboxList.addListSelectionListener(this);
-        
-        file_sp = new JScrollPane (checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        file_sp = new javax.swing.JScrollPane(checkboxList, javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         file_sp.setMinimumSize(new java.awt.Dimension(260, 84));
         file_sp.setPreferredSize(new java.awt.Dimension(260, 84));
         file_sp.setViewportView(checkboxList);
-        
+
         java.awt.GridBagConstraints gridBagConstraints;
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -66,16 +56,59 @@ public class FileChooserPanel extends javax.swing.JPanel
         add(file_sp, gridBagConstraints);
 
         dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
+        //UTILISE OBSERVER PATTERN.
+        mPowderFileCabinet = new PowderFileCabinet();
+        mPowderFileCabinet.registerObserver(this);
+        mPowderFileCabinet.registerObserver((PowderFileObserver) listModel);
+
     }//FileChooserPanel
     
-    public Vector getFile(){
-        return fileToReadVector;
+    //This constructor is called from JPowder's main method.
+    //@param jPowderMain: JPowder
+    public FileChooserPanel(JPowder jPowderMain) {
+        try {
+            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+        }
+        //
+        initComponents();
+        checkboxList = new JCheckBoxJList();
+        checkboxList.setFont(new java.awt.Font("Tahoma", 0, 10));
+        checkboxList.setMinimumSize(new java.awt.Dimension(210, 84));
+        checkboxList.setPreferredSize(new java.awt.Dimension(210, 84));
+
+        //create a list model to put in the JList
+        listModel = new FileNameListModel();
+        checkboxList.setModel(listModel);
+        //checkboxList.addListSelectionListener(this);
+
+        file_sp = new javax.swing.JScrollPane(checkboxList, javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        file_sp.setMinimumSize(new java.awt.Dimension(260, 84));
+        file_sp.setPreferredSize(new java.awt.Dimension(260, 84));
+        file_sp.setViewportView(checkboxList);
+
+        java.awt.GridBagConstraints gridBagConstraints;
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
+        add(file_sp, gridBagConstraints);
+
+        dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
+        //UTILISE OBSERVER PATTERN.
+        mPowderFileCabinet = new PowderFileCabinet();
+        mPowderFileCabinet.registerObserver(this);
+        mPowderFileCabinet.registerObserver((PowderFileObserver) listModel);
+        mPowderFileCabinet.registerObserver((JPowder) jPowderMain);
+
+    }//FileChooserPanel
+
+    public void powderFileCabinetUpdate(Subject data) {
+        PowderFileCabinet pfc = (PowderFileCabinet) data;
+        System.out.println("From FileChooserPanel.java PowderFileCabinet is updated as " + pfc.getData().size());
     }
-    
-    public Vector getData(){
-        return data;
-    }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -131,181 +164,113 @@ public class FileChooserPanel extends javax.swing.JPanel
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         add(deleteFile_btn, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
-    
+
     /** ALL DRAGE AND DROP THING */
     public void dragEnter(java.awt.dnd.DropTargetDragEvent dtde) {
         //System.out.println("Drag Enter");
     }
-    
+
     public void dragExit(java.awt.dnd.DropTargetEvent dte) {
         System.out.println("Source: " + dte.getSource());
-        //System.out.println("Drag Exit");
+    //System.out.println("Drag Exit");
     }
-    
+
     public void dragOver(java.awt.dnd.DropTargetDragEvent dtde) {
         //System.out.println("Drag Over");
     }
-    
+
     public void dropActionChanged(java.awt.dnd.DropTargetDragEvent dtde) {
         //System.out.println("Drop Action Changed");
     }
-    
+
     public void drop(java.awt.dnd.DropTargetDropEvent dtde) {
+        /*
         try {
-            // Ok, get the dropped object and try to figure out what it is
-            Transferable tr = dtde.getTransferable();
-            DataFlavor[] flavors = tr.getTransferDataFlavors();
-            
-            for (int i = 0; i < flavors.length; i++) {
-                System.out.println("Possible flavor: " + flavors[i].getMimeType());
-                // Check for file lists specifically
-                if (flavors[i].isFlavorJavaFileListType()) {
-                    // Great!  Accept copy drops...
-                    dtde.acceptDrop(DnDConstants.ACTION_COPY);
-                    System.out.println("Successful file list drop.\n\n");
-                    
-                    // And add the list of file names to our text area
-                    java.util.List list = (java.util.List)tr.getTransferData(flavors[i]);
-                    
-                    for (int j = 0; j < list.size(); j++) {
-                        File file = (File)list.get(j);
-                        String fileName = file.getName().toLowerCase();
-                        
-                        if (checkAcceptedFileType(fileName)){
-                            this.data = ReadWriteFileUtil.getLocalFileToTable(file, jpowder);
-                            if(this.data != null){
-                                
-                                jpowder.drawTableAndGraph(this.data, fileName);
-                                
-                                this.fileToReadVector.addElement(file);//was filename (String type)
-                                this.listModel.addElement(fileName);//add to DefaultListModel
-                            }
-                        } else {
-                            javax.swing.JOptionPane.showMessageDialog(jpowder, "Only ASCII file please.");
-                            //end if extension matched
-                        }
-                    }
-                    
-                    // If we made it this far, everything worked.
-                    dtde.dropComplete(true);
-                    return;
-                }
-            }
-            // Hmm, the user must not have dropped a file list
-            System.out.println("Drop failed: " + dtde);
-            dtde.rejectDrop();
-        } catch (Exception e) {
-            e.printStackTrace();
-            dtde.rejectDrop();
+        // Ok, get the dropped object and try to figure out what it is
+        Transferable tr = dtde.getTransferable();
+        DataFlavor[] flavors = tr.getTransferDataFlavors();
+        
+        for (int i = 0; i < flavors.length; i++) {
+        System.out.println("Possible flavor: " + flavors[i].getMimeType());
+        // Check for file lists specifically
+        if (flavors[i].isFlavorJavaFileListType()) {
+        // Great!  Accept copy drops...
+        dtde.acceptDrop(DnDConstants.ACTION_COPY);
+        System.out.println("Successful file list drop.\n\n");
+        
+        // And add the list of file names to our text area
+        java.util.List list = (java.util.List) tr.getTransferData(flavors[i]);
+        
+        for (int j = 0; j < list.size(); j++) {
+        File file = (File) list.get(j);
+        String fileName = file.getName().toLowerCase();
+        
+        if (checkAcceptedFileType(fileName)) {
+        this.data = ReadWriteFileUtil.getLocalFileToTable(file, jpowder);
+        if (this.data != null) {
+        
+        jpowder.drawTableAndGraph(this.data, fileName);
+        
+        this.fileToReadVector.addElement(file);//was filename (String type)
+        this.listModel.addElement(fileName);//add to DefaultListModel
         }
-    }
-    //END ALL DRAGE AND DROP
-    
-    /*Checking whether file type is allowed
-     *@ param filenames
-     **/
-    public boolean checkAcceptedFileType(String filenames){
-        System.out.println("\nFile Type = " + filenames);
-        boolean result = true;
-        for(int i = ACCEPTED_FILE_TYPE.length-1; i>=0;i--){
-            if(filenames.endsWith(ACCEPTED_FILE_TYPE[i])){
-                result = true;
-                break;
-            } else{
-                result = false;
-            }
-        }//end for
-        return result;
-    }//end checkAcceptedFileType
-    
+        } else {
+        javax.swing.JOptionPane.showMessageDialog(jpowder, "Only ASCII file please.");
+        //end if extension matched
+        }
+        }
+        
+        // If we made it this far, everything worked.
+        dtde.dropComplete(true);
+        return;
+        }
+        }
+        // Hmm, the user must not have dropped a file list
+        System.out.println("Drop failed: " + dtde);
+        dtde.rejectDrop();
+        } catch (Exception e) {
+        e.printStackTrace();
+        dtde.rejectDrop();
+        }*/
+    }//drop
+
 private void deleteFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFile_btnActionPerformed
     //if no nothing selected then alert.
-    if (checkboxList.getSelectedIndex() == -1) {
-        javax.swing.JOptionPane.showMessageDialog(jpowder, "To delete, please select a file first.");
-        return;
+    /*if (checkboxList.getSelectedIndex() == -1) {
+    javax.swing.JOptionPane.showMessageDialog(jpowder, "To delete, please select a file first.");
+    return;
     }
     
     //if the list is empty then do nothing
     if (this.listModel.getSize() <= 0) {
-        javax.swing.JOptionPane.showMessageDialog(jpowder, "Please add a file first.");
-        return;
+    javax.swing.JOptionPane.showMessageDialog(jpowder, "Please add a file first.");
+    return;
     }
     
     //do the actual deletion.
-    if (this.listModel.getSize() > 0){
-        System.out.println (this.listModel.getSize());
-        int index = checkboxList.getSelectedIndex();
-        this.listModel.removeElementAt(index);
-        this.fileToReadVector.removeElementAt(index);
-    }
+    if (this.listModel.getSize() > 0) {
+    System.out.println(this.listModel.getSize());
+    int index = checkboxList.getSelectedIndex();
+    this.listModel.removeElementAt(index);
+    this.fileToReadVector.removeElementAt(index);
+    }*/
 }//GEN-LAST:event_deleteFile_btnActionPerformed
 
 private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFile_btnActionPerformed
-    // Browse for a file on user machine
-    // Create a list of files to be choosen and keep the actual data in fileToReadVector.
-    // restrict to .xye to be read.
-    
-    final JFileChooser fc = new JFileChooser();
-    fc.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, "ASCII file (*.xye, *.txt)"));
-    fc.setAcceptAllFileFilterUsed(false);//only ASCII will be seen.
-    
-    int returnVal = fc.showOpenDialog(jpowder);
-    
-    if (returnVal == JFileChooser.APPROVE_OPTION) {
-        File file = fc.getSelectedFile();
-        String filename = file.getName().toLowerCase();
-        
-        //This is a real application would restrict to 'xye'.
-        if (checkAcceptedFileType(filename)){
-            this.data = ReadWriteFileUtil.getLocalFileToTable(file, jpowder);
-            if(this.data != null){
-                
-                jpowder.drawTableAndGraph(this.data, filename);                
-                fileToReadVector.addElement(file);//was filename (String type)
-                listModel.addElement(filename);//add to DefaultListModel
-            }
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(jpowder, "Only ASCII file please.");
-            //end if extension matched
-        }
-    } 
+    mPowderFileCabinet.loadFile();
 }//GEN-LAST:event_addFile_btnActionPerformed
 
-public JButton getAddFile_btn() {
-    return addFile_btn;
+public static void main(String args[]) {
+    javax.swing.JFrame frame = new javax.swing.JFrame("File chooser");
+        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        frame.add(new FileChooserPanel(), java.awt.BorderLayout.NORTH);
+        frame.setSize(300, 200);
+        frame.setVisible(true);
 }
-
-public void setAddFile_btn(JButton addFile_btn) {
-    this.addFile_btn = addFile_btn;
-}
-
-public JButton getDeleteFile_btn() {
-    return deleteFile_btn;
-}
-
-public void setDeleteFile_btn(JButton deleteFile_btn) {
-    this.deleteFile_btn = deleteFile_btn;
-}
-//Detecting what user's selected in the JList.
-/*public void valueChanged(javax.swing.event.ListSelectionEvent e) {
-    //javax.swing.event.ListSelectionModel lsm = (javax.swing.event.ListSelectionModel)e.getSource();
-    if (e.getValueIsAdjusting() == false) {
-        if (checkboxList.getSelectedIndex() == -1) {
-            return;
-        } else {
-            int selected = checkboxList.getSelectedIndex();
-            jpowder.currentFileName = checkboxList.getSelectedValue().toString();
-            this.data = ReadWriteFileUtil.getLocalFileToTable((File)fileToReadVector.get(selected), jpowder);
-            if(this.data != null){
-                jpowder.drawTable(this.data);
-            }//if
-        }//else
-    }//if
-}//end valueChanged*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addFile_btn;
     private javax.swing.JButton deleteFile_btn;
     // End of variables declaration//GEN-END:variables
-    
+  
 }

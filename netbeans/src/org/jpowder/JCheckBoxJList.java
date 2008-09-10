@@ -88,32 +88,6 @@ public class JCheckBoxJList extends JList implements ListSelectionListener {
         }//if
     }//valueChanged*/
 
-    /*public static void main (String[] args) {
-        JList list = new JCheckBoxJList ();
-        DefaultListModel defModel = new DefaultListModel();
-        list.setModel (defModel);
-        
-        String[] listItems = {
-            "Chris", "Joshua", "Daniel", "Michael",
-            "Don", "Kimi", "Kelly", "Keagan"
-        };
-        
-        Iterator it = Arrays.asList(listItems).iterator();
-        while (it.hasNext())
-            defModel.addElement (it.next());
-        // show list
-        
-        JScrollPane scroller =
-            new JScrollPane (list,
-                            ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-                            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        JFrame frame = new JFrame ("Checkbox JList");
-        frame.getContentPane().add (scroller);
-        frame.pack();
-        frame.setVisible(true);
-    }*/
-
-
     private class CheckBoxListCellRenderer extends JComponent implements ListCellRenderer {
         DefaultListCellRenderer defaultComp;
         JCheckBox checkbox;
@@ -143,4 +117,30 @@ public class JCheckBoxJList extends JList implements ListSelectionListener {
             return this;
         }//getListCellRendererComponent
     }//CheckBoxListCellRenderer
+    
+        /*public static void main (String[] args) {
+        JList list = new JCheckBoxJList ();
+        DefaultListModel defModel = new DefaultListModel();
+        list.setModel (defModel);
+        
+        String[] listItems = {
+            "Chris", "Joshua", "Daniel", "Michael",
+            "Don", "Kimi", "Kelly", "Keagan"
+        };
+        
+        Iterator it = Arrays.asList(listItems).iterator();
+        while (it.hasNext())
+            defModel.addElement (it.next());
+        // show list
+        
+        JScrollPane scroller =
+            new JScrollPane (list,
+                            ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        JFrame frame = new JFrame ("Checkbox JList");
+        frame.getContentPane().add (scroller);
+        frame.pack();
+        frame.setVisible(true);
+    }*/
+
 }//JCheckBoxJList

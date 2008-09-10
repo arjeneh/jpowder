@@ -1,5 +1,7 @@
 package org.jpowder;
 
+import org.jpowder.util.ScreenUtil;
+
 /**
  * "ShowSumiDialog" implements a dialog which asks the user to confirm
  * their score and send it to me by email; kreecha_pu_at_yahoo.com.
