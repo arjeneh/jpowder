@@ -271,9 +271,10 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
         chart_scrp.setPreferredSize(new java.awt.Dimension(630, 480));
 
         powderChartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chart", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 102))); // NOI18N
+        powderChartPanel.setAutoscrolls(true);
         powderChartPanel.setMaximumSize(new java.awt.Dimension(520, 32767));
-        powderChartPanel.setMinimumSize(new java.awt.Dimension(620, 530));
-        powderChartPanel.setPreferredSize(new java.awt.Dimension(620, 530));
+        powderChartPanel.setMinimumSize(new java.awt.Dimension(630, 540));
+        powderChartPanel.setPreferredSize(new java.awt.Dimension(630, 400));
         powderChartPanel.setLayout(new javax.swing.BoxLayout(powderChartPanel, javax.swing.BoxLayout.Y_AXIS));
         chart_scrp.setViewportView(powderChartPanel);
 
