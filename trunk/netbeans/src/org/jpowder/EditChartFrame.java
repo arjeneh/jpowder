@@ -5,6 +5,8 @@
  */
 package org.jpowder;
 
+import org.jpowder.util.ScreenUtil;
+
 /**
  *
  * @author  Kreecha Pupahiboon

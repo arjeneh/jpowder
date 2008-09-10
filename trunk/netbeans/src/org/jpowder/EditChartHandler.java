@@ -45,7 +45,7 @@ public class EditChartHandler implements ActionListener {
         
         String[] chartArray  = new String[itsNum];
         for (int dex = 0; dex < chartArray.length; dex++) {
-            LineChartPanel jf = (LineChartPanel) jpowder.getChartList().get(dex);
+            PowderChartPanel jf = (PowderChartPanel) jpowder.getChartList().get(dex);
             chartArray[dex] = jf.getName();
         }
         return chartArray;
@@ -111,10 +111,10 @@ class EditChartDialog extends JFrame   {
         options[0] = new JButton("OK");
         options[0].addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent event){
-                //TODO: Move into EditChartFrame.java
+                /*//TODO: Move into EditChartFrame.java
                 try {
                     //----------Copy the chart-------------------
-                    LineChartPanel plot_2 = (LineChartPanel)jpowder.getLineChart(selectedIndex);
+                    PowderChartPanel plot_2 = (PowderChartPanel)jpowder.getLineChart(selectedIndex);
                     final JFreeChart plot_copy = (JFreeChart)plot_2.getChart().clone();
                             
                     //Thread safe by seperating it in case editing and modification.
@@ -125,12 +125,12 @@ class EditChartDialog extends JFrame   {
                         }
                     });
                    
-                    //time for the dialog to disappear.*/
+                    //time for the dialog to disappear.
                     setVisible(false);
                     dispose();
                 } catch (Exception ex){
                     ex.printStackTrace();
-                }//end catch
+                }//end catch*/
             }//end actionPerformed
         });//end addActionListener for ok button.
         
@@ -143,7 +143,7 @@ class EditChartDialog extends JFrame   {
             }
         });
         
-        Object[] msg = {"Which chart would you like to edit?",chartNameList};//this text can be passed in the constructor
+        Object[] msg = {"Which chart would you like to edit?", chartNameList};//this text can be passed in the constructor
         
         JOptionPane op = new JOptionPane(msg,
                 JOptionPane.QUESTION_MESSAGE,

@@ -8,15 +8,21 @@ package org.jpowder;
  * and open the template in the editor.
  */
 
+import org.jpowder.fileCabinet.Subject;
+import org.jpowder.fileCabinet.PowderFileCabinet;
+import org.jpowder.fileCabinet.PowderFileObserver;
 import javax.swing.DefaultListModel;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
 import java.util.*;
 
-public class DataFileTableModel extends DefaultListModel implements TableModel {
+public class DataFileTableModel extends DefaultListModel implements TableModel, PowderFileObserver {
 
     private Vector dataVec,  columnNames;
-    private String fileName;//for displaying the file in the log.
+    
+    //for displaying the file in the log.
+    private String fileName;
+
     private TableModel tableModel = new AbstractTableModel() {
 
         public int getRowCount() {
@@ -54,6 +60,7 @@ public class DataFileTableModel extends DefaultListModel implements TableModel {
             return null;
         }
 
+        @Override
         public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
             //this.fireTableDataChanged();
             return;
@@ -64,6 +71,7 @@ public class DataFileTableModel extends DefaultListModel implements TableModel {
         super();
         this.dataVec = dumData;
         this.fileName = theFileName;
+        
 
         Vector vrow = (Vector) (this.dataVec.elementAt(0));
         int col = vrow.size();
@@ -138,13 +146,32 @@ public class DataFileTableModel extends DefaultListModel implements TableModel {
         this.tableModel.removeTableModelListener(l);
     }
 
-    /*private void fireTableDataChanged() {
+    private void fireTableDataChanged() {
     throw new UnsupportedOperationException("Not yet implemented");
-    }*/
+    }
+    
     @Override
     protected void finalize() throws Throwable {
         this.dataVec = null;
         this.columnNames = null;
         this.tableModel = null;
+    }
+
+    public void powderFileCabinetUpdate(Subject data) {
+        
+        PowderFileCabinet pfc = (PowderFileCabinet) data;
+        System.out.println("From FileNameListModel.java PowderFileCabinet is updated as " + pfc.getData().size());
+
+        java.util.HashMap hm = pfc.getData();
+        //clear
+        clear();
+
+        //To get all keys stored in HashMap use keySet method. 
+        //Signature of the keysSet method is, Set keySet()
+        java.util.Iterator iterator = hm.keySet().iterator();
+        while (iterator.hasNext()) {
+            // TODO:
+            //add((String) iterator.next());
+        }
     }
 }
