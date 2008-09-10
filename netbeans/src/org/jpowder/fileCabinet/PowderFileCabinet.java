@@ -92,33 +92,40 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         System.out.println("PowderFileCabinet.java has been deleted: " + data.toString());
         notifyObservers();
     }
+    
+    // TODO: Multiple selectable - MULTI_SELECTION_ENABLED_CHANGED_PROPERTY 
+    // TODO: getSelectedFiles():  File[]
 
     /* @see  Browse for a file on user machine
      * Create a list of files to be choosen and put data through
      * this.addFile(this.eachFileName, localData);.
      * it restricts file types to .xye */
     public void loadFile() {
-        final long s_time =  System.currentTimeMillis();//time of loading
-        
-        JFileChooser fc = new JFileChooser();
+        final long s_time = System.currentTimeMillis();//time of loading
+
+        JFileChooser chooser = new JFileChooser();
+        chooser.setMultiSelectionEnabled(true);
+
         File file = null;
         Vector localData = null;
         this.eachFileName = null;
         //
-        fc.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, "ASCII file (*.xye, *.txt)"));
-        fc.setAcceptAllFileFilterUsed(false);
+        chooser.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, "ASCII file (*.xye, *.txt)"));
+        chooser.setAcceptAllFileFilterUsed(false);
 
-        int returnVal = fc.showOpenDialog(null);
+        int returnVal = chooser.showOpenDialog(null);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            file = fc.getSelectedFile();
+            //File[] files = chooser.getSelectedFiles();
+
+            file = chooser.getSelectedFile();
             this.eachFileName = file.getName().toLowerCase();
             //change cursor
             setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
             //process file
             localData = getLocalFile(file, null);
 
-            //This is a real application would restrict to 'xye'.
+            //This is the real application that restricts to 'xye'.
             if (checkAcceptedFileType(this.eachFileName)) {
                 if (localData != null) {
                     this.addFile(this.eachFileName, localData);
@@ -128,9 +135,10 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
 
             }//acceptable end if extension matched
         }//if approve
-        
+
         //Report taken time to plot a graph.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
+
             public void run() {
                 setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
                 long t = System.currentTimeMillis() - s_time;
@@ -160,7 +168,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
                 //
                 int numToken = st2.countTokens();
                 //System.out.println("This file has " + numToken + " columns.");
-                for (int i = 0; i < numToken; i++) { 
+                for (int i = 0; i < numToken; i++) {
                     //ignore the last STD by minusing 1.
                     String stoken = st2.nextToken();
                     compare = Double.parseDouble(stoken);//check number or not, if yes add element
@@ -208,15 +216,26 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         return result;
     }//end checkAcceptedFileType
 
+    public void loadMultipleFiles(File file) {
+        if (file.isFile()) {
+            //loadFile(file);
+        } else {
+            File multFiles[] = file.listFiles();
+            for (File subFile : multFiles) {
+                loadMultipleFiles(subFile);
+            }
+        }
+    }
+
     public static void main(String args[]) {
         PowderFileCabinet pdc = new PowderFileCabinet();
-        
+
         javax.swing.JFrame frame = new javax.swing.JFrame("PowderFileCabinet Sample");
         frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         frame.add(pdc, java.awt.BorderLayout.NORTH);
         frame.setSize(300, 100);
         frame.setVisible(true);
-        
+
         pdc.loadFile();
 
     }

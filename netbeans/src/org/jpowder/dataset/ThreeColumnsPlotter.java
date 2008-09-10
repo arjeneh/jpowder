@@ -11,6 +11,7 @@ import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.YIntervalSeries;
 import org.jfree.data.xy.YIntervalSeriesCollection;
 //
+import org.jpowder.PowderPopupMenu;
 import org.jpowder.util.VectorMiscUtil;
 
 public class ThreeColumnsPlotter extends DatasetPlotter {
@@ -64,7 +65,7 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
         //IntervalXYDataset is an interface.
         YIntervalSeriesCollection lDataset = new YIntervalSeriesCollection();
 
-        YIntervalSeries s1 = new YIntervalSeries("Dataset 1"); //(x,y, -y, +y)
+        YIntervalSeries s1 = new YIntervalSeries("Dataset:" + this.d.getFileName()); //(x,y, -y, +y)
 
         //-- TESTING PROTOCAL ---------------------------------------
         //Double d = (Double) ((List)x.get(0)).get(0); 
@@ -94,19 +95,18 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
 
     @Override
     public ChartPanel createPowderChart() {
-        JFreeChart chart = createChart(createDataset(this.d.getData()));
-        ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
+        JFreeChart chart = createChart( createDataset( this.d.getData() ) );
+        
+        ChartPanel chartPanel = new ChartPanel(chart, true);
+        chartPanel.setMaximumSize(new java.awt.Dimension(500, 270));
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
         //user clicks popup a dialog.
-        //chartPanel.addChartMouseListener(new ChartMouseObserver());
+        chartPanel.addChartMouseListener(new PowderChartMouseObserver());
 
-        //add disable popup menu.
-        ///JPopupMenu popup = chartPanel.getPopupMenu();
-        //JMenuItem item = new JMenuItem("Disable");
-        //popup.add(item);
-
+        //add popup menu.
+        PowderPopupMenu pop = new PowderPopupMenu(chartPanel);
+ 
         return chartPanel;
     }
 }

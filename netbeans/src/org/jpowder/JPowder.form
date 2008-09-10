@@ -288,14 +288,15 @@
                         </TitledBorder>
                       </Border>
                     </Property>
+                    <Property name="autoscrolls" type="boolean" value="true"/>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[520, 32767]"/>
                     </Property>
                     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[620, 530]"/>
+                      <Dimension value="[630, 540]"/>
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[620, 530]"/>
+                      <Dimension value="[630, 400]"/>
                     </Property>
                   </Properties>
 
