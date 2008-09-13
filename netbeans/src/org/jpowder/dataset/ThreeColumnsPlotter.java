@@ -18,9 +18,6 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
 
     private DataSet d;
 
-    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.9BCDAAA5-48C4-DA54-051D-F87E256B8859]
-    // </editor-fold> 
     public ThreeColumnsPlotter(DataSet d) {
         super(d);
         this.d = d;
@@ -31,31 +28,32 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
                 " data is " + this.d.description();
     //this.d.description();
     }
+
     /**
      * Creates a chart with (x,y, -y, +y).
      * @param dataset  the dataset.
      * @return The chart.
      */
     private JFreeChart createChart(IntervalXYDataset dataset) {
-        // update serial
 
         NumberAxis xAxis = new NumberAxis("X");
         NumberAxis yAxis = new NumberAxis("Y");
 
-        //XYLineAndShapeRenderer enable connecting lines to be on/off.
-
         XYErrorRenderer renderer = new XYErrorRenderer();
         renderer.setBaseLinesVisible(true);
-        renderer.setBaseShapesVisible(false);
+        renderer.setBaseShapesVisible(true);
         renderer.setDrawYError(true);//show Y error bar.
 
         XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
         plot.setBackgroundPaint(Color.lightGray);
         plot.setDomainGridlinePaint(Color.white);
         plot.setRangeGridlinePaint(Color.white);
+        plot.setDomainCrosshairVisible(true);
 
-           JFreeChart XYE_Chart = new JFreeChart(
-                "Chart: " + this.d.getFileName(), plot);
+
+        JFreeChart XYE_Chart = new JFreeChart("Chart: " + this.d.getFileName(),
+                plot);
+
         XYE_Chart.setBackgroundPaint(Color.white);
         return XYE_Chart;
     }
@@ -67,8 +65,7 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
 
         YIntervalSeries s1 = new YIntervalSeries("Dataset:" + this.d.getFileName()); //(x,y, -y, +y)
 
-        //-- TESTING PROTOCAL ---------------------------------------
-        //Double d = (Double) ((List)x.get(0)).get(0); 
+        //-- TESTING PROTOCAL --------------------------------------------------
         Vector thedata = theData;
         Vector last = VectorMiscUtil.getLastColumnOf2DVector(thedata);
         //
@@ -95,18 +92,21 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
 
     @Override
     public ChartPanel createPowderChart() {
-        JFreeChart chart = createChart( createDataset( this.d.getData() ) );
         
+        JFreeChart chart = createChart(createDataset(this.d.getData()));
+
         ChartPanel chartPanel = new ChartPanel(chart, true);
         chartPanel.setMaximumSize(new java.awt.Dimension(500, 270));
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
-        //user clicks popup a dialog.
+
+        //User click and it brings up a new Frame for editing the chart.
         chartPanel.addChartMouseListener(new PowderChartMouseObserver());
 
+        //user clicks and popup a dialog.
         //add popup menu.
         PowderPopupMenu pop = new PowderPopupMenu(chartPanel);
- 
+
         return chartPanel;
     }
 }

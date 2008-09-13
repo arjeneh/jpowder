@@ -4,6 +4,7 @@
  */
 package org.jpowder.util;
 
+import java.util.Collections;
 import java.util.Vector;
 
 /**
@@ -58,13 +59,31 @@ public class VectorMiscUtil {
         data.add(row3);
         return data;
     }
+    
+    
+    /* Get a specific column
+     * 
+     * @param inVec must be a two dimensional vector.
+     * @param indexPos must minus 1 //Vector starts counting from 0
+     * */   
+    public static Vector getColumn(Vector<Vector> inVec, int indexPos) {
+        Vector a = new Vector();
 
-  /** 
+        for (int rowIndex = 0; rowIndex < inVec.size(); rowIndex++) {
+            Vector row = (Vector) inVec.elementAt(rowIndex);
+            Object x = row.elementAt(indexPos); 
+            a.add(x);
+        }
+
+        return a;
+    }
+
+    /** 
      * Get the last column of 2D vector, in this case we have 3 columns dataset.
      * @param ori is the vector to be extracted
      * @return the last column.
      * */
-    public static Vector getLastColumnOf2DVector(Vector ori) {
+    public static Vector getLastColumnOf2DVector(Vector<Vector> ori) {
         Vector output = new Vector();
         Vector vRow = new Vector();
         Vector vLastColumn = new Vector();
@@ -82,7 +101,7 @@ public class VectorMiscUtil {
         return vLastColumn;
     }
 
-    public static Vector getAllElementOf2DVector(Vector ori) {
+    public static Vector getAllElementOf2DVector(Vector<Vector> ori) {
         Vector output = new Vector();
         Vector vRow = new Vector();
 
@@ -97,11 +116,21 @@ public class VectorMiscUtil {
         }
         return output;
     }
+    
+    public static Double findMaxElementOf1DVector(Vector ori) {
+        Double obj = (Double) Collections.max(ori);
+        return obj;        
+    }
+    
+        
+    public static Double findMinElementOf1DVector(Vector ori) {
+        Double obj = (Double) Collections.min(ori);
+        return obj;        
+    }
 
-    public static Vector copyBeforeLastColumnsOf2DVector(Vector ori) {
+    public static Vector copyBeforeLastColumnsOf2DVector(Vector<Vector> ori) {
         //Parse the data from vectors which has differnt type of objects in it
         Vector vOriginalData = ori;
-        Vector vRow = new Vector();
         Vector vCopyTwoColumns = new Vector();
 
         for (int i = 0; i < vOriginalData.size(); i++) {
@@ -127,8 +156,8 @@ public class VectorMiscUtil {
             Vector temp = new Vector();
             Vector vrow = (Vector) (originValue.elementAt(i));
 
-            Double y = Double.parseDouble( vrow.get(1).toString() ) ;//the constant
-            Double sca = Double.parseDouble( scalar.elementAt(i).toString() );
+            Double y = Double.parseDouble(vrow.get(1).toString());//the constant
+            Double sca = Double.parseDouble(scalar.elementAt(i).toString());
 
             sumMinus = y - sca;
             sumAdd = y + sca;
@@ -149,7 +178,6 @@ public class VectorMiscUtil {
      * @param v2 is the output of minus and add
      * @return vector with this format (x,y, errorX_Minus_Y, errorY_add_Y).
      * */
- 
     public static Vector getResultOfAddingTwoVectors(Vector v1, Vector v2) {
         Vector output = new Vector();
         Vector vrow = new Vector();

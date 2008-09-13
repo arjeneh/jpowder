@@ -1,7 +1,6 @@
 package org.jpowder;
 
 import org.jpowder.util.ScreenUtil;
-import org.jpowder.util.StatsUtil;
 
 import java.awt.Dimension;
 import java.util.Vector;
@@ -43,7 +42,7 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     //
     public DataFileTableModel model;
     //
-    public PowderChartPanel realChart;
+    public JPowderChartPanel realChart;
     private static final int CHART_HIEGHT_FIX_SIZE = 270;
     private static final int FRAME_WIDTH = 1070;
     private static final int FRAME_HIEGHT = 670;
@@ -91,7 +90,7 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
 
         java.awt.Rectangle rect = powderChartPanel.getBounds();
         chart_scrp.getVerticalScrollBar().setValue(rect.height);
-    }
+    }// powderFileCabinetUpdate
 
     public static void main(String[] args) {
         // *** Modify applet subclass name to that of the program

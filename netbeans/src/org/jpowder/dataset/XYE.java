@@ -1,48 +1,78 @@
 package org.jpowder.dataset;
 
 import java.util.Vector;
-// <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-// #[regen=yes,id=DCE.D48C3641-7DCA-878C-C8B1-8761BA038DD2]
-// </editor-fold> 
+import org.jpowder.util.VectorMiscUtil;
+
+/* 
+ * Creates a chart with (x,y, -y, +y).
+ */
+
 public class XYE extends DataSet {
 
-    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.D3857DC5-63F0-201E-701F-2ADCF08B922F]
-    // </editor-fold> 
-    private Vector e;    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.122193B7-02D0-5B76-E671-5FCEAF235530]
-    // </editor-fold> 
-    private Vector yLower;    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.37C4E71E-C50E-3A5A-8A4B-A174F3272425]
-    // </editor-fold> 
+    private Vector e;
+    private Vector yLower;
     private Vector yUpper;
-    
     private Vector data;
-    
 
-    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.FCAD2B57-198A-5333-28D5-52FBBE520F13]
-    // </editor-fold> 
     public XYE(Vector data, String fileName) {
         super(data, fileName);
         this.data = data;
+        this.e = VectorMiscUtil.getColumn(this.data, 2);
+
+        this.yLower = new Vector();
+        this.yUpper = new Vector();
+
+        Vector twoColumn = VectorMiscUtil.copyBeforeLastColumnsOf2DVector(this.data);
+        Vector outputOfMinusAdd = VectorMiscUtil.do_Minus_Addition_Y(twoColumn, this.e);
+        Vector result = VectorMiscUtil.getResultOfAddingTwoVectors(twoColumn, outputOfMinusAdd);
+
+        for (int rowIndex = 0; rowIndex < result.size(); rowIndex++) {
+            Vector row = (Vector) result.elementAt(rowIndex);
+            for (int colIndex = 0; colIndex < row.size(); colIndex++) {
+                
+                Double minusY = Double.parseDouble(row.elementAt(2).toString());  
+                yLower.add(minusY);
+                Double plusY = Double.parseDouble(row.elementAt(3).toString());  
+                yUpper.add(plusY);
+
+            }//end for 2
+        }//end for 1
+
+        System.out.println(" yLower is " + yLower);
+        System.out.println(" y      is " + super.getY());
+        System.out.println(" yUpper is " + yUpper);
     }
 
-    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.D44916A1-62A1-ECF7-AC99-C42843DC1747]
-    // </editor-fold> 
     public DatasetPlotter createDatasetPlotter() {
         return new ThreeColumnsPlotter(this);
     }
 
-    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.C1D8AEE7-9292-A49B-B4F2-BF61A0AE2774]
-    // </editor-fold> 
     public String description() {
         return "XYE data contains " + this.data;
     }
 
+    public Vector getE() {
+        return e;
+    }
 
+    public void setE(Vector e) {
+        this.e = e;
+    }
 
+    public Vector getYLower() {
+        return yLower;
+    }
+
+    public void setYLower(Vector yLower) {
+        this.yLower = yLower;
+    }
+
+    public Vector getYUpper() {
+        return yUpper;
+    }
+
+    public void setYUpper(Vector yUpper) {
+        this.yUpper = yUpper;
+    }
 }
 
