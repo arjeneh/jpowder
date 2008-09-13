@@ -5,6 +5,10 @@ import org.jpowder.util.ScreenUtil;
 import java.awt.Dimension;
 import java.util.Vector;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
@@ -20,16 +24,17 @@ import org.jpowder.dataset.XYE;
  * @author      Kreecha Puphaiboon
  * @version     0.7
  * @since       Fabuary 07.
- *///TODO: Button to delete the graph in graph Panel
-//TODO: Another window to view details of each graph individually by double clicking.
-//TODO: Change tooltip background color.
-//TODO: Email us the result.
-//TODO: Create a help screen.
-//TODO: Create an info screen.
-//TODO: When no data in the stats_ta, print button should be disable.
+ * 
+ * TODO: Button to delete the graph in graph Panel
+ * TODO: Email us the result.
+ * TODO: Create a help screen.
+ * TODO: Create an info screen.
+ * TODO: When no data in the stats_ta, print button should be disable.
+ * 
+ */
 public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabinet.PowderFileObserver {
     //Initializes the applet JPowderApplet
-    private URL source;//url of the file.
+    //private URL source;//url of the file.
 
     //reference of plotted charts.
     public Vector<org.jfree.chart.JFreeChart> chartList = new Vector<org.jfree.chart.JFreeChart>();
@@ -64,28 +69,29 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
         org.jpowder.fileCabinet.PowderFileCabinet pfc = (org.jpowder.fileCabinet.PowderFileCabinet) data;
         //1
         java.util.HashMap dataHm = pfc.getData();
+        System.out.println("From JPowder.powderFileCabinetUpdate, HashMap Data in PowderFileCabinet is: " + dataHm);
 
-        Vector lData = null;
-        String fileName = null;
+        String fileName = pfc.getLastUpdateFileName();
+        Vector lData = (Vector) dataHm.get(fileName);
 
-        java.util.Iterator it = dataHm.keySet().iterator();
-        while (it.hasNext()) {
-            Object key = it.next();
-            Object val = dataHm.get(key);
-            lData = (Vector) val;
-            fileName = key.toString();
-        }
-
-        //2
+        //2 
         java.awt.Dimension area = powderChartPanel.getSize();
         area.height = area.height + CHART_HIEGHT_FIX_SIZE;
         powderChartPanel.setLayout(new javax.swing.BoxLayout(powderChartPanel, javax.swing.BoxLayout.Y_AXIS));
         powderChartPanel.setPreferredSize(area);
-        
+
         //3
         DataSet xye = new XYE(lData, fileName);
         DatasetPlotter plot3Col = xye.createDatasetPlotter();
         powderChartPanel.add(plot3Col.createPowderChart());
+
+        //add seperator.
+        JPanel seperatePanel = new JPanel();
+        seperatePanel.setBackground(new java.awt.Color(240, 240, 240));
+        seperatePanel.setMinimumSize( new Dimension(550, 8));
+        seperatePanel.setPreferredSize(new Dimension(550, 8));
+        seperatePanel.setMaximumSize(new Dimension(550, 8));
+        powderChartPanel.add(seperatePanel);
         powderChartPanel.revalidate();
 
         java.awt.Rectangle rect = powderChartPanel.getBounds();
@@ -132,27 +138,19 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     public JPanel getChartPanel() {
         return this.powderChartPanel;
     }
-    //call from DeleteChartHandler
-    public void deleteChartList(int index) {
-        //TODO: After deletetion it must shrink down on the Y axis.
-        //redraw the srollbar to the new position. We could use AdjustmentListener
-        //this.powderChartPanel.remove( (JFreeChart)chartList.get(index) );
-        //this.powderChartPanel.validate();
-        //this.chartList.remove(index);
-        //super.repaint();
-    }
 
     public void setCartLayout() {//CARD LAYOUT THINGS
         cardPanel.add(homePanel, HOME_PANEL);
         cardPanel.add(logPanel, LOG_PANEL);
         cl = (java.awt.CardLayout) (cardPanel.getLayout());
     }
-    //init the Applet
+    //initialise the Applet
     @Override
     public void init() {
         try {
             javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
         }
         initComponents();
         setCartLayout();
@@ -330,15 +328,6 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     private void openFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileMenuItemActionPerformed
         // TODO add your handling code here:
 }//GEN-LAST:event_openFileMenuItemActionPerformed
-
-    private void deleteGraph_btnActionPerformed(java.awt.event.ActionEvent evt) {
-    }
-
-    private void appendText(javax.swing.JTextArea ta, String msg) {
-        ta.append("\n" + msg);
-    }    //end deleteFile_btnActionPerformed
-
-
     // When user click they can see the graph from what ever data in the table.    //end plotFile_btnActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel cardPanel;

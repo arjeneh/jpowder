@@ -1,7 +1,9 @@
 package org.jpowder.dataset;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.util.Vector;
+import javax.swing.JPanel;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
@@ -50,9 +52,7 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
         plot.setRangeGridlinePaint(Color.white);
         plot.setDomainCrosshairVisible(true);
 
-
-        JFreeChart XYE_Chart = new JFreeChart("Chart: " + this.d.getFileName(),
-                plot);
+        JFreeChart XYE_Chart = new JFreeChart("Chart: " + this.d.getFileName(), plot);
 
         XYE_Chart.setBackgroundPaint(Color.white);
         return XYE_Chart;
@@ -99,12 +99,11 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
         chartPanel.setMaximumSize(new java.awt.Dimension(500, 270));
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
-
+        //chartPanel.add( seperatePanel );
         //User click and it brings up a new Frame for editing the chart.
         chartPanel.addChartMouseListener(new PowderChartMouseObserver());
 
         //user clicks and popup a dialog.
-        //add popup menu.
         PowderPopupMenu pop = new PowderPopupMenu(chartPanel);
 
         return chartPanel;

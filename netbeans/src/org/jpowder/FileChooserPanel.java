@@ -131,7 +131,7 @@ public class FileChooserPanel extends javax.swing.JPanel implements PowderFileOb
 
         addFile_btn.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         addFile_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/addFile.gif"))); // NOI18N
-        addFile_btn.setText("Add file");
+        addFile_btn.setText("Add file(s)");
         addFile_btn.setToolTipText("Add file");
         addFile_btn.setMaximumSize(new java.awt.Dimension(120, 23));
         addFile_btn.setMinimumSize(new java.awt.Dimension(120, 23));
@@ -149,7 +149,7 @@ public class FileChooserPanel extends javax.swing.JPanel implements PowderFileOb
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         add(addFile_btn, gridBagConstraints);
 
-        deleteFile_btn.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        deleteFile_btn.setFont(new java.awt.Font("Tahoma", 0, 10));
         deleteFile_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/del_small.gif"))); // NOI18N
         deleteFile_btn.setText("Delete file");
         deleteFile_btn.setToolTipText("Delete file");
@@ -262,7 +262,8 @@ private void deleteFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GE
 }//GEN-LAST:event_deleteFile_btnActionPerformed
 
 private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFile_btnActionPerformed
-    mPowderFileCabinet.loadFile();
+    //mPowderFileCabinet.loadFile();
+    mPowderFileCabinet.loadFiles();
 }//GEN-LAST:event_addFile_btnActionPerformed
 
 public static void main(String args[]) {
