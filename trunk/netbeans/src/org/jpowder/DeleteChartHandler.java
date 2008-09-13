@@ -54,7 +54,7 @@ public class DeleteChartHandler implements ActionListener {
         
         String[] chartArray  = new String[itsNum];
         for (int dex = 0; dex < chartArray.length; dex++) {
-            PowderChartPanel jf = (PowderChartPanel) jpowder.getChartList().get(dex);
+            JPowderChartPanel jf = (JPowderChartPanel) jpowder.getChartList().get(dex);
             chartArray[dex] = jf.getName();//another way to add number to it + "#" + dex;
         }
 

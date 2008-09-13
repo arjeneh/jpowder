@@ -52,7 +52,9 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
     private Vector<PowderFileObserver> observers = new Vector<PowderFileObserver>();
     private HashMap<String, Vector> data = new HashMap();
     private String eachFileName;
-
+    private String filePath = null;
+    // to be used with the open dialog where it was last open.
+    
     public PowderFileCabinet() {
     }
 
@@ -105,7 +107,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
 
         JFileChooser chooser = new JFileChooser();
         chooser.setMultiSelectionEnabled(true);
-
+        
         File file = null;
         Vector localData = null;
         this.eachFileName = null;
@@ -119,6 +121,9 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
             //File[] files = chooser.getSelectedFiles();
 
             file = chooser.getSelectedFile();
+            filePath = chooser.getSelectedFile().getPath();
+            System.out.println("Previous path of the file = " + filePath);
+            
             this.eachFileName = file.getName().toLowerCase();
             //change cursor
             setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
