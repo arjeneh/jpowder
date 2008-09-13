@@ -16,6 +16,7 @@ public class XYE extends DataSet {
 
     public XYE(Vector data, String fileName) {
         super(data, fileName);
+        
         this.data = data;
         this.e = VectorMiscUtil.getColumn(this.data, 2);
 

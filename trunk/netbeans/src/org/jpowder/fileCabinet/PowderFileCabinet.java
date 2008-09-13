@@ -8,7 +8,9 @@
 // 
 // History:
 //  $Log: 
-//  Revision 0.1  2000/08/09 15:15:25  Kreecha Puphaibon
+//  Revision 0.1  2008/08/09 15:15:25  Kreecha Puphaiboon
+//  Revision 0.2  2008/08/13 14:38:16  Kreecha Puphaiboon
+//              can read multiple files.
 //
 package org.jpowder.fileCabinet;
 
@@ -42,7 +44,7 @@ import javax.swing.JFileChooser;
  * @see data: contain many files act as a cabinet of powder files.
  *              HashMap<String, Vector> fileName and data of the the file.
  * 
- * @see mPowderFileCabinet.loadFile():is used outside to load the powder data.
+ * @see mPowderFileCabinet.loadFiles():is used outside to load the powder data.
 
 
  */
@@ -50,10 +52,11 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
 
     private static final String[] ACCEPTED_FILE_TYPE = {"xy", "xye", "txt"};
     private Vector<PowderFileObserver> observers = new Vector<PowderFileObserver>();
-    private HashMap<String, Vector> data = new HashMap();
-    private String eachFileName;
+    private HashMap<String, Vector<Vector<Double>> > data = new HashMap<String, Vector<Vector<Double>> >();
+    
+    private String lastUpdateFileName;
+    // TODO: to be used with the open dialog where it was last open.
     private String filePath = null;
-    // to be used with the open dialog where it was last open.
     
     public PowderFileCabinet() {
     }
@@ -82,7 +85,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
 
     //@param fileName to be added to data HashMap as Key
     //@param vdata to be added to data HashMap as Value.
-    public void addFile(String fileName, Vector vdata) {
+    public void addFile(String fileName, Vector<Vector<Double>>  vdata) {
         data.put(fileName, vdata);
         System.out.println("PowderFileCabinet.java has been added with: " + data.toString());
         notifyObservers();
@@ -95,63 +98,38 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         notifyObservers();
     }
     
-    // TODO: Multiple selectable - MULTI_SELECTION_ENABLED_CHANGED_PROPERTY 
-    // TODO: getSelectedFiles():  File[]
+     /* @see  Browse for files on user machine. User needs to click Ctlr and select files.
+     *  Create a list of files to be choosen and put data through
+     *  this.addFile(this.eachFileName, localData);.
+     *  it restricts file types to .xye */
+    public void loadFiles() {
 
-    /* @see  Browse for a file on user machine
-     * Create a list of files to be choosen and put data through
-     * this.addFile(this.eachFileName, localData);.
-     * it restricts file types to .xye */
-    public void loadFile() {
-        final long s_time = System.currentTimeMillis();//time of loading
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setMultiSelectionEnabled(true);
 
-        JFileChooser chooser = new JFileChooser();
-        chooser.setMultiSelectionEnabled(true);
-        
-        File file = null;
         Vector localData = null;
-        this.eachFileName = null;
+        //this.lastUpdateFileName = null;
         //
-        chooser.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, "ASCII file (*.xye, *.txt)"));
-        chooser.setAcceptAllFileFilterUsed(false);
-
-        int returnVal = chooser.showOpenDialog(null);
-
+        fileChooser.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, "ASCII file (*.xye, *.txt)"));
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        int returnVal = fileChooser.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            //File[] files = chooser.getSelectedFiles();
-
-            file = chooser.getSelectedFile();
-            filePath = chooser.getSelectedFile().getPath();
-            System.out.println("Previous path of the file = " + filePath);
-            
-            this.eachFileName = file.getName().toLowerCase();
-            //change cursor
-            setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
-            //process file
-            localData = getLocalFile(file, null);
-
-            //This is the real application that restricts to 'xye'.
-            if (checkAcceptedFileType(this.eachFileName)) {
-                if (localData != null) {
-                    this.addFile(this.eachFileName, localData);
-                }
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
-
-            }//acceptable end if extension matched
+            File selectedFiles[] = fileChooser.getSelectedFiles();
+            for (int i = 0, n = selectedFiles.length; i < n; i++) {
+                this.filePath = selectedFiles[i].getParent();
+                this.lastUpdateFileName = selectedFiles[i].getName();
+                localData = this.getLocalFile(selectedFiles[i], null);
+                // restricts to 'xye'.
+                if (checkAcceptedFileType(this.getLastUpdateFileName()) ) {
+                    if (localData != null) {
+                        this.addFile(this.getLastUpdateFileName(), localData);
+                    }
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
+                }//acceptable end if extension matched
+            }//for
         }//if approve
-
-        //Report taken time to plot a graph.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-
-            public void run() {
-                setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
-                long t = System.currentTimeMillis() - s_time;
-                //LogPanel.addLogText("\nElapsed time for loading data of " + currentFileName +" to table is " + t + " milliseconds.");
-                System.out.println("\nElapsed time for loading data is " + t + " milliseconds.");
-            }
-        });
-    }//loadFile
+    }//loadFiles
 
     //@return file data as a 2d Vector when user selected a acceptable file. 
     //@see loadFile().
@@ -241,7 +219,15 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         frame.setSize(300, 100);
         frame.setVisible(true);
 
-        pdc.loadFile();
+        pdc.loadFiles();
+    }
 
+    //@return the last file inserted.
+    public String getLastUpdateFileName() {
+        return lastUpdateFileName;
+    }
+
+    public void setLastUpdateFileName(String fileName) {
+        this.lastUpdateFileName = fileName;
     }
 }
