@@ -126,7 +126,7 @@ class DeleteChartDialog extends JFrame   {
         options[0].addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 System.out.println("You selected chart index number " + petList.getSelectedIndex());
-                jpowder.deleteChartList(selectedIndex);//the KEY CALLING MAINAPPLET TO DELETE CHART
+                //jpowder.deleteChartList(selectedIndex);//the KEY CALLING MAINAPPLET TO DELETE CHART
                 setVisible(false);
                 dispose();
             }

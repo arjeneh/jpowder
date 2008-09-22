@@ -1,18 +1,14 @@
 package org.jpowder;
 
-import org.jpowder.util.ScreenUtil;
-
 import java.awt.Dimension;
 import java.util.Vector;
-import java.net.URL;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+//
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
 import org.jpowder.dataset.XYE;
+import org.jpowder.util.ScreenUtil;
+import org.jpowder.util.VectorMiscUtil;
 
 /**
  * JPowder is the class for all graphics contexts which allow an applet/
@@ -32,7 +28,8 @@ import org.jpowder.dataset.XYE;
  * TODO: When no data in the stats_ta, print button should be disable.
  * 
  */
-public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabinet.PowderFileObserver {
+public class JPowder extends javax.swing.JApplet implements 
+        org.jpowder.fileCabinet.PowderFileObserver {
     //Initializes the applet JPowderApplet
     //private URL source;//url of the file.
 
@@ -80,15 +77,33 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
         powderChartPanel.setLayout(new javax.swing.BoxLayout(powderChartPanel, javax.swing.BoxLayout.Y_AXIS));
         powderChartPanel.setPreferredSize(area);
 
+        // Determine how many columns are there?
+        int countColumn = VectorMiscUtil.countColumnsOf2DVector(lData);
         //3
-        DataSet xye = new XYE(lData, fileName);
-        DatasetPlotter plot3Col = xye.createDatasetPlotter();
-        powderChartPanel.add(plot3Col.createPowderChart());
+        switch (countColumn) {
+            case 1:
+                System.out.println("Data not support yet");
+                break;
+            case 2:
+                System.out.println("Data not support yet");
+                break;
+            case 3:
+                //3
+                DataSet xye = new XYE(lData, fileName);
+                DatasetPlotter plot3Col = xye.createDatasetPlotter();
+                powderChartPanel.add(plot3Col.createPowderChart());
+                break;
+            default:
+                DataSet xye3 = new XYE(lData, fileName);
+                DatasetPlotter plot3Cols = xye3.createDatasetPlotter();
+                powderChartPanel.add(plot3Cols.createPowderChart());
+                break;
+        }
 
         //add seperator.
         JPanel seperatePanel = new JPanel();
         seperatePanel.setBackground(new java.awt.Color(240, 240, 240));
-        seperatePanel.setMinimumSize( new Dimension(550, 8));
+        seperatePanel.setMinimumSize(new Dimension(550, 8));
         seperatePanel.setPreferredSize(new Dimension(550, 8));
         seperatePanel.setMaximumSize(new Dimension(550, 8));
         powderChartPanel.add(seperatePanel);

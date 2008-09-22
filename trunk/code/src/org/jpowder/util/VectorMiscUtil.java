@@ -59,19 +59,18 @@ public class VectorMiscUtil {
         data.add(row3);
         return data;
     }
-    
-    
+
     /* Get a specific column
      * 
      * @param inVec must be a two dimensional vector.
      * @param indexPos must minus 1 //Vector starts counting from 0
-     * */   
+     * */
     public static Vector getColumn(Vector<Vector> inVec, int indexPos) {
         Vector a = new Vector();
 
         for (int rowIndex = 0; rowIndex < inVec.size(); rowIndex++) {
             Vector row = (Vector) inVec.elementAt(rowIndex);
-            Object x = row.elementAt(indexPos); 
+            Object x = row.elementAt(indexPos);
             a.add(x);
         }
 
@@ -116,16 +115,31 @@ public class VectorMiscUtil {
         }
         return output;
     }
-    
+
     public static Double findMaxElementOf1DVector(Vector ori) {
         Double obj = (Double) Collections.max(ori);
-        return obj;        
+        return obj;
     }
-    
-        
+
     public static Double findMinElementOf1DVector(Vector ori) {
         Double obj = (Double) Collections.min(ori);
-        return obj;        
+        return obj;
+    }
+
+    public static int countColumnsOf2DVector(Vector<Vector> ori) {
+        int col = 0;
+        int all = ori.size();
+
+        for (int i = 0; i < ori.size(); i++) {
+            Vector vrow = (Vector) (ori.elementAt(i));
+            //Vector vCopRow = new Vector();
+            col = vrow.size();
+            break;
+        }
+
+        System.out.println("This file has " + col + " columns.");
+        return col;
+
     }
 
     public static Vector copyBeforeLastColumnsOf2DVector(Vector<Vector> ori) {
