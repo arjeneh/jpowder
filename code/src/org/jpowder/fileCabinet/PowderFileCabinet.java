@@ -52,12 +52,11 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
 
     private static final String[] ACCEPTED_FILE_TYPE = {"xy", "xye", "txt"};
     private Vector<PowderFileObserver> observers = new Vector<PowderFileObserver>();
-    private HashMap<String, Vector<Vector<Double>> > data = new HashMap<String, Vector<Vector<Double>> >();
-    
+    private HashMap<String, Vector<Vector<Double>>> data = new HashMap<String, Vector<Vector<Double>>>();
     private String lastUpdateFileName;
     // TODO: to be used with the open dialog where it was last open.
     private String filePath = null;
-    
+
     public PowderFileCabinet() {
     }
 
@@ -85,7 +84,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
 
     //@param fileName to be added to data HashMap as Key
     //@param vdata to be added to data HashMap as Value.
-    public void addFile(String fileName, Vector<Vector<Double>>  vdata) {
+    public void addFile(String fileName, Vector<Vector<Double>> vdata) {
         data.put(fileName, vdata);
         System.out.println("PowderFileCabinet.java has been added with: " + data.toString());
         notifyObservers();
@@ -97,8 +96,8 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         System.out.println("PowderFileCabinet.java has been deleted: " + data.toString());
         notifyObservers();
     }
-    
-     /* @see  Browse for files on user machine. User needs to click Ctlr and select files.
+
+    /* @see  Browse for files on user machine. User needs to click Ctlr and select files.
      *  Create a list of files to be choosen and put data through
      *  this.addFile(this.eachFileName, localData);.
      *  it restricts file types to .xye */
@@ -113,14 +112,16 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         fileChooser.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, "ASCII file (*.xye, *.txt)"));
         fileChooser.setAcceptAllFileFilterUsed(false);
         int returnVal = fileChooser.showOpenDialog(null);
+
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File selectedFiles[] = fileChooser.getSelectedFiles();
             for (int i = 0, n = selectedFiles.length; i < n; i++) {
                 this.filePath = selectedFiles[i].getParent();
                 this.lastUpdateFileName = selectedFiles[i].getName();
                 localData = this.getLocalFile(selectedFiles[i], null);
+
                 // restricts to 'xye'.
-                if (checkAcceptedFileType(this.getLastUpdateFileName()) ) {
+                if (checkAcceptedFileType(this.getLastUpdateFileName())) {
                     if (localData != null) {
                         this.addFile(this.getLastUpdateFileName(), localData);
                     }
@@ -143,8 +144,14 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         try {
             FileInputStream fis = new FileInputStream(file);
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+            int lineNum = 0;
+            //LineNumberReader lineCounter = new LineNumberReader(br);
+
+            //System.out.print("LineCounter.getLineNumber = " + lineCounter.getLineNumber());
+
 
             while ((aLine = br.readLine()) != null) {
+                lineNum++;
                 // create a vector to hold the field values
                 Vector<Double> newRow = new Vector<Double>();
                 StringTokenizer st2 = new StringTokenizer(aLine);
@@ -163,6 +170,8 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
                 } //for
                 localData.addElement(newRow);
             }//while readLine
+            
+            System.out.print("Total LineNumber is: " + lineNum);
 
             fis.close();
             br.close();

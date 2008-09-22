@@ -1,5 +1,6 @@
 package org.jpowder;
 
+import org.jpowder.JCheckboxList.CheckableFileItem;
 import org.jpowder.fileCabinet.Subject;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.fileCabinet.PowderFileObserver;
@@ -10,11 +11,14 @@ import org.jpowder.fileCabinet.PowderFileObserver;
  * The methods won't work if it doesn't match.
  */
 public class FileNameListModel extends javax.swing.DefaultListModel implements PowderFileObserver {
+    
+    private java.util.Vector<CheckableFileItem> fileNameModelVec;
 
-    private java.util.Vector<String> fileNameModelVec;
+    //private java.util.Vector<String> fileNameModelVec;
 
     public FileNameListModel() {
-        this.fileNameModelVec = new java.util.Vector<String>();
+        //this.fileNameModelVec = new java.util.Vector<String>();
+        this.fileNameModelVec = new java.util.Vector<CheckableFileItem>();
     }
 
     @Override
@@ -27,10 +31,16 @@ public class FileNameListModel extends javax.swing.DefaultListModel implements P
         return fileNameModelVec.toArray()[index];
     }
 
-    public void add(Object element) {
-        if (fileNameModelVec.add((String) element)) {
+    public void addCheckableFile(Object element) {
+        
+        //CheckableFileItem c = (CheckableFileItem) element;
+        if (fileNameModelVec.add( (CheckableFileItem) element )) {
             fireContentsChanged(this, 0, getSize());
         }
+        
+        /*if (fileNameModelVec.add((String) element)) {
+            fireContentsChanged(this, 0, getSize());
+        }*/
     }
 
     public void addAll(Object elements[]) {
@@ -87,7 +97,9 @@ public class FileNameListModel extends javax.swing.DefaultListModel implements P
         //Signature of the keysSet method is, Set keySet()
         java.util.Iterator iterator = hm.keySet().iterator();
         while (iterator.hasNext()) {
-            add((String) iterator.next());
+            CheckableFileItem a = new CheckableFileItem((String) iterator.next() );
+            addCheckableFile(a);
+            //add((String) iterator.next());
         }
     }
     /*

@@ -7,6 +7,7 @@ package org.jpowder.dataset;
 
 import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartMouseListener;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jpowder.EditChartFrame;
 
@@ -19,6 +20,19 @@ import org.jpowder.EditChartFrame;
     
     public class PowderChartMouseObserver implements ChartMouseListener {
         
+        private ChartPanel chartPanel;
+        
+        public PowderChartMouseObserver(){
+            
+        }
+        
+        public PowderChartMouseObserver(ChartPanel cp){
+             
+            chartPanel = cp;
+            //chartPanel.add
+           
+        }
+                
         public void chartMouseMoved(ChartMouseEvent chartMouseEvent) {}
         
         public void chartMouseClicked(ChartMouseEvent chartMouseEvent) {
@@ -26,10 +40,12 @@ import org.jpowder.EditChartFrame;
                 try {
                     //----------Copy the chart-------------------
                     final JFreeChart plot_copy = (JFreeChart) chartMouseEvent.getChart().clone();
+
                     //Thread safe by seperating it in case editing and modification.
                     java.awt.EventQueue.invokeLater(new Runnable() {
                         public void run() {
                             EditChartFrame obj = new EditChartFrame(plot_copy);
+                            //EditChartFrame obj = new EditChartFrame(plot_copy, chartPanel);
                             System.out.println(plot_copy.toString() + " is clicked from PowderChartMouseObserver class.");
                         }
                     });

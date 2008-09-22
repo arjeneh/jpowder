@@ -5,8 +5,6 @@ import java.util.*;
 import javax.swing.JPanel;
 import java.awt.Font;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartMouseEvent;
-import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
@@ -30,6 +28,8 @@ import org.jpowder.fileCabinet.Subject;
 
 public class JPowderChartPanel extends JPanel implements PowderFileObserver{
     
+    //private ArrayList<JPowderChart> chartList;
+    //
     private Vector data;
     private XYSeries series1;
     private XYDataset dataset;
@@ -82,10 +82,10 @@ public class JPowderChartPanel extends JPanel implements PowderFileObserver{
             }//end for 2
         }//end for 1
         
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(series1);
+        XYSeriesCollection xydataset = new XYSeriesCollection();
+        xydataset.addSeries(series1);
         //dataset.addSeries(series2);//for multiple files.
-        return dataset;
+        return xydataset;
     }//end createDataset
     
     /**

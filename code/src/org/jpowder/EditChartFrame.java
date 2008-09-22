@@ -27,9 +27,17 @@ public class EditChartFrame extends javax.swing.JFrame {
         bigChartPanel.add(chartPanel);
     }
 
+    public EditChartFrame(org.jfree.chart.JFreeChart chart, org.jfree.chart.ChartPanel cp) {
+        initComponents();
+        jFreeChart = chart;
+        chartPanel = cp;
+        chartPanel.setPreferredSize(bigChartPanel.getSize());
+        bigChartPanel.add(chartPanel);
+    }
+
     public EditChartFrame getSingletonObject(org.jfree.chart.JFreeChart jFreeChart) {
         //if (singletonObject == null) {
-            singletonObject = new EditChartFrame(jFreeChart);
+        singletonObject = new EditChartFrame(jFreeChart);
         //--}
         return singletonObject;
     }
@@ -44,7 +52,7 @@ public class EditChartFrame extends javax.swing.JFrame {
         jFreeChart = null;
         chartPanel = null;
         singletonObject = null;
-        //this = null;
+    //this = null;
     }
 
     private void initComponents() {
