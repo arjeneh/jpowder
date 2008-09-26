@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 //
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
+import org.jpowder.dataset.XY;
 import org.jpowder.dataset.XYE;
 import org.jpowder.util.ScreenUtil;
 import org.jpowder.util.VectorMiscUtil;
@@ -28,8 +29,7 @@ import org.jpowder.util.VectorMiscUtil;
  * TODO: When no data in the stats_ta, print button should be disable.
  * 
  */
-public class JPowder extends javax.swing.JApplet implements 
-        org.jpowder.fileCabinet.PowderFileObserver {
+public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabinet.PowderFileObserver {
     //Initializes the applet JPowderApplet
     //private URL source;//url of the file.
 
@@ -85,7 +85,9 @@ public class JPowder extends javax.swing.JApplet implements
                 System.out.println("Data not support yet");
                 break;
             case 2:
-                System.out.println("Data not support yet");
+                DataSet xy = new XY(lData, fileName);
+                DatasetPlotter plot2Col = xy.createDatasetPlotter();
+                powderChartPanel.add(plot2Col.createPowderChart());
                 break;
             case 3:
                 //3

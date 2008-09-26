@@ -1,5 +1,6 @@
 package org.jpowder;
 
+import java.awt.Cursor;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
@@ -11,8 +12,8 @@ import org.jpowder.JCheckboxList.JCheckBoxJList;
 import java.awt.dnd.DropTargetListener;
 import java.io.File;
 import java.util.Vector;
-import javax.swing.JList;
 import javax.swing.ListModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.jpowder.JCheckboxList.CheckableFileItem;
@@ -311,8 +312,37 @@ private void deleteFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GE
 }//GEN-LAST:event_deleteFile_btnActionPerformed
 
 private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFile_btnActionPerformed
-    //mPowderFileCabinet.loadFile();
-    mPowderFileCabinet.loadFiles();
+
+    //partNoEnd_tf.setText("Loading....");
+    setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+    // We're going to do something that takes a long time, so we
+    // spin off a thread and update the display when we're done.
+    Thread worker = new Thread() {
+
+        @Override
+        public void run() {
+            // Something that takes a long time . . . 
+            //doLongWork();
+            mPowderFileCabinet.loadFiles();
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException ex) {
+            }
+
+            // Report the result using invokeLater().
+            SwingUtilities.invokeLater(new Runnable() {
+
+                public void run() {
+                    //partNoEnd_tf.setText("Done");
+                    setCursor(null); //turn off the wait cursor when done.
+                }
+            });
+        }
+    };
+
+    worker.start(); // So we don't hold up the dispatch thread.
+
 }//GEN-LAST:event_addFile_btnActionPerformed
 
 private void multiPlot_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiPlot_btnActionPerformed
