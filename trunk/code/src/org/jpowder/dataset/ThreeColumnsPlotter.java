@@ -11,7 +11,7 @@ import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.YIntervalSeries;
 import org.jfree.data.xy.YIntervalSeriesCollection;
 //
-import org.jpowder.PowderPopupMenu;
+import org.jpowder.XYE_PopupMenu;
 
 public class ThreeColumnsPlotter extends DatasetPlotter {
 
@@ -62,30 +62,6 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
         YIntervalSeries s1 = new YIntervalSeries("Dataset:" + this.d.getFileName()); //(x,y, -y, +y)
 
         XYE xye = (XYE) this.d;
-        //System.out.println("XYE is ok.");
-
-
-        /*-- TESTING --------------------------------------------------
-        Vector thedata = theData;
-        Vector last = xye.getE();//VectorMiscUtil.getLastColumnOf2DVector(thedata);
-        //
-        Vector twoColumn = VectorMiscUtil.copyBeforeLastColumnsOf2DVector(thedata);
-        Vector outputOfMinusAdd = VectorMiscUtil.do_Minus_Addition_Y(twoColumn, last);
-        Vector result = VectorMiscUtil.getResultOfAddingTwoVectors(twoColumn, outputOfMinusAdd);
-        
-        for (int rowIndex = 0; rowIndex < result.size(); rowIndex++) {
-        Vector row = (Vector) result.elementAt(rowIndex);
-        for (int colIndex = 0; colIndex < row.size(); colIndex++) {
-        Double x = Double.parseDouble(row.elementAt(0).toString()); //works
-        Double y = Double.parseDouble(row.elementAt(1).toString());  //works
-        Double minusY = Double.parseDouble(row.elementAt(2).toString());  //works
-        Double addY = Double.parseDouble(row.elementAt(3).toString());  //works
-        s1.add(x, y, minusY, addY);
-        }//end for 2
-        }//end for 1
-        //-- END TESTING --------------------------------------------------
-         */
-
 
         Vector x = xye.getX();
         Vector y = xye.getY();
@@ -120,7 +96,7 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
         //user clicks and popup a dialog.
-        chartPanel.add( new PowderPopupMenu(chartPanel) );
+        chartPanel.add( new XYE_PopupMenu(chartPanel) );
 
         //User click and it brings up a new Frame for editing the chart.
         chartPanel.addChartMouseListener(new PowderChartMouseObserver(chartPanel));
