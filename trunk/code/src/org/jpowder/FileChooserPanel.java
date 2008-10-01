@@ -11,12 +11,16 @@ import org.jpowder.JCheckboxList.JCheckBoxJList;
 //
 import java.awt.dnd.DropTargetListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Vector;
+import javax.swing.JPanel;
 import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.jpowder.JCheckboxList.CheckableFileItem;
+import org.jpowder.dataset.DatasetPlotter;
+import org.jpowder.dataset.XY_XYE;
 
 /**
  *
@@ -25,7 +29,7 @@ import org.jpowder.JCheckboxList.CheckableFileItem;
  * @author  Kreecha Puphaiboon
  */
 public class FileChooserPanel extends javax.swing.JPanel
-        implements PowderFileObserver, DropTargetListener { //ListSelectionListener
+        implements PowderFileObserver, DropTargetListener {
 
     private java.awt.dnd.DropTarget dt;
     //
@@ -83,6 +87,7 @@ public class FileChooserPanel extends javax.swing.JPanel
             javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
         }
+        this.jPowderMain = jPowderMain;
         //
         initComponents();
 
@@ -93,7 +98,6 @@ public class FileChooserPanel extends javax.swing.JPanel
         checkboxList.setMinimumSize(new java.awt.Dimension(210, 214));
         checkboxList.setPreferredSize(new java.awt.Dimension(210, 214));
 
-        //listen to activate the button. 
         //See how many selected, if greater or equal to 2 then enable the button.
         checkboxList.addListSelectionListener(new ListSelectionListener() {
 
@@ -102,13 +106,10 @@ public class FileChooserPanel extends javax.swing.JPanel
 
                     ListModel model = checkboxList.getModel();
                     int n = model.getSize();
-                    int numSelectedItem = 0;
+
                     for (int i = 0; i < n; i++) {
                         CheckableFileItem item = (CheckableFileItem) model.getElementAt(i);
                         if (item.isSelected()) {
-                            numSelectedItem++;
-                            //textArea.append(item.toString());
-                            //textArea.append(System.getProperty("line.separator"));
                             System.out.println("Selected items: " + item.toString());
                         }
                     }//for
@@ -117,9 +118,7 @@ public class FileChooserPanel extends javax.swing.JPanel
         });
 
         file_sp = new javax.swing.JScrollPane(checkboxList, javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        file_sp.setMinimumSize(
-                new java.awt.Dimension(
-                260, 240));
+        file_sp.setMinimumSize(new java.awt.Dimension(260, 240));
         file_sp.setViewportView(checkboxList);
 
         java.awt.GridBagConstraints gridBagConstraints;
@@ -130,14 +129,13 @@ public class FileChooserPanel extends javax.swing.JPanel
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
 
         add(file_sp, gridBagConstraints);
-        dt = new java.awt.dnd.DropTarget(this.checkboxList, this);            //UTILISE OBSERVER PATTERN.
+        dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
+        //UTILISE OBSERVER PATTERN.
         mPowderFileCabinet = new PowderFileCabinet();
 
         mPowderFileCabinet.registerObserver(this);
-
         mPowderFileCabinet.registerObserver((PowderFileObserver) listModel);
-        mPowderFileCabinet.registerObserver(
-                (JPowder) jPowderMain);
+        mPowderFileCabinet.registerObserver((JPowder) jPowderMain);
 
     }//FileChooserPanel
 
@@ -156,8 +154,8 @@ public class FileChooserPanel extends javax.swing.JPanel
         java.awt.GridBagConstraints gridBagConstraints;
 
         addFile_btn = new javax.swing.JButton();
-        deleteFile_btn = new javax.swing.JButton();
-        multiPlot_btn = new javax.swing.JButton();
+        plotFiles_btn = new javax.swing.JButton();
+        deleteFile_btn1 = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "File Selection Panel (Drop file here)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 102))); // NOI18N
         setMinimumSize(new java.awt.Dimension(265, 340));
@@ -184,16 +182,35 @@ public class FileChooserPanel extends javax.swing.JPanel
         gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 2);
         add(addFile_btn, gridBagConstraints);
 
-        deleteFile_btn.setFont(new java.awt.Font("Tahoma", 0, 10));
-        deleteFile_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/del_small.gif"))); // NOI18N
-        deleteFile_btn.setText("Delete file");
-        deleteFile_btn.setToolTipText("Delete file");
-        deleteFile_btn.setMaximumSize(new java.awt.Dimension(50, 23));
-        deleteFile_btn.setMinimumSize(new java.awt.Dimension(50, 23));
-        deleteFile_btn.setPreferredSize(new java.awt.Dimension(50, 23));
-        deleteFile_btn.addActionListener(new java.awt.event.ActionListener() {
+        plotFiles_btn.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        plotFiles_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/PlotChart.gif"))); // NOI18N
+        plotFiles_btn.setText("Plot datasets");
+        plotFiles_btn.setToolTipText("Plot datasets");
+        plotFiles_btn.setMaximumSize(new java.awt.Dimension(50, 23));
+        plotFiles_btn.setMinimumSize(new java.awt.Dimension(50, 23));
+        plotFiles_btn.setPreferredSize(new java.awt.Dimension(50, 23));
+        plotFiles_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteFile_btnActionPerformed(evt);
+                plotFiles_btnActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 2);
+        add(plotFiles_btn, gridBagConstraints);
+
+        deleteFile_btn1.setFont(new java.awt.Font("Tahoma", 0, 10));
+        deleteFile_btn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/del_small.gif"))); // NOI18N
+        deleteFile_btn1.setText("Delete file");
+        deleteFile_btn1.setToolTipText("Delete file");
+        deleteFile_btn1.setMaximumSize(new java.awt.Dimension(50, 23));
+        deleteFile_btn1.setMinimumSize(new java.awt.Dimension(50, 23));
+        deleteFile_btn1.setPreferredSize(new java.awt.Dimension(50, 23));
+        deleteFile_btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteFile_btn1ActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -202,20 +219,7 @@ public class FileChooserPanel extends javax.swing.JPanel
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
         gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 2);
-        add(deleteFile_btn, gridBagConstraints);
-
-        multiPlot_btn.setText("Plot datasets");
-        multiPlot_btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                multiPlot_btnActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 2);
-        add(multiPlot_btn, gridBagConstraints);
+        add(deleteFile_btn1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     /** ALL DRAGE AND DROP THING */
@@ -289,27 +293,52 @@ public class FileChooserPanel extends javax.swing.JPanel
         }//drop
     }
 
-private void deleteFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFile_btnActionPerformed
-    //if no nothing selected then alert.
-    /*if (checkboxList.getSelectedIndex() == -1) {
-    javax.swing.JOptionPane.showMessageDialog(jpowder, "To delete, please select a file first.");
-    return;
+private void plotFiles_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotFiles_btnActionPerformed
+    // TODO: Plot mulitple files//GEN-LAST:event_plotFiles_btnActionPerformed
+        java.util.HashMap dataHm = mPowderFileCabinet.getData();
+        //
+        ListModel model = checkboxList.getModel();
+        ArrayList<String> nameList = new ArrayList<String>();
+        int n = model.getSize();
+        //
+        for (int i = 0; i < n; i++) {
+            CheckableFileItem item = (CheckableFileItem) model.getElementAt(i);
+            if (item.isSelected()) {
+                nameList.add(item.toString());
+            }//if
+        }//for
+
+        System.out.println("Selectded items: " + nameList.toString() + " and size = " + nameList.size() );
+        //not enough dataset 2 at least.
+        if (nameList.size() <= 1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please select at least 2 files.");
+            return;
+        }//less than two.
+
+        System.out.println("CheckableFileItem: " + nameList.toString());
+
+        /* 1 Get the file data that match with nameList
+         * 2 start plot from the file nameList one by one
+         * 3 add the chart to JPowder one with jPowderMain.getChartPanel()
+         */
+        Vector dat = new Vector();
+        for (int i = 0; i < nameList.size(); i++) {
+            String fileName = nameList.get(i);
+            Vector lData = (Vector) dataHm.get(fileName);
+            dat.add(lData);
+        }
+
+        System.out.println("Data of selected files: " + dat.toString());
+        System.out.println("Data size: " + dat.size());
+        System.out.println("Selected files: " + nameList.toString());
+
+        //plot multiple files.
+        XY_XYE xy_xye = new XY_XYE(dat, nameList.toString());
+        DatasetPlotter plotMultiCol = xy_xye.createDatasetPlotter();
+        JPanel powderChartPanel = jPowderMain.getChartPanel();
+        powderChartPanel.add(plotMultiCol.createPowderChart());
+        powderChartPanel.revalidate();
     }
-    
-    //if the list is empty then do nothing
-    if (this.listModel.getSize() <= 0) {
-    javax.swing.JOptionPane.showMessageDialog(jpowder, "Please add a file first.");
-    return;
-    }
-    
-    //do the actual deletion.
-    if (this.listModel.getSize() > 0) {
-    System.out.println(this.listModel.getSize());
-    int index = checkboxList.getSelectedIndex();
-    this.listModel.removeElementAt(index);
-    this.fileToReadVector.removeElementAt(index);
-    }*/
-}//GEN-LAST:event_deleteFile_btnActionPerformed
 
 private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFile_btnActionPerformed
 
@@ -345,19 +374,9 @@ private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 
 }//GEN-LAST:event_addFile_btnActionPerformed
 
-private void multiPlot_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiPlot_btnActionPerformed
-// TODO: Plot mulitple files
-    int selections[] = checkboxList.getSelectedIndices();
-    Object selectedValues[] = checkboxList.getSelectedValues();
-
-    for (int i = 0, n = selections.length; i < n; i++) {
-        if (i == 0) {
-            System.out.println("Not enough selections.");
-        }
-        System.out.println("Index number: " + selections[i] + " , file name: " + selectedValues[i] + " ");
-    }//for
-
-}//GEN-LAST:event_multiPlot_btnActionPerformed
+private void deleteFile_btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFile_btn1ActionPerformed
+// TODO add your handling code here:
+}//GEN-LAST:event_deleteFile_btn1ActionPerformed
 
 public static void main(String args[]) {
     javax.swing.JFrame frame = new javax.swing.JFrame("File chooser");
@@ -369,8 +388,8 @@ public static void main(String args[]) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addFile_btn;
-    private javax.swing.JButton deleteFile_btn;
-    private javax.swing.JButton multiPlot_btn;
+    private javax.swing.JButton deleteFile_btn1;
+    private javax.swing.JButton plotFiles_btn;
     // End of variables declaration//GEN-END:variables
   
 }

@@ -70,5 +70,10 @@ public class XYE extends DataSet {
     public void setYUpper(Vector yUpper) {
         this.yUpper = yUpper;
     }
+    
+    @Override
+    public Vector getData() {
+        return this.data;
+    }
 }
 

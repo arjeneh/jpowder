@@ -95,11 +95,10 @@ public class TwoColumnsPlotter extends DatasetPlotter {
         renderer.setBaseLinesVisible(true);
         renderer.setBaseShapesVisible(true);
 
-
         // change the auto tick unit selection to integer units only...
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        // OPTIONAL CUSTOMISATION COMPLETED.
+      
         return chart;
     }//end createPowderChart
 
@@ -108,24 +107,23 @@ public class TwoColumnsPlotter extends DatasetPlotter {
     // @return a sample dataset.
     public XYDataset createDataset(String name) {
         String bottomTitle = name;
+        
         XYSeries series1 = new XYSeries(bottomTitle);//the name at the bottom of the chart.
 
         XY xy = (XY) this.d;
-        //System.out.println("XYE is ok.");
 
         Vector x = xy.getX();
         Vector y = xy.getY();
-        //-------------------------------------------------------------
+        //
         for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
             series1.add(
                     Double.parseDouble(x.elementAt(rowIndex).toString()),
                     Double.parseDouble(y.elementAt(rowIndex).toString()));
-
         }
 
         XYSeriesCollection xyCollection = new XYSeriesCollection();
         xyCollection.addSeries(series1);
-        //dataset.addSeries(series2);//for multiple files.
+        //xyCollection.addSeries(series2);//for multiple files.
         return xyCollection;
     }//end createDataset
 }

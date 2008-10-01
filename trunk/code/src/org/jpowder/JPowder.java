@@ -35,12 +35,8 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
 
     //reference of plotted charts.
     public Vector<org.jfree.chart.JFreeChart> chartList = new Vector<org.jfree.chart.JFreeChart>();
-    private LogPanel logPanel = new LogPanel();
     //
     private FileChooserPanel fileChooserPanel = new FileChooserPanel(this);
-    private static final String LOG_PANEL = "YOUR LOG";
-    private static final String HOME_PANEL = "card5";
-    private java.awt.CardLayout cl;
     //
     public DataFileTableModel model;
     //
@@ -151,16 +147,12 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     public Vector getChartList() {
         return this.chartList;
     }
-    //return the panel which has all charts used in EditChartHandler.java.
+    
+    //return the panel which has all charts used in EditChartHandler.java, FileChooserPanel
     public JPanel getChartPanel() {
         return this.powderChartPanel;
     }
 
-    public void setCartLayout() {//CARD LAYOUT THINGS
-        cardPanel.add(homePanel, HOME_PANEL);
-        cardPanel.add(logPanel, LOG_PANEL);
-        cl = (java.awt.CardLayout) (cardPanel.getLayout());
-    }
     //initialise the Applet
     @Override
     public void init() {
@@ -170,7 +162,6 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
             javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
         }
         initComponents();
-        setCartLayout();
     }//end init
 
     /** This method is called from within the init() method to

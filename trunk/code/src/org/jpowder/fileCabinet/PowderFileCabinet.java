@@ -54,7 +54,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
     private Vector<PowderFileObserver> observers = new Vector<PowderFileObserver>();
     private HashMap<String, Vector<Vector<Double>>> data = new HashMap<String, Vector<Vector<Double>>>();
     private String lastUpdateFileName;
-    // TODO: to be used with the open dialog where it was last open.
+    // TODO: to be used with the open dialog where it was last opened.
     private String filePath = null;
 
     public PowderFileCabinet() {
