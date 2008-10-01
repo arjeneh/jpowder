@@ -17,6 +17,10 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
 
     private DataSet d;
 
+    /*  xye = new XYE(data, fileName);
+        DatasetPlotter plot3Col = xye.createDatasetPlotter();
+        powderChartPanel.add(plot3Col.createPowderChart());
+     * */
     public ThreeColumnsPlotter(DataSet d) {
         super(d);
         this.d = d;
@@ -50,16 +54,17 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
 
         JFreeChart XYE_Chart = new JFreeChart("Chart: " + this.d.getFileName(), plot);
         XYE_Chart.setBackgroundPaint(Color.white);
-        
+
         return XYE_Chart;
     }
 
-    private IntervalXYDataset createDataset(java.util.Vector theData) {
+    private IntervalXYDataset createDataset() {
 
         //IntervalXYDataset is an interface.
         YIntervalSeriesCollection lDataset = new YIntervalSeriesCollection();
 
-        YIntervalSeries s1 = new YIntervalSeries("Dataset:" + this.d.getFileName()); //(x,y, -y, +y)
+        YIntervalSeries s1 = new YIntervalSeries("Dataset:" + this.d.getFileName()); 
+        //(x,y, -y, +y)
 
         XYE xye = (XYE) this.d;
 
@@ -77,7 +82,8 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
             s1.add(Double.parseDouble(x.elementAt(rowIndex).toString()),
                     Double.parseDouble(y.elementAt(rowIndex).toString()),
                     Double.parseDouble(minusY.elementAt(rowIndex).toString()),
-                    Double.parseDouble(addY.elementAt(rowIndex).toString()));
+                    Double.parseDouble(addY.elementAt(rowIndex).toString())
+                    );
         }
 
         //Add data to dataset
@@ -89,14 +95,14 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
     @Override
     public ChartPanel createPowderChart() {
 
-        JFreeChart chart = createChart( createDataset(this.d.getData()) );
+        JFreeChart chart = createChart(createDataset());
 
         ChartPanel chartPanel = new ChartPanel(chart, true);
         chartPanel.setMaximumSize(new java.awt.Dimension(500, 270));
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
-        //user clicks and popup a dialog.
-        chartPanel.add( new XYE_PopupMenu(chartPanel) );
+        //User clicks and popup a dialog.
+        chartPanel.add(new XYE_PopupMenu(chartPanel));
 
         //User click and it brings up a new Frame for editing the chart.
         chartPanel.addChartMouseListener(new PowderChartMouseObserver(chartPanel));

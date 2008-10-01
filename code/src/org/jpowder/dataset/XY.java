@@ -1,9 +1,7 @@
 package org.jpowder.dataset;
 
 import java.util.Vector;
-// <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-// #[regen=yes,id=DCE.27F91676-CFD9-0E53-99B0-F2A416ADDAAF]
-// </editor-fold> 
+
 public class XY extends DataSet {
     
     private Vector data;
