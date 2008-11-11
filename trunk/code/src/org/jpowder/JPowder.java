@@ -75,7 +75,7 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
 
         // Determine how many columns are there?
         int countColumn = VectorMiscUtil.countColumnsOf2DVector(lData);
-        //3
+        //3DatasetPlotter plot2Col
         switch (countColumn) {
             case 1:
                 System.out.println("Data not support yet");
