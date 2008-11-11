@@ -1,12 +1,9 @@
-package org.jpowder;
 /*
  * DataFileTableModel.java
  *
- * Created on 20 February 2007, 09:39
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
  */
+
+package org.jpowder;
 
 import org.jpowder.fileCabinet.Subject;
 import org.jpowder.fileCabinet.PowderFileCabinet;
@@ -16,6 +13,15 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
 import java.util.*;
 
+/**
+ * <code>DataFileTableModel</code>.
+ * <todo>Kai, please describe in more detail the purpose of this class</todo>
+ * Kai what exactly does this class try to store and for what purpose?
+ *
+ * @see javax.swing.table.TableModel
+ * @see javax.swing.DefaultListModel
+ * @author Kai
+ */
 public class DataFileTableModel extends DefaultListModel implements TableModel, PowderFileObserver {
 
     private Vector dataVec,  columnNames;

@@ -1,3 +1,7 @@
+/*
+ * DeleteChartHandler.java
+ */
+
 package org.jpowder;
 
 import java.awt.Component;
@@ -11,21 +15,16 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.util.Vector;
-
-
-/*
- * DeleteChartHandler.java
- *
- * Created on 24 April 2007, 12:24
- *
- * @param MainApplet pass in references
- */
 import javax.swing.JButton;
 
 /**
- *
+ * <code>DeleteChartHandler</code>.
+ * 
+ * Kai: what is the purpose of this class?
+ * 
  * @author Kreecha Puphaiboon
  */
+
 // TODO: need to implement finalize() due to JDialog bug.
 // TODO: Headless implementation.
 
