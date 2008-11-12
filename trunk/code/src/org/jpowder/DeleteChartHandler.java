@@ -18,9 +18,7 @@ import java.util.Vector;
 import javax.swing.JButton;
 
 /**
- * <code>DeleteChartHandler</code>.
- * 
- * Kai: what is the purpose of this class?
+ * <code>DeleteChartHandler</code> deletes a chart.
  * 
  * @author Kreecha Puphaiboon
  */

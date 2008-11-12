@@ -14,9 +14,9 @@ import javax.swing.table.*;
 import java.util.*;
 
 /**
- * <code>DataFileTableModel</code>.
- * <todo>Kai, please describe in more detail the purpose of this class</todo>
- * Kai what exactly does this class try to store and for what purpose?
+ * <code>DataFileTableModel</code> stores powder data with the purpose of
+ * viewing these in a swing table. 
+ * 
  *
  * @see javax.swing.table.TableModel
  * @see javax.swing.DefaultListModel
@@ -24,11 +24,16 @@ import java.util.*;
  */
 public class DataFileTableModel extends DefaultListModel implements TableModel, PowderFileObserver {
 
-    private Vector dataVec,  columnNames;
+    private Vector dataVec;    // to hold the data in the table
+    private Vector columnNames; // to hold column labels, like 'X', 'Y'
     
     //for displaying the file in the log.
     private String fileName;
 
+    /**
+     * Kai: how come you use @override for some of the methods of TableModel
+     * below but not all?
+     */    
     private TableModel tableModel = new AbstractTableModel() {
 
         public int getRowCount() {
@@ -68,11 +73,13 @@ public class DataFileTableModel extends DefaultListModel implements TableModel, 
 
         @Override
         public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-            //this.fireTableDataChanged();
             return;
         }
     };
 
+    /**
+     * Kai: why is the first argument called dumData?
+     */     
     public DataFileTableModel(Vector dumData, String theFileName) {
         super();
         this.dataVec = dumData;
@@ -99,7 +106,8 @@ public class DataFileTableModel extends DefaultListModel implements TableModel, 
         LogPanel.addLogText("\nYou have " + this.getRowCount() + " rows in file: " +
                 this.fileName + ".");
     }
-    //My additional methods
+    
+    //My additional methods - Kai what do you mean by this comment?
     public java.util.Vector getData() {
         return this.dataVec;
     }
