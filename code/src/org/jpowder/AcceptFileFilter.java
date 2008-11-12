@@ -10,7 +10,7 @@ import java.io.File;
 
 /**
  * <code>AcceptFileFilter</code> extends FileFilter.
- * <todo>Kai, please describe in more detail the purpose of this class</todo>
+ * Used to check if file extension is acceptable.
  *
  * @see javax.swing.filechooser.FileFilter
  * @author Kai
@@ -21,7 +21,7 @@ public class AcceptFileFilter extends FileFilter {
   String description;   // One description for all the extensions
 
   /**
-   * KAI: What is this constructor good for? What is 'ext' here used for??
+   * Kai: What is this constructor good for? What is 'ext' here used for??
    */
   public AcceptFileFilter(String ext) {
     this (new String[] {ext}, null);
