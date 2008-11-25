@@ -102,9 +102,6 @@ public class DataFileTableModel extends DefaultListModel implements TableModel, 
             this.columnNames.addElement("E");//disable the last STD bit
         }
 
-
-        LogPanel.addLogText("\nYou have " + this.getRowCount() + " rows in file: " +
-                this.fileName + ".");
     }
     
     //My additional methods - Kai what do you mean by this comment?
@@ -115,7 +112,6 @@ public class DataFileTableModel extends DefaultListModel implements TableModel, 
     public void setNewData(Vector dumData, String theFileName) {
         this.dataVec = dumData;
         this.fileName = theFileName;
-        LogPanel.addLogText("\nYou have " + this.getRowCount() + " rows" + " in file " + fileName + ".");
         System.out.println("\nYou have " + this.getRowCount() + " rows" + " in file " + fileName + ".");
     }
 
