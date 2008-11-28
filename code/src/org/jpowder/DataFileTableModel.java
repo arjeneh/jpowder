@@ -14,14 +14,22 @@ import javax.swing.table.*;
 import java.util.*;
 
 /**
- * <code>DataFileTableModel</code> stores powder data with the purpose of
- * viewing these in a swing table. 
- * 
+
+ * Class name: FileNameListModel.java
+ * Date: 28/11/08
+ * Description:
+ * DataFileTableModel stores powder data in a model of multiple columns
+ * with the purpose of displaying them in a table. So user can see details of data.
+ * But this is not yet used!
  *
+ * Interface:
  * @see javax.swing.table.TableModel
  * @see javax.swing.DefaultListModel
- * @author Kai
+ * @see PowderFileObserver
+ *
+ * @author Kreecha Puphaiboon
  */
+
 public class DataFileTableModel extends DefaultListModel implements TableModel, PowderFileObserver {
 
     private Vector dataVec;    // to hold the data in the table

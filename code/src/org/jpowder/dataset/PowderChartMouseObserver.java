@@ -45,7 +45,6 @@ import org.jpowder.EditChartFrame;
                     java.awt.EventQueue.invokeLater(new Runnable() {
                         public void run() {
                             EditChartFrame obj = new EditChartFrame(plot_copy);
-                            //EditChartFrame obj = new EditChartFrame(plot_copy, chartPanel);
                             System.out.println(plot_copy.toString() + " is clicked from PowderChartMouseObserver class.");
                         }
                     });

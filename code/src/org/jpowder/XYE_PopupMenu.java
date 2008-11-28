@@ -7,9 +7,21 @@ package org.jpowder;
 import org.jfree.chart.renderer.xy.XYErrorRenderer;
 
 /**
- * 
- * @author Toshiba
+ *
+ * @Class name:  XYE_PopupMenu.java
+ * @Author: Kreecha Puphaiboon
+ * @Date: 21 July 2008, 19:20
+ * @Modf:
+ *
+ * @Description:
+ * A popupmenu which allows turn off errorbars and rescale Y for XYE dataset
+ * called by ThreeColumnsPlotter.java chartPanel.add(new XYE_PopupMenu(chartPanel));
+ *
+ * @see XY_PopupMenu
+ *
+ * @Return:
  */
+
 public class XYE_PopupMenu extends XY_PopupMenu {
 
     private javax.swing.JCheckBoxMenuItem offErrorBar;
@@ -36,9 +48,6 @@ public class XYE_PopupMenu extends XY_PopupMenu {
 
             }
         });
-
-
-     
         //ADD THESE THREE ONTO changePlotStyle
         changePlotStyle.add(offErrorBar);
         

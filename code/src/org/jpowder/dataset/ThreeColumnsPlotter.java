@@ -13,6 +13,21 @@ import org.jfree.data.xy.YIntervalSeriesCollection;
 //
 import org.jpowder.XYE_PopupMenu;
 
+/**
+ *
+ * @Class name:  ThreeColumnsPlotter.java
+ * @Author: Kreecha Puphaiboon
+ * @Date: 21 July 2008, 19:20
+ * @Modf:
+ *
+ * @Description:
+ * A plotter to plot a dataset with Three columns type.
+ *
+ * @see DatasetPlotter
+ *
+ * @Return:
+ */
+
 public class ThreeColumnsPlotter extends DatasetPlotter {
 
     private DataSet d;

@@ -18,8 +18,17 @@ import org.jfree.ui.TextAnchor;
 import org.jpowder.util.VectorMiscUtil;
 
 /**
- * 
- * @author Toshiba
+ *@Class name:   XY_PopupMenu.java
+@Author: Kreecha Puphaiboon
+@Date: 21 May 2007, 09:53
+@Modf:
+@Description:
+ * A general popupmenu which allows the user to enable/disable chart properties e.g.
+   turn off connecting line, turn off marker,
+
+ * @see javax.swing.JPopupMenu
+
+@Return:
  */
 public class XY_PopupMenu extends javax.swing.JPopupMenu {
 

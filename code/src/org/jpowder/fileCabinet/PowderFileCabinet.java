@@ -1,17 +1,5 @@
 
-// File:         PowderFileCabinet.java
-// Created:      2008/08/09
-// Last Changed: $Date: 2008/08/09 15:15:25 $
-// Author:      Kreecha Puphaiboon
-//
-// This code is copyright (c) 2008 Ratherford Appleton and Kasem Bundit University
-// 
-// History:
-//  $Log: 
-//  Revision 0.1  2008/08/09 15:15:25  Kreecha Puphaiboon
-//  Revision 0.2  2008/08/13 14:38:16  Kreecha Puphaiboon
-//              can read multiple files.
-//
+
 package org.jpowder.fileCabinet;
 
 import org.jpowder.*;
@@ -28,7 +16,11 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.JFileChooser;
 
-/** THIS CLASS KEEPS ALL POWDER FILES IN A HASHMAP. IT LOADS AND 
+/**
+ * File: PowderFileCabinet.java
+ *
+ * @description
+ * THIS CLASS KEEPS ALL POWDER FILES IN A HASHMAP. IT LOADS AND
  * NOTIFIES ALL REGISTERED LISTENERS - 
  *      mPowderFileCabinet = new PowderFileCabinet();
  *      mPowderFileCabinet.registerObserver(this);
@@ -45,8 +37,13 @@ import javax.swing.JFileChooser;
  *              HashMap<String, Vector> fileName and data of the the file.
  * 
  * @see mPowderFileCabinet.loadFiles():is used outside to load the powder data.
-
-
+ * 
+ * This code is copyright (c) 2008 Ratherford Appleton and Kasem Bundit University
+ * History:
+ * $Log:
+ * Revision 0.1  2008/08/09 15:15:25  Kreecha Puphaiboon
+ * Revision 0.2  2008/08/13 14:38:16  Kreecha Puphaiboon
+//              can read multiple files.
  */
 public class PowderFileCabinet extends javax.swing.JComponent implements Subject, Serializable {
 
