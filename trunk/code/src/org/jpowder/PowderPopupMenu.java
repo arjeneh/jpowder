@@ -19,8 +19,19 @@ import org.jpowder.util.VectorMiscUtil;
 
 /**
  * 
- * @author Toshiba
+ * @Class name:  PowderPopupMenu.java
+@Author: Kreecha Puphaiboon
+@Date: 21 May 2008, 19:20
+@Modf:
+@Description:
+ * A popupmenu which allows the user to enable/disable chart properties e.g.
+    turn off errorbars, turn off connecting line, turn off marker,
+ *  mark peak position, Rescale Y data
+ * @see javax.swing.JPopupMenu
+
+@Return:
  */
+
 public class PowderPopupMenu extends javax.swing.JPopupMenu {
 
     private org.jfree.chart.JFreeChart chart;

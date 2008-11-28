@@ -22,13 +22,23 @@ import org.jpowder.fileCabinet.PowderFileObserver;
 import org.jpowder.fileCabinet.Subject;
 
 /**
- *
- * @author Kreecha Puphaiboon
- */
+
+@Class name:   JPowderChartPanel.java
+@Author: Kreecha Puphaiboon
+@Date: 21 May 2007, 09:53
+@Modf:
+@Description:
+ * A panel which contains a chart when the user added a data file
+ * from FileChooserPanel.java.
+
+@Interface: PowderFileObserver
+ * @see JPanel
+
+@Return:
+*/
 
 public class JPowderChartPanel extends JPanel implements PowderFileObserver{
     
-    //private ArrayList<JPowderChart> chartList;
     //
     private Vector data;
     private XYSeries series1;

@@ -6,15 +6,29 @@ import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.fileCabinet.PowderFileObserver;
 
 /**
- * This class assumes that the string used to initialize
- * fullPath has a directory path, filename, and extension.
- * The methods won't work if it doesn't match.
- */
+
+Class name: FileNameListModel.java
+Author: Kreecha Puphaiboon
+Date: 28/11/08
+Modf:
+Description:
+    Used in the FileChooserPanel.java to display dataset files in the program.
+    It presents as a list model also updates when the file is deleted and inserted.
+
+    This class assumes that the string used to initialize
+    fullPath has a directory path, filename, and extension.
+    The methods won't work if it doesn't match.
+
+Interface: PowderFileObserver
+
+Return:
+*/
+
+
 public class FileNameListModel extends javax.swing.DefaultListModel implements PowderFileObserver {
     
     private java.util.Vector<CheckableFileItem> fileNameModelVec;
 
-    //private java.util.Vector<String> fileNameModelVec;
 
     public FileNameListModel() {
         //this.fileNameModelVec = new java.util.Vector<String>();
@@ -38,9 +52,6 @@ public class FileNameListModel extends javax.swing.DefaultListModel implements P
             fireContentsChanged(this, 0, getSize());
         }
         
-        /*if (fileNameModelVec.add((String) element)) {
-            fireContentsChanged(this, 0, getSize());
-        }*/
     }
 
     public void addAll(Object elements[]) {

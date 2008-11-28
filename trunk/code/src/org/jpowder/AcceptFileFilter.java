@@ -1,8 +1,3 @@
-/*
- * @(#)AcceptFileFilter.java
- *
- */
-
 package org.jpowder;
 
 import javax.swing.filechooser.*;
@@ -10,10 +5,15 @@ import java.io.File;
 
 /**
  * <code>AcceptFileFilter</code> extends FileFilter.
- * Used to check if file extension is acceptable.
- *
+ * 
+ * Class name: AcceptFileFilter.java
  * @see javax.swing.filechooser.FileFilter
  * @author Kai
+ * Date: 28/11/08
+ * Description:
+    Used to check if file extension is acceptable.
+ *  Called by PowderFileCabinet.java
+ *  fileChooser.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, "ASCII file (*.xye, *.txt)"));
  */
 public class AcceptFileFilter extends FileFilter {
 

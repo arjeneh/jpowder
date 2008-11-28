@@ -2,7 +2,7 @@ package org.jpowder.fileCabinet;
 
 /**
  *
- * @author Thomas Muster
+ * @author Kreecha Puphaiboon
  */
 public interface PowderFileObserver {
 
