@@ -41,7 +41,9 @@ import org.jpowder.dataset.XY_XYE;
 public class FileChooserPanel extends javax.swing.JPanel
         implements PowderFileObserver, DropTargetListener {
 
-    private java.awt.dnd.DropTarget dt;
+    // Commented out by Anders 16/1/09
+    //private java.awt.dnd.DropTarget dt;
+    
     //
     private PowderFileCabinet mPowderFileCabinet;
     private FileNameListModel listModel;
@@ -81,7 +83,9 @@ public class FileChooserPanel extends javax.swing.JPanel
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         add(file_sp, gridBagConstraints);
 
-        dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
+        // Commented out by Anders 16/1/09
+        //dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
+        
         //UTILISE OBSERVER PATTERN.
         mPowderFileCabinet = new PowderFileCabinet();
         mPowderFileCabinet.registerObserver(this);
@@ -138,7 +142,10 @@ public class FileChooserPanel extends javax.swing.JPanel
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
 
         add(file_sp, gridBagConstraints);
-        dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
+        
+        // Commented out by Anders 16/1/09
+        //dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
+        
         //UTILISE OBSERVER PATTERN.
         mPowderFileCabinet = new PowderFileCabinet();
 
