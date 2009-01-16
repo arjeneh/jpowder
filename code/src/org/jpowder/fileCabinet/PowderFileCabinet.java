@@ -47,6 +47,7 @@ import javax.swing.JFileChooser;
  */
 public class PowderFileCabinet extends javax.swing.JComponent implements Subject, Serializable {
 
+    // if ACCEPTED_FILE_TYPE is modified also modify string in loadFiles()
     private static final String[] ACCEPTED_FILE_TYPE = {"xy", "xye", "txt"};
     private Vector<PowderFileObserver> observers = new Vector<PowderFileObserver>();
     private HashMap<String, Vector<Vector<Double>>> data = new HashMap<String, Vector<Vector<Double>>>();
@@ -95,9 +96,8 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
     }
 
     /* @see  Browse for files on user machine. User needs to click Ctlr and select files.
-     *  Create a list of files to be choosen and put data through
-     *  this.addFile(this.eachFileName, localData);.
-     *  it restricts file types to .xye */
+     *  Create a list of files to be choosen and put data into
+     *  this.addFile(this.eachFileName, localData); */
     public void loadFiles() {
 
         JFileChooser fileChooser = new JFileChooser();
@@ -106,7 +106,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         Vector localData = null;
         //this.lastUpdateFileName = null;
         //
-        fileChooser.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, "ASCII file (*.xye, *.txt)"));
+        fileChooser.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, "ASCII file (*.xy, *.xye, *.txt)"));
         fileChooser.setAcceptAllFileFilterUsed(false);
         int returnVal = fileChooser.showOpenDialog(null);
 
@@ -117,7 +117,6 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
                 this.lastUpdateFileName = selectedFiles[i].getName();
                 localData = this.getLocalFile(selectedFiles[i], null);
 
-                // restricts to 'xye'.
                 if (checkAcceptedFileType(this.getLastUpdateFileName())) {
                     if (localData != null) {
                         this.addFile(this.getLastUpdateFileName(), localData);
@@ -129,8 +128,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         }//if approve
     }//loadFiles
 
-    //@return file data as a 2d Vector when user selected a acceptable file. 
-    //@see loadFile().
+    //@return file data as a Vector or Vectors (rows) when user has selected an acceptable file. 
     public Vector<Double> getLocalFile(File aFile, Component frame) {
         String aLine;
         Vector localData = new Vector<Double>();
@@ -142,10 +140,6 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
             FileInputStream fis = new FileInputStream(file);
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
             int lineNum = 0;
-            //LineNumberReader lineCounter = new LineNumberReader(br);
-
-            //System.out.print("LineCounter.getLineNumber = " + lineCounter.getLineNumber());
-
 
             while ((aLine = br.readLine()) != null) {
                 lineNum++;
@@ -154,7 +148,6 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
                 StringTokenizer st2 = new StringTokenizer(aLine);
                 //
                 int numToken = st2.countTokens();
-                //System.out.println("This file has " + numToken + " columns.");
                 for (int i = 0; i < numToken; i++) {
                     //ignore the last STD by minusing 1.
                     String stoken = st2.nextToken();

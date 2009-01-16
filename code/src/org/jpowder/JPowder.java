@@ -34,16 +34,19 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     //private URL source;//url of the file.
 
     //reference of plotted charts.
-    public Vector<org.jfree.chart.JFreeChart> chartList = new Vector<org.jfree.chart.JFreeChart>();
+    private Vector<org.jfree.chart.JFreeChart> chartList = new Vector<org.jfree.chart.JFreeChart>();
     //
     private FileChooserPanel fileChooserPanel = new FileChooserPanel(this);
-    //
-    public DataFileTableModel model;
-    //
-    public JPowderChartPanel realChart;
-    private static final int CHART_HIEGHT_FIX_SIZE = 270;
+
+    // Commented out Anders 15/1/09
+    //public DataFileTableModel model; 
+
+    // Commented out Anders 15/1/09
+    //public JPowderChartPanel realChart;
+    
+    private static final int CHART_HEIGHT_FIX_SIZE = 270;
     private static final int FRAME_WIDTH = 1070;
-    private static final int FRAME_HIEGHT = 670;
+    private static final int FRAME_HEIGHT = 670;
     private boolean InBrowser = true;
 
     /**
@@ -69,7 +72,7 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
 
         //2 
         java.awt.Dimension area = powderChartPanel.getSize();
-        area.height = area.height + CHART_HIEGHT_FIX_SIZE;
+        area.height = area.height + CHART_HEIGHT_FIX_SIZE;
         powderChartPanel.setLayout(new javax.swing.BoxLayout(powderChartPanel, javax.swing.BoxLayout.Y_AXIS));
         powderChartPanel.setPreferredSize(area);
 
@@ -127,7 +130,7 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
 
         // Add applet to the frame
         f.getContentPane().add(applet);
-        f.setSize(new Dimension(FRAME_WIDTH, FRAME_HIEGHT));
+        f.setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         f.pack();
         f.setVisible(true);
         //calling Screen.java to center the frame on user screen.
