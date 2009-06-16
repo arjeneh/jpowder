@@ -1,5 +1,3 @@
-
-
 package org.jpowder.fileCabinet;
 
 import org.jpowder.*;
@@ -29,21 +27,8 @@ import javax.swing.JFileChooser;
  * ALL LISTENER HAS TO IMPLEMENT POWDERFILEOBSERVER* 
  * 
  * @author kreecha_pu@yahoo.com Kreecha Pupahiboon
- * @version $Revision: 0.1 $ $Date: 2008/08/08 16:15:25 $ 
  * 
- * @see ACCEPTED_FILE_TYPE: List of acceptable file types 
- * @see observers: observer list
- * @see data: contain many files act as a cabinet of powder files.
- *              HashMap<String, Vector> fileName and data of the the file.
- * 
- * @see mPowderFileCabinet.loadFiles():is used outside to load the powder data.
- * 
- * This code is copyright (c) 2008 Ratherford Appleton and Kasem Bundit University
- * History:
- * $Log:
- * Revision 0.1  2008/08/09 15:15:25  Kreecha Puphaiboon
- * Revision 0.2  2008/08/13 14:38:16  Kreecha Puphaiboon
-//              can read multiple files.
+ * This code is copyright (c) 2008 Rutherford Appleton and Kasem Bundit University
  */
 public class PowderFileCabinet extends javax.swing.JComponent implements Subject, Serializable {
 
@@ -52,7 +37,6 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
     private Vector<PowderFileObserver> observers = new Vector<PowderFileObserver>();
     private HashMap<String, Vector<Vector<Double>>> data = new HashMap<String, Vector<Vector<Double>>>();
     private String lastUpdateFileName;
-    // TODO: to be used with the open dialog where it was last opened.
     private String filePath = null;
 
     public PowderFileCabinet() {
