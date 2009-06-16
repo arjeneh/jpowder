@@ -13,37 +13,21 @@ import org.jpowder.util.VectorMiscUtil;
 
 /**
  * JPowder is the class for all graphics contexts which allow an applet/
- * application to draw charts of crystallography data. It uses JFreechart as a
- * library to plot charts. JPowder's List and Table encapsulates files and the
- * crystallography data state information needed for the various rendering
- * operations.
+ * application to draw charts of crystallography data. 
  *
  * @author      Kreecha Puphaiboon
- * @version     0.7
  * @since       Fabuary 07.
- * 
- * TODO: Button to delete the graph in graph Panel
- * TODO: Email us the result.
- * TODO: Create a help screen.
- * TODO: Create an info screen.
- * TODO: When no data in the stats_ta, print button should be disable.
  * 
  */
 public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabinet.PowderFileObserver {
-    //Initializes the applet JPowderApplet
-    //private URL source;//url of the file.
 
-    //reference of plotted charts.
-    private Vector<org.jfree.chart.JFreeChart> chartList = new Vector<org.jfree.chart.JFreeChart>();
-    //
+    // Top right hand panel. Panel where files selected.
+    // Also this file panel holds an instance of PowderFileCabinet
+    // where e.g. this instance gets registered as an observer
     private FileChooserPanel fileChooserPanel = new FileChooserPanel(this);
 
-    // Commented out Anders 15/1/09
-    //public DataFileTableModel model; 
-
-    // Commented out Anders 15/1/09
-    //public JPowderChartPanel realChart;
-    
+    // Some hard coded custom dimensions GUI dimensions
+    // What are they exactly?
     private static final int CHART_HEIGHT_FIX_SIZE = 270;
     private static final int FRAME_WIDTH = 1070;
     private static final int FRAME_HEIGHT = 670;
@@ -57,28 +41,29 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
         System.runFinalization();//beg the jvm to gbc;
     }
 
-    // 1: To get all keys stored in HashMap use keySet method. 
-    // 2: update to a bigger size by getting the current size and add some amount.
-    // 3: plot new chart obtain data from Subject which is a HashMap type.   
+  
     // @param Subject data
     public void powderFileCabinetUpdate(org.jpowder.fileCabinet.Subject data) {
         org.jpowder.fileCabinet.PowderFileCabinet pfc = (org.jpowder.fileCabinet.PowderFileCabinet) data;
-        //1
+
+        // Get copy of all data! Is this really necessary
         java.util.HashMap dataHm = pfc.getData();
         System.out.println("From JPowder.powderFileCabinetUpdate, HashMap Data in PowderFileCabinet is: " + dataHm);
 
+        // Get new dataset
         String fileName = pfc.getLastUpdateFileName();
         Vector lData = (Vector) dataHm.get(fileName);
 
-        //2 
+        // comment: update to a bigger size by getting the current size and add some amount.
         java.awt.Dimension area = powderChartPanel.getSize();
         area.height = area.height + CHART_HEIGHT_FIX_SIZE;
         powderChartPanel.setLayout(new javax.swing.BoxLayout(powderChartPanel, javax.swing.BoxLayout.Y_AXIS));
         powderChartPanel.setPreferredSize(area);
 
-        // Determine how many columns are there?
+        // Determine how many columns there are
         int countColumn = VectorMiscUtil.countColumnsOf2DVector(lData);
-        //3DatasetPlotter plot2Col
+
+        // plot new dataset.
         switch (countColumn) {
             case 1:
                 System.out.println("Data not support yet");
@@ -101,7 +86,7 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
                 break;
         }
 
-        //add seperator.
+        // add seperator
         JPanel seperatePanel = new JPanel();
         seperatePanel.setBackground(new java.awt.Color(240, 240, 240));
         seperatePanel.setMinimumSize(new Dimension(550, 8));
@@ -115,7 +100,6 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     }// powderFileCabinetUpdate
 
     public static void main(String[] args) {
-        // *** Modify applet subclass name to that of the program
 
         JPowder applet = new JPowder();
         applet.InBrowser = false;
@@ -138,18 +122,6 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
 
     } //main
 
-    /**
-     *
-     * @param x
-     * @return the chart at the specific position.
-     */
-    public org.jfree.chart.JFreeChart getLineChart(int x) {
-        return this.chartList.get(x);
-    }
-
-    public Vector getChartList() {
-        return this.chartList;
-    }
     
     //return the panel which has all charts used in EditChartHandler.java, FileChooserPanel
     public JPanel getChartPanel() {
