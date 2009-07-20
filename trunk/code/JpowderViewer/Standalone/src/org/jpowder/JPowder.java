@@ -3,7 +3,7 @@ package org.jpowder;
 import java.awt.Dimension;
 import java.util.Vector;
 import javax.swing.JPanel;
-//
+
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
 import org.jpowder.dataset.XY;
@@ -12,11 +12,29 @@ import org.jpowder.util.ScreenUtil;
 import org.jpowder.util.VectorMiscUtil;
 
 /**
- * JPowder is the class for all graphics contexts which allow an applet/
- * application to draw charts of crystallography data. 
+ * Jpowder is the starting class for the Jpowder project {@link www.jpowder.org}.
+ * It setups the main GUI for this application, which draws charts of powder
+ * diffraction data.
+ * <P>
+ * This file is part of Jpowder.
  *
- * @author      Kreecha Puphaiboon
- * @since       Fabuary 07.
+ * Jpowder is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jpowder is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * File change history is stored at: <https://jpowder.org/svn/Jpowder>
+ *
+ * @author  Kreecha Puphaiboon
+ * @since 07
  * 
  */
 public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabinet.PowderFileObserver {
@@ -33,16 +51,7 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     private static final int FRAME_HEIGHT = 670;
     private boolean InBrowser = true;
 
-    /**
-     * Registers the object to be delete by JVM
-     */
-    @Override
-    protected void finalize() throws Throwable {
-        System.runFinalization();//beg the jvm to gbc;
-    }
-
   
-    // @param Subject data
     public void powderFileCabinetUpdate(org.jpowder.fileCabinet.Subject data) {
         org.jpowder.fileCabinet.PowderFileCabinet pfc = (org.jpowder.fileCabinet.PowderFileCabinet) data;
 
@@ -99,6 +108,11 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
         chart_scrp.getVerticalScrollBar().setValue(rect.height);
     }// powderFileCabinetUpdate
 
+    /**
+     * JVM starting point
+     *
+     * @param args
+     */
     public static void main(String[] args) {
 
         JPowder applet = new JPowder();
@@ -123,12 +137,18 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     } //main
 
     
-    //return the panel which has all charts used in EditChartHandler.java, FileChooserPanel
+    /**
+     * Get hold of the JPanel were the powder diffraction data are plotted in charts
+     *
+     * @return The JPanel where the data are plotted
+     */
     public JPanel getChartPanel() {
         return this.powderChartPanel;
     }
 
-    //initialise the Applet
+    /**
+     * Initialise the GUI
+     */
     @Override
     public void init() {
         try {

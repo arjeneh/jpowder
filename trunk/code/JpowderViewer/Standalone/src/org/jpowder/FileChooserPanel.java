@@ -23,21 +23,13 @@ import org.jpowder.dataset.DatasetPlotter;
 import org.jpowder.dataset.XY_XYE;
 
 /**
-
-@Class name:   FileChooserPanel.java
-@Author: Kreecha Puphaiboon
-@Date: 21 May 2007, 09:53
-@Modf:
-@Description:
  * User can add or drag/drop a dataset file. It brings up a dialog
  * so the user can navigate to the file and the program will process chart ploting.
-
-@Interface: PowderFileObserver, DropTargetListener
-
-@Return:
+ *
+ * @author Kreecha Puphaiboon
+ * @since 21 May 2007, 09:53
+ *
 */
-
-
 public class FileChooserPanel extends javax.swing.JPanel
         implements PowderFileObserver, DropTargetListener {
 
