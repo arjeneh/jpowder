@@ -29,9 +29,9 @@ import org.jpowder.util.VectorMiscUtil;
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * File change history is stored at: <https://jpowder.org/svn/Jpowder>
+ * along with this program.  If not, see <a target="_blank" href=http://www.gnu.org/licenses/>here</a>.
+ * <p>
+ * File change history is stored at: <a target="_blank" href=https://jpowder.org/svn/Jpowder>www.jpowder.org/svn/Jpowder</a>
  *
  * @author  Kreecha Puphaiboon
  * @since 07
