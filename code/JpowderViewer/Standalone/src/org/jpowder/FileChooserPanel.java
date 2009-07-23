@@ -274,7 +274,7 @@ public class FileChooserPanel extends javax.swing.JPanel
                         if (mPowderFileCabinet.checkAcceptedFileType(fileName)) {
 
                             mPowderFileCabinet.setLastUpdateFileName(fileName);
-                            localData = mPowderFileCabinet.getLocalFile(file, null);
+                            localData = mPowderFileCabinet.getLocalFile(file);
                             System.out.println("localData = " + localData);
 
                             if (localData != null) {
@@ -350,17 +350,16 @@ private void plotFiles_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN
 
 private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFile_btnActionPerformed
 
-    //partNoEnd_tf.setText("Loading....");
     setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
-    // We're going to do something that takes a long time, so we
+    // We're going to do something that takes potentially a long time, so we
     // spin off a thread and update the display when we're done.
     Thread worker = new Thread() {
 
         @Override
         public void run() {
-            // Something that takes a long time . . . 
-            //doLongWork();
+            // Load the powder diffraction files which are selected by the user
+            // into the file cabinet
             mPowderFileCabinet.loadFiles();
             try {
                 Thread.sleep(5000);
@@ -371,7 +370,6 @@ private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             SwingUtilities.invokeLater(new Runnable() {
 
                 public void run() {
-                    //partNoEnd_tf.setText("Done");
                     setCursor(null); //turn off the wait cursor when done.
                 }
             });

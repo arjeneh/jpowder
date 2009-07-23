@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.JFileChooser;
+import org.jpowder.util.Stopwatch;
 
 /**
  * File: PowderFileCabinet.java
@@ -79,28 +80,45 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         notifyObservers();
     }
 
-    /* @see  Browse for files on user machine. User needs to click Ctlr and select files.
+    /**
+     *  Browse for files on user machine. User needs to hold Ctlr and select files.
      *  Create a list of files to be choosen and put data into
-     *  this.addFile(this.eachFileName, localData); */
+     *  this.addFile(this.eachFileName, localData);
+     */
     public void loadFiles() {
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(true);
 
         Vector localData = null;
-        //this.lastUpdateFileName = null;
-        //
+
+        // Set the accepted powder diffraction file extensions
+        // and open a file chooser window for the user to select powder
+        // diffraction file
         fileChooser.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, "ASCII file (*.xy, *.xye, *.txt)"));
         fileChooser.setAcceptAllFileFilterUsed(false);
         int returnVal = fileChooser.showOpenDialog(null);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
+            // get the selected files
             File selectedFiles[] = fileChooser.getSelectedFiles();
-            for (int i = 0, n = selectedFiles.length; i < n; i++) {
-                this.filePath = selectedFiles[i].getParent();
-                this.lastUpdateFileName = selectedFiles[i].getName();
-                localData = this.getLocalFile(selectedFiles[i], null);
 
+            // to time how long it takes to read file
+            Stopwatch lStopwatch = new Stopwatch();
+
+            // loop over the selected file
+            for (int i = 0, n = selectedFiles.length; i < n; i++) {
+                filePath = selectedFiles[i].getParent();
+                lastUpdateFileName = selectedFiles[i].getName();
+
+                lStopwatch.start();
+
+                localData = getLocalFile(selectedFiles[i]);
+
+                System.out.println("\nTime it took to load " + selectedFiles[i]);
+                System.out.println(lStopwatch.getElapsedTime());
+
+                lStopwatch.reset();
                 if (checkAcceptedFileType(this.getLastUpdateFileName())) {
                     if (localData != null) {
                         this.addFile(this.getLastUpdateFileName(), localData);
@@ -112,8 +130,12 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         }//if approve
     }//loadFiles
 
-    //@return file data as a Vector or Vectors (rows) when user has selected an acceptable file. 
-    public Vector<Double> getLocalFile(File aFile, Component frame) {
+    /**
+     *  Read a powder diffraction dataset from a powder diffraction file
+     *
+     * @param aFile Name of the powder diffraction file to be read
+     */
+    public Vector<Double> getLocalFile(File aFile) {
         String aLine;
         Vector localData = new Vector<Double>();
         File file = aFile;
@@ -158,15 +180,15 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
             System.out.println("IOException throws " + io);
             return null;
         } catch (java.lang.NumberFormatException nfe) {
-            //TODO: prevent - java.lang.NumberFormatException: For input string: "xxx"//(Component) frame
             javax.swing.JOptionPane.showMessageDialog(null, "The file contains an alphabet, we can not process.");
             System.out.println("NumberFormatException throws " + nfe);
             return null;
         }
     }//end readLocalFile
 
-    /*Checking whether file type is allowed
-     *@ param filenames
+    /**
+     * Checking whether file type is allowed
+     * @param filenames
      **/
     public boolean checkAcceptedFileType(String filenames) {
         System.out.println("\nFile Type = " + filenames);
