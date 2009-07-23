@@ -5,19 +5,11 @@ package org.jpowder.util;
  *
  * Created on 17 May 2007, 09:16
  *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
-
-/**
+ * A class to help benchmark code snippits
+ * It simulates a real stop watch
  *
- * @author Kreecha Puphaiboon
+ * @author  Kreecha Puphaiboon
  */
-
-/**
-  * A class to help benchmark code snippits
-  * It simulates a real stop watch
-  */
 public class Stopwatch {
 
    private long startTime = -1;
@@ -35,10 +27,11 @@ public class Stopwatch {
       return this;
    }
 
-   /** returns elapsed time in milliseconds 
-     * if the watch has never been started then
-     * return zero
-     */
+   /**
+    * returns elapsed time in milliseconds
+    * if the watch has never been started then
+    * return zero
+    */
    public long getElapsedTime() {
       if (startTime == -1) {
          return 0;
