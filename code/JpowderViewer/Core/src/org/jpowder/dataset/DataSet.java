@@ -1,5 +1,6 @@
 package org.jpowder.dataset;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
 import org.jpowder.util.VectorMiscUtil;

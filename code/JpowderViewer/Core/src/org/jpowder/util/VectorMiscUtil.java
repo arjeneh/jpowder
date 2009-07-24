@@ -60,11 +60,12 @@ public class VectorMiscUtil {
         return data;
     }
 
-    /* Get a specific column
+    /**
+     * Get a specific column
      * 
      * @param inVec must be a two dimensional vector.
-     * @param indexPos must minus 1 //Vector starts counting from 0
-     * */
+     * @param indexPos Is the row index
+     */
     public static Vector getColumn(Vector<Vector> inVec, int indexPos) {
         Vector a = new Vector();
 
@@ -76,6 +77,7 @@ public class VectorMiscUtil {
 
         return a;
     }
+
 
     /** 
      * Get the last column of 2D vector, in this case we have 3 columns dataset.
