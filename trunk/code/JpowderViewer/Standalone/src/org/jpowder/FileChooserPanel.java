@@ -230,24 +230,32 @@ public class FileChooserPanel extends javax.swing.JPanel
         add(deleteFile_btn1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    /** ALL DRAGE AND DROP THING */
-    public void dragEnter(java.awt.dnd.DropTargetDragEvent dtde) {
-        //System.out.println("Drag Enter");
-    }
+    /** 
+     * For drag and drop of files into Jpowder
+     */
+    public void dragEnter(java.awt.dnd.DropTargetDragEvent dtde) {}
 
+    /**
+     * For drag and drop of files into Jpowder
+     */
     public void dragExit(java.awt.dnd.DropTargetEvent dte) {
         System.out.println("Source: " + dte.getSource());
     //System.out.println("Drag Exit");
     }
 
-    public void dragOver(java.awt.dnd.DropTargetDragEvent dtde) {
-        //System.out.println("Drag Over");
-    }
+    /**
+     * For drag and drop of files into Jpowder
+     */
+    public void dragOver(java.awt.dnd.DropTargetDragEvent dtde) {}
 
-    public void dropActionChanged(java.awt.dnd.DropTargetDragEvent dtde) {
-        //System.out.println("Drop Action Changed");
-    }
+    /**
+     * For drag and drop of files into Jpowder
+     */
+    public void dropActionChanged(java.awt.dnd.DropTargetDragEvent dtde) {}
 
+    /**
+     * For drag and drop of files into Jpowder
+     */
     public void drop(java.awt.dnd.DropTargetDropEvent dtde) {
 
         try {

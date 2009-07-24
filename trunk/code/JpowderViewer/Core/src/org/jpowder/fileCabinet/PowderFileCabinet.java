@@ -90,7 +90,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(true);
 
-        Vector localData = null;
+        Vector<Vector<Double>> localData = null;
 
         // Set the accepted powder diffraction file extensions
         // and open a file chooser window for the user to select powder
@@ -135,9 +135,9 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
      *
      * @param aFile Name of the powder diffraction file to be read
      */
-    public Vector<Double> getLocalFile(File aFile) {
+    public Vector<Vector<Double>> getLocalFile(File aFile) {
         String aLine;
-        Vector localData = new Vector<Double>();
+        Vector<Vector<Double>> localData = new Vector<Vector<Double>>();
         File file = aFile;
         double filter = 0;
         double compare = 0; //make sure things are number.
