@@ -2,6 +2,10 @@ package org.jpowder.dataset;
 
 import java.util.Vector;
 
+/**
+ * Hold a powder diffraction dataset that contains no errors, i.e. a powder
+ * diffraction dataset with the xy format
+ */
 public class XY extends DataSet {
     
     private Vector data;

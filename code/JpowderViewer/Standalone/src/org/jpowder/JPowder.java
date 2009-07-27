@@ -1,6 +1,7 @@
 package org.jpowder;
 
 import java.awt.Dimension;
+import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.JPanel;
 
@@ -9,7 +10,6 @@ import org.jpowder.dataset.DatasetPlotter;
 import org.jpowder.dataset.XY;
 import org.jpowder.dataset.XYE;
 import org.jpowder.util.ScreenUtil;
-import org.jpowder.util.VectorMiscUtil;
 
 /**
  * Jpowder is the starting class for the Jpowder project {@link www.jpowder.org}.
@@ -55,45 +55,21 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     public void powderFileCabinetUpdate(org.jpowder.fileCabinet.Subject data) {
         org.jpowder.fileCabinet.PowderFileCabinet pfc = (org.jpowder.fileCabinet.PowderFileCabinet) data;
 
-        // Get copy of all data! Is this really necessary
-        java.util.HashMap dataHm = pfc.getData();
-        System.out.println("From JPowder.powderFileCabinetUpdate, HashMap Data in PowderFileCabinet is: " + dataHm);
-
-        // Get new dataset
-        String fileName = pfc.getLastUpdateFileName();
-        Vector lData = (Vector) dataHm.get(fileName);
-
         // comment: update to a bigger size by getting the current size and add some amount.
         java.awt.Dimension area = powderChartPanel.getSize();
         area.height = area.height + CHART_HEIGHT_FIX_SIZE;
         powderChartPanel.setLayout(new javax.swing.BoxLayout(powderChartPanel, javax.swing.BoxLayout.Y_AXIS));
         powderChartPanel.setPreferredSize(area);
 
-        // Determine how many columns there are
-        int countColumn = VectorMiscUtil.countColumnsOf2DVector(lData);
+        HashMap<String, DataSet> allData = pfc.getData();
 
-        // plot new dataset.
-        switch (countColumn) {
-            case 1:
-                System.out.println("Data not support yet");
-                break;
-            case 2:
-                DataSet xy = new XY(lData, fileName);
-                DatasetPlotter plot2Col = xy.createDatasetPlotter();
-                powderChartPanel.add(plot2Col.createPowderChart());
-                break;
-            case 3:
-                //3
-                DataSet xye = new XYE(lData, fileName);
-                DatasetPlotter plot3Col = xye.createDatasetPlotter();
-                powderChartPanel.add(plot3Col.createPowderChart());
-                break;
-            default:
-                DataSet xye3 = new XYE(lData, fileName);
-                DatasetPlotter plot3Cols = xye3.createDatasetPlotter();
-                powderChartPanel.add(plot3Cols.createPowderChart());
-                break;
-        }
+        // Get new dataset
+        String fileName = pfc.getLastUpdateFileName();
+        DataSet lastAddedDataset = allData.get(fileName);
+
+        
+        DatasetPlotter plot = lastAddedDataset.createDatasetPlotter();
+        powderChartPanel.add(plot.createPowderChart());
 
         // add seperator
         JPanel seperatePanel = new JPanel();
