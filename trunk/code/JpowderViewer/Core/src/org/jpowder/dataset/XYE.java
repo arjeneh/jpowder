@@ -3,8 +3,9 @@ package org.jpowder.dataset;
 import java.util.Vector;
 import org.jpowder.util.VectorMiscUtil;
 
-/* 
- * Creates a chart with (x,y, -y, +y).
+/**
+ * Hold a powder diffraction dataset that contains errors, i.e. a powder
+ * diffraction dataset with the xye format
  */
 public class XYE extends DataSet {
 

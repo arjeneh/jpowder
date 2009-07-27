@@ -1,7 +1,6 @@
 package org.jpowder.fileCabinet;
 
 import org.jpowder.*;
-import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,6 +12,9 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.JFileChooser;
+import org.jpowder.dataset.DataSet;
+import org.jpowder.dataset.XY;
+import org.jpowder.dataset.XYE;
 import org.jpowder.util.Stopwatch;
 
 /**
@@ -36,7 +38,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
     // if ACCEPTED_FILE_TYPE is modified also modify string in loadFiles()
     private static final String[] ACCEPTED_FILE_TYPE = {"xy", "xye", "txt"};
     private Vector<PowderFileObserver> observers = new Vector<PowderFileObserver>();
-    private HashMap<String, Vector<Vector<Double>>> data = new HashMap<String, Vector<Vector<Double>>>();
+    private HashMap<String, DataSet> data = new HashMap<String, DataSet>();
     private String lastUpdateFileName;
     private String filePath = null;
 
@@ -44,7 +46,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
     }
 
     // @return data as a hashMap of fileName and data.
-    public HashMap getData() {
+    public HashMap<String, DataSet> getData() {
         return this.data;
     }
 
@@ -67,8 +69,9 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
 
     //@param fileName to be added to data HashMap as Key
     //@param vdata to be added to data HashMap as Value.
-    public void addFile(String fileName, Vector<Vector<Double>> vdata) {
-        data.put(fileName, vdata);
+    public void addFile(String fileName, DataSet ds) {
+        data.put(fileName, ds);
+        //dataSet.add(ds);
         System.out.println("PowderFileCabinet.java has been added with: " + data.toString());
         notifyObservers();
     }
@@ -90,12 +93,13 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(true);
 
-        Vector<Vector<Double>> localData = null;
+        //Vector<Vector<Double>> localData = null;
+        DataSet oneDataset = null;
 
         // Set the accepted powder diffraction file extensions
         // and open a file chooser window for the user to select powder
         // diffraction file
-        fileChooser.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, "ASCII file (*.xy, *.xye, *.txt)"));
+        fileChooser.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, "File (*.xy, *.xye, *.txt)"));
         fileChooser.setAcceptAllFileFilterUsed(false);
         int returnVal = fileChooser.showOpenDialog(null);
 
@@ -113,22 +117,52 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
 
                 lStopwatch.start();
 
-                localData = getLocalFile(selectedFiles[i]);
+                oneDataset = null;
+                oneDataset = createDataSetFromPowderFile(selectedFiles[i]);
 
                 System.out.println("\nTime it took to load " + selectedFiles[i]);
                 System.out.println(lStopwatch.getElapsedTime());
-
                 lStopwatch.reset();
+
+                // is it really necessary to get the file extension here since
+                // you should not have been allowed to a file with one of the
+                // extensions as defined in ACCEPTED_FILE_TYPE in the first place
                 if (checkAcceptedFileType(this.getLastUpdateFileName())) {
-                    if (localData != null) {
-                        this.addFile(this.getLastUpdateFileName(), localData);
+                    if (oneDataset != null) {
+                        this.addFile(this.getLastUpdateFileName(), oneDataset);
                     }
                 } else {
-                    javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
+                    javax.swing.JOptionPane.showMessageDialog(null, "File extension not recognised.");
                 }//acceptable end if extension matched
             }//for
         }//if approve
     }//loadFiles
+
+    /**
+     *  Create a dataset object from a powder diffraction file
+     *
+     * @param aFile Name of the powder diffraction file to be read
+     */
+    public DataSet createDataSetFromPowderFile(File aFile) {
+      DataSet retVal = null;
+
+      // loading the data into a Vector<Vector<Double>>
+      Vector<Vector<Double>> lData = null;
+      lData = getLocalFile(aFile);
+
+      // Determine how many columns there are
+      int countColumn = lData.firstElement().size();
+
+      // create dataset object
+      if (countColumn == 2)
+         retVal = new XY(lData, aFile.getName());
+      else if (countColumn == 3)
+         retVal = new XYE(lData, aFile.getName());
+      else
+        System.out.println("Powder data most contain either 2 or 3 columns");
+
+      return retVal;
+    }
 
     /**
      *  Read a powder diffraction dataset from a powder diffraction file
@@ -138,12 +172,11 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
     public Vector<Vector<Double>> getLocalFile(File aFile) {
         String aLine;
         Vector<Vector<Double>> localData = new Vector<Vector<Double>>();
-        File file = aFile;
         double filter = 0;
         double compare = 0; //make sure things are number.
 
         try {
-            FileInputStream fis = new FileInputStream(file);
+            FileInputStream fis = new FileInputStream(aFile);
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
             int lineNum = 0;
 
@@ -156,35 +189,33 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
                 int numToken = st2.countTokens();
                 for (int i = 0; i < numToken; i++) {
                     //ignore the last STD by minusing 1.
-                    String stoken = st2.nextToken();
-                    compare = Double.parseDouble(stoken);//check number or not, if yes add element
-                    if (compare >= filter) {
-                        newRow.addElement(Double.parseDouble(stoken));
-                    } else {
-                        return null;
-                    }
+                    String stringToken = st2.nextToken();
+                    newRow.addElement(Double.parseDouble(stringToken));
                 } //for
                 localData.addElement(newRow);
             }//while readLine
             
-            System.out.print("Total LineNumber is: " + lineNum);
+            //System.out.print("Total LineNumber is: " + lineNum);
 
             fis.close();
             br.close();
 
             return localData;
         } catch (MalformedURLException e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Not sure.");
             System.out.println("Malformed URL = " + e);
             return null;
         } catch (IOException io) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Can't open file.");
             System.out.println("IOException throws " + io);
             return null;
         } catch (java.lang.NumberFormatException nfe) {
-            javax.swing.JOptionPane.showMessageDialog(null, "The file contains an alphabet, we can not process.");
+            javax.swing.JOptionPane.showMessageDialog(null, "The file contains a character, we cannot process this file.");
             System.out.println("NumberFormatException throws " + nfe);
             return null;
         }
-    }//end readLocalFile
+    }
+
 
     /**
      * Checking whether file type is allowed
