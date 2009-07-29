@@ -19,6 +19,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.jpowder.JCheckboxList.CheckableFileItem;
+import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
 import org.jpowder.dataset.XY_XYE;
 
@@ -258,11 +259,11 @@ public class FileChooserPanel extends javax.swing.JPanel
      */
     public void drop(java.awt.dnd.DropTargetDropEvent dtde) {
 
+        DataSet oneDataset = null;
         try {
             // Ok, get the dropped object and try to figure out what it is
             Transferable tr = dtde.getTransferable();
             DataFlavor[] flavors = tr.getTransferDataFlavors();
-            Vector localData = null;
 
             for (int i = 0; i < flavors.length; i++) {
                 System.out.println("Possible flavor: " + flavors[i].getMimeType());
@@ -282,11 +283,12 @@ public class FileChooserPanel extends javax.swing.JPanel
                         if (mPowderFileCabinet.checkAcceptedFileType(fileName)) {
 
                             mPowderFileCabinet.setLastUpdateFileName(fileName);
-                            localData = mPowderFileCabinet.getLocalFile(file);
-                            System.out.println("localData = " + localData);
 
-                            if (localData != null) {
-                                mPowderFileCabinet.addFile(mPowderFileCabinet.getLastUpdateFileName(), localData);
+                            oneDataset = null;
+                            oneDataset =  mPowderFileCabinet.createDataSetFromPowderFile(file);
+
+                            if (oneDataset != null) {
+                                mPowderFileCabinet.addFile(mPowderFileCabinet.getLastUpdateFileName(), oneDataset);
                             }
 
                         } else {
