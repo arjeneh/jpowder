@@ -2,13 +2,10 @@ package org.jpowder;
 
 import java.awt.Dimension;
 import java.util.HashMap;
-import java.util.Vector;
 import javax.swing.JPanel;
 
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
-import org.jpowder.dataset.XY;
-import org.jpowder.dataset.XYE;
 import org.jpowder.util.ScreenUtil;
 
 /**
