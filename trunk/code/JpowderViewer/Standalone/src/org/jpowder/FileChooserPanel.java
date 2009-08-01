@@ -35,7 +35,7 @@ public class FileChooserPanel extends javax.swing.JPanel
         implements PowderFileObserver, DropTargetListener {
 
     // Commented out by Anders 16/1/09
-    //private java.awt.dnd.DropTarget dt;
+    private java.awt.dnd.DropTarget dt;
     
     //
     private PowderFileCabinet mPowderFileCabinet;
@@ -77,7 +77,7 @@ public class FileChooserPanel extends javax.swing.JPanel
         add(file_sp, gridBagConstraints);
 
         // Commented out by Anders 16/1/09
-        //dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
+        dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
         
         //UTILISE OBSERVER PATTERN.
         mPowderFileCabinet = new PowderFileCabinet();
@@ -137,7 +137,7 @@ public class FileChooserPanel extends javax.swing.JPanel
         add(file_sp, gridBagConstraints);
         
         // Commented out by Anders 16/1/09
-        //dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
+        dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
         
         //UTILISE OBSERVER PATTERN.
         mPowderFileCabinet = new PowderFileCabinet();
