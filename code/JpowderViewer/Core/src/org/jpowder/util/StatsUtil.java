@@ -1,7 +1,7 @@
 package org.jpowder.util;
 
 public class StatsUtil {
-
+/**
    // return maximum value (-infinity if no such value)
    public static double max(double[] a) {
       double max = Double.NEGATIVE_INFINITY;
@@ -56,4 +56,7 @@ public class StatsUtil {
          sum += a[i];
       return sum;
    }
-} 
+ */
+
+  }
+
