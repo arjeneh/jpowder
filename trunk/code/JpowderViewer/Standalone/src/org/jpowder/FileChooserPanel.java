@@ -8,7 +8,6 @@ import org.jpowder.fileCabinet.Subject;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.fileCabinet.PowderFileObserver;
 import org.jpowder.JCheckboxList.JCheckBoxJList;
-//
 import java.awt.dnd.DropTargetListener;
 import java.io.File;
 import java.util.ArrayList;
@@ -30,21 +29,17 @@ import org.jpowder.dataset.XY_XYE;
  * @author Kreecha Puphaiboon
  * @since 21 May 2007, 09:53
  *
-*/
+ */
 public class FileChooserPanel extends javax.swing.JPanel
         implements PowderFileObserver, DropTargetListener {
 
     // Commented out by Anders 16/1/09
     private java.awt.dnd.DropTarget dt;
-    
-    //
     private PowderFileCabinet mPowderFileCabinet;
     private FileNameListModel listModel;
     private JCheckBoxJList checkboxList;
-
     private javax.swing.JScrollPane file_sp;
     private JPowder jPowderMain;//where this class located in
-
 
     //This constructor is for self-testing in the main method of this file.
     public FileChooserPanel() {
@@ -78,7 +73,7 @@ public class FileChooserPanel extends javax.swing.JPanel
 
         // Commented out by Anders 16/1/09
         dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
-        
+
         //UTILISE OBSERVER PATTERN.
         mPowderFileCabinet = new PowderFileCabinet();
         mPowderFileCabinet.registerObserver(this);
@@ -135,10 +130,10 @@ public class FileChooserPanel extends javax.swing.JPanel
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
 
         add(file_sp, gridBagConstraints);
-        
+
         // Commented out by Anders 16/1/09
         dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
-        
+
         //UTILISE OBSERVER PATTERN.
         mPowderFileCabinet = new PowderFileCabinet();
 
@@ -234,25 +229,28 @@ public class FileChooserPanel extends javax.swing.JPanel
     /** 
      * For drag and drop of files into Jpowder
      */
-    public void dragEnter(java.awt.dnd.DropTargetDragEvent dtde) {}
+    public void dragEnter(java.awt.dnd.DropTargetDragEvent dtde) {
+    }
 
     /**
      * For drag and drop of files into Jpowder
      */
     public void dragExit(java.awt.dnd.DropTargetEvent dte) {
         System.out.println("Source: " + dte.getSource());
-    //System.out.println("Drag Exit");
+        //System.out.println("Drag Exit");
     }
 
     /**
      * For drag and drop of files into Jpowder
      */
-    public void dragOver(java.awt.dnd.DropTargetDragEvent dtde) {}
+    public void dragOver(java.awt.dnd.DropTargetDragEvent dtde) {
+    }
 
     /**
      * For drag and drop of files into Jpowder
      */
-    public void dropActionChanged(java.awt.dnd.DropTargetDragEvent dtde) {}
+    public void dropActionChanged(java.awt.dnd.DropTargetDragEvent dtde) {
+    }
 
     /**
      * For drag and drop of files into Jpowder
@@ -285,7 +283,7 @@ public class FileChooserPanel extends javax.swing.JPanel
                             mPowderFileCabinet.setLastUpdateFileName(fileName);
 
                             oneDataset = null;
-                            oneDataset =  mPowderFileCabinet.createDataSetFromPowderFile(file);
+                            oneDataset = mPowderFileCabinet.createDataSetFromPowderFile(file);
 
                             if (oneDataset != null) {
                                 mPowderFileCabinet.addFile(mPowderFileCabinet.getLastUpdateFileName(), oneDataset);
@@ -293,7 +291,7 @@ public class FileChooserPanel extends javax.swing.JPanel
 
                         } else {
                             javax.swing.JOptionPane.showMessageDialog(this, "Only ASCII file please.");
-                        //end if extension matched
+                            //end if extension matched
                         }
                     }
 
@@ -326,7 +324,7 @@ private void plotFiles_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN
             }//if
         }//for
 
-        System.out.println("Selectded items: " + nameList.toString() + " and size = " + nameList.size() );
+        System.out.println("Selectded items: " + nameList.toString() + " and size = " + nameList.size());
         //not enough dataset 2 at least.
         if (nameList.size() <= 1) {
             javax.swing.JOptionPane.showMessageDialog(this, "Please select at least 2 files.");
@@ -394,18 +392,16 @@ private void deleteFile_btn1ActionPerformed(java.awt.event.ActionEvent evt) {//G
 // TODO add your handling code here:
 }//GEN-LAST:event_deleteFile_btn1ActionPerformed
 
-public static void main(String args[]) {
-    javax.swing.JFrame frame = new javax.swing.JFrame("File chooser");
+    public static void main(String args[]) {
+        javax.swing.JFrame frame = new javax.swing.JFrame("File chooser");
         frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         frame.add(new FileChooserPanel(), java.awt.BorderLayout.NORTH);
         frame.setSize(300, 200);
         frame.setVisible(true);
-}
-
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addFile_btn;
     private javax.swing.JButton deleteFile_btn1;
     private javax.swing.JButton plotFiles_btn;
     // End of variables declaration//GEN-END:variables
-  
 }

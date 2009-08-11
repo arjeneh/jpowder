@@ -19,9 +19,11 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.HorizontalAlignment;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
-//
 import org.jpowder.dataset.jfreechart.XY_PopupMenu;
-
+/**
+ *
+ * @author ............
+ */
 public class TwoColumnsPlotter extends DatasetPlotter {
 
     private DataSet d;

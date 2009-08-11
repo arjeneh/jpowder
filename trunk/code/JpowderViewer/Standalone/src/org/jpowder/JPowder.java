@@ -1,11 +1,16 @@
 package org.jpowder;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FileDialog;
+import java.io.IOException;
 import java.util.HashMap;
 import javax.swing.JPanel;
 
+import javax.swing.SwingUtilities;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
+import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.util.ScreenUtil;
 
 /**
@@ -47,6 +52,7 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     private static final int FRAME_WIDTH = 1070;
     private static final int FRAME_HEIGHT = 670;
     private boolean InBrowser = true;
+
 
   
     public void powderFileCabinetUpdate(org.jpowder.fileCabinet.Subject data) {
@@ -124,11 +130,13 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
      */
     @Override
     public void init() {
+
         try {
             javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
         }
+
         initComponents();
     }//end init
 
@@ -159,12 +167,14 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
         fileMenu = new javax.swing.JMenu();
         openFileMenuItem = new javax.swing.JMenuItem();
         saveFileMenuItem = new javax.swing.JMenuItem();
+        Exit = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        Edit = new javax.swing.JMenuItem();
+        Delete = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        Content = new javax.swing.JMenuItem();
+        Docs = new javax.swing.JMenuItem();
+        About = new javax.swing.JMenuItem();
 
         setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
         setForeground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
@@ -276,25 +286,46 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
         saveFileMenuItem.setText("Save");
         fileMenu.add(saveFileMenuItem);
 
+        Exit.setText("Exit");
+        Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitActionPerformed(evt);
+            }
+        });
+        fileMenu.add(Exit);
+
         jMenuBar1.add(fileMenu);
 
         editMenu.setText("Edit Chart");
 
-        jMenuItem3.setText("Edit");
-        editMenu.add(jMenuItem3);
+        Edit.setText("Edit");
+        editMenu.add(Edit);
 
-        jMenuItem4.setText("Delete");
-        editMenu.add(jMenuItem4);
+        Delete.setText("Delete");
+        editMenu.add(Delete);
 
         jMenuBar1.add(editMenu);
 
         helpMenu.setText("Help");
 
-        jMenuItem1.setText("Content");
-        helpMenu.add(jMenuItem1);
+        Content.setText("Content");
+        helpMenu.add(Content);
 
-        jMenuItem6.setText("About");
-        helpMenu.add(jMenuItem6);
+        Docs.setText("Online Docs and Support");
+        Docs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DocsActionPerformed(evt);
+            }
+        });
+        helpMenu.add(Docs);
+
+        About.setText("About");
+        About.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AboutActionPerformed(evt);
+            }
+        });
+        helpMenu.add(About);
 
         jMenuBar1.add(helpMenu);
 
@@ -302,10 +333,36 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     }// </editor-fold>//GEN-END:initComponents
 
     private void openFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileMenuItemActionPerformed
-        // TODO add your handling code here:
+
 }//GEN-LAST:event_openFileMenuItemActionPerformed
+
+    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_ExitActionPerformed
+
+    private void AboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AboutActionPerformed
+        new about().setVisible(true);
+    }//GEN-LAST:event_AboutActionPerformed
+
+    private void DocsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DocsActionPerformed
+
+        Runtime rt = Runtime.getRuntime();
+        String[] callAndArgs = {"explorer.exe",
+            "http://code.google.com/p/jpowder"};
+        try {
+            Process child = rt.exec(callAndArgs);
+        } catch (IOException e) {
+        }
+
+    }//GEN-LAST:event_DocsActionPerformed
     // When user click they can see the graph from what ever data in the table.    //end plotFile_btnActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem About;
+    private javax.swing.JMenuItem Content;
+    private javax.swing.JMenuItem Delete;
+    private javax.swing.JMenuItem Docs;
+    private javax.swing.JMenuItem Edit;
+    private javax.swing.JMenuItem Exit;
     private javax.swing.JPanel cardPanel;
     private javax.swing.JScrollPane chart_scrp;
     private javax.swing.JMenu editMenu;
@@ -313,10 +370,6 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     private javax.swing.JMenu helpMenu;
     private javax.swing.JPanel homePanel;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem openFileMenuItem;
     private javax.swing.JPanel powderChartPanel;
     private javax.swing.JButton print_btn;
