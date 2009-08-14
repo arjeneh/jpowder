@@ -1,17 +1,16 @@
 package org.jpowder;
 
-import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.FileDialog;
 import java.io.IOException;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import javax.swing.SwingUtilities;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.util.ScreenUtil;
+import org.jpowder.util.Stopwatch;
 
 /**
  * Jpowder is the starting class for the Jpowder project {@link www.jpowder.org}.
@@ -52,7 +51,7 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     private static final int FRAME_WIDTH = 1070;
     private static final int FRAME_HEIGHT = 670;
     private boolean InBrowser = true;
-
+    private PowderFileCabinet mPowderFileCabinet;
 
   
     public void powderFileCabinetUpdate(org.jpowder.fileCabinet.Subject data) {
@@ -70,10 +69,13 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
         String fileName = pfc.getLastUpdateFileName();
         DataSet lastAddedDataset = allData.get(fileName);
 
-        
+         Stopwatch lStopwatch = new Stopwatch();
+         lStopwatch.start();
         DatasetPlotter plot = lastAddedDataset.createDatasetPlotter();
         powderChartPanel.add(plot.createPowderChart());
-
+        System.out.println("\nTime it took to create chart " + fileName);
+                System.out.println(lStopwatch.getElapsedTime());
+                lStopwatch.reset();
         // add seperator
         JPanel seperatePanel = new JPanel();
         seperatePanel.setBackground(new java.awt.Color(240, 240, 240));
@@ -218,6 +220,11 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
         print_btn.setMaximumSize(new java.awt.Dimension(100, 23));
         print_btn.setMinimumSize(new java.awt.Dimension(100, 23));
         print_btn.setPreferredSize(new java.awt.Dimension(120, 23));
+        print_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                print_btnActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -333,11 +340,26 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     }// </editor-fold>//GEN-END:initComponents
 
     private void openFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileMenuItemActionPerformed
+  
+            mPowderFileCabinet.loadFiles();
 
+      
 }//GEN-LAST:event_openFileMenuItemActionPerformed
 
     private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
-        System.exit(0);
+        int res = JOptionPane.showConfirmDialog(null, "Do you want to exit?", "JPowder",
+                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        switch (res) {
+            case JOptionPane.YES_OPTION:
+                System.exit(0);
+                break;
+            case JOptionPane.NO_OPTION:
+                break;
+            case JOptionPane.CANCEL_OPTION:
+                break;
+            case JOptionPane.CLOSED_OPTION:
+                break;
+        }
     }//GEN-LAST:event_ExitActionPerformed
 
     private void AboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AboutActionPerformed
@@ -355,6 +377,10 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
         }
 
     }//GEN-LAST:event_DocsActionPerformed
+
+    private void print_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_print_btnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_print_btnActionPerformed
     // When user click they can see the graph from what ever data in the table.    //end plotFile_btnActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem About;

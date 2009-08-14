@@ -12,8 +12,11 @@ import java.awt.dnd.DropTargetListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Vector;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.ListModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -21,6 +24,7 @@ import org.jpowder.JCheckboxList.CheckableFileItem;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
 import org.jpowder.dataset.XY_XYE;
+import org.jpowder.util.Stopwatch;
 
 /**
  * User can add or drag/drop a dataset file. It brings up a dialog
@@ -58,7 +62,7 @@ public class FileChooserPanel extends javax.swing.JPanel
         checkboxList.setMinimumSize(new java.awt.Dimension(210, 274));
         checkboxList.setPreferredSize(new java.awt.Dimension(210, 274));
 
-        file_sp = new javax.swing.JScrollPane(checkboxList, javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         file_sp.setMinimumSize(new java.awt.Dimension(260, 284));
         file_sp.setPreferredSize(new java.awt.Dimension(260, 284));
         file_sp.setViewportView(checkboxList);
@@ -75,6 +79,7 @@ public class FileChooserPanel extends javax.swing.JPanel
         dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
 
         //UTILISE OBSERVER PATTERN.
+
         mPowderFileCabinet = new PowderFileCabinet();
         mPowderFileCabinet.registerObserver(this);
         mPowderFileCabinet.registerObserver((PowderFileObserver) listModel);
@@ -86,7 +91,7 @@ public class FileChooserPanel extends javax.swing.JPanel
     public FileChooserPanel(JPowder jPowderMain) {
         try {
             javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
+         } catch (Exception e) {
         }
         this.jPowderMain = jPowderMain;
         //
@@ -95,8 +100,8 @@ public class FileChooserPanel extends javax.swing.JPanel
         //create a list model to put in the JList
         listModel = new FileNameListModel();
         checkboxList = new JCheckBoxJList(listModel);
-        checkboxList.setFont(new java.awt.Font("Tahoma", 0, 10));
-        checkboxList.setMinimumSize(new java.awt.Dimension(210, 214));
+       checkboxList.setFont(new java.awt.Font("Tahoma", 0, 10));
+       checkboxList.setMinimumSize(new java.awt.Dimension(210, 214));
         checkboxList.setPreferredSize(new java.awt.Dimension(210, 214));
 
         //See how many selected, if greater or equal to 2 then enable the button.
@@ -358,42 +363,47 @@ private void plotFiles_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN
 
 private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFile_btnActionPerformed
 
+    final Stopwatch lStopwatch = new Stopwatch();
+    lStopwatch.start();
     setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-
     // We're going to do something that takes potentially a long time, so we
     // spin off a thread and update the display when we're done.
     Thread worker = new Thread() {
-
         @Override
         public void run() {
             // Load the powder diffraction files which are selected by the user
             // into the file cabinet
+            Stopwatch lStopwatch = new Stopwatch();
+            lStopwatch.start();
             mPowderFileCabinet.loadFiles();
+                System.out.println("\nTotal time took to load(Pressing the Open butt) and plot Data:" + mPowderFileCabinet);
+               System.out.println(lStopwatch.getElapsedTime());
+               lStopwatch.reset();
+
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException ex) {
             }
-
             // Report the result using invokeLater().
             SwingUtilities.invokeLater(new Runnable() {
-
                 public void run() {
                     setCursor(null); //turn off the wait cursor when done.
                 }
             });
         }
     };
-
     worker.start(); // So we don't hold up the dispatch thread.
 
 }//GEN-LAST:event_addFile_btnActionPerformed
 
 private void deleteFile_btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFile_btn1ActionPerformed
-// TODO add your handling code here:
+            listModel.clear();// not coool
+            //checkboxList.clearSelection();//dosent work dont know wa because im ha
+             
 }//GEN-LAST:event_deleteFile_btn1ActionPerformed
 
     public static void main(String args[]) {
-        javax.swing.JFrame frame = new javax.swing.JFrame("File chooser");
+        JFrame frame = new JFrame("File chooser");
         frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         frame.add(new FileChooserPanel(), java.awt.BorderLayout.NORTH);
         frame.setSize(300, 200);
