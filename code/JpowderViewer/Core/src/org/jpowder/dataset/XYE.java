@@ -35,9 +35,9 @@ public class XYE extends DataSet {
             yUpper.add(plusY);
         }//end for 1
 
-        System.out.println(" In XYE.java yLower is " + yLower);
-        System.out.println(" In XYE.java y      is " + super.getY());
-        System.out.println(" In XYE.java yUpper is " + yUpper);
+      // System.out.println(" In XYE.java yLower is " + yLower);
+       // System.out.println(" In XYE.java y      is " + super.getY());
+        //System.out.println(" In XYE.java yUpper is " + yUpper);
     }
 
     public DatasetPlotter createDatasetPlotter() {
