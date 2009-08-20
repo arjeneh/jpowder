@@ -1,25 +1,58 @@
 package org.jpowder.dataset;
 
+import java.util.Vector;
 
-// <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-// #[regen=yes,id=DCE.9789A94C-A49D-16BD-8F04-BBCA545F0367]
-// </editor-fold> 
+
+
 public abstract class DatasetPlotter {
 
-    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.6B64DDC3-0BC8-8DCF-1B39-EABFF36FA9AE]
-    // </editor-fold> 
+    
     protected DataSet dataset;
 
-    // <editor-fold defaultstate="collapsed" desc=" UML Marker "> 
-    // #[regen=yes,id=DCE.77F2C89B-DB68-1547-E8BC-7F54B27EBCD6]
-    // </editor-fold> 
     public DatasetPlotter (DataSet d) { }
+
+    public DatasetPlotter (Vector<DataSet> d) { }
     
     public abstract String description ();
     
     //create chart of all kinds.
     public abstract org.jfree.chart.ChartPanel createPowderChart();
 
+    public static DatasetPlotter createDatasetPlotter(Vector<DataSet> datasets){
+        if (datasets.size() > 1)
+          return new MultiFilesPlotter(datasets);
+        if (datasets.size() == 1)
+        {
+          // does the dataset contain 2 or 3 columns
+          DataSet lDataset = datasets.elementAt(0);
+
+          if (lDataset instanceof XY)
+            return new TwoColumnsPlotter(lDataset);
+          if (lDataset instanceof XYE)
+            return new ThreeColumnsPlotter(lDataset);
+          else
+          {
+            System.out.println("Not a recognised dataSet type");
+            return null;
+          }
+        }
+        else
+        {
+          System.out.println("Can't create DatasetPlotter from no data");
+          return null;
+        }
+    }
+
+  public static DatasetPlotter createDatasetPlotter(DataSet dataset) {
+    if (dataset instanceof XY) {
+      return new TwoColumnsPlotter(dataset);
+    }
+    if (dataset instanceof XYE) {
+      return new ThreeColumnsPlotter(dataset);
+    } else {
+      System.out.println("Not a recognised dataset type");
+      return null;
+    }
+  }
 }
 

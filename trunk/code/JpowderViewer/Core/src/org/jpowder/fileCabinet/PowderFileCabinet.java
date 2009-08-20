@@ -102,13 +102,15 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         fileChooser.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, "File (*.xy, *.xye, *.txt)"));
         fileChooser.setAcceptAllFileFilterUsed(false);
         int returnVal = fileChooser.showOpenDialog(null);
-
+        Stopwatch totalStopwatch = new Stopwatch();
+           Stopwatch lStopwatch = new Stopwatch();
+            totalStopwatch.start();
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             // get the selected files
             File selectedFiles[] = fileChooser.getSelectedFiles();
 
             // to time how long it takes to read file
-            Stopwatch lStopwatch = new Stopwatch();
+           
 
             // loop over the selected file
             for (int i = 0, n = selectedFiles.length; i < n; i++) {
@@ -135,7 +137,11 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
                     javax.swing.JOptionPane.showMessageDialog(null, "File extension not recognised.");
                 }//acceptable end if extension matched
             }//for
-        }//if approve
+
+        }//if open approved
+             System.out.println("\nTotal time took to load and plot the all data:");
+               System.out.println(totalStopwatch.getElapsedTime());
+               totalStopwatch.reset();
     }//loadFiles
 
     /**

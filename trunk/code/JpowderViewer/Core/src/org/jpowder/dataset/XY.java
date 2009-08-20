@@ -15,17 +15,13 @@ public class XY extends DataSet {
         this.data = data;
     }
 
-    @Override
-    public DatasetPlotter createDatasetPlotter () {
-        return new TwoColumnsPlotter(this);
-    }
 
     @Override
     public String description () {
         return "XY data contains = " + data;
     }
 
-    @Override
+   
     public Vector getData() {
         return this.data;
     }

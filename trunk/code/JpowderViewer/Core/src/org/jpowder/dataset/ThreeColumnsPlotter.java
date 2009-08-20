@@ -89,10 +89,10 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
         Vector minusY = xye.getYLower();
         Vector addY = xye.getYUpper();
 
-        System.out.println("addY is " + addY.size());
-        System.out.println("minusY is " + minusY.size());
-        System.out.println("y is " + y.size());
-        System.out.println("x is " + x.size());
+        //System.out.println("addY is " + addY.size());
+        //System.out.println("minusY is " + minusY.size());
+        //System.out.println("y is " + y.size());
+        //System.out.println("x is " + x.size());
 
         for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
             s1.add(Double.parseDouble(x.elementAt(rowIndex).toString()),

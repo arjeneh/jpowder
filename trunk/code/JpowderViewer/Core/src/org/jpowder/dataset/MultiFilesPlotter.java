@@ -7,14 +7,14 @@ import java.util.Vector;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.title.TextTitle;
+import org.jfree.data.general.Dataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -29,15 +29,14 @@ powderChartPanel.add(plot3Col.createPowderChart());
  */
 import org.jpowder.dataset.jfreechart.XY_PopupMenu;
 //
-import org.jpowder.util.VectorMiscUtil;
 
 public class MultiFilesPlotter extends DatasetPlotter {
 
-    private DataSet d;
+    private Vector<DataSet> datasets;
 
-    public MultiFilesPlotter(DataSet d) {
+    public MultiFilesPlotter(Vector<DataSet> d) {
         super(d);
-        this.d = d;
+        this.datasets = d;
         System.out.println("MultiFilesPlotter is called ");
     }
 
@@ -47,12 +46,12 @@ public class MultiFilesPlotter extends DatasetPlotter {
 
     @Override
     public ChartPanel createPowderChart() {
-
-        XYDataset datasets = createDataset(this.d.getData(), this.d.getFileName());
+        //
+        XYDataset JFreeChart_datasets = createDataset();
 
         System.out.println("createPowderChart() in MultiFilesPlotter.java is called ");
 
-        JFreeChart chart = createChart(datasets);
+        JFreeChart chart = createChart(JFreeChart_datasets);
 
         ChartPanel chartPanel = new ChartPanel(chart, true);
         chartPanel.setMaximumSize(new java.awt.Dimension(500, 270));
@@ -72,15 +71,15 @@ public class MultiFilesPlotter extends DatasetPlotter {
      * 
      * @return The chart.
      */
-    private JFreeChart createChart(XYDataset dataset) {
-        XYDataset xyDataset = dataset;
+    private JFreeChart createChart(XYDataset dataSet) {
+  
 
         // create the chart...
         JFreeChart chart = ChartFactory.createXYLineChart(
-                "Chart: " + this.d.getFileName(), // chart title
+                "Chart: " ,//this.d.getFileName(), // chart title
                 "X", // x axis label
                 "Y", // y axis label
-                xyDataset, // data
+                dataSet, // data
                 PlotOrientation.VERTICAL,
                 true, // include legend
                 false, // tooltips
@@ -88,8 +87,11 @@ public class MultiFilesPlotter extends DatasetPlotter {
                 );
 
         // NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
+
+        
+
         chart.setBackgroundPaint(Color.white);
-        chart.addSubtitle(new TextTitle("Data of " + this.d.getFileName()));
+        chart.addSubtitle(new TextTitle("Data of " + "")); ///this.d.getFileName()));
 
         //add the copyright.
         TextTitle source = new TextTitle("Created by Kreecha Puphaiboon and Anders Markvardsen");
@@ -123,29 +125,39 @@ public class MultiFilesPlotter extends DatasetPlotter {
      *
      * @return The dataset.
      */
-    private XYDataset createDataset(Vector dataVec, String name) {
+    private XYDataset createDataset() {
 
-        Vector localData = dataVec;
-        System.out.println("XYDataset createDataset() in MultiFilesPlotter.java: " + name);
+       // Vector<Vector<Double>> localData = dataVec;
+        //System.out.println("XYDataset createDataset() in MultiFilesPlotter.java: " + name);
 
-        String names = name;
+        /*String filename = name;
         int namesChars = names.length();
         //remove '[' and ']'
         String newString = names.substring(1, namesChars - 1);
 
-        String[] files = newString.split(",");
+        String[] files = newString.split(",");*/
 
-        XY_XYE xy_xye = (XY_XYE) this.d;
+        //XY_XYE xy_xye = (XY_XYE) this.d;
         //xy_xye.
 
         XYSeriesCollection datasetCol = new XYSeriesCollection();
 
-        for (int f = 0; f < localData.size(); f++) {
-            Vector<Vector> file = new Vector<Vector>();
-            file.add((Vector) localData.elementAt(f));
-            //new file
-            XYSeries series = new XYSeries(files[f].trim());
+        for (int f = 0; f < datasets.size(); f++) {
+            DataSet lDataset = datasets.elementAt(f);
 
+            //new file
+            XYSeries series = new XYSeries(lDataset.getFileName());
+
+            Vector x = lDataset.getX();
+            Vector y = lDataset.getY();
+        
+            for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
+            series.add(
+                    Double.parseDouble(x.elementAt(rowIndex).toString()),
+                    Double.parseDouble(y.elementAt(rowIndex).toString()));
+           } 
+            
+            /*
             for (int r = 0; r < file.size(); r++) {
                 Vector rowData = file.elementAt(r);
                 Vector x = VectorMiscUtil.getColumn(rowData, 0);
@@ -168,6 +180,7 @@ public class MultiFilesPlotter extends DatasetPlotter {
                 }
 
             }//for
+ */
 
             datasetCol.addSeries(series);
         }//outer for

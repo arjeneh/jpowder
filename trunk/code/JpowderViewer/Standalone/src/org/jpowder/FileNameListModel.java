@@ -113,40 +113,5 @@ public class FileNameListModel extends javax.swing.DefaultListModel implements P
             //add((String) iterator.next());
         }
     }
-    /*
-    
-    To get all values stored in HashMap use entrySet() method. 
-    Signature of the entrySet() method is, Set entrySet()
-    
-    System.out.println("Retriving all values from the HashMap");
-    
-    iterator = hashMap.entrySet().iterator();
-    while( iterator. hasNext() ){
-    System.out.println( iterator.next() );
-    }*/
-    
-    /*private String fullPath;
-    private char pathSeparator, extensionSeparator;
-    
-    public FileNameListModel(String str, char sep, char ext) {
-    fullPath = str;
-    pathSeparator = sep;
-    extensionSeparator = ext;
-    }
-    
-    public String extension() {
-    int dot = fullPath.lastIndexOf(extensionSeparator);
-    return fullPath.substring(dot + 1);
-    }
-    
-    public String filename() {  // gets filename without extension
-    int dot = fullPath.lastIndexOf(extensionSeparator);
-    int sep = fullPath.lastIndexOf(pathSeparator);
-    return fullPath.substring(sep + 1, dot);
-    }
-    
-    public String path() {
-    int sep = fullPath.lastIndexOf(pathSeparator);
-    return fullPath.substring(0, sep);
-    }*/
+   
 }

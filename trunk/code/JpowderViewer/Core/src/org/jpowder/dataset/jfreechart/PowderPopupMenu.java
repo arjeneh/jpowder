@@ -87,7 +87,7 @@ public class PowderPopupMenu extends javax.swing.JPopupMenu {
         });
 
 
-        javax.swing.JCheckBoxMenuItem offMarker = new javax.swing.JCheckBoxMenuItem("turn off marker");
+        javax.swing.JCheckBoxMenuItem offMarker = new javax.swing.JCheckBoxMenuItem("turn off marker",true);
         offMarker.addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent event) {

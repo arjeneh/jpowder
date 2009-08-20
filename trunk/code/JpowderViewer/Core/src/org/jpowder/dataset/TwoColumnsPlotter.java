@@ -105,18 +105,18 @@ public class TwoColumnsPlotter extends DatasetPlotter {
         return chart;
     }//end createPowderChart
 
-    // Creates a sample dataset.
-    // @param name  the name at the bottom of the chart.
-    // @return a sample dataset.
+    /**
+     * Creates a JFreeChart dataset object from Jpowder Dataset
+     *
+     * @param name The name to appear at the bottom of the chart
+     * @return a JFreeChart dataset
+     */
     public XYDataset createDataset(String name) {
-        String bottomTitle = name;
         
-        XYSeries series1 = new XYSeries(bottomTitle);//the name at the bottom of the chart.
+        XYSeries series1 = new XYSeries(name); //the name at the bottom of the chart.
 
-        XY xy = (XY) this.d;
-
-        Vector x = xy.getX();
-        Vector y = xy.getY();
+        Vector x = this.d.getX();
+        Vector y = this.d.getY();
         //
         for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
             series1.add(

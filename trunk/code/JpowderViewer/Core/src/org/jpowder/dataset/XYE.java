@@ -18,7 +18,7 @@ public class XYE extends DataSet {
         super(data, fileName);
 
         this.data = data;
-        this.e = VectorMiscUtil.getColumn(this.data, 2);
+       this.e = VectorMiscUtil.getColumn(this.data, 2);
 
         this.yLower = new Vector<Double>();
         this.yUpper = new Vector<Double>();
@@ -40,9 +40,6 @@ public class XYE extends DataSet {
         //System.out.println(" In XYE.java yUpper is " + yUpper);
     }
 
-    public DatasetPlotter createDatasetPlotter() {
-        return new ThreeColumnsPlotter(this);
-    }
 
     public String description() {
         return "XYE data contains " + this.data;
@@ -72,9 +69,9 @@ public class XYE extends DataSet {
         this.yUpper = yUpper;
     }
     
-    @Override
-    public Vector getData() {
-        return this.data;
-    }
+  
+ //   public Vector getData() {
+    //    return this.data;
+   // }
 }
 
