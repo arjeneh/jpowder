@@ -71,7 +71,7 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
 
          Stopwatch lStopwatch = new Stopwatch();
          lStopwatch.start();
-        DatasetPlotter plot = lastAddedDataset.createDatasetPlotter();
+        DatasetPlotter plot = DatasetPlotter.createDatasetPlotter(lastAddedDataset);
         powderChartPanel.add(plot.createPowderChart());
         System.out.println("\nTime it took to create chart " + fileName);
                 System.out.println(lStopwatch.getElapsedTime());
@@ -111,10 +111,10 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
         f.getContentPane().add(applet);
         f.setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         f.pack();
-        f.setVisible(true);
+        
         //calling Screen.java to center the frame on user screen.
-        ScreenUtil.centerFrame(f);
-
+       ScreenUtil.centerFrame(f);
+       f.setVisible(true);
     } //main
 
     

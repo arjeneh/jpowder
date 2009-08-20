@@ -72,7 +72,7 @@
           <Image iconType="3" name="/images/PlotChart.gif"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Plot datasets"/>
-        <Property name="toolTipText" type="java.lang.String" value="Plot datasets"/>
+        <Property name="toolTipText" type="java.lang.String" value="Plot multy datasets on the same chart "/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[50, 23]"/>
         </Property>
