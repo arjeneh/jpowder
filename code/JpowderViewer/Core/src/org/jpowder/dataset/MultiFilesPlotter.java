@@ -2,24 +2,19 @@ package org.jpowder.dataset;
 
 import org.jpowder.dataset.jfreechart.PowderChartMouseObserver;
 import java.awt.Color;
-import java.awt.Font;
 import java.util.Vector;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.title.TextTitle;
-import org.jfree.data.general.Dataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.HorizontalAlignment;
-import org.jfree.ui.RectangleEdge;
+import org.jfree.data.xy.YIntervalSeries;
 import org.jfree.ui.RectangleInsets;
 
 /*
@@ -76,7 +71,7 @@ public class MultiFilesPlotter extends DatasetPlotter {
 
         // create the chart...
         JFreeChart chart = ChartFactory.createXYLineChart(
-                "Chart: " ,//this.d.getFileName(), // chart title
+                "" ,//this.d.getFileName(), // chart title
                 "X", // x axis label
                 "Y", // y axis label
                 dataSet, // data
@@ -91,14 +86,15 @@ public class MultiFilesPlotter extends DatasetPlotter {
         
 
         chart.setBackgroundPaint(Color.white);
-        chart.addSubtitle(new TextTitle("Data of " + "")); ///this.d.getFileName()));
+        chart.addSubtitle(new TextTitle("")); ///this.d.getFileName()));
 
         //add the copyright.
+        /*
         TextTitle source = new TextTitle("Created by Kreecha Puphaiboon and Anders Markvardsen");
         source.setFont(new Font("SansSerif", Font.PLAIN, 10));
         source.setPosition(RectangleEdge.BOTTOM);
         source.setHorizontalAlignment(HorizontalAlignment.RIGHT);
-        chart.addSubtitle(source);
+        chart.addSubtitle(source);*/
 
         // get a reference to the plot for further customisation...
         XYPlot plot = (XYPlot) chart.getPlot();
@@ -109,7 +105,7 @@ public class MultiFilesPlotter extends DatasetPlotter {
 
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
         renderer.setBaseLinesVisible(true);
-        renderer.setBaseShapesVisible(true);
+        renderer.setBaseShapesVisible(false);//responsible for turning the marker off/on
 
         // change the auto tick unit selection to integer units only...
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
@@ -125,67 +121,50 @@ public class MultiFilesPlotter extends DatasetPlotter {
      *
      * @return The dataset.
      */
-    private XYDataset createDataset() {
+  private XYDataset createDataset() {
 
-       // Vector<Vector<Double>> localData = dataVec;
-        //System.out.println("XYDataset createDataset() in MultiFilesPlotter.java: " + name);
+    XYSeriesCollection datasetCol = new XYSeriesCollection();
 
-        /*String filename = name;
-        int namesChars = names.length();
-        //remove '[' and ']'
-        String newString = names.substring(1, namesChars - 1);
+    for (int f = 0; f < datasets.size(); f++) {
+      DataSet lDataset = datasets.elementAt(f);
 
-        String[] files = newString.split(",");*/
+      //new file
+      XYSeries series = new XYSeries(lDataset.getFileName());
 
-        //XY_XYE xy_xye = (XY_XYE) this.d;
-        //xy_xye.
+      Vector x = lDataset.getX();
+      Vector y = lDataset.getY();
 
-        XYSeriesCollection datasetCol = new XYSeriesCollection();
+      //if (lDataset instanceof XY) {
+        for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
+          series.add(
+                  Double.parseDouble(x.elementAt(rowIndex).toString()),
+                  Double.parseDouble(y.elementAt(rowIndex).toString()));
+        }
+        datasetCol.addSeries(series);
+      //}
+      /*} else if (lDataset instanceof XYE) {
+        YIntervalSeries s1 = new YIntervalSeries(lDataset.getFileName());
 
-        for (int f = 0; f < datasets.size(); f++) {
-            DataSet lDataset = datasets.elementAt(f);
+        XYE xye = (XYE) lDataset;
 
-            //new file
-            XYSeries series = new XYSeries(lDataset.getFileName());
+        Vector minusY = xye.getYLower();
+        Vector addY = xye.getYUpper();
 
-            Vector x = lDataset.getX();
-            Vector y = lDataset.getY();
-        
-            for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
-            series.add(
-                    Double.parseDouble(x.elementAt(rowIndex).toString()),
-                    Double.parseDouble(y.elementAt(rowIndex).toString()));
-           } 
-            
-            /*
-            for (int r = 0; r < file.size(); r++) {
-                Vector rowData = file.elementAt(r);
-                Vector x = VectorMiscUtil.getColumn(rowData, 0);
-                Vector y = VectorMiscUtil.getColumn(rowData, 1);
+        for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
+          s1.add(Double.parseDouble(x.elementAt(rowIndex).toString()),
+                  Double.parseDouble(y.elementAt(rowIndex).toString()),
+                  Double.parseDouble(minusY.elementAt(rowIndex).toString()),
+                  Double.parseDouble(addY.elementAt(rowIndex).toString()));
+        }
+        datasetCol.addSeries(s1);
+      }*/
+       //else {
+        // do a window not recognised
+       // }
 
-                System.out.println("rowData in MultiFilesPlotter.java: " + rowData);
-                System.out.println("X in MultiFilesPlotter.java: " + x);
-                System.out.println("Y in MultiFilesPlotter.java: " + y);
+      }//outer for
 
-                System.out.println("add x to series: " +
-                        Double.parseDouble(x.elementAt(r).toString()));
-                System.out.println("add y to series: " +
-                        Double.parseDouble(y.elementAt(r).toString()));
-
-                for (int col = 0; col < rowData.size(); col++) {
-                    series.add(
-                            Double.parseDouble(x.elementAt(col).toString()),
-                            Double.parseDouble(y.elementAt(col).toString())
-                            );
-                }
-
-            }//for
- */
-
-            datasetCol.addSeries(series);
-        }//outer for
-
-        return datasetCol;
+      return datasetCol;
 
     }//createDataset
 }//class
