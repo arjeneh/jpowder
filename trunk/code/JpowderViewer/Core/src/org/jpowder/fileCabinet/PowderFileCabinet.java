@@ -165,7 +165,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
       else if (countColumn == 3)
          retVal = new XYE(lData, aFile.getName());
       else
-        System.out.println("Powder data most contain either 2 or 3 columns");
+         javax.swing.JOptionPane.showMessageDialog(this, "File must contain either 2 or 3 columns");
 
       return retVal;
     }
@@ -213,13 +213,15 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
             return null;
         } catch (IOException io) {
             javax.swing.JOptionPane.showMessageDialog(null, "Can't open file.");
-            System.out.println("IOException throws " + io);
+            System.out.println("IOException throws "+io );
             return null;
         } catch (java.lang.NumberFormatException nfe) {
+
             javax.swing.JOptionPane.showMessageDialog(null, "The file contains a character, we cannot process this file.");
             System.out.println("NumberFormatException throws " + nfe);
             return null;
         }
+        
     }
 
 

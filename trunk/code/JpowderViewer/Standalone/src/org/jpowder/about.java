@@ -16,17 +16,16 @@ package org.jpowder;
  * @author qyt21516
  */
 public class about extends javax.swing.JFrame {
+ 
+  
 
-    @Override
-    public void setLocation(int x, int y) {
-       
-    }
 
 
     /** Creates new form About */
     public about() {
         initComponents();
-        
+     
+
     }
 
     /** This method is called from within the constructor to
@@ -150,7 +149,9 @@ public class about extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 new about().setVisible(true);
+                
 
             }
         });

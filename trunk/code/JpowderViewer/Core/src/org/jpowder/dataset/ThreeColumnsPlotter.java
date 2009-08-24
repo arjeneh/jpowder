@@ -59,7 +59,7 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
 
         XYErrorRenderer renderer = new XYErrorRenderer();
         renderer.setBaseLinesVisible(true);
-        renderer.setBaseShapesVisible(true);
+        renderer.setBaseShapesVisible(false);//responsible for turning the marker off/on
         renderer.setDrawYError(true);
 
         XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
@@ -68,7 +68,7 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
         plot.setRangeGridlinePaint(Color.white);
         plot.setDomainCrosshairVisible(true);
 
-        JFreeChart XYE_Chart = new JFreeChart("Chart: " + this.d.getFileName(), plot);
+        JFreeChart XYE_Chart = new JFreeChart(plot);//"Chart: " + this.d.getFileName() for getting the chart header
         XYE_Chart.setBackgroundPaint(Color.white);
 
         return XYE_Chart;

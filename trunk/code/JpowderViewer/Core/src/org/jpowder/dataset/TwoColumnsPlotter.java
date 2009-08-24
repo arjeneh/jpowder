@@ -1,9 +1,9 @@
+
 package org.jpowder.dataset;
 
 //
 import org.jpowder.dataset.jfreechart.PowderChartMouseObserver;
 import java.awt.Color;
-import java.awt.Font;
 import java.util.Vector;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -16,8 +16,6 @@ import org.jfree.chart.title.TextTitle;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.HorizontalAlignment;
-import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 import org.jpowder.dataset.jfreechart.XY_PopupMenu;
 /**
@@ -65,7 +63,7 @@ public class TwoColumnsPlotter extends DatasetPlotter {
 
         // create the chart...
         JFreeChart chart = ChartFactory.createXYLineChart(
-                "Chart: " + this.d.getFileName(), // chart title
+                "", // chart title  + this.d.getFileName()
                 "X", // x axis label
                 "Y", // y axis label
                 dataset, // data
@@ -78,14 +76,15 @@ public class TwoColumnsPlotter extends DatasetPlotter {
 
         // NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
         chart.setBackgroundPaint(Color.white);
-        chart.addSubtitle(new TextTitle("Data of " + this.d.getFileName()));
+        chart.addSubtitle(new TextTitle(""));//"Data of " + this.d.getFileName()) is for sub header
 
         //add the copyright.
+        /*
         TextTitle source = new TextTitle("Created by Kreecha Puphaiboon and Anders Markvardsen");
         source.setFont(new Font("SansSerif", Font.PLAIN, 10));
         source.setPosition(RectangleEdge.BOTTOM);
         source.setHorizontalAlignment(HorizontalAlignment.RIGHT);
-        chart.addSubtitle(source);
+        chart.addSubtitle(source); */
 
         // get a reference to the plot for further customisation...
         XYPlot plot = (XYPlot) chart.getPlot();
@@ -96,7 +95,7 @@ public class TwoColumnsPlotter extends DatasetPlotter {
 
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
         renderer.setBaseLinesVisible(true);
-        renderer.setBaseShapesVisible(true);
+        renderer.setBaseShapesVisible(false);//responsible for turning the marker off/on
 
         // change the auto tick unit selection to integer units only...
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();

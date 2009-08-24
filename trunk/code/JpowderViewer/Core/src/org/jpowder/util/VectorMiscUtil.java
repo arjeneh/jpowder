@@ -18,6 +18,7 @@ public class VectorMiscUtil {
      * */
     public static Vector initXYEData() {
         Vector row1 = new Vector();
+        
         row1.add(3.000);
         row1.add(171.863);
         row1.add(14.82657);
@@ -37,7 +38,10 @@ public class VectorMiscUtil {
         data.add(row2);
         data.add(row3);
 
+         
+
         return data;
+        
     }
 
     public static Vector initXYData() {
@@ -88,7 +92,7 @@ public class VectorMiscUtil {
         Vector output = new Vector();
         Vector vRow = new Vector();
         Vector vLastColumn = new Vector();
-        //Get the last column of Vector.
+        //Get the last column oof Vector.
         for (int i = 0; i < ori.size(); i++) {
             vRow = (Vector) (ori.elementAt(i));
             for (int j = 0; j < vRow.size(); j++) {

@@ -21,9 +21,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.jpowder.JCheckboxList.CheckableFileItem;
-import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
 import org.jpowder.util.Stopwatch;
+import org.jpowder.dataset.DataSet;
 
 /**
  * User can add or drag/drop a dataset file. It brings up a dialog
@@ -61,7 +61,8 @@ public class FileChooserPanel extends javax.swing.JPanel
         checkboxList.setMinimumSize(new java.awt.Dimension(210, 274));
         checkboxList.setPreferredSize(new java.awt.Dimension(210, 274));
 
-        file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS
+                , ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         file_sp.setMinimumSize(new java.awt.Dimension(260, 284));
         file_sp.setPreferredSize(new java.awt.Dimension(260, 284));
         file_sp.setViewportView(checkboxList);
@@ -122,7 +123,7 @@ public class FileChooserPanel extends javax.swing.JPanel
             }
         });
 
-        file_sp = new javax.swing.JScrollPane(checkboxList, javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        file_sp = new JScrollPane(checkboxList,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         file_sp.setMinimumSize(new java.awt.Dimension(260, 240));
         file_sp.setViewportView(checkboxList);
 
@@ -382,7 +383,7 @@ private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                lStopwatch.reset();
 
             try {
-                Thread.sleep(5000);
+                Thread.sleep(1500);
             } catch (InterruptedException ex) {
             }
             // Report the result using invokeLater().
