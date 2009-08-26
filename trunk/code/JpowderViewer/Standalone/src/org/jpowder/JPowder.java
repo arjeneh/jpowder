@@ -1,5 +1,6 @@
 package org.jpowder;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.io.IOException;
 import java.util.HashMap;
@@ -7,10 +8,12 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import javax.swing.SwingUtilities;
 import org.jpowder.dataset.DatasetPlotter;
 import org.jpowder.util.ScreenUtil;
 import org.jpowder.util.Stopwatch;
 import org.jpowder.dataset.DataSet;
+import org.jpowder.fileCabinet.PowderFileCabinet;
 /**
  * Jpowder is the starting class for the Jpowder project {@link www.jpowder.org}.
  * It setups the main GUI for this application, which draws charts of powder
@@ -51,6 +54,7 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     private static final int FRAME_HEIGHT = 670;
     private boolean InBrowser = true;
 
+    private PowderFileCabinet mPowderFileCabinet;
     
   
     public void powderFileCabinetUpdate(org.jpowder.fileCabinet.Subject data) {
@@ -131,7 +135,8 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
      */
     @Override
     public void init() {
-
+      mPowderFileCabinet = new PowderFileCabinet();
+      mPowderFileCabinet.registerObserver(this);
         try {
             javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
@@ -353,7 +358,8 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
   }// </editor-fold>//GEN-END:initComponents
 
     private void openFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileMenuItemActionPerformed
-   
+     
+    mPowderFileCabinet.loadFiles();
 }//GEN-LAST:event_openFileMenuItemActionPerformed
 
     private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed

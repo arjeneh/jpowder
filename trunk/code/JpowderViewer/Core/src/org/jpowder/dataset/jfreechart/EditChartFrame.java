@@ -31,6 +31,7 @@ public class EditChartFrame extends javax.swing.JFrame {
         initComponents();
         jFreeChart = chart;
         chartPanel = new org.jfree.chart.ChartPanel(jFreeChart);
+        chartPanel.add(new XYE_PopupMenu(chartPanel));
         bigChartPanel.add(chartPanel);
     }
 

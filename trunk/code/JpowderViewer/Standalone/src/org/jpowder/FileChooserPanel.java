@@ -365,42 +365,47 @@ private void plotFiles_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN
 
 private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFile_btnActionPerformed
 
-    final Stopwatch lStopwatch = new Stopwatch();
-    lStopwatch.start();
-    setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-    // We're going to do something that takes potentially a long time, so we
-    // spin off a thread and update the display when we're done.
-    Thread worker = new Thread() {
-        @Override
-        public void run() {
-            // Load the powder diffraction files which are selected by the user
-            // into the file cabinet
-            Stopwatch lStopwatch = new Stopwatch();
-            lStopwatch.start();
-            mPowderFileCabinet.loadFiles();
-                System.out.println("\nTotal time took to load(Pressing the Open butt) and plot Data:" + mPowderFileCabinet);
-               System.out.println(lStopwatch.getElapsedTime());
-               lStopwatch.reset();
+  final Stopwatch lStopwatch = new Stopwatch();
+  lStopwatch.start();
+  setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+  // We're going to do something that takes potentially a long time, so we
+  // spin off a thread and update the display when we're done.
+  Thread worker = new Thread() {
 
-            try {
-                Thread.sleep(1500);
-            } catch (InterruptedException ex) {
-            }
-            // Report the result using invokeLater().
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    setCursor(null); //turn off the wait cursor when done.
-                }
-            });
+    @Override
+    public void run() {
+      // Load the powder diffraction files which are selected by the user
+      // into the file cabinet
+      Stopwatch lStopwatch = new Stopwatch();
+      lStopwatch.start();
+      mPowderFileCabinet.loadFiles();
+      System.out.println("\nTotal time took to load(Pressing the Open butt) and plot Data:" + mPowderFileCabinet);
+      System.out.println(lStopwatch.getElapsedTime());
+      lStopwatch.reset();
+
+      try {
+        Thread.sleep(1500);
+      } catch (InterruptedException ex) {
+      }
+      // Report the result using invokeLater().
+      SwingUtilities.invokeLater(new Runnable() {
+
+        public void run() {
+          setCursor(null); //turn off the wait cursor when done.
         }
-    };
-    worker.start(); // So we don't hold up the dispatch thread.
+      });
+    }
+  };
+  worker.start(); // So we don't hold up the dispatch thread.
 
 }//GEN-LAST:event_addFile_btnActionPerformed
 
 private void deleteFile_btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFile_btn1ActionPerformed
-            listModel.clear();// not coool
+            //listModel.clear();// not coool
             //checkboxList.clearSelection();//dosent work dont know wa because im ha
+
+            PowderFileCabinet delete = new  PowderFileCabinet();
+            delete.deleteFile(TOOL_TIP_TEXT_KEY);
              
 }//GEN-LAST:event_deleteFile_btn1ActionPerformed
 

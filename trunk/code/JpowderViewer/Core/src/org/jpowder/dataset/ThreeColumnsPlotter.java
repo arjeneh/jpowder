@@ -83,7 +83,6 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
         //(x,y, -y, +y)
 
         XYE xye = (XYE) this.d;
-
         Vector x = xye.getX();
         Vector y = xye.getY();
         Vector minusY = xye.getYLower();
