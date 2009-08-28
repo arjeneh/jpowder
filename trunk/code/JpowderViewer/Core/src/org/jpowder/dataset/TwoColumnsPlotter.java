@@ -4,11 +4,15 @@ package org.jpowder.dataset;
 //
 import org.jpowder.dataset.jfreechart.PowderChartMouseObserver;
 import java.awt.Color;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.labels.StandardXYToolTipGenerator;
+import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -100,6 +104,11 @@ public class TwoColumnsPlotter extends DatasetPlotter {
         // change the auto tick unit selection to integer units only...
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        //Displaying the X&Y in Tooltip
+      XYToolTipGenerator tooltip = new StandardXYToolTipGenerator(
+              "{1},{2}", new DecimalFormat("0.000"), new DecimalFormat("0.000"));
+      renderer.setToolTipGenerator(tooltip);
+
       
         return chart;
     }//end createPowderChart

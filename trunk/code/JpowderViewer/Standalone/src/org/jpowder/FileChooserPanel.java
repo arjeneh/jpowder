@@ -1,6 +1,7 @@
 package org.jpowder;
 
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
@@ -36,6 +37,7 @@ import org.jpowder.dataset.DataSet;
 public class FileChooserPanel extends javax.swing.JPanel
         implements PowderFileObserver, DropTargetListener {
 
+
     // Commented out by Anders 16/1/09
     private java.awt.dnd.DropTarget dt;
     private PowderFileCabinet mPowderFileCabinet;
@@ -46,6 +48,8 @@ public class FileChooserPanel extends javax.swing.JPanel
 
     //This constructor is for self-testing in the main method of this file.
     public FileChooserPanel() {
+
+    
         try {
             javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
@@ -191,7 +195,7 @@ public class FileChooserPanel extends javax.swing.JPanel
     gridBagConstraints.insets = new java.awt.Insets(5, 2, 5, 2);
     add(addFile_btn, gridBagConstraints);
 
-    plotFiles_btn.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+    plotFiles_btn.setFont(new java.awt.Font("Tahoma", 0, 10));
     plotFiles_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/PlotChart.gif"))); // NOI18N
     plotFiles_btn.setText("Plot datasets");
     plotFiles_btn.setToolTipText("Plot multy datasets on the same chart ");
@@ -316,52 +320,61 @@ public class FileChooserPanel extends javax.swing.JPanel
 
 private void plotFiles_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotFiles_btnActionPerformed
     // TODO: Plot mulitple files//GEN-LAST:event_plotFiles_btnActionPerformed
-        java.util.HashMap dataHm = mPowderFileCabinet.getData();
 
-        // figure out which filenames have been ticked
-        ListModel model = checkboxList.getModel();
-        ArrayList<String> nameList = new ArrayList<String>();
-        int n = model.getSize();
-        
-        for (int i = 0; i < n; i++) {
-            CheckableFileItem item = (CheckableFileItem) model.getElementAt(i);
-            if (item.isSelected()) {
-                nameList.add(item.toString());
-            }//if
-        }//for
 
-        //System.out.println("Selectded items: " + nameList.toString() + " and size = " + nameList.size());
+    JPanel seperatePanel = new JPanel();
+    //seperatePanel.setBackground(new java.awt.Color(240, 240, 240));
+    seperatePanel.setMinimumSize(new Dimension(550, 4));
+    seperatePanel.setPreferredSize(new Dimension(550, 4));
+    seperatePanel.setMaximumSize(new Dimension(550, 4));
 
-        //not enough dataset 2 at least.
-        if (nameList.size() <= 1) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Please select at least 2 files.");
-            return;
-        }//less than two.
+    java.util.HashMap dataHm = mPowderFileCabinet.getData();
 
-        //System.out.println("CheckableFileItem: " + nameList.toString());
+    // figure out which filenames have been ticked
+    ListModel model = checkboxList.getModel();
+    ArrayList<String> nameList = new ArrayList<String>();
+    int n = model.getSize();
 
-        /* 1 Get the file data that match with nameList
-         * 2 start plot from the file nameList one by one
-         * 3 add the chart to JPowder one with jPowderMain.getChartPanel()
-         */
-        Vector<DataSet> dat = new Vector<DataSet>();
-        for (int i = 0; i < nameList.size(); i++) {
-            String fileName = nameList.get(i);
-            DataSet lData = (DataSet) dataHm.get(fileName);
-            dat.add(lData);
-        }
+    for (int i = 0; i < n; i++) {
+      CheckableFileItem item = (CheckableFileItem) model.getElementAt(i);
+      if (item.isSelected()) {
+        nameList.add(item.toString());
+      }//if
+    }//for
 
-        //System.out.println("Data of selected files: " + dat.toString());
-       // System.out.println("Data size: " + dat.size());
-        //System.out.println("Selected files: " + nameList.toString());
+    //System.out.println("Selectded items: " + nameList.toString() + " and size = " + nameList.size());
 
-        //plot multiple files.
-        //XY_XYE xy_xye = new XY_XYE(dat, nameList.toString());
-        DatasetPlotter plotMultiCol = DatasetPlotter.createDatasetPlotter(dat);
-        JPanel powderChartPanel = jPowderMain.getChartPanel();
-        powderChartPanel.add(plotMultiCol.createPowderChart());
-        powderChartPanel.revalidate();
+    //not enough dataset 2 at least.
+    if (nameList.size() <= 1) {
+      javax.swing.JOptionPane.showMessageDialog(this, "Please select at least 2 files.");
+      return;
+    }//less than two.
+
+    //System.out.println("CheckableFileItem: " + nameList.toString());
+
+    /* 1 Get the file data that match with nameList
+     * 2 start plot from the file nameList one by one
+     * 3 add the chart to JPowder one with jPowderMain.getChartPanel()
+     */
+    Vector<DataSet> dat = new Vector<DataSet>();
+    for (int i = 0; i < nameList.size(); i++) {
+      String fileName = nameList.get(i);
+      DataSet lData = (DataSet) dataHm.get(fileName);
+      dat.add(lData);
     }
+
+    //System.out.println("Data of selected files: " + dat.toString());
+    // System.out.println("Data size: " + dat.size());
+    //System.out.println("Selected files: " + nameList.toString());
+
+    //plot multiple files.
+    //XY_XYE xy_xye = new XY_XYE(dat, nameList.toString());
+    DatasetPlotter plotMultiCol = DatasetPlotter.createDatasetPlotter(dat);
+    JPanel powderChartPanel = jPowderMain.getChartPanel();
+    powderChartPanel.add(plotMultiCol.createPowderChart());
+    powderChartPanel.add(seperatePanel);
+    powderChartPanel.revalidate();
+  }
 
 private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFile_btnActionPerformed
 
@@ -417,7 +430,7 @@ private void deleteFile_btn1ActionPerformed(java.awt.event.ActionEvent evt) {//G
         frame.setVisible(true);
     }
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JButton addFile_btn;
+  public static javax.swing.JButton addFile_btn;
   private javax.swing.JButton deleteFile_btn1;
   private javax.swing.JButton plotFiles_btn;
   // End of variables declaration//GEN-END:variables

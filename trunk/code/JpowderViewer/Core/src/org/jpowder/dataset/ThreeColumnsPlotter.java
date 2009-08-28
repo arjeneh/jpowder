@@ -2,10 +2,13 @@ package org.jpowder.dataset;
 
 import org.jpowder.dataset.jfreechart.PowderChartMouseObserver;
 import java.awt.Color;
+import java.text.DecimalFormat;
 import java.util.Vector;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.labels.StandardXYToolTipGenerator;
+import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYErrorRenderer;
 import org.jfree.data.xy.IntervalXYDataset;
@@ -52,21 +55,25 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
      * @param dataset  the dataset.
      * @return The chart.
      */
-    private JFreeChart createChart(IntervalXYDataset dataset) {
+   private JFreeChart createChart(IntervalXYDataset dataset) {
 
-        NumberAxis xAxis = new NumberAxis("X");
-        NumberAxis yAxis = new NumberAxis("Y");
+    NumberAxis xAxis = new NumberAxis("X");
+    NumberAxis yAxis = new NumberAxis("Y");
 
-        XYErrorRenderer renderer = new XYErrorRenderer();
-        renderer.setBaseLinesVisible(true);
-        renderer.setBaseShapesVisible(false);//responsible for turning the marker off/on
-        renderer.setDrawYError(true);
+    XYErrorRenderer renderer = new XYErrorRenderer();
+    renderer.setBaseLinesVisible(true);
+    renderer.setBaseShapesVisible(false);//responsible for turning the marker off/on
+    renderer.setDrawYError(true);
+    //Displaying the X&Y in Tooltip
+    XYToolTipGenerator tooltip = new StandardXYToolTipGenerator(
+            "{1},{2}", new DecimalFormat("0.000"), new DecimalFormat("0.000"));
+    renderer.setToolTipGenerator(tooltip);
 
-        XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
-        plot.setBackgroundPaint(Color.lightGray);
-        plot.setDomainGridlinePaint(Color.white);
-        plot.setRangeGridlinePaint(Color.white);
-        plot.setDomainCrosshairVisible(true);
+    XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
+    plot.setBackgroundPaint(Color.lightGray);
+    plot.setDomainGridlinePaint(Color.white);
+    plot.setRangeGridlinePaint(Color.white);
+    plot.setDomainCrosshairVisible(true);
 
         JFreeChart XYE_Chart = new JFreeChart(plot);//"Chart: " + this.d.getFileName() for getting the chart header
         XYE_Chart.setBackgroundPaint(Color.white);
