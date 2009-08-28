@@ -2,10 +2,13 @@ package org.jpowder.dataset;
 
 import org.jpowder.dataset.jfreechart.PowderChartMouseObserver;
 import java.awt.Color;
+import java.text.DecimalFormat;
 import java.util.Vector;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.labels.StandardXYToolTipGenerator;
+import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.chart.plot.DatasetRenderingOrder;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYErrorRenderer;
@@ -67,6 +70,11 @@ public class MultiFilesPlotter extends DatasetPlotter {
     renderer1.setBaseLinesVisible(true);
     renderer1.setBaseShapesVisible(false);//responsible for turning the marker off/on
 
+    //Displaying the X&Y in Tooltip
+    XYToolTipGenerator tooltip = new StandardXYToolTipGenerator(
+            "{1},{2}", new DecimalFormat("0.000"), new DecimalFormat("0.000"));
+    renderer1.setToolTipGenerator(tooltip);
+
     XYPlot plot = new XYPlot(XY_dataSets, xAxis, yAxis, renderer1);
     plot.setBackgroundPaint(Color.lightGray);
     plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
@@ -80,6 +88,7 @@ public class MultiFilesPlotter extends DatasetPlotter {
     XYErrorRenderer renderer2 = new XYErrorRenderer();
     renderer2.setBaseLinesVisible(true);
     renderer2.setBaseShapesVisible(false);//responsible for turning the marker off/on
+    renderer2.setToolTipGenerator(tooltip);
 
     plot.setDataset(1, XYE_datasets);
     plot.setRenderer(1, renderer2);

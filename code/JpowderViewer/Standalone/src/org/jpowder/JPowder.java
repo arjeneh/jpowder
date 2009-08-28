@@ -81,10 +81,10 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
                 lStopwatch.reset();
         // add seperator
         JPanel seperatePanel = new JPanel();
-        seperatePanel.setBackground(new java.awt.Color(240, 240, 240));
-        seperatePanel.setMinimumSize(new Dimension(550, 8));
-        seperatePanel.setPreferredSize(new Dimension(550, 8));
-        seperatePanel.setMaximumSize(new Dimension(550, 8));
+        //seperatePanel.setBackground(new java.awt.Color(240, 240, 240));
+        seperatePanel.setMinimumSize(new Dimension(550, 4));
+        seperatePanel.setPreferredSize(new Dimension(550, 4));
+        seperatePanel.setMaximumSize(new Dimension(550, 4));
         powderChartPanel.add(seperatePanel);
         powderChartPanel.revalidate();
 
@@ -359,7 +359,9 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
 
     private void openFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileMenuItemActionPerformed
      
-    mPowderFileCabinet.loadFiles();
+   mPowderFileCabinet.loadFiles();
+
+
 }//GEN-LAST:event_openFileMenuItemActionPerformed
 
     private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
