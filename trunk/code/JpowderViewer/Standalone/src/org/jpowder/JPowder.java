@@ -2,7 +2,8 @@ package org.jpowder;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.io.IOException;
+import java.awt.FileDialog;
+import java.io.*;
 import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -49,9 +50,9 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
 
     // Some hard coded custom dimensions GUI dimensions
     // What are they exactly?
-    private static final int CHART_HEIGHT_FIX_SIZE = 270;
-    private static final int FRAME_WIDTH = 1070;
-    private static final int FRAME_HEIGHT = 670;
+    private static final int CHART_HEIGHT_FIX_SIZE =270;
+    private static final int FRAME_WIDTH = 10700;
+    private static final int FRAME_HEIGHT = 6700;
     private boolean InBrowser = true;
 
     private PowderFileCabinet mPowderFileCabinet;
@@ -62,7 +63,7 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
 
         // comment: update to a bigger size by getting the current size and add some amount.
         java.awt.Dimension area = powderChartPanel.getSize();
-        area.height = area.height + CHART_HEIGHT_FIX_SIZE;
+        area.height = area.height+ CHART_HEIGHT_FIX_SIZE;
         powderChartPanel.setLayout(new javax.swing.BoxLayout(powderChartPanel, javax.swing.BoxLayout.Y_AXIS));
         powderChartPanel.setPreferredSize(area);
 
@@ -112,7 +113,7 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
 
         // Add applet to the frame
         f.getContentPane().add(applet);
-//        f.setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+       // f.setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         f.pack();
         
         //calling Screen.java to center the frame on user screen.
@@ -402,6 +403,8 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     }//GEN-LAST:event_print_btnActionPerformed
 
     private void saveFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileMenuItemActionPerformed
+ 
+
 
      
 
@@ -414,7 +417,7 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
       f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
       f.getContentPane().add(applet);
       f.pack();
-      ScreenUtil.centerFrame(f);
+      f.setLocation(100, 100);
       f.setVisible(true);
 }//GEN-LAST:event_NewActionPerformed
     // When user click they can see the graph from what ever data in the table.    //end plotFile_btnActionPerformed

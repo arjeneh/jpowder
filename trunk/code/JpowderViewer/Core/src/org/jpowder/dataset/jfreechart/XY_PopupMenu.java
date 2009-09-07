@@ -6,8 +6,14 @@ package org.jpowder.dataset.jfreechart;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.Vector;
+import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -42,6 +48,7 @@ public class XY_PopupMenu extends javax.swing.JPopupMenu {
     private javax.swing.JCheckBoxMenuItem offMarker;
     private javax.swing.JMenuItem markPeakPosition;
     private javax.swing.JMenuItem scaleYdata;
+    private javax.swing.JMenuItem Saveserialize;
     
 
     public XY_PopupMenu(org.jfree.chart.ChartPanel chartPanel) {
@@ -167,7 +174,23 @@ public class XY_PopupMenu extends javax.swing.JPopupMenu {
                 System.out.println("rescale Y data");
             }
         });
+      //ADD serili
+      Saveserialize = new javax.swing.JMenuItem("Save as Ser...");
+      Saveserialize.addActionListener(new java.awt.event.ActionListener() {
 
+        public void actionPerformed(java.awt.event.ActionEvent event) {
+          System.out.println("Save as serialize");
+          try {
+            FileOutputStream buffer = new FileOutputStream("Chart.ser");
+            final ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(chart);
+            //out.close();
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        }
+      });
+        //
         this.jFreeChartPopup.addSeparator();
         this.jFreeChartPopup.add(changePlotStyle);
         //
@@ -176,6 +199,9 @@ public class XY_PopupMenu extends javax.swing.JPopupMenu {
         //
         this.jFreeChartPopup.addSeparator();
         this.jFreeChartPopup.add(scaleYdata);
+        //
+        this.jFreeChartPopup.addSeparator();
+        this.jFreeChartPopup.add(Saveserialize);
 
     }
 
