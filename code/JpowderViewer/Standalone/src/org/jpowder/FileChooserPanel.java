@@ -39,6 +39,7 @@ public class FileChooserPanel extends javax.swing.JPanel
 
 
     // Commented out by Anders 16/1/09
+  
     private java.awt.dnd.DropTarget dt;
     private PowderFileCabinet mPowderFileCabinet;
     private FileNameListModel listModel;
@@ -47,9 +48,8 @@ public class FileChooserPanel extends javax.swing.JPanel
     private JPowder jPowderMain;//where this class located in
 
     //This constructor is for self-testing in the main method of this file.
-    public FileChooserPanel() {
 
-    
+    public FileChooserPanel() {
         try {
             javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
@@ -67,8 +67,8 @@ public class FileChooserPanel extends javax.swing.JPanel
 
         file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS
                 , ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        file_sp.setMinimumSize(new java.awt.Dimension(260, 284));
-        file_sp.setPreferredSize(new java.awt.Dimension(260, 284));
+        file_sp.setMinimumSize(new java.awt.Dimension(260, 260));
+        file_sp.setPreferredSize(new java.awt.Dimension(260, 260));
         file_sp.setViewportView(checkboxList);
 
         java.awt.GridBagConstraints gridBagConstraints;
@@ -78,6 +78,7 @@ public class FileChooserPanel extends javax.swing.JPanel
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         add(file_sp, gridBagConstraints);
+ 
 
         // Commented out by Anders 16/1/09
         dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
@@ -128,7 +129,7 @@ public class FileChooserPanel extends javax.swing.JPanel
         });
 
         file_sp = new JScrollPane(checkboxList,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        file_sp.setMinimumSize(new java.awt.Dimension(260, 240));
+        file_sp.setMinimumSize(new java.awt.Dimension(260, 250));
         file_sp.setViewportView(checkboxList);
 
         java.awt.GridBagConstraints gridBagConstraints;
@@ -416,10 +417,9 @@ private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 private void deleteFile_btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFile_btn1ActionPerformed
             //listModel.clear();// not coool
             //checkboxList.clearSelection();//dosent work dont know wa because im ha
+ 
 
-            PowderFileCabinet delete = new  PowderFileCabinet();
-            delete.deleteFile(TOOL_TIP_TEXT_KEY);
-             
+            
 }//GEN-LAST:event_deleteFile_btn1ActionPerformed
 
     public static void main(String args[]) {
