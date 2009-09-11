@@ -3,13 +3,18 @@ package org.jpowder;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FileDialog;
+import java.awt.dnd.DropTargetDropEvent;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import org.jpowder.dataset.DatasetPlotter;
 import org.jpowder.util.ScreenUtil;
 import org.jpowder.util.Stopwatch;
@@ -61,12 +66,13 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     public void powderFileCabinetUpdate(org.jpowder.fileCabinet.Subject data) {
         org.jpowder.fileCabinet.PowderFileCabinet pfc = (org.jpowder.fileCabinet.PowderFileCabinet) data;
 
+/*
         // comment: update to a bigger size by getting the current size and add some amount.
         java.awt.Dimension area = powderChartPanel.getSize();
-        area.height = area.height+ CHART_HEIGHT_FIX_SIZE;
+        area.height = area.height+( CHART_HEIGHT_FIX_SIZE);
         powderChartPanel.setLayout(new javax.swing.BoxLayout(powderChartPanel, javax.swing.BoxLayout.Y_AXIS));
         powderChartPanel.setPreferredSize(area);
-
+*/
         HashMap<String, DataSet> allData = pfc.getData();
 
         // Get new dataset
@@ -403,9 +409,32 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     }//GEN-LAST:event_print_btnActionPerformed
 
     private void saveFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileMenuItemActionPerformed
- 
+
+      boolean[] JPowder = new boolean[16654];
+      for (int i=0; i<16654;i++){
+      }
+      
+    JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                ".ISIS ", "ISIS");
+
+        chooser.setFileFilter(filter);
+
+        int returnVal = chooser.showSaveDialog(chooser);
+        File fileName = chooser.getSelectedFile();
+        if (returnVal == JFileChooser.APPROVE_OPTION) 
+          try {
+            FileOutputStream buffer = new FileOutputStream(fileName);
+            final ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(JPowder);
 
 
+          } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Invalid file!",
+                    "error", JOptionPane.ERROR_MESSAGE);
+          }
+         
+      
      
 
     }//GEN-LAST:event_saveFileMenuItemActionPerformed

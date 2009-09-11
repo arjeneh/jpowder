@@ -19,6 +19,7 @@ import org.jfree.data.xy.YIntervalSeries;
 import org.jfree.data.xy.YIntervalSeriesCollection;
 import org.jfree.ui.RectangleInsets;
 import org.jpowder.dataset.jfreechart.XYE_PopupMenu;
+import org.jpowder.dataset.jfreechart.XY_PopupMenu;
 /*
 DataSet xye = new XY_XYE(lData, fileName);
 DatasetPlotter plot3Col = xye.createDatasetPlotter();

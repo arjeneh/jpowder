@@ -2,10 +2,10 @@
 package org.jpowder.dataset;
 
 //
+
 import org.jpowder.dataset.jfreechart.PowderChartMouseObserver;
 import java.awt.Color;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Vector;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -29,7 +29,7 @@ import org.jpowder.dataset.jfreechart.XY_PopupMenu;
 public class TwoColumnsPlotter extends DatasetPlotter {
 
     private DataSet d;
-
+    
     public TwoColumnsPlotter(DataSet d) {
         super(d);
         this.d = d;
@@ -40,7 +40,6 @@ public class TwoColumnsPlotter extends DatasetPlotter {
                 " data is " + this.d.description();
     //this.d.description();
     }
-
     @Override
     public ChartPanel createPowderChart() {
         //throw new UnsupportedOperationException("Not supported yet.");
@@ -137,5 +136,7 @@ public class TwoColumnsPlotter extends DatasetPlotter {
         //xyCollection.addSeries(series2);//for multiple files.
         return xyCollection;
     }//end createDataset
+       
+
 }
 

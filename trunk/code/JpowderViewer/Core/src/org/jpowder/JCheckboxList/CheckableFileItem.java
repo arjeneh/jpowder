@@ -5,7 +5,6 @@ import javax.swing.Icon;
 
 /**
  *
- * @author Toshiba
  */
 public class CheckableFileItem {
 
@@ -15,6 +14,7 @@ public class CheckableFileItem {
 
     public CheckableFileItem(String str) {
         this.str = str;
+
         isSelected = false;
     }
 
@@ -38,4 +38,5 @@ public class CheckableFileItem {
     public Icon getIcon() {
         return icon;
     }
+ 
 }

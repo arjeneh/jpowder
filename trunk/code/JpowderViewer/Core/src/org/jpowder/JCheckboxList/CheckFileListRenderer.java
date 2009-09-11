@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package org.jpowder.JCheckboxList;
 
 import java.awt.Component;
@@ -11,9 +8,10 @@ import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 
 /**
- *
- * @author Toshiba
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
+
 public class CheckFileListRenderer extends CheckFileRenderer implements ListCellRenderer {
 
     private Icon commonIcon;
@@ -35,6 +33,7 @@ public class CheckFileListRenderer extends CheckFileRenderer implements ListCell
 
         setEnabled(list.isEnabled());
 
+        //
         check.setSelected(((CheckableFileItem) value).isSelected());
         //
         label.setFont(list.getFont());

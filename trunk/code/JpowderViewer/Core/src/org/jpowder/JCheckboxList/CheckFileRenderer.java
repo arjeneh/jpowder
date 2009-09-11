@@ -6,7 +6,6 @@ package org.jpowder.JCheckboxList;
 
 /**
  *
- * @author Toshiba
  */
 
 import java.awt.*;
@@ -33,7 +32,7 @@ public class CheckFileRenderer extends JPanel implements TreeCellRenderer {
         String stringValue = tree.convertValueToText(value, isSelected,
                 expanded, leaf, row, hasFocus);
         setEnabled(tree.isEnabled());
-        check.setSelected(((CheckFileNode) value).isSelected());
+       // check.setSelected(((CheckFileNode) value).isSelected());
         label.setFont(tree.getFont());
         label.setText(stringValue);
         label.setSelected(isSelected);

@@ -37,7 +37,7 @@ public class XYE_PopupMenu extends XY_PopupMenu {
         plot = super.getPlot();
 
         // TODO: Throw Casting exception
-        offErrorBar = new javax.swing.JCheckBoxMenuItem("turn off errorbars", true);
+        offErrorBar = new javax.swing.JCheckBoxMenuItem("turn on errorbars", true);
         offErrorBar.addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent event) {

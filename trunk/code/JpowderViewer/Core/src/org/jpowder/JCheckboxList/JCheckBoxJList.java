@@ -14,37 +14,27 @@ import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 
 /**
+ * @author Author: Kreecha Puphaiboon
+ * @date 20-Sep-2007, 13:38:48
+ * Used in the FileChooserPanel to display a tickbox of JList (JList by itself does not support tickbox).
+ * It also allow user to select multiple files.
+ *
+ */
 
-Class name: JCheckBoxJList.java
-Author: Kreecha Puphaiboon
-Date: 20-Sep-2007, 13:38:48
-Modf:
-Description:
-    Used in the FileChooserPanel.java to display a tickbox of JList which does not support.
-    It presents as a list model. It also allow user to select multiple files,
-    and plot a chart to display multiple dataset of files.
- * TODO: Add zebra colour to help users to see file (odd/even) .
-
-Interface: ListSelectionListener
- * @see ListSelectionListener
- * @see JList
-
-Return:
-*/
 public class JCheckBoxJList extends JList implements Serializable {
-    //
+    
     public static final String PROP_SAMPLE_PROPERTY = "sampleProperty";
     private String sampleProperty;
     private PropertyChangeSupport propertySupport;
-    //
+   
     private DefaultListModel model;
     //Properties for striping blue and white on the list.
     private CheckFileListRenderer wrapper = null;
-    //private RendererWrapper wrapper = null;
-    //
+   // private RendererWrapper wrapper = null;
+    
     private java.awt.Color rowColors[] = new java.awt.Color[2];
     private boolean drawStripes = false;
-    //
+    
     public JCheckBoxJList(DefaultListModel model) {
         super(model);
         this.model = model;

@@ -6,22 +6,15 @@ import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.fileCabinet.PowderFileObserver;
 
 /**
-
-Class name: FileNameListModel.java
-Author: Kreecha Puphaiboon
-Date: 28/11/08
-Modf:
-Description:
-    Used in the FileChooserPanel.java to display dataset files in the program.
-    It presents as a list model also updates when the file is deleted and inserted.
-
-    This class assumes that the string used to initialize
-    fullPath has a directory path, filename, and extension.
-    The methods won't work if it doesn't match.
-
-Interface: PowderFileObserver
-
-Return:
+*
+*Class name: FileNameListModel.java
+*@author: Kreecha Puphaiboon
+*@date: 28/11/08
+*Used in the FileChooserPanel.java to display dataset files in the program.
+*It presents as a list model also updates when the file is deleted and inserted.
+*This class assumes that the string used to initialize
+*fullPath has a directory path, filename, and extension.
+*The methods won't work if it doesn't match.
 */
 
 
@@ -66,12 +59,12 @@ public class FileNameListModel extends javax.swing.DefaultListModel implements P
         fileNameModelVec.clear();
         fireContentsChanged(this, 0, getSize());
     }
-
+/*
     @Override
     public boolean contains(Object element) {
         return fileNameModelVec.contains(element);
     }
-
+*/
     @Override
     public Object firstElement() {
         return fileNameModelVec.firstElement();
@@ -85,7 +78,7 @@ public class FileNameListModel extends javax.swing.DefaultListModel implements P
     public Object lastElement() {
         return fileNameModelVec.lastElement();
     }
-
+/*
     @Override
     public boolean removeElement(Object element) {
         boolean removed = fileNameModelVec.remove(element);
@@ -94,7 +87,7 @@ public class FileNameListModel extends javax.swing.DefaultListModel implements P
         }
         return removed;
     }
-
+*/
     public void powderFileCabinetUpdate(Subject data) {
 
         PowderFileCabinet pfc = (PowderFileCabinet) data;

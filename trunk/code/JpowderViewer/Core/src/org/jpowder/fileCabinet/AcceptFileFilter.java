@@ -11,7 +11,7 @@ import java.io.File;
  * @author Kai
  * Date: 28/11/08
  * Description:
-    Used to check if file extension is acceptable.
+ *   Used to check if file extension is acceptable.
  *  Called by PowderFileCabinet.java
  *  fileChooser.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, "ASCII file (*.xye, *.txt)"));
  */
