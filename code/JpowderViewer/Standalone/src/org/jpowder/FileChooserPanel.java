@@ -39,7 +39,7 @@ public class FileChooserPanel extends javax.swing.JPanel
 
 
     // Commented out by Anders 16/1/09
-  
+  private static final int CHART_HEIGHT_FIX_SIZE =270;
     private java.awt.dnd.DropTarget dt;
     private PowderFileCabinet mPowderFileCabinet;
     private FileNameListModel listModel;
@@ -297,6 +297,14 @@ public class FileChooserPanel extends javax.swing.JPanel
 
                             if (oneDataset != null) {
                                 mPowderFileCabinet.addFile(mPowderFileCabinet.getLastUpdateFileName(), oneDataset);
+                                 System.out.println("number file selected.\n"+list.size());
+                                 
+                              JPanel powderChartPanel = jPowderMain.getChartPanel();
+                              java.awt.Dimension area = powderChartPanel.getSize();
+                              area.height = area.height + (CHART_HEIGHT_FIX_SIZE*list.size());
+                              powderChartPanel.setLayout(new javax.swing.BoxLayout(powderChartPanel, javax.swing.BoxLayout.Y_AXIS));
+                              powderChartPanel.setPreferredSize(area);
+
                             }
 
                         } else {
@@ -343,7 +351,7 @@ private void plotFiles_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN
       }//if
     }//for
 
-    //System.out.println("Selectded items: " + nameList.toString() + " and size = " + nameList.size());
+    System.out.println("Selectded items: " + nameList.toString() + " and size = " + nameList.size());
 
     //not enough dataset 2 at least.
     if (nameList.size() <= 1) {
@@ -370,11 +378,19 @@ private void plotFiles_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN
 
     //plot multiple files.
     //XY_XYE xy_xye = new XY_XYE(dat, nameList.toString());
+
+
+
     DatasetPlotter plotMultiCol = DatasetPlotter.createDatasetPlotter(dat);
     JPanel powderChartPanel = jPowderMain.getChartPanel();
     powderChartPanel.add(plotMultiCol.createPowderChart());
     powderChartPanel.add(seperatePanel);
     powderChartPanel.revalidate();
+
+        java.awt.Dimension area = powderChartPanel.getSize();
+        area.height = area.height+( CHART_HEIGHT_FIX_SIZE);
+        powderChartPanel.setLayout(new javax.swing.BoxLayout(powderChartPanel, javax.swing.BoxLayout.Y_AXIS));
+        powderChartPanel.setPreferredSize(area);
   }
 
 private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFile_btnActionPerformed

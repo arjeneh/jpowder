@@ -6,11 +6,10 @@ package org.jpowder.JCheckboxList;
 
 /**
  *
- * @author Toshiba
  */
 import java.util.*;
 import javax.swing.tree.*;
-
+/*
 public class CheckFileNode extends DefaultMutableTreeNode {
 
     public final static int SINGLE_SELECTION = 0;
@@ -64,4 +63,4 @@ public class CheckFileNode extends DefaultMutableTreeNode {
     }
     }
      */
-}
+
