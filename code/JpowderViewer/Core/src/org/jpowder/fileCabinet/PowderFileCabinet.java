@@ -15,6 +15,7 @@ import javax.swing.JFileChooser;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.XY;
 import org.jpowder.dataset.XYE;
+import org.jpowder.dataset.XYandXYE_Reader;
 import org.jpowder.util.Stopwatch;
 
 
@@ -151,77 +152,11 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
      * @param aFile Name of the powder diffraction file to be read
      */
     public DataSet createDataSetFromPowderFile(File aFile) {
-      DataSet retVal = null;
 
-      // loading the data into a Vector<Vector<Double>>
-      Vector<Vector<Double>> lData = null;
-      lData = getLocalFile(aFile);
-
-      // Determine how many columns there are
-      int countColumn = lData.firstElement().size();
-
-      // create dataset object
-      if (countColumn == 2)
-         retVal = new XY(lData, aFile.getName());
-      else if (countColumn == 3)
-         retVal = new XYE(lData, aFile.getName());
-      else
-         javax.swing.JOptionPane.showMessageDialog(this, "File must contain either 2 or 3 columns");
-
-      return retVal;
-    }
-
-    /**
-     *  Read a powder diffraction dataset from a powder diffraction file
-     *
-     * @param aFile Name of the powder diffraction file to be read
-     */
-    public Vector<Vector<Double>> getLocalFile(File aFile) {
-        String aLine;
-        Vector<Vector<Double>> localData = new Vector<Vector<Double>>();
-        double filter = 0;
-        double compare = 0; //make sure things are number.
-
-        try {
-            FileInputStream fis = new FileInputStream(aFile);
-            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-            int lineNum = 0;
-
-            while ((aLine = br.readLine()) != null) {
-                lineNum++;
-                // create a vector to hold the field values
-                Vector<Double> newRow = new Vector<Double>();
-                StringTokenizer st2 = new StringTokenizer(aLine);
-                //
-                int numToken = st2.countTokens();
-                for (int i = 0; i < numToken; i++) {
-                    //ignore the last STD by minusing 1.
-                    String stringToken = st2.nextToken();
-                    newRow.addElement(Double.parseDouble(stringToken));
-                } //for
-                localData.addElement(newRow);
-            }//while readLine
-            
-            //System.out.print("Total LineNumber is: " + lineNum);
-
-            fis.close();
-            br.close();
-
-            return localData;
-        } catch (MalformedURLException e) {
-            javax.swing.JOptionPane.showMessageDialog(null, "Not sure.");
-            System.out.println("Malformed URL = " + e);
-            return null;
-        } catch (IOException io) {
-            javax.swing.JOptionPane.showMessageDialog(null, "Can't open file.");
-            System.out.println("IOException throws "+io );
-            return null;
-        } catch (java.lang.NumberFormatException nfe) {
-
-            javax.swing.JOptionPane.showMessageDialog(null, "The file contains a character, we cannot process this file.");
-            System.out.println("NumberFormatException throws " + nfe);
-            return null;
-        }
+      //if (aFile.getName()==".xy" or ".xye)
+      return XYandXYE_Reader.read(aFile);
+      //if (aFile.getName()==".cif")
+        // do something
         
     }
 

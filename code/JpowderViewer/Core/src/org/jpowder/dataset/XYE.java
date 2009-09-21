@@ -16,9 +16,10 @@ public class XYE extends DataSet {
 
     public XYE(Vector data, String fileName) {
         super(data, fileName);
+        hasErrorbars = true;
 
         this.data = data;
-       this.e = VectorMiscUtil.getColumn(this.data, 2);
+        this.e = VectorMiscUtil.getColumn(this.data, 2);
 
         this.yLower = new Vector<Double>();
         this.yUpper = new Vector<Double>();
@@ -34,10 +35,6 @@ public class XYE extends DataSet {
             Double plusY = Double.parseDouble(row.elementAt(3).toString());
             yUpper.add(plusY);
         }//end for 1
-
-      // System.out.println(" In XYE.java yLower is " + yLower);
-       // System.out.println(" In XYE.java y      is " + super.getY());
-        //System.out.println(" In XYE.java yUpper is " + yUpper);
     }
 
 

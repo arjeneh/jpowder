@@ -15,7 +15,9 @@ public abstract class DataSet
 
     private Vector x;
     private Vector y;
-    //
+    
+    public boolean hasErrorbars = false;
+
     private String fileName;
   
 

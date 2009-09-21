@@ -26,15 +26,18 @@ public abstract class DatasetPlotter {
           // does the dataset contain 2 or 3 columns
           DataSet lDataset = datasets.elementAt(0);
 
-          if (lDataset instanceof XY)
-            return new TwoColumnsPlotter(lDataset);
-          if (lDataset instanceof XYE)
+          //if (lDataset instanceof XY)
+          if (lDataset.hasErrorbars)
             return new ThreeColumnsPlotter(lDataset);
           else
-          {
-            System.out.println("Not a recognised dataSet type");
-            return null;
-          }
+            return new TwoColumnsPlotter(lDataset);
+          //if (lDataset instanceof XYE)
+
+          //else
+          //{
+          //  System.out.println("Not a recognised dataSet type");
+          //  return null;
+         // }
         }
         else
         {
