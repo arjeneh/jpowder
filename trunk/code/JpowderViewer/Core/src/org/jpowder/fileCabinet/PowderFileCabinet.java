@@ -1,20 +1,13 @@
 package org.jpowder.fileCabinet;
 
 import org.jpowder.*;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Serializable;
-import java.net.MalformedURLException;
 import java.util.HashMap;
-import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.JFileChooser;
+import org.jpowder.dataset.Cif_Reader;
 import org.jpowder.dataset.DataSet;
-import org.jpowder.dataset.XY;
-import org.jpowder.dataset.XYE;
 import org.jpowder.dataset.XYandXYE_Reader;
 import org.jpowder.util.Stopwatch;
 
@@ -38,7 +31,7 @@ import org.jpowder.util.Stopwatch;
 public class PowderFileCabinet extends javax.swing.JComponent implements Subject, Serializable {
 
     // if ACCEPTED_FILE_TYPE is modified also modify string in loadFiles()
-    private static final String[] ACCEPTED_FILE_TYPE = {"xy", "xye", "txt"};
+    private static final String[] ACCEPTED_FILE_TYPE = {"xy", "xye", "txt","cif"};
     private Vector<PowderFileObserver> observers = new Vector<PowderFileObserver>();
     private HashMap<String, DataSet> data = new HashMap<String, DataSet>();
     private String lastUpdateFileName;
@@ -101,7 +94,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         // Set the accepted powder diffraction file extensions
         // and open a file chooser window for the user to select powder
         // diffraction file
-        fileChooser.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, "File (*.xy, *.xye, *.txt)"));
+        fileChooser.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, "File (*.xy, *.xye, *.txt,*cif)"));
         fileChooser.setAcceptAllFileFilterUsed(false);
         int returnVal = fileChooser.showOpenDialog(null);
         Stopwatch totalStopwatch = new Stopwatch();
@@ -153,13 +146,15 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
      */
     public DataSet createDataSetFromPowderFile(File aFile) {
 
-      //if (aFile.getName()==".xy" or ".xye)
-      return XYandXYE_Reader.read(aFile);
-      //if (aFile.getName()==".cif")
-        // do something
-        
-    }
+        if (aFile.getName().endsWith("xye") || aFile.getName().endsWith("xy")||aFile.getName().endsWith("txt")) {
+            return XYandXYE_Reader.read(aFile);
+        }
 
+        if (aFile.getName().endsWith("cif")) {
+            return Cif_Reader.read(aFile);
+        }
+        return null;
+    }
 
     /**
      * Checking whether file type is allowed
