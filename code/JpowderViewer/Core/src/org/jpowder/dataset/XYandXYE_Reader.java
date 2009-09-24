@@ -47,6 +47,7 @@ public class XYandXYE_Reader {
                     newRow.addElement(Double.parseDouble(stringToken));
                 } //for
                 localData.addElement(newRow);
+              // System.out.println(localData);
             }//while readLine
 
             //System.out.print("Total LineNumber is: " + lineNum);

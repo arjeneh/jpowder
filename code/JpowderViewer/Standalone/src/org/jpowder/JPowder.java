@@ -66,13 +66,13 @@ public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabi
     public void powderFileCabinetUpdate(org.jpowder.fileCabinet.Subject data) {
         org.jpowder.fileCabinet.PowderFileCabinet pfc = (org.jpowder.fileCabinet.PowderFileCabinet) data;
 
-/*
+
         // comment: update to a bigger size by getting the current size and add some amount.
         java.awt.Dimension area = powderChartPanel.getSize();
         area.height = area.height+( CHART_HEIGHT_FIX_SIZE);
         powderChartPanel.setLayout(new javax.swing.BoxLayout(powderChartPanel, javax.swing.BoxLayout.Y_AXIS));
         powderChartPanel.setPreferredSize(area);
-*/
+
         HashMap<String, DataSet> allData = pfc.getData();
 
         // Get new dataset
