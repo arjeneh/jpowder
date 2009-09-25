@@ -10,7 +10,7 @@ import org.jpowder.util.VectorMiscUtil;
  *
  *
  */
-public abstract class DataSet
+public abstract  class DataSet
 {
 
     private Vector x;

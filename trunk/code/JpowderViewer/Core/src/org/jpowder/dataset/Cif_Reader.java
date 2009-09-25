@@ -88,9 +88,9 @@ public class Cif_Reader {
 
             // create dataset object
             if (countColumn == 2) {
-                retVal = new XY(localData, aFile.getName());
+                retVal = new DataSetNoErrors(localData, aFile.getName());
             } else if (countColumn == 3) {
-                retVal = new XYE(localData, aFile.getName());
+                retVal = new DataSetWithErrors(localData, aFile.getName());
             } else {
                 javax.swing.JOptionPane.showMessageDialog(null, "File must contain either 2 or 3 columns");
             }

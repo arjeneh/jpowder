@@ -47,10 +47,10 @@ public abstract class DatasetPlotter {
     }
 
   public static DatasetPlotter createDatasetPlotter(DataSet dataset) {
-    if (dataset instanceof XY) {
+    if (dataset instanceof DataSetNoErrors) {
       return new TwoColumnsPlotter(dataset);
     }
-    if (dataset instanceof XYE) {
+    if (dataset instanceof DataSetWithErrors) {
       return new ThreeColumnsPlotter(dataset);
     } else {
       System.out.println("Not a recognised dataset type");
