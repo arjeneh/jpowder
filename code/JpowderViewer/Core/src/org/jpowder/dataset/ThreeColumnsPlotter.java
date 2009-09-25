@@ -89,7 +89,7 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
         YIntervalSeries s1 = new YIntervalSeries("Dataset:" + this.d.getFileName()); 
         //(x,y, -y, +y)
 
-        XYE xye = (XYE) this.d;
+        DataSetWithErrors xye = (DataSetWithErrors) this.d;
         Vector x = xye.getX();
         Vector y = xye.getY();
         Vector minusY = xye.getYLower();

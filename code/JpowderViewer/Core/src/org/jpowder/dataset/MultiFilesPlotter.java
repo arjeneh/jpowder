@@ -113,7 +113,7 @@ public class MultiFilesPlotter extends DatasetPlotter {
     XYSeriesCollection datasetCol = new XYSeriesCollection();
 
     for (int i = 0; i < datasets.size(); i++) {
-      if (datasets.elementAt(i) instanceof XY) {
+      if (datasets.elementAt(i) instanceof DataSetNoErrors) {
         //new file
         XYSeries series = new XYSeries(datasets.elementAt(i).getFileName());
 
@@ -135,9 +135,9 @@ public class MultiFilesPlotter extends DatasetPlotter {
     //IntervalXYDataset is an interface.
     YIntervalSeriesCollection datasetCol = new YIntervalSeriesCollection();
     for (int i = 0; i < datasets.size(); i++) {
-      if (datasets.elementAt(i) instanceof XYE) {
+      if (datasets.elementAt(i) instanceof DataSetWithErrors) {
         YIntervalSeries s1 = new YIntervalSeries(datasets.elementAt(i).getFileName());
-        XYE xye = (XYE) datasets.elementAt(i);
+        DataSetWithErrors xye = (DataSetWithErrors) datasets.elementAt(i);
         Vector x = xye.getX();
         Vector y = xye.getY();
         Vector minusY = xye.getYLower();
