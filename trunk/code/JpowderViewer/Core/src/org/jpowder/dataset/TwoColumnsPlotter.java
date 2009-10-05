@@ -46,7 +46,7 @@ public class TwoColumnsPlotter extends DatasetPlotter {
         JFreeChart chart = createChart(createDataset(this.d.getFileName()));
 
         ChartPanel chartPanel = new ChartPanel(chart, true);
-        chartPanel.setMaximumSize(new java.awt.Dimension(500, 270));
+        //chartPanel.setMaximumSize(new java.awt.Dimension(500, 270));
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
         //user clicks and popup a dialog.
