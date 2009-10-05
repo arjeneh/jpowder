@@ -49,7 +49,7 @@ public class MultiFilesPlotter extends DatasetPlotter {
     JFreeChart chart = createChart(XY_type_datasets, XYE_type_datasets);
 
     ChartPanel chartPanel = new ChartPanel(chart, true);
-    chartPanel.setMaximumSize(new java.awt.Dimension(500, 270));
+    //chartPanel.setMaximumSize(new java.awt.Dimension(500, 270));
     chartPanel.setDisplayToolTips(false);
     chartPanel.getChartRenderingInfo().setEntityCollection(null);
     chartPanel.add(new XYE_PopupMenu(chartPanel));
