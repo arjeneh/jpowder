@@ -120,7 +120,7 @@ public class ThreeColumnsPlotter extends DatasetPlotter {
         JFreeChart chart = createChart(createDataset());
 
         ChartPanel chartPanel = new ChartPanel(chart, true);
-        //chartPanel.setMaximumSize(new java.awt.Dimension(500, 270));
+        //chartPanel.setMaximumSize(new java.awt.Dimension(300,320));
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
         //User clicks and popup a dialog.
