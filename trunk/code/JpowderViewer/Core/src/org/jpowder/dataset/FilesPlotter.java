@@ -19,20 +19,26 @@ import org.jfree.data.xy.YIntervalSeries;
 import org.jfree.data.xy.YIntervalSeriesCollection;
 import org.jfree.ui.RectangleInsets;
 import org.jpowder.dataset.jfreechart.XYE_PopupMenu;
-import org.jpowder.dataset.jfreechart.XY_PopupMenu;
 /*
 DataSet xye = new XY_XYE(lData, fileName);
 DatasetPlotter plot3Col = xye.createDatasetPlotter();
 powderChartPanel.add(plot3Col.createPowderChart());
  */
 
-public class MultiFilesPlotter extends DatasetPlotter {
+public class FilesPlotter extends DatasetPlotter {
 
   private Vector<DataSet> datasets;
 
-  public MultiFilesPlotter(Vector<DataSet> d) {
+  public FilesPlotter(Vector<DataSet> d) {
     super(d);
     this.datasets = d;
+    System.out.println("MultiFilesPlotter is called ");
+  }
+
+  public FilesPlotter(DataSet d) {
+    super(d);
+    datasets = new Vector<DataSet>();
+    this.datasets.addElement(d);
     System.out.println("MultiFilesPlotter is called ");
   }
 
