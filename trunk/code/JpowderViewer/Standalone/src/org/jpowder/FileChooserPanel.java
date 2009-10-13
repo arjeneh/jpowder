@@ -1,7 +1,7 @@
 package org.jpowder;
 
+import java.awt.BorderLayout;
 import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
@@ -13,7 +13,9 @@ import java.awt.dnd.DropTargetListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Vector;
+import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListModel;
@@ -37,19 +39,17 @@ import org.jpowder.dataset.DataSet;
 public class FileChooserPanel extends javax.swing.JPanel
         implements PowderFileObserver, DropTargetListener {
 
-
     // Commented out by Anders 16/1/09
-  private static final int CHART_HEIGHT_FIX_SIZE =300;
+    private static final int CHART_HEIGHT_FIX_SIZE = 300;
     private java.awt.dnd.DropTarget dt;
     private PowderFileCabinet mPowderFileCabinet;
     private FileNameListModel listModel;
     private JCheckBoxJList checkboxList;
     private javax.swing.JScrollPane file_sp;
     //private JPowder jPowderMain;//where this class located in
-     private JPowderFinalGui jPowderMain;//where this class located in
+    private JPowderFinalGui jPowderMain;//where this class located in
 
     //This constructor is for self-testing in the main method of this file.
-
     public FileChooserPanel() {
         try {
             javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
@@ -66,12 +66,11 @@ public class FileChooserPanel extends javax.swing.JPanel
         checkboxList.setMinimumSize(new java.awt.Dimension(200, 250));
         checkboxList.setPreferredSize(new java.awt.Dimension(200, 250));
 
-        file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS
-                , ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         file_sp.setMinimumSize(new java.awt.Dimension(260, 260));
         file_sp.setPreferredSize(new java.awt.Dimension(260, 260));
         file_sp.setViewportView(checkboxList);
-
+       
         java.awt.GridBagConstraints gridBagConstraints;
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -79,7 +78,8 @@ public class FileChooserPanel extends javax.swing.JPanel
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         add(file_sp, gridBagConstraints);
- 
+         
+        
 
         // Commented out by Anders 16/1/09
         dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
@@ -97,7 +97,7 @@ public class FileChooserPanel extends javax.swing.JPanel
     public FileChooserPanel(JPowderFinalGui jPowderMain) {
         try {
             javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-         } catch (Exception e) {
+        } catch (Exception e) {
         }
         this.jPowderMain = jPowderMain;
         //
@@ -106,8 +106,8 @@ public class FileChooserPanel extends javax.swing.JPanel
         //create a list model to put in the JList
         listModel = new FileNameListModel();
         checkboxList = new JCheckBoxJList(listModel);
-       checkboxList.setFont(new java.awt.Font("Tahoma", 0, 10));
-       checkboxList.setMinimumSize(new java.awt.Dimension(214, 250));
+        checkboxList.setFont(new java.awt.Font("Tahoma", 0, 10));
+        checkboxList.setMinimumSize(new java.awt.Dimension(214, 250));
         checkboxList.setPreferredSize(new java.awt.Dimension(214, 250));
 
         //See how many selected, if greater or equal to 2 then enable the button.
@@ -129,17 +129,17 @@ public class FileChooserPanel extends javax.swing.JPanel
             }
         });
 
-        file_sp = new JScrollPane(checkboxList,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         file_sp.setMinimumSize(new java.awt.Dimension(260, 250));
         file_sp.setViewportView(checkboxList);
-
+        
         java.awt.GridBagConstraints gridBagConstraints;
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
-
+         
         add(file_sp, gridBagConstraints);
 
         // Commented out by Anders 16/1/09
@@ -296,14 +296,14 @@ public class FileChooserPanel extends javax.swing.JPanel
 
                             if (oneDataset != null) {
                                 mPowderFileCabinet.addFile(mPowderFileCabinet.getLastUpdateFileName(), oneDataset);
-                                 System.out.println("number file selected.\n"+list.size());
-                             /**
-                              JPanel ChartPlot = jPowderMain.getChartPanel();
-                              java.awt.Dimension area = ChartPlot.getSize();
-                              area.height = area.height + (CHART_HEIGHT_FIX_SIZE*list.size());
-                              ChartPlot.setLayout(new javax.swing.BoxLayout(ChartPlot, javax.swing.BoxLayout.Y_AXIS));
-                             ChartPlot.setPreferredSize(area);
-                             */
+                                System.out.println("number file selected.\n" + list.size());
+                                /**
+                                JPanel ChartPlot = jPowderMain.getChartPanel();
+                                java.awt.Dimension area = ChartPlot.getSize();
+                                area.height = area.height + (CHART_HEIGHT_FIX_SIZE*list.size());
+                                ChartPlot.setLayout(new javax.swing.BoxLayout(ChartPlot, javax.swing.BoxLayout.Y_AXIS));
+                                ChartPlot.setPreferredSize(area);
+                                 */
                             }
 
                         } else {
@@ -329,113 +329,116 @@ public class FileChooserPanel extends javax.swing.JPanel
 private void plotFiles_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotFiles_btnActionPerformed
     // TODO: Plot mulitple files//GEN-LAST:event_plotFiles_btnActionPerformed
 
-
-    JPanel seperatePanel = new JPanel();
-    //seperatePanel.setBackground(new java.awt.Color(240, 240, 240));
-    seperatePanel.setMinimumSize(new Dimension(550, 4));
-    seperatePanel.setPreferredSize(new Dimension(550, 4));
-    seperatePanel.setMaximumSize(new Dimension(550, 4));
-
-    java.util.HashMap dataHm = mPowderFileCabinet.getData();
-
-    // figure out which filenames have been ticked
-    ListModel model = checkboxList.getModel();
-    ArrayList<String> nameList = new ArrayList<String>();
-    int n = model.getSize();
-
-    for (int i = 0; i < n; i++) {
-      CheckableFileItem item = (CheckableFileItem) model.getElementAt(i);
-      if (item.isSelected()) {
-        nameList.add(item.toString());
-      }//if
-    }//for
-
-    System.out.println("Selectded items: " + nameList.toString() + " and size = " + nameList.size());
-
-    //not enough dataset 2 at least.
-    if (nameList.size() <= 1) {
-      javax.swing.JOptionPane.showMessageDialog(this, "Please select at least 2 files.");
-      return;
-    }//less than two.
-
-    //System.out.println("CheckableFileItem: " + nameList.toString());
-
-    /* 1 Get the file data that match with nameList
-     * 2 start plot from the file nameList one by one
-     * 3 add the chart to JPowder one with jPowderMain.getChartPanel()
-     */
-    Vector<DataSet> dat = new Vector<DataSet>();
-    for (int i = 0; i < nameList.size(); i++) {
-      String fileName = nameList.get(i);
-      DataSet lData = (DataSet) dataHm.get(fileName);
-      dat.add(lData);
-    }
-
-    //System.out.println("Data of selected files: " + dat.toString());
-    // System.out.println("Data size: " + dat.size());
-    //System.out.println("Selected files: " + nameList.toString());
-
-    //plot multiple files.
-    //XY_XYE xy_xye = new XY_XYE(dat, nameList.toString());
-
-
-
-    DatasetPlotter plotMultiCol = DatasetPlotter.createDatasetPlotter(dat);
-    JPanel ChartPlot = jPowderMain.getChartPanel();
-   ChartPlot.add(plotMultiCol.createPowderChart());
-    ChartPlot.add(seperatePanel);
-    ChartPlot.revalidate();
 /**
+        JPanel seperatePanel = new JPanel();
+        //seperatePanel.setBackground(new java.awt.Color(240, 240, 240));
+        seperatePanel.setMinimumSize(new Dimension(550, 4));
+        seperatePanel.setPreferredSize(new Dimension(550, 4));
+        seperatePanel.setMaximumSize(new Dimension(550, 4));
+*/
+        java.util.HashMap dataHm = mPowderFileCabinet.getData();
+
+        // figure out which filenames have been ticked
+        ListModel model = checkboxList.getModel();
+        ArrayList<String> nameList = new ArrayList<String>();
+        int n = model.getSize();
+
+        for (int i = 0; i < n; i++) {
+            CheckableFileItem item = (CheckableFileItem) model.getElementAt(i);
+            if (item.isSelected()) {
+                nameList.add(item.toString());
+            }//if
+        }//for
+
+        System.out.println("Selectded items: " + nameList.toString() + " and size = " + nameList.size());
+
+        //not enough dataset 2 at least.
+        if (nameList.size() <= 1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please select at least 2 files.");
+            return;
+        }//less than two.
+
+        //System.out.println("CheckableFileItem: " + nameList.toString());
+
+        /* 1 Get the file data that match with nameList
+         * 2 start plot from the file nameList one by one
+         * 3 add the chart to JPowder one with jPowderMain.getChartPanel()
+         */
+        Vector<DataSet> dat = new Vector<DataSet>();
+        for (int i = 0; i < nameList.size(); i++) {
+            String fileName = nameList.get(i);
+            DataSet lData = (DataSet) dataHm.get(fileName);
+            dat.add(lData);
+        }
+
+        //System.out.println("Data of selected files: " + dat.toString());
+        // System.out.println("Data size: " + dat.size());
+        //System.out.println("Selected files: " + nameList.toString());
+
+        //plot multiple files.
+        //XY_XYE xy_xye = new XY_XYE(dat, nameList.toString());
+
+
+
+        DatasetPlotter plotMultiCol = DatasetPlotter.createDatasetPlotter(dat);
+        JPanel chartpanls = new JPanel();//jPowderMain.getChartPanel();
+        JDesktopPane ChartPlotter = jPowderMain.getChartPanel();
+
+        //ChartPlot.add(plotMultiCol.createPowderChart());
+        chartpanls.setLayout(new BorderLayout());
+        chartpanls.add(plotMultiCol.createPowderChart());
+        Internalframe internalframe = new Internalframe(chartpanls);
+        ChartPlotter.add(internalframe);
+      //  ChartPlot.add(seperatePanel);
+        //ChartPlot.revalidate();
+        /**
         java.awt.Dimension area = ChartPlot.getSize();
         area.height = area.height+( CHART_HEIGHT_FIX_SIZE);
         ChartPlot.setLayout(new javax.swing.BoxLayout(ChartPlot, javax.swing.BoxLayout.Y_AXIS));
         ChartPlot.setPreferredSize(area);
- * */
-  }
+         * */
+    }
 
 private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFile_btnActionPerformed
 
-  final Stopwatch lStopwatch = new Stopwatch();
-  lStopwatch.start();
-  setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-  // We're going to do something that takes potentially a long time, so we
-  // spin off a thread and update the display when we're done.
-  Thread worker = new Thread() {
+    final Stopwatch lStopwatch = new Stopwatch();
+    lStopwatch.start();
+    setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+    // We're going to do something that takes potentially a long time, so we
+    // spin off a thread and update the display when we're done.
+    Thread worker = new Thread() {
 
-    @Override
-    public void run() {
-      // Load the powder diffraction files which are selected by the user
-      // into the file cabinet
-      Stopwatch lStopwatch = new Stopwatch();
-      lStopwatch.start();
-      mPowderFileCabinet.loadFiles();
-      System.out.println("\nTotal time took to load(Pressing the Open butt) and plot Data:" + mPowderFileCabinet);
-      System.out.println(lStopwatch.getElapsedTime());
-      lStopwatch.reset();
-
-      try {
-        Thread.sleep(5000);
-      } catch (InterruptedException ex) {
-      }
-      // Report the result using invokeLater().
-      SwingUtilities.invokeLater(new Runnable() {
-
+        @Override
         public void run() {
-          setCursor(null); //turn off the wait cursor when done.
+            // Load the powder diffraction files which are selected by the user
+            // into the file cabinet
+            Stopwatch lStopwatch = new Stopwatch();
+            lStopwatch.start();
+            mPowderFileCabinet.loadFiles();
+            System.out.println("\nTotal time took to load(Pressing the Open butt) and plot Data:" + mPowderFileCabinet);
+            System.out.println(lStopwatch.getElapsedTime());
+            lStopwatch.reset();
+
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException ex) {
+            }
+            // Report the result using invokeLater().
+            SwingUtilities.invokeLater(new Runnable() {
+
+                public void run() {
+                    setCursor(null); //turn off the wait cursor when done.
+                }
+            });
         }
-      });
-    }
-  };
-  worker.start(); // So we don't hold up the dispatch thread.
+    };
+    worker.start(); // So we don't hold up the dispatch thread.
 
 }//GEN-LAST:event_addFile_btnActionPerformed
 
 private void deleteFile_btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFile_btn1ActionPerformed
-            //listModel.clear();// not coool
-            //checkboxList.clearSelection();//dosent work dont know wa because im ha
- 
-
-            
+    //listModel.clear();// not coool
+    //checkboxList.clearSelection();//dosent work dont know wa because im ha
 }//GEN-LAST:event_deleteFile_btn1ActionPerformed
 
     public static void main(String args[]) {
