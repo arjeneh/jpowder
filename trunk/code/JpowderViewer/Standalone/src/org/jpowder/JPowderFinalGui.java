@@ -12,7 +12,6 @@ package org.jpowder;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,16 +21,12 @@ import java.util.HashMap;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import org.jfree.layout.CenterLayout;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.util.ScreenUtil;
 import org.jpowder.util.Stopwatch;
-import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
  * Jpowder is the starting class for the Jpowder project {@link www.jpowder.org}.
