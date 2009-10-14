@@ -9,13 +9,12 @@ import org.jpowder.util.VectorMiscUtil;
  */
 public class DataSetWithErrors extends DataSet {
 
-    private Vector e;
+    private Vector<Double> e;
     private Vector<Double> yLower;
     private Vector<Double> yUpper;
 
     public DataSetWithErrors(Vector data, String fileName) {
         super(data, fileName);
-        hasErrorbars = true;
 
         this.e = VectorMiscUtil.getColumn(data, 2);
 
