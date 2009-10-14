@@ -12,19 +12,17 @@ public class DataSetWithErrors extends DataSet {
     private Vector e;
     private Vector<Double> yLower;
     private Vector<Double> yUpper;
-    private Vector data;
 
     public DataSetWithErrors(Vector data, String fileName) {
         super(data, fileName);
         hasErrorbars = true;
 
-        this.data = data;
-        this.e = VectorMiscUtil.getColumn(this.data, 2);
+        this.e = VectorMiscUtil.getColumn(data, 2);
 
         this.yLower = new Vector<Double>();
         this.yUpper = new Vector<Double>();
 
-        Vector twoColumn = VectorMiscUtil.copyBeforeLastColumnsOf2DVector(this.data);
+        Vector twoColumn = VectorMiscUtil.copyBeforeLastColumnsOf2DVector(data);
         Vector outputOfMinusAdd = VectorMiscUtil.do_Minus_Addition_Y(twoColumn, this.e);
         Vector result = VectorMiscUtil.getResultOfAddingTwoVectors(twoColumn, outputOfMinusAdd);
 
@@ -34,18 +32,14 @@ public class DataSetWithErrors extends DataSet {
             yLower.add(minusY);
             Double plusY = Double.parseDouble(row.elementAt(3).toString());
             yUpper.add(plusY);
-        }//end for 1
-
-
-     // System.out.println(" In XYE.java yLower is " + yLower);
-       //System.out.println(" In XYE.java y      is " + super.getY());
-        //System.out.println(" In XYE.java yUpper is " + yUpper);
+        }
 
     }
 
-
+    @Override
+    /// Do we really need this method
     public String description() {
-        return "XYE data contains " + this.data;
+        return "DataSetNoErrors contains powder data with no errors";
     }
 
     public Vector<Double> getE() {
@@ -72,9 +66,5 @@ public class DataSetWithErrors extends DataSet {
         this.yUpper = yUpper;
     }
     
-  
- //   public Vector getData() {
-    //    return this.data;
-   // }
 }
 
