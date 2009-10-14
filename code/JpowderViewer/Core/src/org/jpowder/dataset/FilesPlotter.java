@@ -120,22 +120,19 @@ public class FilesPlotter extends DatasetPlotter {
 
     for (int i = 0; i < datasets.size(); i++) {
       if (datasets.elementAt(i) instanceof DataSetNoErrors) {
-        //new file
+
         XYSeries series = new XYSeries(datasets.elementAt(i).getFileName());
 
-        Vector x = datasets.elementAt(i).getX();
-        Vector y = datasets.elementAt(i).getY();
-        //if (lDataset instanceof XY) {
+        Vector<Double> x = datasets.elementAt(i).getX();
+        Vector<Double> y = datasets.elementAt(i).getY();
         for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
-          series.add(
-                  Double.parseDouble(x.elementAt(rowIndex).toString()),
-                  Double.parseDouble(y.elementAt(rowIndex).toString()));
+          series.add(x.elementAt(rowIndex), y.elementAt(rowIndex));
         }//for
         datasetCol.addSeries(series);
       }//if
     }//for
     return datasetCol;
-  }//create dataset1
+  }
 
   private YIntervalSeriesCollection createDataset2() {
     //IntervalXYDataset is an interface.
@@ -144,20 +141,18 @@ public class FilesPlotter extends DatasetPlotter {
       if (datasets.elementAt(i) instanceof DataSetWithErrors) {
         YIntervalSeries s1 = new YIntervalSeries(datasets.elementAt(i).getFileName());
         DataSetWithErrors xye = (DataSetWithErrors) datasets.elementAt(i);
-        Vector x = xye.getX();
-        Vector y = xye.getY();
-        Vector minusY = xye.getYLower();
-        Vector addY = xye.getYUpper();
+        Vector<Double> x = xye.getX();
+        Vector<Double> y = xye.getY();
+        Vector<Double> minusY = xye.getYLower();
+        Vector<Double> addY = xye.getYUpper();
         for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
-          s1.add(Double.parseDouble(x.elementAt(rowIndex).toString()),
-                  Double.parseDouble(y.elementAt(rowIndex).toString()),
-                  Double.parseDouble(minusY.elementAt(rowIndex).toString()),
-                  Double.parseDouble(addY.elementAt(rowIndex).toString()));
+          s1.add(x.elementAt(rowIndex), y.elementAt(rowIndex),
+                 minusY.elementAt(rowIndex), addY.elementAt(rowIndex));
         }//for
         datasetCol.addSeries(s1);
       }//if
     }// for
     return datasetCol;
-  }//createDataset2
+  }
 }//class
 

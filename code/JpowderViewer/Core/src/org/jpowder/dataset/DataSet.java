@@ -13,10 +13,8 @@ import org.jpowder.util.VectorMiscUtil;
 public abstract  class DataSet
 {
 
-    private Vector x;
-    private Vector y;
-    
-    public boolean hasErrorbars = false;
+    private Vector<Double> x;
+    private Vector<Double> y;
 
     private String fileName;
   
@@ -32,13 +30,6 @@ public abstract  class DataSet
     }
 
     public DataSet() {
-    }
-
-    public void addDataset(DataSet dataset) {
-    }
-
-    public Iterator iterator() {
-        return null;
     }
 
     /// Do we really need this method
