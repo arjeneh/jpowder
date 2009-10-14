@@ -41,9 +41,8 @@ public abstract  class DataSet
         return null;
     }
 
+    /// Do we really need this method
     public abstract String description();
-
- 
 
     public String getFileName() {
         return this.fileName;
