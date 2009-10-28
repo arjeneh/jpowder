@@ -4,6 +4,7 @@
  */
 package org.jpowder.JCheckboxList;
 
+import java.awt.BorderLayout;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

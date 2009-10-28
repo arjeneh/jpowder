@@ -1,6 +1,7 @@
 
 package org.jpowder.JCheckboxList;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.Icon;
 import javax.swing.JList;
@@ -30,6 +31,7 @@ public class CheckFileListRenderer extends CheckFileRenderer implements ListCell
         /*if (!isSelected && drawStripes) {
             c.setBackground( rowColors[index & 1] );
         }*/
+    
 
         setEnabled(list.isEnabled());
 

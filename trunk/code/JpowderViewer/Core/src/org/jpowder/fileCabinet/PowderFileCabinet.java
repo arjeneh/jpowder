@@ -38,6 +38,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
     private String filePath = null;
 
     public PowderFileCabinet() {
+      
     }
 
     // @return data as a hashMap of fileName and data.
