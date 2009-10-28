@@ -1,5 +1,6 @@
 package org.jpowder;
 
+
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.datatransfer.DataFlavor;
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListModel;
@@ -47,27 +47,23 @@ public class FileChooserPanel extends javax.swing.JPanel
     private JCheckBoxJList checkboxList;
     private javax.swing.JScrollPane file_sp;
     //private JPowder jPowderMain;//where this class located in
-    private JPowderFinalGui jPowderMain;//where this class located in
+    private JPowder jPowderMain;//where this class located in
+  
 
     //This constructor is for self-testing in the main method of this file.
     public FileChooserPanel() {
-        try {
-            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        //
+     
         initComponents();
 
         //create a list model to put in the JList
         listModel = new FileNameListModel();
         checkboxList = new JCheckBoxJList(listModel);
         checkboxList.setFont(new java.awt.Font("Tahoma", 0, 10));
-        checkboxList.setMinimumSize(new java.awt.Dimension(200, 250));
+        //checkboxList.setMinimumSize(new java.awt.Dimension(200, 250));
         checkboxList.setPreferredSize(new java.awt.Dimension(200, 250));
 
         file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        file_sp.setMinimumSize(new java.awt.Dimension(260, 260));
+        //file_sp.setMinimumSize(new java.awt.Dimension(260, 260));
         file_sp.setPreferredSize(new java.awt.Dimension(260, 260));
         file_sp.setViewportView(checkboxList);
        
@@ -78,11 +74,9 @@ public class FileChooserPanel extends javax.swing.JPanel
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         add(file_sp, gridBagConstraints);
-         
-        
-
+          
         // Commented out by Anders 16/1/09
-        dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
+     //   dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
 
         //UTILISE OBSERVER PATTERN.
 
@@ -94,11 +88,8 @@ public class FileChooserPanel extends javax.swing.JPanel
 
     //This constructor is called from JPowder's main method.
     //@param jPowderMain: JPowder
-    public FileChooserPanel(JPowderFinalGui jPowderMain) {
-        try {
-            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-        }
+    public FileChooserPanel(JPowder jPowderMain) {
+     
         this.jPowderMain = jPowderMain;
         //
         initComponents();
@@ -107,8 +98,9 @@ public class FileChooserPanel extends javax.swing.JPanel
         listModel = new FileNameListModel();
         checkboxList = new JCheckBoxJList(listModel);
         checkboxList.setFont(new java.awt.Font("Tahoma", 0, 10));
-        checkboxList.setMinimumSize(new java.awt.Dimension(214, 250));
+        //checkboxList.setMinimumSize(new java.awt.Dimension(214, 250));
         checkboxList.setPreferredSize(new java.awt.Dimension(214, 250));
+
 
         //See how many selected, if greater or equal to 2 then enable the button.
         checkboxList.addListSelectionListener(new ListSelectionListener() {
@@ -130,7 +122,7 @@ public class FileChooserPanel extends javax.swing.JPanel
         });
 
         file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        file_sp.setMinimumSize(new java.awt.Dimension(260, 250));
+        file_sp.setMinimumSize(new java.awt.Dimension(260, 150));
         file_sp.setViewportView(checkboxList);
         
         java.awt.GridBagConstraints gridBagConstraints;
@@ -144,15 +136,20 @@ public class FileChooserPanel extends javax.swing.JPanel
 
         // Commented out by Anders 16/1/09
         dt = new java.awt.dnd.DropTarget(this.checkboxList, this);
-
+ 
         //UTILISE OBSERVER PATTERN.
         mPowderFileCabinet = new PowderFileCabinet();
 
         mPowderFileCabinet.registerObserver(this);
         mPowderFileCabinet.registerObserver((PowderFileObserver) listModel);
-        mPowderFileCabinet.registerObserver((JPowderFinalGui) jPowderMain);
+        mPowderFileCabinet.registerObserver((JPowder) jPowderMain);
 
     }//FileChooserPanel
+
+
+    public PowderFileCabinet getPowderFileCabinet(){
+      return mPowderFileCabinet;
+    }
 
     public void powderFileCabinetUpdate(Subject data) {
         PowderFileCabinet pfc = (PowderFileCabinet) data;
@@ -172,7 +169,9 @@ public class FileChooserPanel extends javax.swing.JPanel
     plotFiles_btn = new javax.swing.JButton();
     deleteFile_btn1 = new javax.swing.JButton();
 
+    setBackground(new java.awt.Color(240, 240, 240));
     setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "File Selection Panel (Drop file here)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 102))); // NOI18N
+    setOpaque(false);
     setLayout(new java.awt.GridBagLayout());
 
     addFile_btn.setFont(new java.awt.Font("Tahoma", 0, 10));
@@ -270,7 +269,7 @@ public class FileChooserPanel extends javax.swing.JPanel
         try {
             // Ok, get the dropped object and try to figure out what it is
             Transferable tr = dtde.getTransferable();
-            DataFlavor[] flavors = tr.getTransferDataFlavors();
+             DataFlavor[] flavors = tr.getTransferDataFlavors();
 
             for (int i = 0; i < flavors.length; i++) {
                 System.out.println("Possible flavor: " + flavors[i].getMimeType());
@@ -382,12 +381,12 @@ private void plotFiles_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN
 
         DatasetPlotter plotMultiCol = DatasetPlotter.createDatasetPlotter(dat);
         JPanel chartpanls = new JPanel();//jPowderMain.getChartPanel();
+ 
         JDesktopPane ChartPlotter = jPowderMain.getChartPanel();
-
         //ChartPlot.add(plotMultiCol.createPowderChart());
         chartpanls.setLayout(new BorderLayout());
         chartpanls.add(plotMultiCol.createPowderChart());
-        Internalframe internalframe = new Internalframe(chartpanls);
+        JpowderInternalframe internalframe = new JpowderInternalframe(chartpanls, jPowderMain.DVIC, dat);
         ChartPlotter.add(internalframe);
       //  ChartPlot.add(seperatePanel);
         //ChartPlot.revalidate();
@@ -415,6 +414,7 @@ private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             Stopwatch lStopwatch = new Stopwatch();
             lStopwatch.start();
             mPowderFileCabinet.loadFiles();
+            System.out.println("############ "+mPowderFileCabinet.getLastUpdateFileName());
             System.out.println("\nTotal time took to load(Pressing the Open butt) and plot Data:" + mPowderFileCabinet);
             System.out.println(lStopwatch.getElapsedTime());
             lStopwatch.reset();
@@ -442,6 +442,7 @@ private void deleteFile_btn1ActionPerformed(java.awt.event.ActionEvent evt) {//G
 }//GEN-LAST:event_deleteFile_btn1ActionPerformed
 
     public static void main(String args[]) {
+   
         JFrame frame = new JFrame("File chooser");
         frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         frame.add(new FileChooserPanel(), java.awt.BorderLayout.NORTH);

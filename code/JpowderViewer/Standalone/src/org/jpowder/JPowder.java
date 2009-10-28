@@ -1,25 +1,35 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/*
+ * JPowderFinalGui.java
+ *
+ * Created on 05-Oct-2009, 09:57:11
+ */
 package org.jpowder;
 
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.FileDialog;
-import java.awt.dnd.DropTargetDropEvent;
-import java.io.*;
-import java.util.ArrayList;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Vector;
+import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
-import javax.swing.SwingUtilities;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
+import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.util.ScreenUtil;
 import org.jpowder.util.Stopwatch;
-import org.jpowder.dataset.DataSet;
-import org.jpowder.fileCabinet.PowderFileCabinet;
+
 /**
  * Jpowder is the starting class for the Jpowder project {@link www.jpowder.org}.
  * It setups the main GUI for this application, which draws charts of powder
@@ -44,486 +54,644 @@ import org.jpowder.fileCabinet.PowderFileCabinet;
  *
  * @author  Kreecha Puphaiboon
  * @since 07
- * 
  *
-public class JPowder extends javax.swing.JApplet implements org.jpowder.fileCabinet.PowderFileObserver {
+ *
+ */
+public class JPowder extends javax.swing.JFrame implements org.jpowder.fileCabinet.PowderFileObserver {
 
-    // Top right hand panel. Panel where files selected.
-    // Also this file panel holds an instance of PowderFileCabinet
-    // where e.g. this instance gets registered as an observer
-    private FileChooserPanel fileChooserPanel = new FileChooserPanel(this);
+  private FileChooserPanel fileChooserPanel = new FileChooserPanel(this);
+  private Tree tr = new Tree();
+  private LookAndFeel LAF = new LookAndFeel(this);
+  public DataVisibleInChart DVIC = new DataVisibleInChart(fileChooserPanel.getPowderFileCabinet());
+  private PowderFileCabinet mPowderFileCabinet;
 
-    // Some hard coded custom dimensions GUI dimensions
-    // What are they exactly?
-    private static final int CHART_HEIGHT_FIX_SIZE=300 ;
-    private static final int FRAME_WIDTH = 10700;
-    private static final int FRAME_HEIGHT = 6700;
-    private boolean InBrowser = true;
+  public void powderFileCabinetUpdate(org.jpowder.fileCabinet.Subject data) {
+    org.jpowder.fileCabinet.PowderFileCabinet pfc = (org.jpowder.fileCabinet.PowderFileCabinet) data;
 
-    private PowderFileCabinet mPowderFileCabinet;
-    
-  
-    public void powderFileCabinetUpdate(org.jpowder.fileCabinet.Subject data) {
-        org.jpowder.fileCabinet.PowderFileCabinet pfc = (org.jpowder.fileCabinet.PowderFileCabinet) data;
-
-
-        // comment: update to a bigger size by getting the current size and add some amount.
-        java.awt.Dimension area = powderChartPanel.getSize();
-        area.height = area.height+( CHART_HEIGHT_FIX_SIZE);
-        powderChartPanel.setLayout(new javax.swing.BoxLayout(powderChartPanel, javax.swing.BoxLayout.Y_AXIS));
-        powderChartPanel.setPreferredSize(area);
-
-        HashMap<String, DataSet> allData = pfc.getData();
-
-        // Get new dataset
-        String fileName = pfc.getLastUpdateFileName();
-        DataSet lastAddedDataset = allData.get(fileName);
-
-         Stopwatch lStopwatch = new Stopwatch();
-         lStopwatch.start();
-        DatasetPlotter plot = DatasetPlotter.createDatasetPlotter(lastAddedDataset);
-        powderChartPanel.add(plot.createPowderChart());
-        System.out.println("\nTime it took to create chart " + fileName);
-                System.out.println(lStopwatch.getElapsedTime());
-                lStopwatch.reset();
-        // add seperator
-        JPanel seperatePanel = new JPanel();
-        //seperatePanel.setBackground(new java.awt.Color(240, 240, 240));
-        seperatePanel.setMinimumSize(new Dimension(550, 4));
-        seperatePanel.setPreferredSize(new Dimension(550, 4));
-        seperatePanel.setMaximumSize(new Dimension(550, 4));
-        powderChartPanel.add(seperatePanel);
-        powderChartPanel.revalidate();
-
-        java.awt.Rectangle rect = powderChartPanel.getBounds();
-        chart_scrp.getVerticalScrollBar().setValue(rect.height);
-    }// powderFileCabinetUpdate
-
+    // comment: update to a bigger size by getting the current size and add some amount.
     /**
-     * JVM starting point
-     *
-     * @param args
-     *
-    public static void main(String[] args) {
+    java.awt.Dimension area = ChartPlotter.getSize();
+    area.height = area.height+( CHART_HEIGHT_FIX_SIZE);
+    ChartPlotter.setLayout(new javax.swing.BoxLayout(ChartPlotter, javax.swing.BoxLayout.Y_AXIS));
+    ChartPlotter.setPreferredSize(area);
+     */
+    HashMap<String, DataSet> allData = pfc.getData();
 
-        JPowder applet = new JPowder();
-        applet.InBrowser = false;
+    // Get new dataset
+    String fileName = pfc.getLastUpdateFileName();
+    DataSet lastAddedDataset = allData.get(fileName);
 
-        // Note that init () invoked before adding to frame.
-        // So don't use width/height info in init () since those parameters not yet set.
-       applet.init();
+    Stopwatch lStopwatch = new Stopwatch();
+    lStopwatch.start();
+    DatasetPlotter plot = DatasetPlotter.createDatasetPlotter(lastAddedDataset);
 
-        // Following anonymous class used to close window & exit program
-        javax.swing.JFrame f = new javax.swing.JFrame("JPowder Crystallograhy Demo");
-        f.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+//creating the internal frame here
+    javax.swing.JPanel chartpanls = new javax.swing.JPanel();
 
-        // Add applet to the frame
-        f.getContentPane().add(applet);
-       // f.setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
-        f.pack();
-        
-        //calling Screen.java to center the frame on user screen.
-       ScreenUtil.centerFrame(f);
-       f.setVisible(true);
-    } //main
+    chartpanls.setLayout(new BorderLayout());
+    chartpanls.add(plot.createPowderChart());
 
-    
-    /**
-     * Get hold of the JPanel were the powder diffraction data are plotted in charts
-     *
-     * @return The JPanel where the data are plotted
-     *
-    public JPanel getChartPanel() {
-        return this.powderChartPanel;
-    }
+    Vector<DataSet> lDataset = new Vector<DataSet>();
+    lDataset.add(lastAddedDataset);
+    JpowderInternalframe internalframe = new JpowderInternalframe(chartpanls, DVIC, lDataset);
 
-    /**
-     * Initialise the GUI
-     *
-    @Override
-    public void init() {
-    
-      mPowderFileCabinet = new PowderFileCabinet();
-      mPowderFileCabinet.registerObserver(this);
-        try {
-            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
-        }
+    InternalFrameListener internalFrameListener = new InternalFrameIconifyListener();
+    internalframe.addInternalFrameListener(internalFrameListener);
 
-        initComponents();
-      
-            dragPanel.add(fileChooserPanel);
-            fileChooserPanel.setVisible(true);
-    }//end init
+    ChartPlotter.setLayout(new FlowLayout());
+    ChartPlotter.add(internalframe);
+    setVisible(true);
 
-    /** This method is called from within the init() method to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
-     *
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    System.out.println("\nTime it took to create chart " + fileName);
+    System.out.println(lStopwatch.getElapsedTime());
+    lStopwatch.reset();
 
-        jMenuBar2 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        homePanel = new javax.swing.JPanel();
-        statPanel = new javax.swing.JPanel();
-        statBluePanel = new javax.swing.JPanel();
-        stats_sp = new javax.swing.JScrollPane();
-        stats_ta = new javax.swing.JTextArea();
-        print_btn = new javax.swing.JButton();
-        saveStat_btn = new javax.swing.JButton();
-        chart_scrp = new javax.swing.JScrollPane();
-        powderChartPanel = new javax.swing.JPanel();
-        dragPanel = new javax.swing.JPanel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        New = new javax.swing.JMenuItem();
-        openFileMenuItem = new javax.swing.JMenuItem();
-        saveFileMenuItem = new javax.swing.JMenuItem();
-        Exit = new javax.swing.JMenuItem();
-        editMenu = new javax.swing.JMenu();
-        Edit = new javax.swing.JMenuItem();
-        Delete = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
-        Content = new javax.swing.JMenuItem();
-        Docs = new javax.swing.JMenuItem();
-        About = new javax.swing.JMenuItem();
+  }// powderFileCabinetUpdate
 
-        jMenu1.setText("File");
-        jMenuBar2.add(jMenu1);
+  /**
+   * JVM starting point
+   *
+   * @param args
+   */
+  public JDesktopPane getChartPanel() {
+    return this.ChartPlotter;
+  }
 
-        jMenu2.setText("Edit");
-        jMenuBar2.add(jMenu2);
+  public JPowder() {
 
-        setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
-        setForeground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
+    mPowderFileCabinet = new PowderFileCabinet();
+    mPowderFileCabinet.registerObserver(this);
+ 
+    initComponents();
 
-        homePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Home", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(153, 153, 153))); // NOI18N
+    DataVisibleInChartPanel.add(DVIC);
+    DVIC.setVisible(true);
 
-        statPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Statistics Panel", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 102))); // NOI18N
-        statPanel.setMaximumSize(new java.awt.Dimension(270, 32767));
-        statPanel.setMinimumSize(new java.awt.Dimension(265, 180));
-        statPanel.setPreferredSize(new java.awt.Dimension(265, 180));
+    Filechoose.add(fileChooserPanel);
+    fileChooserPanel.setVisible(true);
 
-        statBluePanel.setMaximumSize(new java.awt.Dimension(260, 2147483647));
-        statBluePanel.setMinimumSize(new java.awt.Dimension(260, 158));
-        statBluePanel.setPreferredSize(new java.awt.Dimension(260, 158));
+    Treetab.add(tr);
+    tr.setVisible(true);
+  }
+  /** This method is called from within the constructor to
+   * initialise the form.
+   * WARNING: Do NOT modify this code. The content of this method is
+   * always regenerated by the Form Editor.
+   */
+  @SuppressWarnings("unchecked")
+  // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+  private void initComponents() {
 
-        stats_sp.setMinimumSize(new java.awt.Dimension(260, 115));
-        stats_sp.setPreferredSize(new java.awt.Dimension(260, 115));
+    jSplitPane1 = new javax.swing.JSplitPane();
+    home = new javax.swing.JPanel();
+    Filechoose = new javax.swing.JPanel();
+    Tabs = new javax.swing.JTabbedPane();
+    Treetab = new javax.swing.JPanel();
+    Analysis = new javax.swing.JPanel();
+    jButton3 = new javax.swing.JButton();
+    jButton2 = new javax.swing.JButton();
+    jButton4 = new javax.swing.JButton();
+    jButton5 = new javax.swing.JButton();
+    jButton6 = new javax.swing.JButton();
+    jLabel1 = new javax.swing.JLabel();
+    jLabel2 = new javax.swing.JLabel();
+    jLabel3 = new javax.swing.JLabel();
+    jLabel4 = new javax.swing.JLabel();
+    jPanel1 = new javax.swing.JPanel();
+    jSlider1 = new javax.swing.JSlider();
+    jSlider2 = new javax.swing.JSlider();
+    jButton1 = new javax.swing.JButton();
+    jPanel2 = new javax.swing.JPanel();
+    jButton7 = new javax.swing.JButton();
+    DataVisibleInChartPanel = new javax.swing.JPanel();
+    ChartPlotter = new javax.swing.JDesktopPane();
+    jMenuBar1 = new javax.swing.JMenuBar();
+    jMenu1 = new javax.swing.JMenu();
+    New = new javax.swing.JMenuItem();
+    jSeparator2 = new javax.swing.JSeparator();
+    Open = new javax.swing.JMenuItem();
+    Save = new javax.swing.JMenuItem();
+    jSeparator1 = new javax.swing.JSeparator();
+    Exit = new javax.swing.JMenuItem();
+    LookAndFeel = new javax.swing.JMenu();
+    Windows = new javax.swing.JRadioButtonMenuItem();
+    WindowClassic = new javax.swing.JRadioButtonMenuItem();
+    MacLookAndFeel = new javax.swing.JRadioButtonMenuItem();
+    Motif = new javax.swing.JRadioButtonMenuItem();
+    Nimbus = new javax.swing.JRadioButtonMenuItem();
+    Metal = new javax.swing.JRadioButtonMenuItem();
+    LinuxSolaris = new javax.swing.JRadioButtonMenuItem();
+    jMenu2 = new javax.swing.JMenu();
+    Content = new javax.swing.JMenuItem();
+    OnlieDocsandSupport = new javax.swing.JMenuItem();
+    jSeparator3 = new javax.swing.JSeparator();
+    About = new javax.swing.JMenuItem();
 
-        stats_ta.setColumns(20);
-        stats_ta.setRows(5);
-        stats_ta.setMinimumSize(new java.awt.Dimension(1400, 1000));
-        stats_ta.setPreferredSize(new java.awt.Dimension(1400, 1000));
-        stats_sp.setViewportView(stats_ta);
+    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    setTitle("JPowder Crystallography Demo");
+    setLocationByPlatform(true);
 
-        print_btn.setFont(new java.awt.Font("Tahoma", 0, 10));
-        print_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/printer.gif"))); // NOI18N
-        print_btn.setLabel("Print stats");
-        print_btn.setMaximumSize(new java.awt.Dimension(100, 23));
-        print_btn.setMinimumSize(new java.awt.Dimension(100, 23));
-        print_btn.setPreferredSize(new java.awt.Dimension(120, 23));
-        print_btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                print_btnActionPerformed(evt);
-            }
-        });
+    jSplitPane1.setDividerLocation(300);
+    jSplitPane1.setDividerSize(8);
+    jSplitPane1.setAutoscrolls(true);
 
-        saveStat_btn.setFont(new java.awt.Font("Tahoma", 0, 10));
-        saveStat_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/savas_small.gif"))); // NOI18N
-        saveStat_btn.setLabel("Save stats");
-        saveStat_btn.setPreferredSize(new java.awt.Dimension(100, 25));
+    Filechoose.setPreferredSize(new java.awt.Dimension(279, 350));
+    Filechoose.setLayout(new java.awt.BorderLayout());
 
-        org.jdesktop.layout.GroupLayout statBluePanelLayout = new org.jdesktop.layout.GroupLayout(statBluePanel);
-        statBluePanel.setLayout(statBluePanelLayout);
-        statBluePanelLayout.setHorizontalGroup(
-            statBluePanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(stats_sp, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-            .add(statBluePanelLayout.createSequentialGroup()
-                .add(2, 2, 2)
-                .add(print_btn, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(4, 4, 4)
-                .add(saveStat_btn, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-        );
-        statBluePanelLayout.setVerticalGroup(
-            statBluePanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(statBluePanelLayout.createSequentialGroup()
-                .add(6, 6, 6)
-                .add(stats_sp, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(5, 5, 5)
-                .add(statBluePanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(print_btn, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(saveStat_btn, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-        );
+    Tabs.setFont(new java.awt.Font("Kartika", 1, 11));
+    Tabs.setMaximumSize(new java.awt.Dimension(327, 32767));
 
-        org.jdesktop.layout.GroupLayout statPanelLayout = new org.jdesktop.layout.GroupLayout(statPanel);
-        statPanel.setLayout(statPanelLayout);
-        statPanelLayout.setHorizontalGroup(
-            statPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(statPanelLayout.createSequentialGroup()
-                .add(statBluePanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(8, Short.MAX_VALUE))
-        );
-        statPanelLayout.setVerticalGroup(
-            statPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(statBluePanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-        );
+    Treetab.setLayout(new java.awt.BorderLayout());
+    Tabs.addTab(" Tree ", Treetab);
 
-        chart_scrp.setBorder(null);
-        chart_scrp.setAutoscrolls(true);
-        chart_scrp.setMinimumSize(new java.awt.Dimension(630, 480));
-        chart_scrp.setPreferredSize(new java.awt.Dimension(630, 480));
+    jButton3.setText("jButton1");
 
-        powderChartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chart", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 102))); // NOI18N
-        powderChartPanel.setAutoscrolls(true);
+    jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/SendMail.gif"))); // NOI18N
+    jButton2.setFocusable(false);
+    jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+    jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        org.jdesktop.layout.GroupLayout powderChartPanelLayout = new org.jdesktop.layout.GroupLayout(powderChartPanel);
-        powderChartPanel.setLayout(powderChartPanelLayout);
-        powderChartPanelLayout.setHorizontalGroup(
-            powderChartPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 705, Short.MAX_VALUE)
-        );
-        powderChartPanelLayout.setVerticalGroup(
-            powderChartPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 532, Short.MAX_VALUE)
-        );
+    jButton4.setText("jButton1");
 
-        chart_scrp.setViewportView(powderChartPanel);
+    jButton5.setText("jButton1");
 
-        org.jdesktop.layout.GroupLayout homePanelLayout = new org.jdesktop.layout.GroupLayout(homePanel);
-        homePanel.setLayout(homePanelLayout);
-        homePanelLayout.setHorizontalGroup(
-            homePanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(homePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(homePanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(statPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 280, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(dragPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 280, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(chart_scrp, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        homePanelLayout.setVerticalGroup(
-            homePanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(homePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(homePanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(homePanelLayout.createSequentialGroup()
-                        .add(chart_scrp, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .add(homePanelLayout.createSequentialGroup()
-                        .add(dragPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(statPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(50, 50, 50))))
-        );
+    jButton6.setText("jButton1");
 
-        fileMenu.setText("File");
+    jLabel1.setText("delete");
 
-        New.setText("New...");
-        New.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NewActionPerformed(evt);
-            }
-        });
-        fileMenu.add(New);
+    jLabel2.setText("Email");
 
-        openFileMenuItem.setText("Open");
-        openFileMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openFileMenuItemActionPerformed(evt);
-            }
-        });
-        fileMenu.add(openFileMenuItem);
+    jLabel3.setText("jLabel1");
 
-        saveFileMenuItem.setText("Save");
-        saveFileMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveFileMenuItemActionPerformed(evt);
-            }
-        });
-        fileMenu.add(saveFileMenuItem);
+    jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/del_med.gif"))); // NOI18N
 
-        Exit.setText("Exit");
-        Exit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ExitActionPerformed(evt);
-            }
-        });
-        fileMenu.add(Exit);
+    javax.swing.GroupLayout AnalysisLayout = new javax.swing.GroupLayout(Analysis);
+    Analysis.setLayout(AnalysisLayout);
+    AnalysisLayout.setHorizontalGroup(
+      AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(AnalysisLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(AnalysisLayout.createSequentialGroup()
+            .addComponent(jButton4)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jButton5)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jButton6))
+          .addGroup(AnalysisLayout.createSequentialGroup()
+            .addGap(10, 10, 10)
+            .addGroup(AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addGroup(AnalysisLayout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
+              .addGroup(AnalysisLayout.createSequentialGroup()
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)))
+            .addGroup(AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addGroup(AnalysisLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel2))
+              .addGroup(AnalysisLayout.createSequentialGroup()
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addGroup(AnalysisLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel3))
+              .addComponent(jButton3))))
+        .addContainerGap(33, Short.MAX_VALUE))
+    );
+    AnalysisLayout.setVerticalGroup(
+      AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(AnalysisLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addGroup(AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(jLabel4))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jLabel1)
+          .addComponent(jLabel2)
+          .addComponent(jLabel3))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addGroup(AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addContainerGap(273, Short.MAX_VALUE))
+    );
 
-        jMenuBar1.add(fileMenu);
+    Tabs.addTab("Analysis", Analysis);
 
-        editMenu.setText("Edit Chart");
+    jButton1.setText("jButton1");
 
-        Edit.setText("Edit");
-        editMenu.add(Edit);
+    jButton7.setText("jButton7");
 
-        Delete.setText("Delete");
-        editMenu.add(Delete);
+    javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+    jPanel2.setLayout(jPanel2Layout);
+    jPanel2Layout.setHorizontalGroup(
+      jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(jPanel2Layout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(jButton7)
+        .addContainerGap())
+    );
+    jPanel2Layout.setVerticalGroup(
+      jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(jPanel2Layout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(jButton7)
+        .addContainerGap())
+    );
 
-        jMenuBar1.add(editMenu);
+    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+    jPanel1.setLayout(jPanel1Layout);
+    jPanel1Layout.setHorizontalGroup(
+      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(jPanel1Layout.createSequentialGroup()
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSlider1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jSlider2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGap(21, 21, 21)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGap(23, 23, 23)
+            .addComponent(jButton1)))
+        .addContainerGap(74, Short.MAX_VALUE))
+    );
+    jPanel1Layout.setVerticalGroup(
+      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(jPanel1Layout.createSequentialGroup()
+        .addGap(22, 22, 22)
+        .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(jButton1)
+        .addGap(35, 35, 35)
+        .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(193, Short.MAX_VALUE))
+    );
 
-        helpMenu.setText("Help");
+    Tabs.addTab("Effects ", jPanel1);
 
-        Content.setText("Content");
-        helpMenu.add(Content);
+    DataVisibleInChartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("DataVisibleInChart"));
+    DataVisibleInChartPanel.setLayout(new java.awt.BorderLayout());
 
-        Docs.setText("Online Docs and Support");
-        Docs.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DocsActionPerformed(evt);
-            }
-        });
-        helpMenu.add(Docs);
+    javax.swing.GroupLayout homeLayout = new javax.swing.GroupLayout(home);
+    home.setLayout(homeLayout);
+    homeLayout.setHorizontalGroup(
+      homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(homeLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+          .addComponent(Filechoose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(DataVisibleInChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))
+        .addContainerGap())
+    );
+    homeLayout.setVerticalGroup(
+      homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(DataVisibleInChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(Filechoose, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap())
+    );
 
-        About.setText("About");
-        About.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AboutActionPerformed(evt);
-            }
-        });
-        helpMenu.add(About);
+    jSplitPane1.setLeftComponent(home);
 
-        jMenuBar1.add(helpMenu);
+    ChartPlotter.setBackground(new java.awt.Color(240, 240, 240));
+    ChartPlotter.setOpaque(false);
+    jSplitPane1.setRightComponent(ChartPlotter);
 
-        setJMenuBar(jMenuBar1);
+    jMenu1.setText("File");
 
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .add(homePanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .add(homePanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-    }// </editor-fold>//GEN-END:initComponents
+    New.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+    New.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new_small.gif"))); // NOI18N
+    New.setText("New...");
+    New.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        NewActionPerformed(evt);
+      }
+    });
+    jMenu1.add(New);
+    jMenu1.add(jSeparator2);
 
-    private void openFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileMenuItemActionPerformed
-     
-   mPowderFileCabinet.loadFiles();
+    Open.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+    Open.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/addFile.gif"))); // NOI18N
+    Open.setText("Open");
+    Open.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        OpenActionPerformed(evt);
+      }
+    });
+    jMenu1.add(Open);
 
+    Save.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+    Save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/savas_small.gif"))); // NOI18N
+    Save.setText("Save");
+    Save.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        SaveActionPerformed(evt);
+      }
+    });
+    jMenu1.add(Save);
+    jMenu1.add(jSeparator1);
 
-}//GEN-LAST:event_openFileMenuItemActionPerformed
+    Exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
+    Exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/del_small.gif"))); // NOI18N
+    Exit.setText("Exit");
+    Exit.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        ExitActionPerformed(evt);
+      }
+    });
+    jMenu1.add(Exit);
 
-    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
-        int res = JOptionPane.showConfirmDialog(null, "Do you want to exit?", "JPowder",
-                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-        switch (res) {
-            case JOptionPane.YES_OPTION:
-                System.exit(0);
-                break;
-            case JOptionPane.NO_OPTION:
-                break;
-            case JOptionPane.CANCEL_OPTION:
-                break;
-            case JOptionPane.CLOSED_OPTION:
-                break;
-        }
-    }//GEN-LAST:event_ExitActionPerformed
+    jMenuBar1.add(jMenu1);
+
+    LookAndFeel.setText("LookAndFeel");
+
+    Windows.setText("Windows");
+    Windows.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        WindowsActionPerformed(evt);
+      }
+    });
+    LookAndFeel.add(Windows);
+
+    WindowClassic.setText("WindowClassic");
+    WindowClassic.setContentAreaFilled(false);
+    WindowClassic.setFocusPainted(true);
+    WindowClassic.setHideActionText(true);
+    WindowClassic.setMargin(new java.awt.Insets(4, 4, 4, 4));
+    WindowClassic.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        WindowClassicActionPerformed(evt);
+      }
+    });
+    LookAndFeel.add(WindowClassic);
+
+    MacLookAndFeel.setText("MacLookAndFeel");
+    MacLookAndFeel.setContentAreaFilled(false);
+    MacLookAndFeel.setFocusPainted(true);
+    MacLookAndFeel.setHideActionText(true);
+    MacLookAndFeel.setMargin(new java.awt.Insets(4, 4, 4, 4));
+    MacLookAndFeel.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        MacLookAndFeelActionPerformed(evt);
+      }
+    });
+    LookAndFeel.add(MacLookAndFeel);
+
+    Motif.setText("Motif");
+    Motif.setContentAreaFilled(false);
+    Motif.setFocusPainted(true);
+    Motif.setHideActionText(true);
+    Motif.setMargin(new java.awt.Insets(4, 4, 4, 4));
+    Motif.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        MotifActionPerformed(evt);
+      }
+    });
+    LookAndFeel.add(Motif);
+
+    Nimbus.setText("Nimbus");
+    Nimbus.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        NimbusActionPerformed(evt);
+      }
+    });
+    LookAndFeel.add(Nimbus);
+
+    Metal.setText("Metal");
+    Metal.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        MetalActionPerformed(evt);
+      }
+    });
+    LookAndFeel.add(Metal);
+
+    LinuxSolaris.setText("LinuxandSolaris");
+    LinuxSolaris.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        LinuxSolarisActionPerformed(evt);
+      }
+    });
+    LookAndFeel.add(LinuxSolaris);
+
+    jMenuBar1.add(LookAndFeel);
+
+    jMenu2.setText("Help");
+
+    Content.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+    Content.setText("Content");
+    jMenu2.add(Content);
+
+    OnlieDocsandSupport.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, java.awt.event.InputEvent.CTRL_MASK));
+    OnlieDocsandSupport.setText("Online Docs and Support");
+    OnlieDocsandSupport.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        OnlieDocsandSupportActionPerformed(evt);
+      }
+    });
+    jMenu2.add(OnlieDocsandSupport);
+    jMenu2.add(jSeparator3);
+
+    About.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+    About.setText("About");
+    About.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        AboutActionPerformed(evt);
+      }
+    });
+    jMenu2.add(About);
+
+    jMenuBar1.add(jMenu2);
+
+    setJMenuBar(jMenuBar1);
+
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(layout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1040, Short.MAX_VALUE)
+        .addContainerGap())
+    );
+    layout.setVerticalGroup(
+      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE)
+        .addContainerGap())
+    );
+
+    pack();
+  }// </editor-fold>//GEN-END:initComponents
+
+    private void OnlieDocsandSupportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OnlieDocsandSupportActionPerformed
+      Runtime rt = Runtime.getRuntime();
+      String[] callAndArgs = {"explorer.exe",
+        "http://code.google.com/p/jpowder"};
+      try {
+
+        Process poress = rt.exec(callAndArgs);
+      } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "No Internet Conection!",
+                "error", JOptionPane.ERROR_MESSAGE);
+
+      }
+    }//GEN-LAST:event_OnlieDocsandSupportActionPerformed
 
     private void AboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AboutActionPerformed
-        new about().setVisible(true);       
+      new about().setVisible(true);
     }//GEN-LAST:event_AboutActionPerformed
 
-    private void DocsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DocsActionPerformed
-
-        Runtime rt = Runtime.getRuntime();
-        String[] callAndArgs = {"explorer.exe",
-            "http://code.google.com/p/jpowder"};
-        try {
-
-            Process child = rt.exec(callAndArgs);
-        } catch (IOException e) {
-        }
-
-    }//GEN-LAST:event_DocsActionPerformed
-
-    private void saveFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileMenuItemActionPerformed
-
-      boolean[] JPowder = new boolean[16654];
-      for (int i=0; i<16654;i++){
+    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
+      int res = JOptionPane.showConfirmDialog(null, "Do you want to exit?", "JPowderFinalGui",
+              JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+      switch (res) {
+        case JOptionPane.YES_OPTION:
+          System.exit(0);
+          break;
+        case JOptionPane.NO_OPTION:
+          break;
+        case JOptionPane.CANCEL_OPTION:
+          break;
+        case JOptionPane.CLOSED_OPTION:
+          break;
       }
-      
-    JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                ".ISIS ", "ISIS");
+    }//GEN-LAST:event_ExitActionPerformed
 
-        chooser.setFileFilter(filter);
+    private void OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenActionPerformed
+      mPowderFileCabinet.loadFiles();
+    }//GEN-LAST:event_OpenActionPerformed
 
-        int returnVal = chooser.showSaveDialog(chooser);
-        File fileName = chooser.getSelectedFile();
-        if (returnVal == JFileChooser.APPROVE_OPTION) 
-          try {
-            FileOutputStream buffer = new FileOutputStream(fileName);
-            final ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(JPowder);
+    private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
+      boolean[] JPowder = new boolean[16654];
+      for (int i = 0; i < 16654; i++) {
+      }
+      JFileChooser chooser = new JFileChooser();
+      FileNameExtensionFilter filter = new FileNameExtensionFilter(
+              ".ISIS ", "ISIS");
+      chooser.setFileFilter(filter);
+      int returnVal = chooser.showSaveDialog(chooser);
+      File fileName = chooser.getSelectedFile();
+      if (returnVal == JFileChooser.APPROVE_OPTION) {
+        try {
+          FileOutputStream buffer = new FileOutputStream(fileName);
+          final ObjectOutput out = new ObjectOutputStream(buffer);
+          out.writeObject(JPowder);
 
-
-          } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Invalid file!",
-                    "error", JOptionPane.ERROR_MESSAGE);
-          }
-         
-      
-     
-
-    }//GEN-LAST:event_saveFileMenuItemActionPerformed
+        } catch (IOException e) {
+          JOptionPane.showMessageDialog(this, "Invalid file!",
+                  "error", JOptionPane.ERROR_MESSAGE);
+        }
+      }
+    }//GEN-LAST:event_SaveActionPerformed
 
     private void NewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewActionPerformed
-      JPowder applet = new JPowder();
-      applet.init();
-      JFrame f = new JFrame("JPowder Crystallograhy Demo");
-      f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-      f.getContentPane().add(applet);
-      f.pack();
-      f.setLocation(100, 100);
-      f.setVisible(true);
-}//GEN-LAST:event_NewActionPerformed
+      JPowder jpowderfinalgui = new JPowder();
+      ScreenUtil.centerFrame(jpowderfinalgui);
+      jpowderfinalgui.setVisible(true);
 
-    private void print_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_print_btnActionPerformed
-        // TODO add your handling code here:
-}//GEN-LAST:event_print_btnActionPerformed
-    // When user click they can see the graph from what ever data in the table.    //end plotFile_btnActionPerformed
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem About;
-    private javax.swing.JMenuItem Content;
-    private javax.swing.JMenuItem Delete;
-    private javax.swing.JMenuItem Docs;
-    private javax.swing.JMenuItem Edit;
-    private javax.swing.JMenuItem Exit;
-    private javax.swing.JMenuItem New;
-    private javax.swing.JScrollPane chart_scrp;
-    private javax.swing.JPanel dragPanel;
-    private javax.swing.JMenu editMenu;
-    private javax.swing.JMenu fileMenu;
-    private javax.swing.JMenu helpMenu;
-    private javax.swing.JPanel homePanel;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem openFileMenuItem;
-    private javax.swing.JPanel powderChartPanel;
-    private javax.swing.JButton print_btn;
-    private javax.swing.JMenuItem saveFileMenuItem;
-    private javax.swing.JButton saveStat_btn;
-    private javax.swing.JPanel statBluePanel;
-    private javax.swing.JPanel statPanel;
-    private javax.swing.JScrollPane stats_sp;
-    private javax.swing.JTextArea stats_ta;
-    // End of variables declaration//GEN-END:variables
-}//end
-*/
+    }//GEN-LAST:event_NewActionPerformed
+
+    private void WindowClassicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WindowClassicActionPerformed
+      LAF.windosclassic();
+    }//GEN-LAST:event_WindowClassicActionPerformed
+
+    private void MacLookAndFeelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MacLookAndFeelActionPerformed
+      LAF.appleLook();
+    }//GEN-LAST:event_MacLookAndFeelActionPerformed
+
+    private void MotifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MotifActionPerformed
+      LAF.motif();
+    }//GEN-LAST:event_MotifActionPerformed
+
+    private void NimbusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NimbusActionPerformed
+      LAF.nimbus();
+    }//GEN-LAST:event_NimbusActionPerformed
+
+    private void MetalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MetalActionPerformed
+      LAF.metal();
+    }//GEN-LAST:event_MetalActionPerformed
+
+    private void WindowsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WindowsActionPerformed
+      LAF.windows();
+    }//GEN-LAST:event_WindowsActionPerformed
+
+    private void LinuxSolarisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LinuxSolarisActionPerformed
+      LAF.LinuxandSolaris();
+    }//GEN-LAST:event_LinuxSolarisActionPerformed
+
+  /**
+   * @param args the command line arguments
+   */
+  public static void main(String args[]) {
+    java.awt.EventQueue.invokeLater(new Runnable() {
+
+      public void run() {
+
+        new JPowder().setVisible(true);
+
+      }
+    });
+  }
+  // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JMenuItem About;
+  private javax.swing.JPanel Analysis;
+  private javax.swing.JDesktopPane ChartPlotter;
+  private javax.swing.JMenuItem Content;
+  private javax.swing.JPanel DataVisibleInChartPanel;
+  private javax.swing.JMenuItem Exit;
+  private javax.swing.JPanel Filechoose;
+  private javax.swing.JRadioButtonMenuItem LinuxSolaris;
+  private javax.swing.JMenu LookAndFeel;
+  private javax.swing.JRadioButtonMenuItem MacLookAndFeel;
+  private javax.swing.JRadioButtonMenuItem Metal;
+  private javax.swing.JRadioButtonMenuItem Motif;
+  private javax.swing.JMenuItem New;
+  private javax.swing.JRadioButtonMenuItem Nimbus;
+  private javax.swing.JMenuItem OnlieDocsandSupport;
+  private javax.swing.JMenuItem Open;
+  private javax.swing.JMenuItem Save;
+  private javax.swing.JTabbedPane Tabs;
+  private javax.swing.JPanel Treetab;
+  private javax.swing.JRadioButtonMenuItem WindowClassic;
+  private javax.swing.JRadioButtonMenuItem Windows;
+  private javax.swing.JPanel home;
+  private javax.swing.JButton jButton1;
+  private javax.swing.JButton jButton2;
+  private javax.swing.JButton jButton3;
+  private javax.swing.JButton jButton4;
+  private javax.swing.JButton jButton5;
+  private javax.swing.JButton jButton6;
+  private javax.swing.JButton jButton7;
+  private javax.swing.JLabel jLabel1;
+  private javax.swing.JLabel jLabel2;
+  private javax.swing.JLabel jLabel3;
+  private javax.swing.JLabel jLabel4;
+  private javax.swing.JMenu jMenu1;
+  private javax.swing.JMenu jMenu2;
+  private javax.swing.JMenuBar jMenuBar1;
+  private javax.swing.JPanel jPanel1;
+  private javax.swing.JPanel jPanel2;
+  private javax.swing.JSeparator jSeparator1;
+  private javax.swing.JSeparator jSeparator2;
+  private javax.swing.JSeparator jSeparator3;
+  private javax.swing.JSlider jSlider1;
+  private javax.swing.JSlider jSlider2;
+  private javax.swing.JSplitPane jSplitPane1;
+  // End of variables declaration//GEN-END:variables
+}

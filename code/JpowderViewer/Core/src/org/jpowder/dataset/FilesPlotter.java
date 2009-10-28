@@ -107,6 +107,7 @@ public class FilesPlotter extends DatasetPlotter {
 
     return chart;
   }
+
   /**
    *
    * @param dataVec  dataVec.
@@ -114,7 +115,7 @@ public class FilesPlotter extends DatasetPlotter {
    *
    * @return The dataset.
    */
-  private XYSeriesCollection createDataset1() {
+private XYSeriesCollection createDataset1() {
 
     XYSeriesCollection datasetCol = new XYSeriesCollection();
 
@@ -123,16 +124,26 @@ public class FilesPlotter extends DatasetPlotter {
 
         XYSeries series = new XYSeries(datasets.elementAt(i).getFileName());
 
+
         Vector<Double> x = datasets.elementAt(i).getX();
         Vector<Double> y = datasets.elementAt(i).getY();
         for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
           series.add(x.elementAt(rowIndex), y.elementAt(rowIndex));
         }//for
         datasetCol.addSeries(series);
+        System.out.println(series.getItemCount());
+        datasetCol.getSeries().toString();
+       // series.add(12, 45);
+       // series.add(13, 46);
+       // System.out.println("getserie/////" + series.getItemCount());
+      //  System.out.println("getserie/////" + datasetCol.getSeries(0).getItemCount());
+        
+   
       }//if
     }//for
     return datasetCol;
   }
+
 
   private YIntervalSeriesCollection createDataset2() {
     //IntervalXYDataset is an interface.
@@ -147,7 +158,7 @@ public class FilesPlotter extends DatasetPlotter {
         Vector<Double> addY = xye.getYUpper();
         for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
           s1.add(x.elementAt(rowIndex), y.elementAt(rowIndex),
-                 minusY.elementAt(rowIndex), addY.elementAt(rowIndex));
+                  minusY.elementAt(rowIndex), addY.elementAt(rowIndex));
         }//for
         datasetCol.addSeries(s1);
       }//if

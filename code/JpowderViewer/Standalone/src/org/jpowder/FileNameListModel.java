@@ -18,7 +18,7 @@ import org.jpowder.fileCabinet.PowderFileObserver;
 */
 
 
-public class FileNameListModel extends javax.swing.DefaultListModel implements PowderFileObserver {
+ public class FileNameListModel extends javax.swing.DefaultListModel implements PowderFileObserver {
     
     private java.util.Vector<CheckableFileItem> fileNameModelVec;
 
