@@ -254,12 +254,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="DataVisibleInChartPanel" alignment="0" pref="279" max="32767" attributes="0"/>
                           <Component id="Tabs" alignment="0" pref="279" max="32767" attributes="0"/>
                           <Component id="Filechoose" alignment="0" max="32767" attributes="0"/>
-                          <Component id="DataVisibleInChartPanel" alignment="0" pref="279" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -269,9 +269,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="Tabs" min="-2" pref="411" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="DataVisibleInChartPanel" pref="166" max="32767" attributes="0"/>
+                      <Component id="Tabs" min="-2" pref="381" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="DataVisibleInChartPanel" pref="189" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="Filechoose" min="-2" pref="258" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -393,7 +393,7 @@
                                   <Component id="jButton5" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                                   <Component id="jButton6" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="273" max="32767" attributes="0"/>
+                              <EmptySpace pref="239" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -495,7 +495,7 @@
                               <Component id="jSlider2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="193" max="32767" attributes="0"/>
+                              <EmptySpace pref="163" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>

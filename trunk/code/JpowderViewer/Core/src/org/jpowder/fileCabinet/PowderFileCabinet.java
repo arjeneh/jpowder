@@ -1,7 +1,14 @@
 package org.jpowder.fileCabinet;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jpowder.*;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Vector;
@@ -145,16 +152,32 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
      *
      * @param aFile Name of the powder diffraction file to be read
      */
+
+
+
     public DataSet createDataSetFromPowderFile(File aFile) {
-
-        if (aFile.getName().endsWith("xye") || aFile.getName().endsWith("xy")||aFile.getName().endsWith("txt")) {
-            return XYandXYE_Reader.read(aFile);
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(aFile);
+            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+            int lineNum = 0;
+            if (aFile.getName().endsWith("xye") || aFile.getName().endsWith("xy") || aFile.getName().endsWith("txt")) {
+                return XYandXYE_Reader.read(aFile);
+            }
+            if (aFile.getName().endsWith("cif")) {
+                return Cif_Reader.read(aFile);
+            }
+            return null;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(PowderFileCabinet.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                fis.close();
+            } catch (IOException ex) {
+                Logger.getLogger(PowderFileCabinet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-
-        if (aFile.getName().endsWith("cif")) {
-            return Cif_Reader.read(aFile);
-        }
-        return null;
+     return null;
     }
 
     /**
@@ -207,3 +230,4 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         this.lastUpdateFileName = fileName;
     }
 }
+

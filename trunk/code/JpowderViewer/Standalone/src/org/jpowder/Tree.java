@@ -254,9 +254,12 @@ public class Tree extends JPanel {
     FileTreeNode rootTreeNode = new FileTreeNode(roots);
     this.tree = new JTree(rootTreeNode);
     this.tree.setDragEnabled(true);
-    this.tree.setDropTarget(null);
+    FileChooserPanel fc = new FileChooserPanel();
+
+   // this.tree.setDropTarget(fc.list());
      tree.setDragEnabled(true);
       tree.setTransferHandler(new TreeDragAndDrop());
+      //tree.expandRow(1);
     this.tree.setCellRenderer(new FileTreeCellRenderer());
     this.tree.setRootVisible(false);
 
