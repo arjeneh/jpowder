@@ -325,6 +325,7 @@ public class FileChooserPanel extends javax.swing.JPanel
         }//drop
     }
 
+
 private void plotFiles_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotFiles_btnActionPerformed
     // TODO: Plot mulitple files//GEN-LAST:event_plotFiles_btnActionPerformed
 
