@@ -4,12 +4,14 @@
  */
 package org.jpowder;
 
+import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.ScrollPaneLayout;
 import org.jpowder.JCheckboxList.CheckableFileItem;
 import org.jpowder.JCheckboxList.JCheckBoxJList;
 import org.jpowder.dataset.DataSet;
@@ -33,11 +35,13 @@ public class DataVisibleInChart extends JPanel implements PowderFileObserver {
     listModel = new FileNameListModel();
 
     checkboxList = new JCheckBoxJList(listModel);
+    checkboxList.setLayout(new BorderLayout());
     checkboxList.setFont(new java.awt.Font("Tahoma", 0, 10));
 
     file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-    file_sp.setPreferredSize(new java.awt.Dimension(260, 120));
+    file_sp.setPreferredSize(new java.awt.Dimension(260, 150));
     file_sp.setViewportView(checkboxList);
+    file_sp.setLayout(new ScrollPaneLayout());
 
     java.awt.GridBagConstraints gridBagConstraints;
     gridBagConstraints = new java.awt.GridBagConstraints();
