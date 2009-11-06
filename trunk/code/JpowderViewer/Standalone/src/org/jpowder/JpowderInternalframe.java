@@ -25,13 +25,19 @@ public class JpowderInternalframe extends JInternalFrame {
     this.dataVisibleInChartPanel = dataVisibleInChartPanel;
     this.setClosable(true);
     this.setMaximizable(true);
-    this.setResizable(true);
+    this.setResizable(false);
     this.setPreferredSize(new Dimension(300, 300));
     this.add(chartPanel);
     this.setVisible(true);
     System.out.println("Internalframe created");
 
     m_data = data;
+    try{
+    this.moveToFront();
+    this.updateUI();
+    this.addFocusListener(null);
+    this.setSelected(true);
+    }catch(java.beans.PropertyVetoException e){}
 
   }
 
