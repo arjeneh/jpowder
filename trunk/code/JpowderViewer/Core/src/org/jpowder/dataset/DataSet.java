@@ -1,6 +1,5 @@
 package org.jpowder.dataset;
 
-import java.util.Iterator;
 import java.util.Vector;
 import org.jpowder.util.VectorMiscUtil;
 
@@ -19,18 +18,16 @@ public abstract  class DataSet
     private String fileName;
   
 
-    //@param $data: recieve data to plot as 2D vector.
-    //@param $fileName: recieve the file name.
+    //@param data: data from a powder diffraction file
+    //@param fileName: filename of powder diffraction file.
     public DataSet(Vector<Vector> data, String filename) {
         this.fileName = filename;
-      //  this.data = data;
+
         //obtain data and assign x and y values to this class
         this.x = VectorMiscUtil.getColumn(data, 0);
         this.y = VectorMiscUtil.getColumn(data, 1);
     }
 
-    public DataSet() {
-    }
 
     /// Do we really need this method
     public abstract String description();

@@ -19,12 +19,11 @@ import org.jfree.data.xy.YIntervalSeries;
 import org.jfree.data.xy.YIntervalSeriesCollection;
 import org.jfree.ui.RectangleInsets;
 import org.jpowder.dataset.jfreechart.XYE_PopupMenu;
-/*
-DataSet xye = new XY_XYE(lData, fileName);
-DatasetPlotter plot3Col = xye.createDatasetPlotter();
-powderChartPanel.add(plot3Col.createPowderChart());
- */
 
+/**
+ * Implements DatasetPlotter interface. Creates chart container data from
+ * one or more powder diffraction files.
+ */
 public class FilesPlotter extends DatasetPlotter {
 
   private Vector<DataSet> datasets;
@@ -52,8 +51,10 @@ public class FilesPlotter extends DatasetPlotter {
     XYSeriesCollection XY_type_datasets = createDataset1();
     YIntervalSeriesCollection XYE_type_datasets = createDataset2();
 
+    // get chart
     JFreeChart chart = createChart(XY_type_datasets, XYE_type_datasets);
 
+    // create panel from chart and set some panel attributes
     ChartPanel chartPanel = new ChartPanel(chart, true);
     chartPanel.setMaximumSize(new java.awt.Dimension(300, 300));
     chartPanel.setDisplayToolTips(false);
@@ -65,9 +66,9 @@ public class FilesPlotter extends DatasetPlotter {
   }
 
   /**
-   * Creates the chart with multiple datasets.
+   * Creates the chart containing data from one or more powder diffraction files
    *
-   * @return The chart.
+   * @return A JFreeChart
    */
   private JFreeChart createChart(XYSeriesCollection XY_dataSets, YIntervalSeriesCollection XYE_datasets) {
     NumberAxis xAxis = new NumberAxis("X");
@@ -109,11 +110,9 @@ public class FilesPlotter extends DatasetPlotter {
   }
 
   /**
+   * Create collection which contains a XYSeries container for each DataSetNoErrors
    *
-   * @param dataVec  dataVec.
-   * @param name  the file name list came as [pd_0010.xy, SNBL_zeolite_VPI-9.xye]
-   *
-   * @return The dataset.
+   * @return collection
    */
 private XYSeriesCollection createDataset1() {
 
@@ -124,27 +123,24 @@ private XYSeriesCollection createDataset1() {
 
         XYSeries series = new XYSeries(datasets.elementAt(i).getFileName());
 
-
         Vector<Double> x = datasets.elementAt(i).getX();
         Vector<Double> y = datasets.elementAt(i).getY();
+        
         for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
           series.add(x.elementAt(rowIndex), y.elementAt(rowIndex));
         }//for
         datasetCol.addSeries(series);
-        System.out.println(series.getItemCount());
-        datasetCol.getSeries().toString();
-       // series.add(12, 45);
-       // series.add(13, 46);
-       // System.out.println("getserie/////" + series.getItemCount());
-      //  System.out.println("getserie/////" + datasetCol.getSeries(0).getItemCount());
-        
-   
       }//if
     }//for
     return datasetCol;
   }
 
-
+  /**
+   * Create collection which contains a YIntervalSeries container for each
+   * DataSetWithErrors
+   *
+   * @return collection
+   */
   private YIntervalSeriesCollection createDataset2() {
     //IntervalXYDataset is an interface.
     YIntervalSeriesCollection datasetCol = new YIntervalSeriesCollection();
@@ -165,5 +161,5 @@ private XYSeriesCollection createDataset1() {
     }// for
     return datasetCol;
   }
-}//class
+}
 

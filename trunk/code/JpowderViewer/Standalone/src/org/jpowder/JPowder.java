@@ -716,7 +716,7 @@ public class JPowder extends JFrame implements PowderFileObserver, DropTargetLis
     }//GEN-LAST:event_MotifActionPerformed
 
     private void NimbusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NimbusActionPerformed
-      LAF.nimbus();
+//      LAF.nimbus();
     }//GEN-LAST:event_NimbusActionPerformed
 
     private void MetalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MetalActionPerformed
