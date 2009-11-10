@@ -4,7 +4,6 @@
  */
 package org.jpowder;
 
-import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
 import com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel;
 import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 import java.util.logging.Level;
@@ -47,7 +46,7 @@ public class LookAndFeel {
   }
 /**
  *
- */
+ 
   public void nimbus() {
     try {
       UIManager.setLookAndFeel(
@@ -56,7 +55,7 @@ public class LookAndFeel {
     } catch (Exception j) {
       j.printStackTrace();
     }
-  }
+  }*/
 
   public void windows() {
     try {
