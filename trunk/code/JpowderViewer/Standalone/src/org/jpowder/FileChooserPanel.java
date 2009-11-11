@@ -342,7 +342,6 @@ private void plotFiles_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN
     }//less than two.
 
     //System.out.println("CheckableFileItem: " + nameList.toString());
-
     /* 1 Get the file data that match with nameList
      * 2 start plot from the file nameList one by one
      * 3 add the chart to JPowder one with jPowderMain.getChartPanel()
@@ -353,26 +352,21 @@ private void plotFiles_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN
       DataSet lData = (DataSet) dataHm.get(fileName);
       dat.add(lData);
     }
-
     //System.out.println("Data of selected files: " + dat.toString());
     // System.out.println("Data size: " + dat.size());
     //System.out.println("Selected files: " + nameList.toString());
 
     //plot multiple files.
     //XY_XYE xy_xye = new XY_XYE(dat, nameList.toString());
-
-
-
     DatasetPlotter plotMultiCol = DatasetPlotter.createDatasetPlotter(dat);
-    JPanel chartpanls = new JPanel();//jPowderMain.getChartPanel();
+    JPanel chartpanel = new JPanel();//jPowderMain.getChartPanel();
 
     JDesktopPane ChartPlotter = jPowderMain.getChartPanel();
     //ChartPlot.add(plotMultiCol.createPowderChart());
-    chartpanls.setLayout(new BorderLayout());
-    chartpanls.add(plotMultiCol.createPowderChart());
-    JpowderInternalframe internalframe = new JpowderInternalframe(chartpanls, jPowderMain.DVIC, dat);
+    chartpanel.setLayout(new BorderLayout());
+    chartpanel.add(plotMultiCol.createPowderChart());
+    JpowderInternalframe internalframe = new JpowderInternalframe(chartpanel, jPowderMain.DVIC, dat);
     ChartPlotter.add(internalframe);
-
   }
 
 private void addFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFile_btnActionPerformed

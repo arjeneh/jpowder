@@ -19,28 +19,32 @@ public class JpowderInternalframe extends JInternalFrame {
 
   private DataVisibleInChart dataVisibleInChartPanel;
   private Vector<DataSet> m_data;
-
+/**
+ *
+ * @param chartPanel
+ * @param dataVisibleInChartPanel
+ * @param data
+ */
   public JpowderInternalframe(JPanel chartPanel, DataVisibleInChart dataVisibleInChartPanel, Vector<DataSet> data) {
-    super("title");
+    super("JPowder");
+  
     this.dataVisibleInChartPanel = dataVisibleInChartPanel;
+    this.add(chartPanel);    
+    m_data = data;
+
     this.setClosable(true);
     this.setMaximizable(true);
     this.setResizable(false);
+    this.setIconifiable(false);
+
     this.setPreferredSize(new Dimension(300, 300));
-    this.add(chartPanel);
-    this.setVisible(true);
     System.out.println("Internalframe created");
-
-    m_data = data;
-    try{
-    this.moveToFront();
-    this.updateUI();
-    this.addFocusListener(null);
-    this.setSelected(true);
-    }catch(java.beans.PropertyVetoException e){}
-
+    this.setVisible(true);
   }
-
+/**
+ *
+ * @return
+ */
   public Vector<DataSet> getPowderDataSet() {
     return m_data;
   }
@@ -59,16 +63,25 @@ public class JpowderInternalframe extends JInternalFrame {
     return dataVisibleInChartPanel;
   }
 }
-
+/**
+ *
+ * @author qyt21516
+ */
 class InternalFrameIconifyListener extends InternalFrameAdapter {
-
+/**
+ *
+ * @param e
+ */
   @Override
   public void internalFrameClosed(InternalFrameEvent e) {
 
     System.out.println("widows is Closed");
 
   }
-
+/**
+ *
+ * @param e
+ */
   @Override
   public void internalFrameActivated(InternalFrameEvent e) {
 
@@ -80,7 +93,10 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
     dvic.newChartInFocus(jpowderinternalframe.getPowderDataSet());
 
   }
-
+/**
+ * 
+ * @param e
+ */
   @Override
   public void internalFrameDeactivated(InternalFrameEvent e) {
     //System.out.println("widows is DeActivated");

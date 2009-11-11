@@ -16,11 +16,13 @@ import javax.swing.plaf.ColorUIResource;
 public class CheckFileRenderer extends JPanel implements TreeCellRenderer {
 
     protected JCheckBox check;
+
     protected TreeLabel label;
 
     public CheckFileRenderer() {
         setLayout(null);
         add(check = new JCheckBox());
+          check.setSelected(true);
         add(label = new TreeLabel());
         check.setBackground(UIManager.getColor("Tree.textBackground"));
         label.setForeground(UIManager.getColor("Tree.textForeground"));
