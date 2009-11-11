@@ -5,10 +5,12 @@
 
 package org.jpowder;
 
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
 import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 
 /**
  *
@@ -65,9 +67,8 @@ import javax.swing.tree.TreeNode;
         return "null";
       else
         return file.getAbsolutePath();
+
     }
-
-
     /**
      * Creates a new file tree node.
      *

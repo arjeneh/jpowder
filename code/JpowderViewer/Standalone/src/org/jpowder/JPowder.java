@@ -12,14 +12,11 @@ package org.jpowder;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetContext;
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
@@ -35,13 +32,10 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
-import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JTree;
-import javax.swing.TransferHandler;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.jpowder.dataset.DataSet;
@@ -49,7 +43,6 @@ import org.jpowder.dataset.DatasetPlotter;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.fileCabinet.PowderFileObserver;
 import org.jpowder.util.ScreenUtil;
-import org.jpowder.util.Stopwatch;
 
 /**
  * Jpowder is the starting class for the Jpowder project {@link www.jpowder.org}.
@@ -104,8 +97,6 @@ public class JPowder extends JFrame implements PowderFileObserver, DropTargetLis
     String fileName = pfc.getLastUpdateFileName();
     DataSet lastAddedDataset = allData.get(fileName);
 
-    Stopwatch lStopwatch = new Stopwatch();
-    lStopwatch.start();
     DatasetPlotter plot = DatasetPlotter.createDatasetPlotter(lastAddedDataset);
 
 //creating the internal frame here
@@ -128,9 +119,6 @@ public class JPowder extends JFrame implements PowderFileObserver, DropTargetLis
     ChartPlotter.add(internalframe);
     setVisible(true);
 
-    System.out.println("\nTime it took to create chart " + fileName);
-    System.out.println(lStopwatch.getElapsedTime());
-    lStopwatch.reset();
 
   }// powderFileCabinetUpdate
 
@@ -145,70 +133,10 @@ public class JPowder extends JFrame implements PowderFileObserver, DropTargetLis
 
   public JPowder() {
 
-
     initComponents();
     mPowderFileCabinet = new PowderFileCabinet();
     mPowderFileCabinet.registerObserver(this);
     dt = new DropTarget(ChartPlotter, this);
-    /**
-    //  ChartPlotter.setTransferHandler(new TransferHandler() {
-    TransferHandler handler = new TransferHandler() {
-
-    @Override
-    public boolean canImport(TransferHandler.TransferSupport info) {
-    if (!info.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-    //||!(info.isDataFlavorSupported(DataFlavor.javaFileListFlavor))
-    return false;
-    }
-    if (!info.isDrop()) {
-    return false;
-    }
-    return true;
-    }
-
-    @Override
-    public boolean importData(TransferHandler.TransferSupport info) {
-    if (!canImport(info)) {
-    return false;
-    }
-
-    DataSet oneDataset = null;
-    // Get the string that is being dropped.
-    Transferable t = info.getTransferable();
-
-    String fileName;
-    try {
-    fileName = (String) t.getTransferData(DataFlavor.stringFlavor);
-    String[] fileArr = fileName.split("   ");
-
-    //File file = new File(fileName);
-
-    for (int i = 0; i < fileArr.length; i++) {
-    System.out.println(fileArr[i]);
-    if (mPowderFileCabinet.checkAcceptedFileType(fileArr[i])) {
-    mPowderFileCabinet.setLastUpdateFileName(fileArr[i]);
-    oneDataset = null;
-    File file = new File(fileArr[i]);
-    oneDataset = mPowderFileCabinet.createDataSetFromPowderFile(file);
-    if (oneDataset != null) {
-    mPowderFileCabinet.addFile(mPowderFileCabinet.getLastUpdateFileName(), oneDataset);
-    }
-    } else {
-    javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
-    //end if extension matched
-    }
-    System.out.println(fileName);
-    }
-    } catch (Exception e) {
-    e.printStackTrace();
-    return false;
-    }
-    return false;
-    }
-    };
-
-    ChartPlotter.setTransferHandler(handler);
-     */
     DataVisibleInChartPanel.add(DVIC);
     DVIC.setVisible(true);
 
@@ -730,7 +658,99 @@ public class JPowder extends JFrame implements PowderFileObserver, DropTargetLis
     private void LinuxSolarisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LinuxSolarisActionPerformed
       LAF.LinuxandSolaris();
     }//GEN-LAST:event_LinuxSolarisActionPerformed
+  public void dragEnter(DropTargetDragEvent dtde) {
+  }
 
+  public void dragOver(DropTargetDragEvent dtde) {
+  }
+
+  public void dropActionChanged(DropTargetDragEvent dtde) {
+  }
+
+  public void dragExit(DropTargetEvent dte) {
+  }
+
+  public void drop(DropTargetDropEvent dtde) {
+    DataSet oneDataset = null;
+    ArrayList<File> allfiles = new ArrayList<File>();
+    ArrayList<String> allfilesName = new ArrayList<String>();
+    Vector<DataSet> datasets = new Vector<DataSet>();
+
+    Transferable transfeable = dtde.getTransferable();
+    DataFlavor[] flavors = transfeable.getTransferDataFlavors();
+    dtde.acceptDrop(DnDConstants.ACTION_COPY);
+
+    // Find all filenames which have been draged into the chart plotter area
+    // and to allFilenames
+
+    for (int i = 0; i < flavors.length; i++) {
+      if (flavors[i].isFlavorJavaFileListType()) {
+        try {
+          // populate allFilenames
+          java.util.List<File> list = (java.util.List) transfeable.getTransferData(flavors[i]);
+          for (int j = 0; j < list.size(); j++) {
+            File file = list.get(j);
+            String fileName = file.getName().toLowerCase();
+            allfiles.add(file);
+            allfilesName.add(fileName);
+          }
+          System.out.println("files added to descktop pane" + allfiles);
+        } catch (UnsupportedFlavorException ex) {
+          Logger.getLogger(JPowder.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+          Logger.getLogger(JPowder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+      } else if (flavors[i].equals(DataFlavor.stringFlavor)) {
+
+        try {
+          // populate allFilenames
+          String fileName;
+          fileName = (String) transfeable.getTransferData(DataFlavor.stringFlavor);
+          String[] array = fileName.split("\n");
+          int n = array.length;
+          for (int j = 0; j < n; j++) {
+            System.out.println("\n" + array[j] + "\n");
+            File file = new File(array[j]);
+            String fileNames = file.getName().toLowerCase();
+            allfiles.add(file);
+            allfilesName.add(fileNames);
+          }
+          System.out.println("files added to descktop pane\n" + allfiles);
+        } catch (Exception ex) {
+        }
+      } else {
+      }
+    }
+
+    // create vector of DataSet
+    for (int i = 0; i < allfiles.size(); i++) {
+      if (mPowderFileCabinet.checkAcceptedFileType(allfilesName.get(i))) {
+        mPowderFileCabinet.setLastUpdateFileName(allfilesName.get(i));
+        oneDataset = null;
+        oneDataset = mPowderFileCabinet.createDataSetFromPowderFile(allfiles.get(i));
+        if (oneDataset != null) {
+          datasets.add(oneDataset);
+        } else {
+          continue;
+        }
+      } else {
+      }
+    }
+    // finally plot the data
+    DatasetPlotter plotMultiCol = DatasetPlotter.createDatasetPlotter(datasets);
+    javax.swing.JPanel chartpanls = new javax.swing.JPanel();
+    chartpanls.setLayout(new BorderLayout());
+    chartpanls.add(plotMultiCol.createPowderChart());
+    JpowderInternalframe internalframe = new JpowderInternalframe(chartpanls, DVIC, datasets);
+    InternalFrameListener internalFrameListener = new InternalFrameIconifyListener();
+    internalframe.addInternalFrameListener(internalFrameListener);
+    ChartPlotter.setLayout(new FlowLayout());
+    ChartPlotter.add(internalframe);
+    setVisible(true);
+  }
+  
   /**
    * @param args the command line arguments
    */
@@ -790,93 +810,4 @@ public class JPowder extends JFrame implements PowderFileObserver, DropTargetLis
   private javax.swing.JSlider jSlider2;
   private javax.swing.JSplitPane jSplitPane1;
   // End of variables declaration//GEN-END:variables
-
-  public void dragEnter(DropTargetDragEvent dtde) {
-  }
-
-  public void dragOver(DropTargetDragEvent dtde) {
-  }
-
-  public void dropActionChanged(DropTargetDragEvent dtde) {
-  }
-
-  public void dragExit(DropTargetEvent dte) {
-  }
-
-  public void drop(DropTargetDropEvent dtde) {
-    DataSet oneDataset = null;
-    try {
-      Transferable transfeable = dtde.getTransferable();
-      DataFlavor[] flavors = transfeable.getTransferDataFlavors();
-
-      for (int i = 0; i < flavors.length; i++) {
-        //System.out.println("Possible flavor: " + flavors[i].getMimeType());
-        if (flavors[i].isFlavorJavaFileListType()) {
-          dtde.acceptDrop(DnDConstants.ACTION_COPY);
-          System.out.println("Successful file list drop.\n\n");
-          // And add the list of file names to our text area
-          java.util.List list = (java.util.List) transfeable.getTransferData(flavors[i]);
-          for (int j = 0; j < list.size(); j++) {
-            File file = (File) list.get(j);
-            String fileName = file.getName().toLowerCase();
-            if (mPowderFileCabinet.checkAcceptedFileType(fileName)) {
-              mPowderFileCabinet.setLastUpdateFileName(fileName);
-              oneDataset = null;
-              oneDataset = mPowderFileCabinet.createDataSetFromPowderFile(file);
-              if (oneDataset != null) {
-                mPowderFileCabinet.addFile(mPowderFileCabinet.getLastUpdateFileName(), oneDataset);
-                System.out.println("number file selected.\n" + list.size());
-              }
-            } else {
-              javax.swing.JOptionPane.showMessageDialog(this, "Only ASCII file please.");
-              //end if extension matched
-            }
-          }
-          // If we made it this far, everything worked.
-          dtde.dropComplete(true);
-          return;
-
-        } else if (flavors[i].equals(DataFlavor.stringFlavor)) {
-          dtde.acceptDrop(DnDConstants.ACTION_COPY);
-
-          String fileName;
-          fileName = (String) transfeable.getTransferData(DataFlavor.stringFlavor);
-          System.out.println(fileName);
-
-         // if(fileName.contains("C: ")||fileName.contains("D: ")){
-              String[] fileArr = fileName.split("C: ");
-
-
-          for (int k = 0; k < fileArr.length; k++) {
-            File file = new File(fileArr[k]);
-            if (mPowderFileCabinet.checkAcceptedFileType(fileArr[k])) {
-              mPowderFileCabinet.setLastUpdateFileName(fileArr[k]);
-              oneDataset = null;
-              oneDataset = mPowderFileCabinet.createDataSetFromPowderFile(file);
-              if (oneDataset != null) {
-                mPowderFileCabinet.addFile(mPowderFileCabinet.getLastUpdateFileName(), oneDataset);
-                System.out.println("number file selected.\n" + fileArr.length);
-              }
-            } else {
-              javax.swing.JOptionPane.showMessageDialog(this, "Only ASCII file please.");
-              //end if extension matched
-            }
-
-            // If we made it this far, everything worked.
-            dtde.dropComplete(true);
-            return;
-          }
-        }
-        // Hmm, the user must not have dropped a file list
-        System.out.println("Drop failed: " + dtde);
-        dtde.rejectDrop();
-      }//drop
-      //}
-    } catch (UnsupportedFlavorException ex) {
-      Logger.getLogger(JPowder.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (IOException ex) {
-      Logger.getLogger(JPowder.class.getName()).log(Level.SEVERE, null, ex);
-    }
-  }
 }
-

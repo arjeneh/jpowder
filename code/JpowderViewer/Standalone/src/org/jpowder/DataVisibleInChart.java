@@ -38,6 +38,8 @@ public class DataVisibleInChart extends JPanel implements PowderFileObserver {
     checkboxList.setLayout(new BorderLayout());
     checkboxList.setFont(new java.awt.Font("Tahoma", 0, 10));
 
+
+
     file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     file_sp.setPreferredSize(new java.awt.Dimension(260, 150));
     file_sp.setViewportView(checkboxList);

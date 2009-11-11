@@ -35,7 +35,7 @@ public abstract class DatasetPlotter {
         if (datasets.size() >= 1) {
             return new FilesPlotter(datasets);
         } else {
-            System.out.println("Can't create DatasetPlotter from no data");
+          javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
             return null;
         }
     }
@@ -49,7 +49,7 @@ public abstract class DatasetPlotter {
         if (dataset != null) {
             return new FilesPlotter(dataset);
         } else {
-            System.out.println("Can't pass null in createDatasetPlotter");
+             javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
             return null;
         }
     }

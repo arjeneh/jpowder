@@ -29,7 +29,7 @@ public class Tree extends JPanel {
    */
   protected static FileSystemView fsv = FileSystemView.getFileSystemView();
   private java.awt.dnd.DropTarget dt;
-
+    private JTree tree;
   /**
    * Renderer for the file tree.
    *
@@ -53,6 +53,10 @@ public class Tree extends JPanel {
       FileTreeNode ftn = (FileTreeNode) value;
       File file = ftn.file;
       String filename = "";
+ DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) tree.getCellRenderer();
+    //tool tip
+    ToolTipManager.sharedInstance().registerComponent(tree);
+    renderer.setToolTipText(FileTreeNode.class.toString());
       if (file != null) {
         if (ftn.isFileSystemRoot) {
           // long start = System.currentTimeMillis();
@@ -84,7 +88,7 @@ public class Tree extends JPanel {
   /**
    * The file tree.
    */
-  private JTree tree;
+
   /**
    * Creates the file tree panel.
    */
@@ -99,10 +103,6 @@ public class Tree extends JPanel {
     tree.expandRow(1);
     this.tree.setCellRenderer(new FileTreeCellRenderer());
     this.tree.setRootVisible(false);
-    DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) tree.getCellRenderer();
-    //tool tip
-    ToolTipManager.sharedInstance().registerComponent(tree);
-    renderer.setToolTipText("");
     final JScrollPane jsp = new JScrollPane(this.tree);
     jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
     this.add(jsp, BorderLayout.CENTER);
