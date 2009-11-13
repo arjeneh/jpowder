@@ -23,17 +23,28 @@ import org.jpowder.dataset.jfreechart.XYE_PopupMenu;
 /**
  * Implements DatasetPlotter interface. Creates chart container data from
  * one or more powder diffraction files.
+ *
  */
 public class FilesPlotter extends DatasetPlotter {
 
   private Vector<DataSet> datasets;
+  private int datasetIndex = 0;
+  private XYPlot plot;
 
+  /**
+   *
+   * @param d
+   */
   public FilesPlotter(Vector<DataSet> d) {
     super(d);
     this.datasets = d;
     System.out.println("MultiFilesPlotter is called ");
   }
 
+  /**
+   *
+   * @param d
+   */
   public FilesPlotter(DataSet d) {
     super(d);
     datasets = new Vector<DataSet>();
@@ -45,15 +56,14 @@ public class FilesPlotter extends DatasetPlotter {
     return "Multiple Files Plotter";
   }
 
+  /**
+   * creating the chart panel
+   * @return chartPanel
+   */
   @Override
   public ChartPanel createPowderChart() {
-
-    XYSeriesCollection XY_type_datasets = createDataset1();
-    YIntervalSeriesCollection XYE_type_datasets = createDataset2();
-
     // get chart
-    JFreeChart chart = createChart(XY_type_datasets, XYE_type_datasets);
-
+    JFreeChart chart = createChart();
     // create panel from chart and set some panel attributes
     ChartPanel chartPanel = new ChartPanel(chart, true);
     chartPanel.setMaximumSize(new java.awt.Dimension(300, 300));
@@ -67,99 +77,124 @@ public class FilesPlotter extends DatasetPlotter {
 
   /**
    * Creates the chart containing data from one or more powder diffraction files
-   *
-   * @return A JFreeChart
+   * @return chart
    */
-  private JFreeChart createChart(XYSeriesCollection XY_dataSets, YIntervalSeriesCollection XYE_datasets) {
+  public JFreeChart createChart() {
     NumberAxis xAxis = new NumberAxis("X");
     NumberAxis yAxis = new NumberAxis("Y");
     // get a reference to the plot for further customisation...
     XYLineAndShapeRenderer renderer1 = new XYLineAndShapeRenderer();
-    renderer1.setBaseLinesVisible(true);
+    XYErrorRenderer renderer2 = new XYErrorRenderer();
+
+
+    renderer1.setBaseLinesVisible(true);//for turning the line on and off
     renderer1.setBaseShapesVisible(false);//responsible for turning the marker off/on
+    renderer2.setBaseLinesVisible(true);
+    renderer2.setBaseShapesVisible(false);//responsible for turning the marker off/on
 
     //Displaying the X&Y in Tooltip
     XYToolTipGenerator tooltip = new StandardXYToolTipGenerator(
             "{1},{2}", new DecimalFormat("0.000"), new DecimalFormat("0.000"));
     renderer1.setToolTipGenerator(tooltip);
+    renderer2.setToolTipGenerator(tooltip);
 
-    XYPlot plot = new XYPlot(XY_dataSets, xAxis, yAxis, renderer1);
+
+    if (datasets.elementAt(0) instanceof DataSetNoErrors) {
+      plot = new XYPlot(createXYSeriesCollectionFromDataset(datasets.elementAt(0)),
+              xAxis, yAxis, renderer1);
+    } else {
+      plot = new XYPlot(createYIntervalSeriesCollectionFromDataset(datasets.elementAt(0)),
+              xAxis, yAxis, renderer2);
+    }
+
     plot.setBackgroundPaint(Color.lightGray);
     plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
     plot.setDomainGridlinePaint(Color.white);
     plot.setRangeGridlinePaint(Color.white);
 
-    // change the auto tick unit selection to integer units only...
-    NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-    rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
-    XYErrorRenderer renderer2 = new XYErrorRenderer();
-    renderer2.setBaseLinesVisible(true);
-    renderer2.setBaseShapesVisible(false);//responsible for turning the marker off/on
-    renderer2.setToolTipGenerator(tooltip);
+    for (int i = 1; i < datasets.size(); i++) {
+      XYLineAndShapeRenderer renderer3 = new XYLineAndShapeRenderer();
+      XYErrorRenderer renderer4 = new XYErrorRenderer();
+      renderer3.setBaseLinesVisible(true);//for turning the line on and off
+      renderer3.setBaseShapesVisible(false);//responsible for turning the marker off/on
+      renderer4.setBaseLinesVisible(true);
+      renderer4.setBaseShapesVisible(false);//responsible for turning the marker off/on
+      // change the auto tick unit selection to integer units only...
+      NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+      rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+      //XYErrorRenderer renderer2 = new XYErrorRenderer();
+      if (datasets.elementAt(i) instanceof DataSetNoErrors) {
+        plot.setDataset(i, createXYSeriesCollectionFromDataset(datasets.elementAt(i)));
+        plot.setRenderer(i, renderer3);
+      } else {
+        plot.setDataset(i, createYIntervalSeriesCollectionFromDataset(datasets.elementAt(i)));
+        plot.setRenderer(i, renderer4);
+      }
 
-    plot.setDataset(1, XYE_datasets);
-    plot.setRenderer(1, renderer2);
-
+    }
     plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
-    //   plot.setRenderer(1,(XYItemRenderer) data2);
     JFreeChart chart = new JFreeChart(plot);//"Chart: " + this.d.getFileName() for getting the chart header
     chart.setBackgroundPaint(Color.white);
-
     return chart;
   }
 
-  /**
-   * Create collection which contains a XYSeries container for each DataSetNoErrors
-   *
-   * @return collection
-   */
-private XYSeriesCollection createDataset1() {
+  public XYPlot getplot() {
+    return plot;
+  }
 
+  /**
+   * Create collection which contains a XYSeriesCollection container for each
+   * DataSetNoErrors
+   * @param dataset
+   * @return datasetCol
+   */
+  private XYSeriesCollection createXYSeriesCollectionFromDataset(DataSet dataset) {
     XYSeriesCollection datasetCol = new XYSeriesCollection();
 
-    for (int i = 0; i < datasets.size(); i++) {
-      if (datasets.elementAt(i) instanceof DataSetNoErrors) {
+    XYSeries series = new XYSeries(dataset.getFileName());
 
-        XYSeries series = new XYSeries(datasets.elementAt(i).getFileName());
+    Vector<Double> x = dataset.getX();
+    Vector<Double> y = dataset.getY();
 
-        Vector<Double> x = datasets.elementAt(i).getX();
-        Vector<Double> y = datasets.elementAt(i).getY();
-        
-        for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
-          series.add(x.elementAt(rowIndex), y.elementAt(rowIndex));
-        }//for
-        datasetCol.addSeries(series);
-      }//if
+    for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
+      series.add(x.elementAt(rowIndex), y.elementAt(rowIndex));
     }//for
+
+    datasetCol.addSeries(series);
+
     return datasetCol;
   }
 
   /**
    * Create collection which contains a YIntervalSeries container for each
    * DataSetWithErrors
-   *
-   * @return collection
+   * @param dataset
+   * @return datasetCol
    */
-  private YIntervalSeriesCollection createDataset2() {
-    //IntervalXYDataset is an interface.
+  private YIntervalSeriesCollection createYIntervalSeriesCollectionFromDataset(DataSet dataset) {
     YIntervalSeriesCollection datasetCol = new YIntervalSeriesCollection();
-    for (int i = 0; i < datasets.size(); i++) {
-      if (datasets.elementAt(i) instanceof DataSetWithErrors) {
-        YIntervalSeries s1 = new YIntervalSeries(datasets.elementAt(i).getFileName());
-        DataSetWithErrors xye = (DataSetWithErrors) datasets.elementAt(i);
-        Vector<Double> x = xye.getX();
-        Vector<Double> y = xye.getY();
-        Vector<Double> minusY = xye.getYLower();
-        Vector<Double> addY = xye.getYUpper();
-        for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
-          s1.add(x.elementAt(rowIndex), y.elementAt(rowIndex),
-                  minusY.elementAt(rowIndex), addY.elementAt(rowIndex));
-        }//for
-        datasetCol.addSeries(s1);
-      }//if
-    }// for
+
+    YIntervalSeries s1 = new YIntervalSeries(dataset.getFileName());
+
+    DataSetWithErrors xye = (DataSetWithErrors) dataset;
+    Vector<Double> x = xye.getX();
+    Vector<Double> y = xye.getY();
+    Vector<Double> minusY = xye.getYLower();
+    Vector<Double> addY = xye.getYUpper();
+    for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
+      s1.add(x.elementAt(rowIndex), y.elementAt(rowIndex),
+              minusY.elementAt(rowIndex), addY.elementAt(rowIndex));
+    }//for
+
+    datasetCol.addSeries(s1);
+
     return datasetCol;
+  }
+
+  public int getSeriesCount() {
+    System.out.println("get the series count" + getSeriesCount());
+    return 1;
   }
 }
 
