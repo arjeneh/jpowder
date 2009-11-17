@@ -137,10 +137,10 @@ public class FileChooserPanel extends javax.swing.JPanel
 
     //UTILISE OBSERVER PATTERN.
     mPowderFileCabinet = new PowderFileCabinet();
-
-    mPowderFileCabinet.registerObserver(this);
-    mPowderFileCabinet.registerObserver((PowderFileObserver) listModel);
-    mPowderFileCabinet.registerObserver((JPowder) jPowderMain);
+//
+//    mPowderFileCabinet.registerObserver(this);
+//    mPowderFileCabinet.registerObserver((PowderFileObserver) listModel);
+//    mPowderFileCabinet.registerObserver((JPowder) jPowderMain);
 
   }//FileChooserPanel
 
@@ -365,7 +365,7 @@ private void plotFiles_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN
     //ChartPlot.add(plotMultiCol.createPowderChart());
     chartpanel.setLayout(new BorderLayout());
     chartpanel.add(plotMultiCol.createPowderChart());
-    JpowderInternalframe internalframe = new JpowderInternalframe(chartpanel, jPowderMain.DVIC, dat);
+    JpowderInternalframe internalframe = new JpowderInternalframe( jPowderMain.DVIC, dat);
     ChartPlotter.add(internalframe);
   }
 

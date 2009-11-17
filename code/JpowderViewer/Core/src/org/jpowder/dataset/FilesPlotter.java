@@ -111,8 +111,6 @@ public class FilesPlotter extends DatasetPlotter {
     plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
     plot.setDomainGridlinePaint(Color.white);
     plot.setRangeGridlinePaint(Color.white);
-
-
     for (int i = 1; i < datasets.size(); i++) {
       XYLineAndShapeRenderer renderer3 = new XYLineAndShapeRenderer();
       XYErrorRenderer renderer4 = new XYErrorRenderer();
@@ -135,14 +133,10 @@ public class FilesPlotter extends DatasetPlotter {
     }
     plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
     JFreeChart chart = new JFreeChart(plot);//"Chart: " + this.d.getFileName() for getting the chart header
+
     chart.setBackgroundPaint(Color.white);
     return chart;
   }
-
-  public XYPlot getplot() {
-    return plot;
-  }
-
   /**
    * Create collection which contains a XYSeriesCollection container for each
    * DataSetNoErrors

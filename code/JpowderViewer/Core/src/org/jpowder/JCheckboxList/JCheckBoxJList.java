@@ -5,14 +5,22 @@
 package org.jpowder.JCheckboxList;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYErrorRenderer;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jpowder.dataset.FilesPlotter;
+
 
 /**
  * @author Author: Kreecha Puphaiboon
@@ -27,41 +35,61 @@ public class JCheckBoxJList extends JList implements Serializable {
     public static final String PROP_SAMPLE_PROPERTY = "sampleProperty";
     private String sampleProperty;
     private PropertyChangeSupport propertySupport;
-   
     private DefaultListModel model;
     //Properties for striping blue and white on the list.
     private CheckFileListRenderer wrapper = null;
-   // private RendererWrapper wrapper = null;
-    
+   // private RendererWrapper wrapper = null;    
     private java.awt.Color rowColors[] = new java.awt.Color[2];
     private boolean drawStripes = false;
-    
-    public JCheckBoxJList(DefaultListModel model) {
-        super(model);
-        this.model = model;
+    //private FilesPlotter fileplotter;
 
-        setCellRenderer(new CheckFileListRenderer());
-        setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    public XYPlot m_plot = null;
 
-        this.addMouseListener(new MouseAdapter() {
+  //  public void setPlotInFocus(XYPlot plot) {
+  //    m_plot = plot;
+  //  }
 
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                JList list = (JList) e.getSource();
-                int index = list.locationToIndex(e.getPoint());
-                //Check which items are clicked. 
-                CheckableFileItem item = (CheckableFileItem) list.getModel().getElementAt(index);
 
-                item.setSelected(!item.isSelected());
-                Rectangle rect = list.getCellBounds(index, index);
-                list.repaint(rect);
+   public JCheckBoxJList(DefaultListModel model) {
+    super(model);
+    this.model = model;
 
-                System.out.println("Item " + item.toString());
-            }
-        });
+    setCellRenderer(new CheckFileListRenderer());
+    setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        propertySupport = new PropertyChangeSupport(this);
-    }
+    this.addMouseListener(new MouseAdapter() {
+
+      @Override
+      public void mouseClicked(MouseEvent e) {
+
+        JCheckBoxJList list = (JCheckBoxJList) e.getSource();
+        int index = list.locationToIndex(e.getPoint());
+        //Check which items are clicked.
+        CheckableFileItem item = (CheckableFileItem) list.getModel().getElementAt(index);
+        item.setSelected(!item.isSelected());
+        Rectangle rect = list.getCellBounds(index, index);
+        list.repaint(rect);
+
+        if (item.isSelected()) {
+          m_plot.setDataset(index, null);
+          m_plot.setRenderer(index, null);
+          index++;
+        }
+        if(!item.isSelected()){
+          System.out.println("have beeen unselected");
+          m_plot.setRenderer(1,new XYErrorRenderer());
+//          m_plot.setDataset(
+//                    index, createXYSeriesCollectionFromDataset());
+        }
+      
+        System.out.println("i have been selected hooray...");
+        System.out.println("Item " + item.toString());
+      }
+    });
+
+    propertySupport = new PropertyChangeSupport(this);
+  }
+
 
     /*
     //Compute zebra background stripe colors. 
