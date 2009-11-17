@@ -29,6 +29,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
@@ -36,6 +37,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.TransferHandler;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.jpowder.dataset.DataSet;
@@ -71,16 +73,18 @@ import org.jpowder.util.ScreenUtil;
  *
  *
  */
-public class JPowder extends JFrame implements PowderFileObserver, DropTargetListener {
+public class JPowder extends JFrame implements DropTargetListener {
 
   private FileChooserPanel fileChooserPanel = new FileChooserPanel(this);
   private Tree tr = new Tree();
   private LookAndFeel LAF = new LookAndFeel(this);
   public DataVisibleInChart DVIC = new DataVisibleInChart(fileChooserPanel.getPowderFileCabinet());
   private PowderFileCabinet mPowderFileCabinet;
-  private java.awt.dnd.DropTarget dt, dts;
+  private java.awt.dnd.DropTarget dt;
+  private TransferHandler th;
   private ButtonGroup buttonGroup = new ButtonGroup();
 
+/**
   public void powderFileCabinetUpdate(org.jpowder.fileCabinet.Subject data) {
     org.jpowder.fileCabinet.PowderFileCabinet pfc = (org.jpowder.fileCabinet.PowderFileCabinet) data;
 
@@ -91,6 +95,7 @@ public class JPowder extends JFrame implements PowderFileObserver, DropTargetLis
     ChartPlotter.setLayout(new javax.swing.BoxLayout(ChartPlotter, javax.swing.BoxLayout.Y_AXIS));
     ChartPlotter.setPreferredSize(area);
      */
+  /*
     HashMap<String, DataSet> allData = pfc.getData();
 
     // Get new dataset
@@ -112,16 +117,14 @@ public class JPowder extends JFrame implements PowderFileObserver, DropTargetLis
     InternalFrameListener internalFrameListener = new InternalFrameIconifyListener();
     internalframe.addInternalFrameListener(internalFrameListener);
 
-    //JScrollPane scrollpane  = new JScrollPane(ChartPlotter);
-    // jSplitPane1.add(scrollpane);
-    // add(jSplitPane1);
+  
     ChartPlotter.setLayout(new FlowLayout());
-    ChartPlotter.add(internalframe);
+
     setVisible(true);
 
 
   }// powderFileCabinetUpdate
-
+*/
   /**
    * JVM starting point
    *
@@ -135,7 +138,7 @@ public class JPowder extends JFrame implements PowderFileObserver, DropTargetLis
 
     initComponents();
     mPowderFileCabinet = new PowderFileCabinet();
-    mPowderFileCabinet.registerObserver(this);
+//    mPowderFileCabinet.registerObserver(this);
     dt = new DropTarget(ChartPlotter, this);
     DataVisibleInChartPanel.add(DVIC);
     DVIC.setVisible(true);
@@ -672,10 +675,9 @@ public class JPowder extends JFrame implements PowderFileObserver, DropTargetLis
 
   public void drop(DropTargetDropEvent dtde) {
     DataSet oneDataset = null;
+    Vector<DataSet> datasets = new Vector<DataSet>();
     ArrayList<File> allfiles = new ArrayList<File>();
     ArrayList<String> allfilesName = new ArrayList<String>();
-    Vector<DataSet> datasets = new Vector<DataSet>();
-
     Transferable transfeable = dtde.getTransferable();
     DataFlavor[] flavors = transfeable.getTransferDataFlavors();
     dtde.acceptDrop(DnDConstants.ACTION_COPY);
@@ -700,8 +702,6 @@ public class JPowder extends JFrame implements PowderFileObserver, DropTargetLis
         } catch (IOException ex) {
           Logger.getLogger(JPowder.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
       } else if (flavors[i].equals(DataFlavor.stringFlavor)) {
 
         try {
@@ -716,6 +716,7 @@ public class JPowder extends JFrame implements PowderFileObserver, DropTargetLis
             String fileNames = file.getName().toLowerCase();
             allfiles.add(file);
             allfilesName.add(fileNames);
+
           }
           System.out.println("files added to descktop pane\n" + allfiles);
         } catch (Exception ex) {
@@ -727,38 +728,33 @@ public class JPowder extends JFrame implements PowderFileObserver, DropTargetLis
     // create vector of DataSet
     for (int i = 0; i < allfiles.size(); i++) {
       if (mPowderFileCabinet.checkAcceptedFileType(allfilesName.get(i))) {
-        mPowderFileCabinet.setLastUpdateFileName(allfilesName.get(i));
-        oneDataset = null;
-        oneDataset = mPowderFileCabinet.createDataSetFromPowderFile(allfiles.get(i));
+          oneDataset = null;
+          oneDataset = mPowderFileCabinet.createDataSetFromPowderFile(allfiles.get(i));
         if (oneDataset != null) {
           datasets.add(oneDataset);
-        } else {
-          continue;
         }
       } else {
+        javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
+        break;
       }
     }
     // finally plot the data
-    DatasetPlotter plotMultiCol = DatasetPlotter.createDatasetPlotter(datasets);
-    javax.swing.JPanel chartpanls = new javax.swing.JPanel();
-    chartpanls.setLayout(new BorderLayout());
-    chartpanls.add(plotMultiCol.createPowderChart());
-    JpowderInternalframe internalframe = new JpowderInternalframe(chartpanls, DVIC, datasets);
+    JpowderInternalframe internalframe = new JpowderInternalframe(DVIC, datasets);
     InternalFrameListener internalFrameListener = new InternalFrameIconifyListener();
     internalframe.addInternalFrameListener(internalFrameListener);
     ChartPlotter.setLayout(new FlowLayout());
     ChartPlotter.add(internalframe);
     setVisible(true);
   }
-  
+
   /**
+   *
    * @param args the command line arguments
    */
   public static void main(String args[]) {
     java.awt.EventQueue.invokeLater(new Runnable() {
 
       public void run() {
-
         new JPowder().setVisible(true);
 
       }

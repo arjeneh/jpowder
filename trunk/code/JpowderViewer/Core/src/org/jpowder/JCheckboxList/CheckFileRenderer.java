@@ -9,6 +9,8 @@ package org.jpowder.JCheckboxList;
  */
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.tree.*;
 import javax.swing.plaf.ColorUIResource;
@@ -22,11 +24,14 @@ public class CheckFileRenderer extends JPanel implements TreeCellRenderer {
     public CheckFileRenderer() {
         setLayout(null);
         add(check = new JCheckBox());
-          check.setSelected(true);
+         check.setSelected(true);
         add(label = new TreeLabel());
         check.setBackground(UIManager.getColor("Tree.textBackground"));
         label.setForeground(UIManager.getColor("Tree.textForeground"));
     }
+
+
+ 
 
     public Component getTreeCellRendererComponent(JTree tree, Object value,
             boolean isSelected, boolean expanded,
@@ -142,6 +147,7 @@ public class CheckFileRenderer extends JPanel implements TreeCellRenderer {
             this.hasFocus = hasFocus;
         }
     }
+
 } 
 
 

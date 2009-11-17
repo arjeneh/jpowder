@@ -1,5 +1,6 @@
 package org.jpowder;
 
+import org.jfree.chart.plot.XYPlot;
 import org.jpowder.JCheckboxList.CheckableFileItem;
 import org.jpowder.fileCabinet.Subject;
 import org.jpowder.fileCabinet.PowderFileCabinet;
@@ -21,6 +22,9 @@ import org.jpowder.fileCabinet.PowderFileObserver;
  public class FileNameListModel extends javax.swing.DefaultListModel implements PowderFileObserver {
     
     private java.util.Vector<CheckableFileItem> fileNameModelVec;
+
+    //public javax.swing.JPanel jfreeChartPanel;
+   // public XYPlot m_plot = null;
 
 
     public FileNameListModel() {

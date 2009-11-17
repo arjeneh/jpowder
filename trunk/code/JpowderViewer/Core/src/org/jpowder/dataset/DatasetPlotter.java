@@ -35,7 +35,6 @@ public abstract class DatasetPlotter {
         if (datasets.size() >= 1) {
             return new FilesPlotter(datasets);
         } else {
-          javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
             return null;
         }
     }
@@ -49,7 +48,6 @@ public abstract class DatasetPlotter {
         if (dataset != null) {
             return new FilesPlotter(dataset);
         } else {
-             javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
             return null;
         }
     }
