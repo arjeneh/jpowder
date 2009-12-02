@@ -84,7 +84,7 @@ public class JPowder extends JFrame implements DropTargetListener {
   private java.awt.dnd.DropTarget dt;
   private TransferHandler th;
   private ButtonGroup buttonGroup = new ButtonGroup();
-  private DragAndDrop drop = new DragAndDrop();
+//  private DragAndDrop drop = new DragAndDrop();
   private Peak peak = new Peak();
 
     
