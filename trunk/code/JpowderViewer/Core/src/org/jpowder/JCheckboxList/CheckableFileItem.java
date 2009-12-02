@@ -12,14 +12,15 @@ public class CheckableFileItem {
     private boolean isSelected;
     private Icon icon;
 
+
     public CheckableFileItem(String str) {
         this.str = str;
-
-        isSelected = false;
+        isSelected=true;
     }
 
     public void setSelected(boolean b) {
         isSelected = b;
+
     }
 
     public boolean isSelected() {

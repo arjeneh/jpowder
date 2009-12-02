@@ -7,8 +7,7 @@ package org.jpowder.JCheckboxList;
 /**
  *
  */
-import java.util.*;
-import javax.swing.tree.*;
+
 /*
 public class CheckFileNode extends DefaultMutableTreeNode {
 

@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.JFileChooser;
@@ -41,6 +42,8 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
   private Vector<PowderFileObserver> observers = new Vector<PowderFileObserver>();
   private HashMap<String, DataSet> data = new HashMap<String, DataSet>();
   private String lastUpdateFileName;
+  private ArrayList<File> m_file;
+  private ArrayList<String> m_filename;
   private String filePath = null;
 
   public PowderFileCabinet() {
@@ -150,11 +153,11 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
    *
    * @param aFile Name of the powder diffraction file to be read
    */
-  public DataSet createDataSetFromPowderFile(String filename) {
-    return createDataSetFromPowderFile(new File(filename));
+  public static DataSet createDataSetFromPowderFile(String filename) {
+    return PowderFileCabinet.createDataSetFromPowderFile(new File(filename));
   }
 
-  public DataSet createDataSetFromPowderFile(File aFile) {
+  public static DataSet createDataSetFromPowderFile(File aFile) {
     FileInputStream fis = null;
     try {
       fis = new FileInputStream(aFile);
@@ -207,18 +210,24 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
       }
     }
   }
-
-  public static void main(String args[]) {
-    PowderFileCabinet pdc = new PowderFileCabinet();
-
-    javax.swing.JFrame frame = new javax.swing.JFrame("PowderFileCabinet Sample");
-    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-    frame.add(pdc, java.awt.BorderLayout.NORTH);
-    frame.setSize(300, 100);
-    frame.setVisible(true);
-
-    pdc.loadFiles();
+   public ArrayList<String> allfilesName(){
+    return m_filename;
   }
+  public ArrayList<File> allfiles(){
+    return m_file;
+  }
+
+//  public static void main(String args[]) {
+//    PowderFileCabinet pdc = new PowderFileCabinet();
+//
+//    javax.swing.JFrame frame = new javax.swing.JFrame("PowderFileCabinet Sample");
+//    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+//    frame.add(pdc, java.awt.BorderLayout.NORTH);
+//    frame.setSize(300, 100);
+//    frame.setVisible(true);
+//
+//    pdc.loadFiles();
+//  }
 
   //@return the last file inserted.
   public String getLastUpdateFileName() {
@@ -228,5 +237,6 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
   public void setLastUpdateFileName(String fileName) {
     this.lastUpdateFileName = fileName;
   }
+
 }
 
