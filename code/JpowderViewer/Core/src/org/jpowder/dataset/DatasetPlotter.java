@@ -1,6 +1,7 @@
 package org.jpowder.dataset;
 
 import java.util.Vector;
+import org.jfree.chart.plot.XYPlot;
 
 
 /**
@@ -17,7 +18,9 @@ public abstract class DatasetPlotter {
     }
 
     public DatasetPlotter(Vector<DataSet> d) {
+      System.out.println("");
     }
+   
 
     public abstract String description();
 
@@ -51,5 +54,6 @@ public abstract class DatasetPlotter {
             return null;
         }
     }
+    
 }
 

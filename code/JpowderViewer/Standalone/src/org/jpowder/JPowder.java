@@ -10,7 +10,6 @@
  */
 package org.jpowder;
 
-import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -28,22 +27,24 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
+import javax.swing.GroupLayout;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.TransferHandler;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.jpowder.Analysis.Peak;
 import org.jpowder.dataset.DataSet;
-import org.jpowder.dataset.DatasetPlotter;
 import org.jpowder.fileCabinet.PowderFileCabinet;
-import org.jpowder.fileCabinet.PowderFileObserver;
 import org.jpowder.util.ScreenUtil;
 
 /**
@@ -75,56 +76,18 @@ import org.jpowder.util.ScreenUtil;
  */
 public class JPowder extends JFrame implements DropTargetListener {
 
-  private FileChooserPanel fileChooserPanel = new FileChooserPanel(this);
+
   private Tree tr = new Tree();
   private LookAndFeel LAF = new LookAndFeel(this);
-  public DataVisibleInChart DVIC = new DataVisibleInChart(fileChooserPanel.getPowderFileCabinet());
+  public DataVisibleInChart DVIC = new DataVisibleInChart();
   private PowderFileCabinet mPowderFileCabinet;
   private java.awt.dnd.DropTarget dt;
   private TransferHandler th;
   private ButtonGroup buttonGroup = new ButtonGroup();
+  private DragAndDrop drop = new DragAndDrop();
+  private Peak peak = new Peak();
 
-/**
-  public void powderFileCabinetUpdate(org.jpowder.fileCabinet.Subject data) {
-    org.jpowder.fileCabinet.PowderFileCabinet pfc = (org.jpowder.fileCabinet.PowderFileCabinet) data;
-
-    // comment: update to a bigger size by getting the current size and add some amount.
-    /**
-    java.awt.Dimension area = ChartPlotter.getSize();
-    area.height = area.height+( CHART_HEIGHT_FIX_SIZE);
-    ChartPlotter.setLayout(new javax.swing.BoxLayout(ChartPlotter, javax.swing.BoxLayout.Y_AXIS));
-    ChartPlotter.setPreferredSize(area);
-     */
-  /*
-    HashMap<String, DataSet> allData = pfc.getData();
-
-    // Get new dataset
-    String fileName = pfc.getLastUpdateFileName();
-    DataSet lastAddedDataset = allData.get(fileName);
-
-    DatasetPlotter plot = DatasetPlotter.createDatasetPlotter(lastAddedDataset);
-
-//creating the internal frame here
-    javax.swing.JPanel chartpanls = new javax.swing.JPanel();
-
-    chartpanls.setLayout(new BorderLayout());
-    chartpanls.add(plot.createPowderChart());
-
-    Vector<DataSet> lDataset = new Vector<DataSet>();
-    lDataset.add(lastAddedDataset);
-    JpowderInternalframe internalframe = new JpowderInternalframe(chartpanls, DVIC, lDataset);
-
-    InternalFrameListener internalFrameListener = new InternalFrameIconifyListener();
-    internalframe.addInternalFrameListener(internalFrameListener);
-
-  
-    ChartPlotter.setLayout(new FlowLayout());
-
-    setVisible(true);
-
-
-  }// powderFileCabinetUpdate
-*/
+    
   /**
    * JVM starting point
    *
@@ -133,21 +96,23 @@ public class JPowder extends JFrame implements DropTargetListener {
   public JDesktopPane getChartPanel() {
     return this.ChartPlotter;
   }
+  public JPanel getpeakjPanel(){
+    return this.peakjpanel;
+  }
 
   public JPowder() {
 
     initComponents();
+
+
     mPowderFileCabinet = new PowderFileCabinet();
-//    mPowderFileCabinet.registerObserver(this);
     dt = new DropTarget(ChartPlotter, this);
     DataVisibleInChartPanel.add(DVIC);
     DVIC.setVisible(true);
-
-    Filechoose.add(fileChooserPanel);
-    fileChooserPanel.setVisible(true);
-
     Treetab.add(tr);
-    tr.setVisible(true);
+    
+   
+
   }
 
   /** This method is called from within the constructor to
@@ -161,19 +126,12 @@ public class JPowder extends JFrame implements DropTargetListener {
 
     jSplitPane1 = new javax.swing.JSplitPane();
     home = new javax.swing.JPanel();
-    Filechoose = new javax.swing.JPanel();
     Tabs = new javax.swing.JTabbedPane();
     Treetab = new javax.swing.JPanel();
-    Analysis = new javax.swing.JPanel();
-    jButton3 = new javax.swing.JButton();
+    analysistab = new javax.swing.JPanel();
+    peakjpanel = new javax.swing.JPanel();
     jButton2 = new javax.swing.JButton();
-    jButton4 = new javax.swing.JButton();
-    jButton5 = new javax.swing.JButton();
-    jButton6 = new javax.swing.JButton();
     jLabel1 = new javax.swing.JLabel();
-    jLabel2 = new javax.swing.JLabel();
-    jLabel3 = new javax.swing.JLabel();
-    jLabel4 = new javax.swing.JLabel();
     jPanel1 = new javax.swing.JPanel();
     jSlider1 = new javax.swing.JSlider();
     jSlider2 = new javax.swing.JSlider();
@@ -182,6 +140,9 @@ public class JPowder extends JFrame implements DropTargetListener {
     jButton7 = new javax.swing.JButton();
     DataVisibleInChartPanel = new javax.swing.JPanel();
     ChartPlotter = new javax.swing.JDesktopPane();
+    Chrtedittor = new javax.swing.JToolBar();
+    zoom = new javax.swing.JButton();
+    unZoom = new javax.swing.JButton();
     jMenuBar1 = new javax.swing.JMenuBar();
     jMenu1 = new javax.swing.JMenu();
     New = new javax.swing.JMenuItem();
@@ -212,96 +173,50 @@ public class JPowder extends JFrame implements DropTargetListener {
     jSplitPane1.setDividerSize(8);
     jSplitPane1.setAutoscrolls(true);
 
-    Filechoose.setPreferredSize(new java.awt.Dimension(279, 350));
-    Filechoose.setLayout(new java.awt.BorderLayout());
-
-    Tabs.setFont(new java.awt.Font("Kartika", 1, 11));
+    Tabs.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+    Tabs.setFont(new java.awt.Font("Kartika", 0, 24));
     Tabs.setMaximumSize(new java.awt.Dimension(327, 32767));
 
     Treetab.setLayout(new java.awt.BorderLayout());
     Tabs.addTab(" Tree ", Treetab);
 
-    jButton3.setText("jButton1");
+    analysistab.setLayout(new java.awt.BorderLayout());
 
-    jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/SendMail.gif"))); // NOI18N
-    jButton2.setFocusable(false);
-    jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+    jButton2.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton2ActionPerformed(evt);
+      }
+    });
 
-    jButton4.setText("jButton1");
+    jLabel1.setText("Peak");
 
-    jButton5.setText("jButton1");
-
-    jButton6.setText("jButton1");
-
-    jLabel1.setText("delete");
-
-    jLabel2.setText("Email");
-
-    jLabel3.setText("jLabel1");
-
-    jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/del_med.gif"))); // NOI18N
-
-    javax.swing.GroupLayout AnalysisLayout = new javax.swing.GroupLayout(Analysis);
-    Analysis.setLayout(AnalysisLayout);
-    AnalysisLayout.setHorizontalGroup(
-      AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(AnalysisLayout.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(AnalysisLayout.createSequentialGroup()
-            .addComponent(jButton4)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jButton5)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jButton6))
-          .addGroup(AnalysisLayout.createSequentialGroup()
-            .addGap(10, 10, 10)
-            .addGroup(AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addGroup(AnalysisLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12))
-              .addGroup(AnalysisLayout.createSequentialGroup()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)))
-            .addGroup(AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(AnalysisLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jLabel2))
-              .addGroup(AnalysisLayout.createSequentialGroup()
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(AnalysisLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel3))
-              .addComponent(jButton3))))
-        .addContainerGap(33, Short.MAX_VALUE))
+    javax.swing.GroupLayout peakjpanelLayout = new javax.swing.GroupLayout(peakjpanel);
+    peakjpanel.setLayout(peakjpanelLayout);
+    peakjpanelLayout.setHorizontalGroup(
+      peakjpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(peakjpanelLayout.createSequentialGroup()
+        .addGroup(peakjpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(peakjpanelLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(peakjpanelLayout.createSequentialGroup()
+            .addGap(28, 28, 28)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addContainerGap(186, Short.MAX_VALUE))
     );
-    AnalysisLayout.setVerticalGroup(
-      AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(AnalysisLayout.createSequentialGroup()
+    peakjpanelLayout.setVerticalGroup(
+      peakjpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(peakjpanelLayout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addGroup(AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addComponent(jLabel4))
+        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel1)
-          .addComponent(jLabel2)
-          .addComponent(jLabel3))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addContainerGap(243, Short.MAX_VALUE))
+        .addComponent(jLabel1)
+        .addContainerGap(263, Short.MAX_VALUE))
     );
 
-    Tabs.addTab("Analysis", Analysis);
+    analysistab.add(peakjpanel, java.awt.BorderLayout.PAGE_END);
+
+    Tabs.addTab("Analysis", analysistab);
 
     jButton1.setText("jButton1");
 
@@ -352,12 +267,13 @@ public class JPowder extends JFrame implements DropTargetListener {
         .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(163, Short.MAX_VALUE))
+        .addContainerGap(141, Short.MAX_VALUE))
     );
 
     Tabs.addTab("Effects ", jPanel1);
 
     DataVisibleInChartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("DataVisibleInChart"));
+    DataVisibleInChartPanel.setPreferredSize(new java.awt.Dimension(270, 260));
     DataVisibleInChartPanel.setLayout(new java.awt.BorderLayout());
 
     javax.swing.GroupLayout homeLayout = new javax.swing.GroupLayout(home);
@@ -367,20 +283,17 @@ public class JPowder extends JFrame implements DropTargetListener {
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(DataVisibleInChartPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
           .addComponent(Tabs, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
-          .addComponent(Filechoose, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+          .addComponent(DataVisibleInChartPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))
         .addContainerGap())
     );
     homeLayout.setVerticalGroup(
       homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(18, 18, 18)
-        .addComponent(DataVisibleInChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+        .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(Filechoose, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(DataVisibleInChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap())
     );
 
@@ -390,7 +303,32 @@ public class JPowder extends JFrame implements DropTargetListener {
     ChartPlotter.setOpaque(false);
     jSplitPane1.setRightComponent(ChartPlotter);
 
+    Chrtedittor.setFloatable(false);
+    Chrtedittor.setRollover(true);
+    Chrtedittor.setBorderPainted(false);
+    Chrtedittor.setOpaque(false);
+
+    zoom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/zoomi_small.gif"))); // NOI18N
+    zoom.setFocusable(false);
+    zoom.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+    zoom.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+    zoom.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        zoomActionPerformed(evt);
+      }
+    });
+    Chrtedittor.add(zoom);
+
+    unZoom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/zoomo_small.gif"))); // NOI18N
+    unZoom.setFocusable(false);
+    unZoom.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+    unZoom.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+    Chrtedittor.add(unZoom);
+
+    jMenuBar1.setFont(new java.awt.Font("Tahoma", 0, 36));
+
     jMenu1.setText("File");
+    jMenu1.setFont(new java.awt.Font("Tahoma", 0, 14));
 
     New.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
     New.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new_small.gif"))); // NOI18N
@@ -437,6 +375,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     jMenuBar1.add(jMenu1);
 
     LookAndFeel.setText("LookAndFeel");
+    LookAndFeel.setFont(new java.awt.Font("Tahoma", 0, 14));
 
     buttonGroup
     .add(Windows);
@@ -519,6 +458,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     jMenuBar1.add(LookAndFeel);
 
     jMenu2.setText("Help");
+    jMenu2.setFont(new java.awt.Font("Tahoma", 0, 14));
 
     Content.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
     Content.setText("Content");
@@ -552,14 +492,21 @@ public class JPowder extends JFrame implements DropTargetListener {
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1040, Short.MAX_VALUE)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(layout.createSequentialGroup()
+            .addGap(10, 10, 10)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 930, Short.MAX_VALUE))
+          .addGroup(layout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(Chrtedittor, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addContainerGap())
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE)
+      .addGroup(layout.createSequentialGroup()
+        .addComponent(Chrtedittor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -661,6 +608,20 @@ public class JPowder extends JFrame implements DropTargetListener {
     private void LinuxSolarisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LinuxSolarisActionPerformed
       LAF.LinuxandSolaris();
     }//GEN-LAST:event_LinuxSolarisActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+      System.out.println("peak added to the panel");
+
+      analysistab.add(peak);
+      peakjpanel.setVisible(false);
+      System.out.println("");
+
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void zoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoomActionPerformed
+      // TODO add your handling code here:
+}//GEN-LAST:event_zoomActionPerformed
   public void dragEnter(DropTargetDragEvent dtde) {
   }
 
@@ -674,10 +635,11 @@ public class JPowder extends JFrame implements DropTargetListener {
   }
 
   public void drop(DropTargetDropEvent dtde) {
+
     DataSet oneDataset = null;
     Vector<DataSet> datasets = new Vector<DataSet>();
-    ArrayList<File> allfiles = new ArrayList<File>();
-    ArrayList<String> allfilesName = new ArrayList<String>();
+    HashMap<String, File> hash = new HashMap<String, File>();
+
     Transferable transfeable = dtde.getTransferable();
     DataFlavor[] flavors = transfeable.getTransferDataFlavors();
     dtde.acceptDrop(DnDConstants.ACTION_COPY);
@@ -693,10 +655,9 @@ public class JPowder extends JFrame implements DropTargetListener {
           for (int j = 0; j < list.size(); j++) {
             File file = list.get(j);
             String fileName = file.getName().toLowerCase();
-            allfiles.add(file);
-            allfilesName.add(fileName);
+            hash.put(fileName, file);
+
           }
-          System.out.println("files added to descktop pane" + allfiles);
         } catch (UnsupportedFlavorException ex) {
           Logger.getLogger(JPowder.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -714,22 +675,22 @@ public class JPowder extends JFrame implements DropTargetListener {
             System.out.println("\n" + array[j] + "\n");
             File file = new File(array[j]);
             String fileNames = file.getName().toLowerCase();
-            allfiles.add(file);
-            allfilesName.add(fileNames);
+            hash.put(fileNames, file);
 
           }
-          System.out.println("files added to descktop pane\n" + allfiles);
         } catch (Exception ex) {
         }
       } else {
       }
     }
-
     // create vector of DataSet
-    for (int i = 0; i < allfiles.size(); i++) {
-      if (mPowderFileCabinet.checkAcceptedFileType(allfilesName.get(i))) {
-          oneDataset = null;
-          oneDataset = mPowderFileCabinet.createDataSetFromPowderFile(allfiles.get(i));
+
+    for (Map.Entry<String, File> entry : hash.entrySet()) {
+
+      String fileName = entry.getKey();
+      File file = entry.getValue();
+      if (mPowderFileCabinet.checkAcceptedFileType(fileName)) {
+        oneDataset = PowderFileCabinet.createDataSetFromPowderFile(file);
         if (oneDataset != null) {
           datasets.add(oneDataset);
         }
@@ -738,10 +699,12 @@ public class JPowder extends JFrame implements DropTargetListener {
         break;
       }
     }
+
     // finally plot the data
     JpowderInternalframe internalframe = new JpowderInternalframe(DVIC, datasets);
-    InternalFrameListener internalFrameListener = new InternalFrameIconifyListener();
+    InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(DVIC);
     internalframe.addInternalFrameListener(internalFrameListener);
+
     ChartPlotter.setLayout(new FlowLayout());
     ChartPlotter.add(internalframe);
     setVisible(true);
@@ -762,12 +725,11 @@ public class JPowder extends JFrame implements DropTargetListener {
   }
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JMenuItem About;
-  private javax.swing.JPanel Analysis;
   private javax.swing.JDesktopPane ChartPlotter;
+  private javax.swing.JToolBar Chrtedittor;
   private javax.swing.JMenuItem Content;
   private javax.swing.JPanel DataVisibleInChartPanel;
   private javax.swing.JMenuItem Exit;
-  private javax.swing.JPanel Filechoose;
   private javax.swing.JRadioButtonMenuItem LinuxSolaris;
   private javax.swing.JMenu LookAndFeel;
   private javax.swing.JRadioButtonMenuItem MacLookAndFeel;
@@ -782,18 +744,12 @@ public class JPowder extends JFrame implements DropTargetListener {
   private javax.swing.JPanel Treetab;
   private javax.swing.JRadioButtonMenuItem WindowClassic;
   private javax.swing.JRadioButtonMenuItem Windows;
+  private javax.swing.JPanel analysistab;
   private javax.swing.JPanel home;
   private javax.swing.JButton jButton1;
   private javax.swing.JButton jButton2;
-  private javax.swing.JButton jButton3;
-  private javax.swing.JButton jButton4;
-  private javax.swing.JButton jButton5;
-  private javax.swing.JButton jButton6;
   private javax.swing.JButton jButton7;
   private javax.swing.JLabel jLabel1;
-  private javax.swing.JLabel jLabel2;
-  private javax.swing.JLabel jLabel3;
-  private javax.swing.JLabel jLabel4;
   private javax.swing.JMenu jMenu1;
   private javax.swing.JMenu jMenu2;
   private javax.swing.JMenuBar jMenuBar1;
@@ -805,5 +761,8 @@ public class JPowder extends JFrame implements DropTargetListener {
   private javax.swing.JSlider jSlider1;
   private javax.swing.JSlider jSlider2;
   private javax.swing.JSplitPane jSplitPane1;
+  private javax.swing.JPanel peakjpanel;
+  private javax.swing.JButton unZoom;
+  private javax.swing.JButton zoom;
   // End of variables declaration//GEN-END:variables
 }
