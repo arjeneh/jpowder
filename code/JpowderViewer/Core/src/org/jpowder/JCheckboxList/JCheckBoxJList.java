@@ -18,9 +18,9 @@ import org.jfree.chart.plot.XYPlot;
 
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.ui.RectangleInsets;
-import org.jpowder.dataset.FilesPlotter;
-import org.jpowder.dataset.jfreechart.XYErrorRender;
-import org.jpowder.dataset.jfreechart.XYLineAndShapeRender;
+import org.jpowder.jfreechart.FilesPlotter;
+import org.jpowder.jfreechart.XYErrorRender;
+import org.jpowder.jfreechart.XYLineAndShapeRender;
 
 /**
  * @author Author: Kreecha Puphaiboon
@@ -50,17 +50,27 @@ public class JCheckBoxJList extends JList implements Serializable {
       @Override
       public void mouseClicked(MouseEvent e) {
 
+        // get handle of list containing all the tickboxes
         JCheckBoxJList list = (JCheckBoxJList) e.getSource();
-         index = list.locationToIndex(e.getPoint());
-        //Check which items are clicked.
+
+        // get index of the item (tickbox) clicked in list
+        index = list.locationToIndex(e.getPoint());
+
+        // get handle of the item clicked
         CheckableFileItem item = (CheckableFileItem) list.getModel().getElementAt(index);
+
+        // turn off/on tick in tickbox
         item.setSelected(!item.isSelected());
-        Rectangle rect = list.getCellBounds(index, index);
-        list.repaint(rect);
+
+        //Rectangle rect = list.getCellBounds(index, index);
+        // list.repaint(rect);
 
         if (!item.isSelected()) {
-            m_plot.setRenderer(index, null);
-                System.out.println("");  
+            XYLineAndShapeRender renderer = new XYLineAndShapeRender();
+            renderer.setSeriesPaint(0, Color.PINK);
+            renderer = null;
+            m_plot.setRenderer(0, renderer);
+            System.out.println("");  
         }
         if (item.isSelected() && item.toString().endsWith("xye") || 
                 item.isSelected() && item.toString().endsWith("cif")) {

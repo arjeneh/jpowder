@@ -8,7 +8,7 @@ import javax.swing.Icon;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
-import org.jpowder.dataset.FilesPlotter;
+import org.jpowder.jfreechart.FilesPlotter;
 
 /**
  * To change this template, choose Tools | Templates

@@ -1,10 +1,4 @@
-package org.jpowder;
-
-import org.jfree.chart.plot.XYPlot;
-import org.jpowder.JCheckboxList.CheckableFileItem;
-import org.jpowder.fileCabinet.Subject;
-import org.jpowder.fileCabinet.PowderFileCabinet;
-import org.jpowder.fileCabinet.PowderFileObserver;
+package org.jpowder.JCheckboxList;
 
 /**
 *
@@ -19,7 +13,7 @@ import org.jpowder.fileCabinet.PowderFileObserver;
 */
 
 
- public class FileNameListModel extends javax.swing.DefaultListModel implements PowderFileObserver {
+ public class FileNameListModel extends javax.swing.DefaultListModel {
     
     private java.util.Vector<CheckableFileItem> fileNameModelVec;
 
@@ -82,33 +76,6 @@ import org.jpowder.fileCabinet.PowderFileObserver;
     public Object lastElement() {
         return fileNameModelVec.lastElement();
     }
-/*
-    @Override
-    public boolean removeElement(Object element) {
-        boolean removed = fileNameModelVec.remove(element);
-        if (removed) {
-            fireContentsChanged(this, 0, getSize());
-        }
-        return removed;
-    }
-*/
-    public void powderFileCabinetUpdate(Subject data) {
 
-        PowderFileCabinet pfc = (PowderFileCabinet) data;
-        System.out.println("From FileNameListModel.java PowderFileCabinet is updated as " + pfc.getData().size());
 
-        java.util.HashMap hm = pfc.getData();
-        //clear
-        this.clear();
-
-        //To get all keys stored in HashMap use keySet method. 
-        //Signature of the keysSet method is, Set keySet()
-        java.util.Iterator iterator = hm.keySet().iterator();
-        while (iterator.hasNext()) {
-            CheckableFileItem a = new CheckableFileItem((String) iterator.next() );
-            addCheckableFile(a);
-            //add((String) iterator.next());
-        }
-    }
-   
 }
