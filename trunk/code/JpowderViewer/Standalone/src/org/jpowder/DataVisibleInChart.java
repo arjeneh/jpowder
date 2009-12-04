@@ -4,6 +4,7 @@
  */
 package org.jpowder;
 
+import org.jpowder.JCheckboxList.FileNameListModel;
 import java.awt.BorderLayout;
 import java.util.Vector;
 import javax.swing.JPanel;

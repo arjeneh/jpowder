@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.jpowder.dataset.jfreechart;
+package org.jpowder.jfreechart;
 
 import org.jfree.chart.renderer.xy.XYErrorRenderer;
 

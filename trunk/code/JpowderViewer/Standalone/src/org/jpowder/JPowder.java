@@ -105,7 +105,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     initComponents();
 
 
-    mPowderFileCabinet = new PowderFileCabinet();
+    //mPowderFileCabinet = new PowderFileCabinet();
     dt = new DropTarget(ChartPlotter, this);
     DataVisibleInChartPanel.add(DVIC);
     DVIC.setVisible(true);

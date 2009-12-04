@@ -1,5 +1,5 @@
 
-package org.jpowder.dataset.jfreechart;
+package org.jpowder.jfreechart;
 
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;

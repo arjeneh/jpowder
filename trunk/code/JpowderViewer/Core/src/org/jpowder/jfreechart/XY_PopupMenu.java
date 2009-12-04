@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.jpowder.dataset.jfreechart;
+package org.jpowder.jfreechart;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;

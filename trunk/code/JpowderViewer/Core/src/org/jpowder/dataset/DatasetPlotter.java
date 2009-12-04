@@ -1,7 +1,7 @@
 package org.jpowder.dataset;
 
+import org.jpowder.jfreechart.FilesPlotter;
 import java.util.Vector;
-import org.jfree.chart.plot.XYPlot;
 
 
 /**
