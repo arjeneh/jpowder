@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Paint;
 import java.text.DecimalFormat;
 import java.util.Vector;
+import org.jfree.chart.ChartColor;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItemCollection;
@@ -18,10 +19,8 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.data.xy.YIntervalSeries;
 import org.jfree.data.xy.YIntervalSeriesCollection;
 import org.jfree.ui.RectangleInsets;
-import org.jpowder.jfreechart.PowderChartMouseObserver;
-import org.jpowder.jfreechart.XYE_PopupMenu;
-import org.jpowder.jfreechart.XYErrorRender;
-import org.jpowder.jfreechart.XYLineAndShapeRender;
+
+
 
 
 
@@ -38,7 +37,13 @@ public class FilesPlotter extends DatasetPlotter {
   public XYPlot plot;
   public  static Paint[] allseriescolors={Color.BLUE, Color.RED, Color.GREEN,
                 Color.ORANGE, Color.CYAN,Color.MAGENTA,Color.YELLOW, Color.BLACK,
-                Color.PINK,Color.WHITE,Color.LIGHT_GRAY,Color.GRAY};
+                Color.PINK,Color.WHITE,Color.LIGHT_GRAY,Color.GRAY
+                ,ChartColor.DARK_BLUE,ChartColor.DARK_RED,ChartColor.DARK_GREEN
+                  ,ChartColor.DARK_YELLOW,ChartColor.DARK_CYAN,ChartColor.DARK_GRAY
+  ,ChartColor.VERY_DARK_BLUE,ChartColor.VERY_DARK_RED,ChartColor.VERY_DARK_GREEN
+  ,ChartColor.VERY_DARK_YELLOW,ChartColor.VERY_DARK_CYAN,ChartColor.VERY_DARK_MAGENTA
+  ,ChartColor.VERY_LIGHT_BLUE,ChartColor.VERY_LIGHT_RED,ChartColor.VERY_LIGHT_GREEN
+  ,ChartColor.VERY_LIGHT_YELLOW,ChartColor.VERY_LIGHT_CYAN,ChartColor.VERY_LIGHT_MAGENTA};
 
   /**
    *
@@ -46,7 +51,7 @@ public class FilesPlotter extends DatasetPlotter {
    */
   public FilesPlotter(Vector<DataSet> d) {
     super(d);
-    this.datasets = d;
+    FilesPlotter.datasets = d;
     System.out.println("MultiFilesPlotter is called ");
   }
 
@@ -57,10 +62,12 @@ public class FilesPlotter extends DatasetPlotter {
   public FilesPlotter(DataSet d) {
     super(d);
     datasets = new Vector<DataSet>();
-    this.datasets.addElement(d);
+    FilesPlotter.datasets.addElement(d);
     System.out.println("MultiFilesPlotter is called ");
   }
-
+ public static Paint getSeriescolors(int i){
+   return allseriescolors[i%allseriescolors.length];
+ }
   public String description() {
     return "Multiple Files Plotter";
   }
@@ -95,10 +102,10 @@ public class FilesPlotter extends DatasetPlotter {
     NumberAxis yAxis = new NumberAxis("Y");
 
     // get a reference to the plot for further customisation...
-    XYLineAndShapeRender renderer1 = new XYLineAndShapeRender();
-    renderer1.setSeriesPaint(0, allseriescolors[0]);
-     XYErrorRender renderer2 = new XYErrorRender();
-     renderer2.setSeriesPaint(0, allseriescolors[0]);
+    JpowderXYLineAndShapeRender renderer1 = new JpowderXYLineAndShapeRender();
+    renderer1.setSeriesPaint(0, getSeriescolors(0));
+     JpowderXYErrorRender renderer2 = new JpowderXYErrorRender();
+     renderer2.setSeriesPaint(0, getSeriescolors(0));
     //Displaying the X&Y in Tooltip
     XYToolTipGenerator tooltip = new StandardXYToolTipGenerator(
             "{1},{2}", new DecimalFormat("0.000"), new DecimalFormat("0.000"));
@@ -118,10 +125,10 @@ public class FilesPlotter extends DatasetPlotter {
     plot.setRangeGridlinePaint(Color.white);
     System.out.println("the series count" + plot.getSeriesCount());
     for (int i = 1; i < datasets.size(); i++) {
-      XYLineAndShapeRender renderer3 = new XYLineAndShapeRender();
-      renderer3.setSeriesPaint(0,  allseriescolors[i]);
-      XYErrorRender renderer4 = new XYErrorRender();
-      renderer4.setSeriesPaint(0,  allseriescolors[i]);
+      JpowderXYLineAndShapeRender renderer3 = new JpowderXYLineAndShapeRender();
+      renderer3.setSeriesPaint(0,  getSeriescolors(i));
+      JpowderXYErrorRender renderer4 = new JpowderXYErrorRender();
+      renderer4.setSeriesPaint(0,  getSeriescolors(i));
       NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
       rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
@@ -195,10 +202,10 @@ public class FilesPlotter extends DatasetPlotter {
     plot.setRangeGridlinePaint(Color.white);
     for (int i = 0; i < data.size(); i++) {
  int newPlotIndex = plot.getDatasetCount();
-      XYLineAndShapeRender renderer3 = new XYLineAndShapeRender();
-      XYErrorRender renderer4 = new XYErrorRender();
-      renderer3.setSeriesPaint(0, allseriescolors[plot.getDatasetCount()]);
-      renderer4.setSeriesPaint(0, allseriescolors[plot.getDatasetCount()]);
+      JpowderXYLineAndShapeRender renderer3 = new JpowderXYLineAndShapeRender();
+      JpowderXYErrorRender renderer4 = new JpowderXYErrorRender();
+      renderer3.setSeriesPaint(0, getSeriescolors(plot.getDatasetCount()));
+      renderer4.setSeriesPaint(0, getSeriescolors(plot.getDatasetCount()));
       // change the auto tick unit selection to integer units only...
       NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
       rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());

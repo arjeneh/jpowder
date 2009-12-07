@@ -19,8 +19,9 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.ui.RectangleInsets;
 import org.jpowder.jfreechart.FilesPlotter;
-import org.jpowder.jfreechart.XYErrorRender;
-import org.jpowder.jfreechart.XYLineAndShapeRender;
+import org.jpowder.jfreechart.JpowderXYErrorRender;
+import org.jpowder.jfreechart.JpowderXYLineAndShapeRender;
+
 
 /**
  * @author Author: Kreecha Puphaiboon
@@ -66,23 +67,19 @@ public class JCheckBoxJList extends JList implements Serializable {
         // list.repaint(rect);
 
         if (!item.isSelected()) {
-            XYLineAndShapeRender renderer = new XYLineAndShapeRender();
-            renderer.setSeriesPaint(0, Color.PINK);
-            renderer = null;
-            m_plot.setRenderer(0, renderer);
-            System.out.println("");  
+           m_plot.setRenderer(index, null);
         }
         if (item.isSelected() && item.toString().endsWith("xye") || 
                 item.isSelected() && item.toString().endsWith("cif")) {
-          XYErrorRender renderer = new XYErrorRender();
-          renderer.setSeriesPaint(0, FilesPlotter.allseriescolors[index]);
+          JpowderXYErrorRender renderer = new JpowderXYErrorRender();
+          renderer.setSeriesPaint(0, FilesPlotter.getSeriescolors(index));
           m_plot.setRenderer(index, renderer);
 
         }
         if (item.isSelected() && item.toString().endsWith("xy")
                 || item.isSelected() && item.toString().endsWith("txt")) {
-          XYLineAndShapeRender renderer = new XYLineAndShapeRender();
-          renderer.setSeriesPaint(0, FilesPlotter.allseriescolors[index]);
+          JpowderXYLineAndShapeRender renderer = new JpowderXYLineAndShapeRender();
+          renderer.setSeriesPaint(0, FilesPlotter.getSeriescolors(index));
           m_plot.setRenderer(index, renderer);
 
           System.out.println("");

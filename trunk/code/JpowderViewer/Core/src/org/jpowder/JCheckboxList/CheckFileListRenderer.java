@@ -36,7 +36,7 @@ public class CheckFileListRenderer extends CheckFileRenderer implements ListCell
         check.setSelected(((CheckableFileItem) value).isSelected());
         //
        // label.setFont(list.getFont());
-        label.setForeground((Color) FilesPlotter.allseriescolors[index]);
+        label.setForeground((Color) FilesPlotter.getSeriescolors(index));
         label.setText(value.toString());
         label.setSelected(true);//hilighting the string
         label.setFocus(hasFocus);

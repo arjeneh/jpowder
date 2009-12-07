@@ -105,7 +105,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     initComponents();
 
 
-    //mPowderFileCabinet = new PowderFileCabinet();
+    mPowderFileCabinet = new PowderFileCabinet();
     dt = new DropTarget(ChartPlotter, this);
     DataVisibleInChartPanel.add(DVIC);
     DVIC.setVisible(true);
@@ -689,7 +689,7 @@ public class JPowder extends JFrame implements DropTargetListener {
 
       String fileName = entry.getKey();
       File file = entry.getValue();
-      if (mPowderFileCabinet.checkAcceptedFileType(fileName)) {
+     if (mPowderFileCabinet.checkAcceptedFileType(fileName)) {
         oneDataset = PowderFileCabinet.createDataSetFromPowderFile(file);
         if (oneDataset != null) {
           datasets.add(oneDataset);
