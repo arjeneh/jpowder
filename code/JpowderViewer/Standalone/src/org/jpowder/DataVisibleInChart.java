@@ -42,8 +42,7 @@ public class DataVisibleInChart extends JPanel  {
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
  
     file_sp.setPreferredSize(new java.awt.Dimension(270, 260));
-   // file_sp.setViewportView(checkboxList);
-   // file_sp.setLayout(new ScrollPaneLayout());
+
 
     java.awt.GridBagConstraints gridBagConstraints;
     gridBagConstraints = new java.awt.GridBagConstraints();
@@ -80,27 +79,4 @@ public class DataVisibleInChart extends JPanel  {
        checkboxList.setm_plot(xyplot);
     System.out.println("chartInFocus chartInFocus chartInFocus");
   }
-
-//  public void powderFileCabinetUpdate(Subject data) {
-//    org.jpowder.fileCabinet.PowderFileCabinet pfc = (org.jpowder.fileCabinet.PowderFileCabinet) data;
-//
-//    String fileName = pfc.getLastUpdateFileName();
-//    System.out.println("get the file name" + fileName);
-//    listModel.clear();
-//    CheckableFileItem a = new CheckableFileItem(fileName);
-//    listModel.addCheckableFile(a);
-//
-//    ListModel model = checkboxList.getModel();
-//    ArrayList<String> nameList = new ArrayList<String>();
-//    int n = model.getSize();
-//
-//    for (int i = 0; i < n; i++) {
-//      CheckableFileItem item = (CheckableFileItem) model.getElementAt(i);
-//      if (item.isSelected()) {
-//        nameList.add(item.toString());
-//        System.out.println("multible file " + item.toString());
-//      }//if
-//    }//for
-//
-//  }
 }

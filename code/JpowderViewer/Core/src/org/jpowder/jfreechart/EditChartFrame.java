@@ -2,8 +2,6 @@
 package org.jpowder.jfreechart;
 
 import java.awt.Cursor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 import org.jfree.chart.ChartRenderingInfo;
 import org.jfree.chart.JFreeChart;

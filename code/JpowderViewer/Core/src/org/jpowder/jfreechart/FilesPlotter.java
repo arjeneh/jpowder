@@ -35,12 +35,12 @@ public class FilesPlotter extends DatasetPlotter {
   private static Vector<DataSet> datasets;
   private int datasetIndex = 0;
   public XYPlot plot;
-  public  static Paint[] allseriescolors={Color.BLUE, Color.RED, Color.GREEN,
-                Color.ORANGE, Color.CYAN,Color.MAGENTA,Color.YELLOW, Color.BLACK,
-                Color.PINK,Color.WHITE,Color.LIGHT_GRAY,Color.GRAY
+  public  static Paint[] allseriescolors={Color.BLUE, Color.RED, ChartColor.VERY_DARK_GREEN,
+                Color.ORANGE, Color.CYAN,Color.MAGENTA,ChartColor.DARK_YELLOW, Color.BLACK,
+                Color.PINK,Color.LIGHT_GRAY,Color.GRAY
                 ,ChartColor.DARK_BLUE,ChartColor.DARK_RED,ChartColor.DARK_GREEN
-                  ,ChartColor.DARK_YELLOW,ChartColor.DARK_CYAN,ChartColor.DARK_GRAY
-  ,ChartColor.VERY_DARK_BLUE,ChartColor.VERY_DARK_RED,ChartColor.VERY_DARK_GREEN
+                  ,Color.yellow,ChartColor.DARK_CYAN,ChartColor.DARK_GRAY
+  ,ChartColor.VERY_DARK_BLUE,ChartColor.VERY_DARK_RED,Color.GREEN
   ,ChartColor.VERY_DARK_YELLOW,ChartColor.VERY_DARK_CYAN,ChartColor.VERY_DARK_MAGENTA
   ,ChartColor.VERY_LIGHT_BLUE,ChartColor.VERY_LIGHT_RED,ChartColor.VERY_LIGHT_GREEN
   ,ChartColor.VERY_LIGHT_YELLOW,ChartColor.VERY_LIGHT_CYAN,ChartColor.VERY_LIGHT_MAGENTA};
@@ -196,10 +196,6 @@ public class FilesPlotter extends DatasetPlotter {
    */
   public static void addDataToJpowderInternalFrame(XYPlot plot, Vector<DataSet> data) {
 
-    plot.setBackgroundPaint(Color.lightGray);
-    plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
-    plot.setDomainGridlinePaint(Color.white);
-    plot.setRangeGridlinePaint(Color.white);
     for (int i = 0; i < data.size(); i++) {
  int newPlotIndex = plot.getDatasetCount();
       JpowderXYLineAndShapeRender renderer3 = new JpowderXYLineAndShapeRender();
@@ -210,8 +206,6 @@ public class FilesPlotter extends DatasetPlotter {
       NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
       rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
-     
-      //(data.size()+datasets.size());//Returns the number of datasets in the plot.
       if (data.elementAt(i) instanceof DataSetNoErrors) {
         plot.setDataset(newPlotIndex, FilesPlotter.createXYSeriesCollectionFromDataset(data.elementAt(i)));
         plot.setRenderer(newPlotIndex, renderer3);

@@ -1,15 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/*
- * JPowderFinalGui.java
- *
- * Created on 05-Oct-2009, 09:57:11
- */
+
 package org.jpowder;
 
+import java.awt.CardLayout;
+import org.jpowder.tree.Tree;
 import java.awt.FlowLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -25,27 +19,27 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
-import javax.swing.GroupLayout;
-import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import org.jpowder.Analysis.Peak;
+import org.jpowder.Analysis.AnalysisIcon;
+import org.jpowder.chartTools.ChartToolsIcon;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.util.ScreenUtil;
+
+
 
 /**
  * Jpowder is the starting class for the Jpowder project {@link www.jpowder.org}.
@@ -84,8 +78,12 @@ public class JPowder extends JFrame implements DropTargetListener {
   private java.awt.dnd.DropTarget dt;
   private TransferHandler th;
   private ButtonGroup buttonGroup = new ButtonGroup();
-//  private DragAndDrop drop = new DragAndDrop();
-  private Peak peak = new Peak();
+  private ChartToolsIcon icons = new ChartToolsIcon(this);
+  private AnalysisIcon icon = new AnalysisIcon();
+  private CardLayout cardLayout;
+
+  private LinkInfoPanelToJinternalfrm linkIPJF;
+
 
     
   /**
@@ -93,28 +91,27 @@ public class JPowder extends JFrame implements DropTargetListener {
    *
    * @param args
    */
-  public JDesktopPane getChartPanel() {
-    return this.ChartPlotter;
-  }
-  public JPanel getpeakjPanel(){
-    return this.peakjpanel;
-  }
 
   public JPowder() {
 
     initComponents();
-
-
     mPowderFileCabinet = new PowderFileCabinet();
     dt = new DropTarget(ChartPlotter, this);
-    DataVisibleInChartPanel.add(DVIC);
-    DVIC.setVisible(true);
-    Treetab.add(tr);
-    
-   
-
+    dataVisibleInChartPanel.add(DVIC);
+    treetab.add(tr,"1");
+    analysistab.add(icon);
+    chartToolstab.add(icons,"1");
   }
 
+  public  JPanel getChartToolstab(){
+    return chartToolstab;
+  }
+  public JPanel getanalysistab(){
+    return analysistab;
+  }
+  public CardLayout getCardLayout(){
+    return cardLayout;
+  }
   /** This method is called from within the constructor to
    * initialise the form.
    * WARNING: Do NOT modify this code. The content of this method is
@@ -127,22 +124,12 @@ public class JPowder extends JFrame implements DropTargetListener {
     jSplitPane1 = new javax.swing.JSplitPane();
     home = new javax.swing.JPanel();
     Tabs = new javax.swing.JTabbedPane();
-    Treetab = new javax.swing.JPanel();
+    treetab = new javax.swing.JPanel();
     analysistab = new javax.swing.JPanel();
-    peakjpanel = new javax.swing.JPanel();
-    jButton2 = new javax.swing.JButton();
-    jLabel1 = new javax.swing.JLabel();
-    jPanel1 = new javax.swing.JPanel();
-    jSlider1 = new javax.swing.JSlider();
-    jSlider2 = new javax.swing.JSlider();
-    jButton1 = new javax.swing.JButton();
-    jPanel2 = new javax.swing.JPanel();
-    jButton7 = new javax.swing.JButton();
-    DataVisibleInChartPanel = new javax.swing.JPanel();
+    cardLayout = new CardLayout();
+    chartToolstab = new javax.swing.JPanel();
+    dataVisibleInChartPanel = new javax.swing.JPanel();
     ChartPlotter = new javax.swing.JDesktopPane();
-    Chrtedittor = new javax.swing.JToolBar();
-    zoom = new javax.swing.JButton();
-    unZoom = new javax.swing.JButton();
     jMenuBar1 = new javax.swing.JMenuBar();
     jMenu1 = new javax.swing.JMenu();
     New = new javax.swing.JMenuItem();
@@ -177,104 +164,20 @@ public class JPowder extends JFrame implements DropTargetListener {
     Tabs.setFont(new java.awt.Font("Kartika", 0, 24));
     Tabs.setMaximumSize(new java.awt.Dimension(327, 32767));
 
-    Treetab.setLayout(new java.awt.BorderLayout());
-    Tabs.addTab(" Tree ", Treetab);
+    treetab.setLayout(new java.awt.CardLayout());
+    Tabs.addTab(" Tree ", treetab);
 
+    analysistab.setPreferredSize(new java.awt.Dimension(270, 320));
     analysistab.setLayout(new java.awt.BorderLayout());
-
-    jButton2.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jButton2ActionPerformed(evt);
-      }
-    });
-
-    jLabel1.setText("Peak");
-
-    javax.swing.GroupLayout peakjpanelLayout = new javax.swing.GroupLayout(peakjpanel);
-    peakjpanel.setLayout(peakjpanelLayout);
-    peakjpanelLayout.setHorizontalGroup(
-      peakjpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(peakjpanelLayout.createSequentialGroup()
-        .addGroup(peakjpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(peakjpanelLayout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(peakjpanelLayout.createSequentialGroup()
-            .addGap(28, 28, 28)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addContainerGap(186, Short.MAX_VALUE))
-    );
-    peakjpanelLayout.setVerticalGroup(
-      peakjpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(peakjpanelLayout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jLabel1)
-        .addContainerGap(263, Short.MAX_VALUE))
-    );
-
-    analysistab.add(peakjpanel, java.awt.BorderLayout.PAGE_END);
-
     Tabs.addTab("Analysis", analysistab);
 
-    jButton1.setText("jButton1");
+    chartToolstab.setLayout(new java.awt.CardLayout());
+    chartToolstab.setLayout(cardLayout);
+    Tabs.addTab("ChartTools", chartToolstab);
 
-    jButton7.setText("jButton7");
-
-    javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-    jPanel2.setLayout(jPanel2Layout);
-    jPanel2Layout.setHorizontalGroup(
-      jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel2Layout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(jButton7)
-        .addContainerGap())
-    );
-    jPanel2Layout.setVerticalGroup(
-      jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel2Layout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(jButton7)
-        .addContainerGap())
-    );
-
-    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-    jPanel1.setLayout(jPanel1Layout);
-    jPanel1Layout.setHorizontalGroup(
-      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel1Layout.createSequentialGroup()
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSlider1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jSlider2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGap(21, 21, 21)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGap(23, 23, 23)
-            .addComponent(jButton1)))
-        .addContainerGap(74, Short.MAX_VALUE))
-    );
-    jPanel1Layout.setVerticalGroup(
-      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel1Layout.createSequentialGroup()
-        .addGap(22, 22, 22)
-        .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(jButton1)
-        .addGap(35, 35, 35)
-        .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(141, Short.MAX_VALUE))
-    );
-
-    Tabs.addTab("Effects ", jPanel1);
-
-    DataVisibleInChartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("DataVisibleInChart"));
-    DataVisibleInChartPanel.setPreferredSize(new java.awt.Dimension(270, 260));
-    DataVisibleInChartPanel.setLayout(new java.awt.BorderLayout());
+    dataVisibleInChartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("DataVisibleInChart"));
+    dataVisibleInChartPanel.setPreferredSize(new java.awt.Dimension(270, 260));
+    dataVisibleInChartPanel.setLayout(new java.awt.BorderLayout());
 
     javax.swing.GroupLayout homeLayout = new javax.swing.GroupLayout(home);
     home.setLayout(homeLayout);
@@ -284,16 +187,16 @@ public class JPowder extends JFrame implements DropTargetListener {
         .addContainerGap()
         .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addComponent(Tabs, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
-          .addComponent(DataVisibleInChartPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))
+          .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))
         .addContainerGap())
     );
     homeLayout.setVerticalGroup(
       homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+        .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(DataVisibleInChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap())
     );
 
@@ -302,28 +205,6 @@ public class JPowder extends JFrame implements DropTargetListener {
     ChartPlotter.setBackground(new java.awt.Color(240, 240, 240));
     ChartPlotter.setOpaque(false);
     jSplitPane1.setRightComponent(ChartPlotter);
-
-    Chrtedittor.setFloatable(false);
-    Chrtedittor.setRollover(true);
-    Chrtedittor.setBorderPainted(false);
-    Chrtedittor.setOpaque(false);
-
-    zoom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/zoomi_small.gif"))); // NOI18N
-    zoom.setFocusable(false);
-    zoom.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    zoom.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    zoom.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        zoomActionPerformed(evt);
-      }
-    });
-    Chrtedittor.add(zoom);
-
-    unZoom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/zoomo_small.gif"))); // NOI18N
-    unZoom.setFocusable(false);
-    unZoom.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    unZoom.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-    Chrtedittor.add(unZoom);
 
     jMenuBar1.setFont(new java.awt.Font("Tahoma", 0, 36));
 
@@ -492,21 +373,15 @@ public class JPowder extends JFrame implements DropTargetListener {
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-            .addGap(10, 10, 10)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 930, Short.MAX_VALUE))
-          .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(Chrtedittor, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addContainerGap()
+        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 930, Short.MAX_VALUE)
         .addContainerGap())
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(layout.createSequentialGroup()
-        .addComponent(Chrtedittor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE)
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -608,20 +483,6 @@ public class JPowder extends JFrame implements DropTargetListener {
     private void LinuxSolarisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LinuxSolarisActionPerformed
       LAF.LinuxandSolaris();
     }//GEN-LAST:event_LinuxSolarisActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      System.out.println("peak added to the panel");
-
-      analysistab.add(peak);
-      peakjpanel.setVisible(false);
-      System.out.println("");
-
-
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void zoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoomActionPerformed
-      // TODO add your handling code here:
-}//GEN-LAST:event_zoomActionPerformed
   public void dragEnter(DropTargetDragEvent dtde) {
   }
 
@@ -676,7 +537,6 @@ public class JPowder extends JFrame implements DropTargetListener {
             File file = new File(array[j]);
             String fileNames = file.getName().toLowerCase();
             hash.put(fileNames, file);
-
           }
         } catch (Exception ex) {
         }
@@ -686,7 +546,6 @@ public class JPowder extends JFrame implements DropTargetListener {
     // create vector of DataSet
 
     for (Map.Entry<String, File> entry : hash.entrySet()) {
-
       String fileName = entry.getKey();
       File file = entry.getValue();
      if (mPowderFileCabinet.checkAcceptedFileType(fileName)) {
@@ -699,7 +558,6 @@ public class JPowder extends JFrame implements DropTargetListener {
         break;
       }
     }
-
     // finally plot the data
     JpowderInternalframe internalframe = new JpowderInternalframe(DVIC, datasets);
     InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(DVIC);
@@ -716,19 +574,18 @@ public class JPowder extends JFrame implements DropTargetListener {
    */
   public static void main(String args[]) {
     java.awt.EventQueue.invokeLater(new Runnable() {
-
+     JPowder jpowder = new JPowder();
       public void run() {
-        new JPowder().setVisible(true);
-
+        jpowder.setLocationRelativeTo(null);
+        jpowder.setDefaultCloseOperation(JPowder.EXIT_ON_CLOSE);
+        jpowder.setVisible(true);
       }
     });
   }
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JMenuItem About;
   private javax.swing.JDesktopPane ChartPlotter;
-  private javax.swing.JToolBar Chrtedittor;
   private javax.swing.JMenuItem Content;
-  private javax.swing.JPanel DataVisibleInChartPanel;
   private javax.swing.JMenuItem Exit;
   private javax.swing.JRadioButtonMenuItem LinuxSolaris;
   private javax.swing.JMenu LookAndFeel;
@@ -741,28 +598,19 @@ public class JPowder extends JFrame implements DropTargetListener {
   private javax.swing.JMenuItem Open;
   private javax.swing.JMenuItem Save;
   private javax.swing.JTabbedPane Tabs;
-  private javax.swing.JPanel Treetab;
   private javax.swing.JRadioButtonMenuItem WindowClassic;
   private javax.swing.JRadioButtonMenuItem Windows;
   private javax.swing.JPanel analysistab;
+  private javax.swing.JPanel chartToolstab;
+  private javax.swing.JPanel dataVisibleInChartPanel;
   private javax.swing.JPanel home;
-  private javax.swing.JButton jButton1;
-  private javax.swing.JButton jButton2;
-  private javax.swing.JButton jButton7;
-  private javax.swing.JLabel jLabel1;
   private javax.swing.JMenu jMenu1;
   private javax.swing.JMenu jMenu2;
   private javax.swing.JMenuBar jMenuBar1;
-  private javax.swing.JPanel jPanel1;
-  private javax.swing.JPanel jPanel2;
   private javax.swing.JSeparator jSeparator1;
   private javax.swing.JSeparator jSeparator2;
   private javax.swing.JSeparator jSeparator3;
-  private javax.swing.JSlider jSlider1;
-  private javax.swing.JSlider jSlider2;
   private javax.swing.JSplitPane jSplitPane1;
-  private javax.swing.JPanel peakjpanel;
-  private javax.swing.JButton unZoom;
-  private javax.swing.JButton zoom;
+  private javax.swing.JPanel treetab;
   // End of variables declaration//GEN-END:variables
 }
