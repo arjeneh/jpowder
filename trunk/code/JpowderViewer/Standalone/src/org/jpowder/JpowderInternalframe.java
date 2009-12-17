@@ -13,7 +13,6 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
-import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
 
@@ -23,9 +22,6 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import javax.swing.event.InternalFrameListener;
-import javax.swing.plaf.InternalFrameUI;
-import org.jpowder.JCheckboxList.JCheckBoxJList;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
 import org.jpowder.jfreechart.FilesPlotter;
@@ -43,9 +39,9 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
   private DataVisibleInChart dataVisibleInChartPanel;
   private Vector<DataSet> m_data;
   private java.awt.dnd.DropTarget droptraget;  // to drop to this frame
-  //public org.jfree.chart.ChartPanel jfreeChartPanel;
   private XYPlot xyPlot;  // hold reference to plot created from dataset in constructor
   private static int numberOfJpowderInternalframe = 0;
+
 
   /**
    *
@@ -55,7 +51,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
   public JpowderInternalframe(DataVisibleInChart dataVisibleInChartPanel, Vector<DataSet> data) {
     super("JPowder");
     numberOfJpowderInternalframe++;
-     System.out.println("\n\n"+numberOfJpowderInternalframe);
+    System.out.println("\n\n"+numberOfJpowderInternalframe);
     javax.swing.JPanel chartPanel = new javax.swing.JPanel();
     this.dataVisibleInChartPanel = dataVisibleInChartPanel;
     this.add(chartPanel);
