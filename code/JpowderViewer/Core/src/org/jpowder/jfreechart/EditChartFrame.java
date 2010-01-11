@@ -264,7 +264,7 @@ public class EditChartFrame extends javax.swing.JFrame{
                 }
                 else if (zoomFactor > 1.0) {
                     // zoom out
-                    Range range = new Range(0, 200000);
+                    Range range = new Range(0,jFreeChart.getXYPlot().getRangeAxisIndex(primYAxis));
                     adjustRange(primYAxis, range, zoomFactor, anchorValue);
                 }
             }

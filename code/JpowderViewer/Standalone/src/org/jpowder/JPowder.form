@@ -273,7 +273,7 @@
   <SubComponents>
     <Container class="javax.swing.JSplitPane" name="jSplitPane1">
       <Properties>
-        <Property name="dividerLocation" type="int" value="300"/>
+        <Property name="dividerLocation" type="int" value="310"/>
         <Property name="dividerSize" type="int" value="8"/>
         <Property name="autoscrolls" type="boolean" value="true"/>
       </Properties>
@@ -293,8 +293,8 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="Tabs" alignment="0" pref="279" max="32767" attributes="0"/>
-                          <Component id="dataVisibleInChartPanel" alignment="0" pref="279" max="32767" attributes="0"/>
+                          <Component id="Tabs" alignment="0" pref="289" max="32767" attributes="0"/>
+                          <Component id="dataVisibleInChartPanel" alignment="0" pref="289" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -317,7 +317,7 @@
               <Properties>
                 <Property name="tabLayoutPolicy" type="int" value="1"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Kartika" size="24" style="0"/>
+                  <Font name="Kartika" size="18" style="0"/>
                 </Property>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[327, 32767]"/>
