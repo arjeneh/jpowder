@@ -141,20 +141,13 @@ public class XY_PopupMenu extends javax.swing.JPopupMenu {
           chartList.add(tX);
           chartList.add(tY);
         }
-
-        //System.out.println("Value of chartList = " + chartList);
-        //System.out.println("Value of tX = " + tX);
-        //System.out.println("Value of tY = " + tY);
-
         //DRAW a Y line on the max value in Range.
         //Find the max value and find its position using v.indexOf("max value");
         //Find the x position of the X axis (Domain).
         Double maxRange = VectorMiscUtil.findMaxElementOf1DVector(tY);
         //System.out.println("Max Range value is " + maxRange);
-
         int pos = tY.indexOf(Double.parseDouble(maxRange.toString()));//not found
         //System.out.println("Max Range position is " + pos);
-
         //add Marker Higlight for the range.
         Marker peakRangeMarker = new ValueMarker(Double.parseDouble(
                 maxRange.toString()));
@@ -189,6 +182,9 @@ public class XY_PopupMenu extends javax.swing.JPopupMenu {
     scaleYdata.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent event) {
         System.out.println("rescale Y data");
+
+        
+
       }
     });
     /**
