@@ -30,6 +30,8 @@ import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.plot.XYPlot;
 
+
+
 /**
  *
  * @author qyt21516
@@ -41,7 +43,9 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
   private java.awt.dnd.DropTarget droptraget;  // to drop to this frame
   private XYPlot xyPlot;  // hold reference to plot created from dataset in constructor
   private static int numberOfJpowderInternalframe = 0;
-
+  private DatasetPlotter plotMultiCol;
+  private ChartPanel jfreeChartPanel;
+  private Vector<Double> markedPeakPosition = new Vector<Double>();
 
   /**
    *
@@ -51,16 +55,18 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
   public JpowderInternalframe(DataVisibleInChart dataVisibleInChartPanel, Vector<DataSet> data) {
     super("JPowder");
     numberOfJpowderInternalframe++;
-    System.out.println("\n\n"+numberOfJpowderInternalframe);
+    System.out.println("\n\n" + numberOfJpowderInternalframe);
     javax.swing.JPanel chartPanel = new javax.swing.JPanel();
     this.dataVisibleInChartPanel = dataVisibleInChartPanel;
     this.add(chartPanel);
     m_data = data;
-    DatasetPlotter plotMultiCol = DatasetPlotter.createDatasetPlotter(data);
+    plotMultiCol = DatasetPlotter.createDatasetPlotter(data);
     chartPanel.setLayout(new BorderLayout());
-    ChartPanel jfreeChartPanel = plotMultiCol.createPowderChart();
-    xyPlot = jfreeChartPanel.getChart().getXYPlot();
-    chartPanel.add(jfreeChartPanel);
+    ChartPanel jfreeChartPanels = plotMultiCol.createPowderChart();
+//    jfreeChartPanels.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+    this.jfreeChartPanel=jfreeChartPanels;
+    xyPlot = jfreeChartPanels.getChart().getXYPlot();   
+    chartPanel.add(jfreeChartPanels);
     this.setClosable(true);
     this.setMaximizable(true);
     this.setResizable(false);
@@ -74,23 +80,46 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
     this.setVisible(true);
   }
 
-  public XYPlot getXYPlot()
-  {
-      return xyPlot;
-  }
 
-  public static int getnumberOfJpowderInternalframe() {
-   
+/**
+ *
+ * @return
+ */
+  public ChartPanel getChartPanel() {
+    return jfreeChartPanel;
+  }
+/**
+ *
+ * @return
+ */
+  public XYPlot getXYPlot() {
+    return xyPlot;
+  }
+/**
+ *
+ * @return
+ */
+  public static int getnumberOfJpowderInternalframe() { 
     return numberOfJpowderInternalframe;
   }
-
+/**
+ *
+ */
   public static void decrementnumberOfJpowderInternalframe() {
     numberOfJpowderInternalframe--;
   }
-
+/**
+ *
+ * @return
+ */
   public Vector<DataSet> getPowderDataSet() {
     return m_data;
   }
+/**
+ *
+ * @param comp
+ * @return
+ */
 
   @Override
   public Component add(Component comp) {
@@ -103,13 +132,26 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
   public DataVisibleInChart getDataVisibleInChartPanel() {
     return dataVisibleInChartPanel;
   }
-
+/**
+ *
+ * @return
+ */
   public Vector<DataSet> addDataset() {
-
     return m_data;
   }
-
-  public void addseries() {
+/**
+ *
+ * @param peaks
+ */
+  public void addMarkedPeakPosition(double peaks){
+   markedPeakPosition.add(peaks);
+  }
+  /**
+   *
+   * @return
+   */
+  public Vector<Double> getMarkedPeakPosition (){
+    return markedPeakPosition;
   }
 
   public void dragEnter(DropTargetDragEvent dtde) {
@@ -123,7 +165,10 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
 
   public void dragExit(DropTargetEvent dte) {
   }
-
+/**
+ *
+ * @param dtde
+ */
   public void drop(DropTargetDropEvent dtde) {
     System.out.println("hashcodeeeeeeeeeee" + hashCode());
     System.out.println("i am getting called nice..");
@@ -213,8 +258,7 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
   private DataVisibleInChart dvic;
   private JpowderInternalframe jpowderinternalframe;
 
-  public InternalFrameIconifyListener() {
-  }
+  
 
   /**
    *
@@ -223,6 +267,7 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
   public InternalFrameIconifyListener(DataVisibleInChart dvic) {
     this.dvic = dvic;
   }
+
   /**
    *
    * @param e
@@ -230,14 +275,15 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
   @Override
   public void internalFrameClosed(InternalFrameEvent e) {
     System.out.println("widows is Closed");
-    jpowderinternalframe.decrementnumberOfJpowderInternalframe();
+    JpowderInternalframe.decrementnumberOfJpowderInternalframe();
     System.out.println("the number of internalframe in the descktop pane" +
             JpowderInternalframe.getnumberOfJpowderInternalframe());
 
-    if(JpowderInternalframe.getnumberOfJpowderInternalframe()>1||
-            JpowderInternalframe.getnumberOfJpowderInternalframe()==0){
+    if (JpowderInternalframe.getnumberOfJpowderInternalframe() > 1 ||
+            JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
       dvic.clear();
     }
+
   }
 
   /**
@@ -250,6 +296,7 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
     System.out.println("widows is Activated");
 
     jpowderinternalframe = (JpowderInternalframe) e.getInternalFrame();
+    JPowder.jpowderInternalFrameUpdate(jpowderinternalframe);
     jpowderinternalframe.moveToFront();
     DataVisibleInChart DVIC = jpowderinternalframe.getDataVisibleInChartPanel();
     DVIC.newChartInFocus(jpowderinternalframe.getXYPlot(),

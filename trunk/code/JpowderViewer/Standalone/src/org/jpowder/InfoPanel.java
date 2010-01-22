@@ -1,27 +1,15 @@
 package org.jpowder;
 
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
  * @author qyt21516
  */
-public class InfoPanel  {
 
-private JpowderIcon jpowdericon;
+public interface InfoPanel {
 
-  public InfoPanel(JpowderIcon jpowdericon) {
-
-    this.jpowdericon=jpowdericon;
-
-  }
-  
-  // updates info panel with information contained in JpowderInternalframe
-  // passed to this method
-  public void update(JpowderInternalframe frame){
-
-  }
+ /** Update information panel. For example when a JpowderInternalFrame is
+  *  activated by the user this method is called to reflect that a new
+  *  JpowderInternalFrame is in focus.
+  */
+  public void update();
 }
