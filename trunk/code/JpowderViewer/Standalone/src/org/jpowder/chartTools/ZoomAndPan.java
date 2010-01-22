@@ -18,6 +18,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.Range;
+import org.jpowder.InfoPanel;
 import org.jpowder.JPowder;
 import org.jpowder.JpowderInternalframe;
 import org.jpowder.dataset.DatasetPlotter;
@@ -28,7 +29,7 @@ import org.jpowder.dataset.DatasetPlotter;
  *
  * @author Arjeneh
  */
-public class ZoomAndPan extends javax.swing.JPanel {
+public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
 
   
 
@@ -39,7 +40,14 @@ public class ZoomAndPan extends javax.swing.JPanel {
   private ButtonGroup buttonGroup = new ButtonGroup();
 
 
+  public void update() {
+    JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
 
+    jCheckBoxDomain.setSelected(false);
+
+    //System.out.println("In Update" + inFocus);
+
+  }
 
   /**
    *
