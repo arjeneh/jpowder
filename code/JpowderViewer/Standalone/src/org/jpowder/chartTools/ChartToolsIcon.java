@@ -150,6 +150,10 @@ public class ChartToolsIcon extends javax.swing.JPanel {
       jpowder.getChartToolstab().setComponentZOrder(zoomAndPan, 0);
       jpowder.getCardLayout().first(jpowder.getChartToolstab());
       zoomAndPan.setVisible(true);
+      jpowder.getChartToolstab().updateUI();
+      jpowder.getChartToolstab().repaint();
+
+      JPowder.jpowderInfoPanelUpdate(zoomAndPan);      
     }//GEN-LAST:event_chartToolButton1ActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton chartToolButton;

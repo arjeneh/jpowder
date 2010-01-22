@@ -284,6 +284,7 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
       dvic.clear();
     }
 
+    //JPowder.jpowderInternalFrameUpdate(null);
   }
 
   /**
