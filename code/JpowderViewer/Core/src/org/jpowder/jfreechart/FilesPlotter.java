@@ -35,7 +35,7 @@ public class FilesPlotter extends DatasetPlotter {
   private static Vector<DataSet> datasets;
   private int datasetIndex = 0;
   public XYPlot plot;
-  public  static Paint[] allseriescolors={Color.BLUE, Color.RED, ChartColor.VERY_DARK_GREEN,
+  public  static Paint[] allseriescolors={ Color.BLUE, Color.RED,ChartColor.VERY_DARK_GREEN,
                 Color.ORANGE, Color.CYAN,Color.MAGENTA,ChartColor.DARK_YELLOW, Color.BLACK,
                 Color.PINK,Color.LIGHT_GRAY,Color.GRAY
                 ,ChartColor.DARK_BLUE,ChartColor.DARK_RED,ChartColor.DARK_GREEN
@@ -97,7 +97,7 @@ public class FilesPlotter extends DatasetPlotter {
    */
   @SuppressWarnings("static-access")
   public JFreeChart createChart() {
-    String x = "2\u03D1";//unicode
+    String x = "2\u03D1";//unicode 2thetha
     NumberAxis xAxis = new NumberAxis(x.toUpperCase());
     NumberAxis yAxis = new NumberAxis("Y");
 
@@ -119,7 +119,7 @@ public class FilesPlotter extends DatasetPlotter {
               xAxis, yAxis, renderer2);
       renderer2.setToolTipGenerator(tooltip);
     }
-    plot.setBackgroundPaint(Color.lightGray);
+    plot.setBackgroundPaint(ChartColor.lightGray);
     plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
     plot.setDomainGridlinePaint(Color.white);
     plot.setRangeGridlinePaint(Color.white);
@@ -141,8 +141,7 @@ public class FilesPlotter extends DatasetPlotter {
       }
     }
     plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
-    plot.setFixedLegendItems(createLegendItems());//this for setting the legend null
-    JFreeChart chart = new JFreeChart(plot);// for getting the chart header
+    JFreeChart chart = new JFreeChart(null,null,plot,false);// for getting the chart header
     chart.setBackgroundPaint(Color.white);
     return chart;
   }
@@ -226,16 +225,5 @@ public class FilesPlotter extends DatasetPlotter {
     return index;
   }
 
-  /**
-   * A collection of legend items, typically returned by the getLegendItems() method in the plot classes.
-   * You can create your own collection of legend items and pass it to a CategoryPlot or XYPlot via the
-   * setFixedLegendItems() method, as a way of overriding the automatically generated legend items.
-   * @return legendItemCollection
-   */
-  private LegendItemCollection createLegendItems() {
-    LegendItemCollection legendItemCollection = new LegendItemCollection();
-//    LegendItem item1 = new LegendItem("", Color.BLUE);
-//    legendItemCollection.add(item1);
-    return legendItemCollection;
-  }
+
 }

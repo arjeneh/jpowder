@@ -24,27 +24,23 @@ import org.jpowder.JpowderIcon;
 public class AnalysisIcon extends javax.swing.JPanel {
 
     private JpowderIcon jpowderIcon;
-   private List<JButton> buttons = new ArrayList<JButton>();
-
-   private String[] title = {"Logo", "PlotChart",
-    "printer", "SendMail", "email_small", };
-
-    private String[] imgdir = {"Logo.gif", "PlotChart.gif",
-    "printer.gif", "SendMail.gif", "email_small.gif"};
-
-
+    private List<JButton> buttons = new ArrayList<JButton>();
+    private String[] title = {"Logo", "PlotChart"};
+    private String[] imgdir = {"PlotChart.gif",
+    "printer.gif"};
+    private MarkPeakPosition markPeakPosition= new MarkPeakPosition(this);
+    private JPowder jpowder;
 
     /** Creates new form AnalysisIcon */
-    public AnalysisIcon() {
+    public AnalysisIcon(JPowder jpowder) {
         initComponents();
-        buttons.add(thumbButton);
-        buttons.add(thumbButton1);
-        buttons.add(thumbButton2);
-        buttons.add(thumbButton3);
-        buttons.add(thumbButton4);
+        this.jpowder = jpowder;
+        buttons.add(AnalysisButton);
+        buttons.add(AnalysisButton1);
+       
 
         jpowderIcon=new JpowderIcon(buttons,title,imgdir);
-         jpowderIcon.set_imgdir(imgdir);
+        jpowderIcon.set_imgdir(imgdir);
     }
 
     /** This method is called from within the constructor to
@@ -56,65 +52,72 @@ public class AnalysisIcon extends javax.swing.JPanel {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
-    thumbButton = new javax.swing.JButton();
-    thumbButton1 = new javax.swing.JButton();
-    thumbButton2 = new javax.swing.JButton();
-    thumbButton3 = new javax.swing.JButton();
-    thumbButton4 = new javax.swing.JButton();
+    AnalysisButton = new javax.swing.JButton();
+    AnalysisButton1 = new javax.swing.JButton();
+    jLabel1 = new javax.swing.JLabel();
+    jLabel2 = new javax.swing.JLabel();
 
-    thumbButton.setPreferredSize(new java.awt.Dimension(80, 80));
+    AnalysisButton.setPreferredSize(new java.awt.Dimension(80, 80));
+    AnalysisButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        AnalysisButtonActionPerformed(evt);
+      }
+    });
 
-    thumbButton1.setPreferredSize(new java.awt.Dimension(80, 80));
+    AnalysisButton1.setPreferredSize(new java.awt.Dimension(80, 80));
 
-    thumbButton2.setPreferredSize(new java.awt.Dimension(80, 80));
+    jLabel1.setText("Peak Position");
 
-    thumbButton3.setPreferredSize(new java.awt.Dimension(80, 80));
-
-    thumbButton4.setPreferredSize(new java.awt.Dimension(80, 80));
+    jLabel2.setText("Rescale Ydata");
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addContainerGap()
+        .addGap(24, 24, 24)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-            .addGroup(layout.createSequentialGroup()
-              .addComponent(thumbButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(thumbButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-              .addComponent(thumbButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addGap(48, 48, 48)
-              .addComponent(thumbButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-          .addComponent(thumbButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addContainerGap(51, Short.MAX_VALUE))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(AnalysisButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(26, 26, 26)
+            .addComponent(AnalysisButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addGap(47, 47, 47))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(thumbButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(thumbButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(26, 26, 26)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(thumbButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(thumbButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(18, 18, 18)
-        .addComponent(thumbButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(89, Short.MAX_VALUE))
+          .addComponent(AnalysisButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(AnalysisButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(14, 14, 14)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jLabel1)
+          .addComponent(jLabel2))
+        .addContainerGap(220, Short.MAX_VALUE))
     );
   }// </editor-fold>//GEN-END:initComponents
 
+    private void AnalysisButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnalysisButtonActionPerformed
+      System.out.println("analysisbutt is clicked");
+      jpowder.getanalysistab().add(markPeakPosition, "1");
+      jpowder.getanalysistab().setComponentZOrder(markPeakPosition, 0);
+     jpowder.getCardLayout().first(jpowder.getanalysistab());
+      markPeakPosition.setVisible(true);
+      JPowder.jpowderInfoPanelUpdate(markPeakPosition);
+
+    }//GEN-LAST:event_AnalysisButtonActionPerformed
+
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JButton thumbButton;
-  private javax.swing.JButton thumbButton1;
-  private javax.swing.JButton thumbButton2;
-  private javax.swing.JButton thumbButton3;
-  private javax.swing.JButton thumbButton4;
+  private javax.swing.JButton AnalysisButton;
+  private javax.swing.JButton AnalysisButton1;
+  private javax.swing.JLabel jLabel1;
+  private javax.swing.JLabel jLabel2;
   // End of variables declaration//GEN-END:variables
 
 }

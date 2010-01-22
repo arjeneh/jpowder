@@ -26,12 +26,12 @@ public class ChartToolsIcon extends javax.swing.JPanel {
   private JpowderIcon jpowderIcon;
   private List<JButton> buttons = new ArrayList<JButton>();
   private String[] title = {"Logo.gif", "PlotChart.gif",
-    "printer.gif", "SendMail.gif"};
+    "printer.gif"};
   private String[] imgdir = {"Logo.gif", "PlotChart.gif",
-    "printer.gif", "SendMail.gif"};
+    "printer.gif"};
   private ChangePlotStyle changePlotStyle = new ChangePlotStyle(this);
+  private ZoomAndPan zoomAndPan = new ZoomAndPan(this);
   private JPowder jpowder;
-
 
   /** Creates new form ChartToolsIcon */
   public ChartToolsIcon(JPowder jpowder) {
@@ -40,16 +40,15 @@ public class ChartToolsIcon extends javax.swing.JPanel {
     buttons.add(chartToolButton);
     buttons.add(chartToolButton1);
     buttons.add(chartToolButton2);
-    buttons.add(thumbButton3);
+
 
     jpowderIcon = new JpowderIcon(buttons, title, imgdir);
     jpowderIcon.set_imgdir(imgdir);
   }
 
-  public JPanel getChartToolsIcon(){
+  public JPanel getChartToolsIcon() {
     return this;
   }
- 
 
   /**
    * This method is called from within the constructor to
@@ -64,7 +63,6 @@ public class ChartToolsIcon extends javax.swing.JPanel {
     jLabel2 = new javax.swing.JLabel();
     jLabel1 = new javax.swing.JLabel();
     chartToolButton = new javax.swing.JButton();
-    thumbButton3 = new javax.swing.JButton();
     chartToolButton2 = new javax.swing.JButton();
     chartToolButton1 = new javax.swing.JButton();
     jLabel3 = new javax.swing.JLabel();
@@ -82,11 +80,14 @@ public class ChartToolsIcon extends javax.swing.JPanel {
       }
     });
 
-    thumbButton3.setPreferredSize(new java.awt.Dimension(80, 80));
-
     chartToolButton2.setPreferredSize(new java.awt.Dimension(80, 80));
 
     chartToolButton1.setPreferredSize(new java.awt.Dimension(80, 80));
+    chartToolButton1.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        chartToolButton1ActionPerformed(evt);
+      }
+    });
 
     jLabel3.setText("Set Legend");
 
@@ -107,9 +108,7 @@ public class ChartToolsIcon extends javax.swing.JPanel {
               .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addComponent(chartToolButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(30, 30, 30)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(thumbButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(chartToolButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addComponent(chartToolButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addContainerGap())
     );
     layout.setVerticalGroup(
@@ -126,10 +125,8 @@ public class ChartToolsIcon extends javax.swing.JPanel {
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(jLabel1)
           .addComponent(jLabel2))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(thumbButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(chartToolButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(9, 9, 9)
+        .addComponent(chartToolButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jLabel3)
         .addContainerGap(74, Short.MAX_VALUE))
@@ -139,16 +136,21 @@ public class ChartToolsIcon extends javax.swing.JPanel {
     private void chartToolButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chartToolButtonActionPerformed
       System.out.println("hi chartToolButton clicked");
 
-//      jpowder.getChartToolstab().add(changePlotStyle,"1");
-     jpowder.getCardLayout().next(changePlotStyle);
-//      jpowder.getChartToolstab().setComponentZOrder(changePlotStyle, 0);
-//      this.setVisible(false);
-//      remove(this);
-//      this.validate();
-//      this.repaint();
+      jpowder.getChartToolstab().add(changePlotStyle, "1");
+      jpowder.getChartToolstab().setComponentZOrder(changePlotStyle, 0);
+      jpowder.getCardLayout().first(jpowder.getChartToolstab());
+      changePlotStyle.setVisible(true);
 
-
+      JPowder.jpowderInfoPanelUpdate(changePlotStyle);
     }//GEN-LAST:event_chartToolButtonActionPerformed
+
+    private void chartToolButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chartToolButton1ActionPerformed
+
+      jpowder.getChartToolstab().add(zoomAndPan, "1");
+      jpowder.getChartToolstab().setComponentZOrder(zoomAndPan, 0);
+      jpowder.getCardLayout().first(jpowder.getChartToolstab());
+      zoomAndPan.setVisible(true);
+    }//GEN-LAST:event_chartToolButton1ActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton chartToolButton;
   private javax.swing.JButton chartToolButton1;
@@ -156,6 +158,5 @@ public class ChartToolsIcon extends javax.swing.JPanel {
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
-  private javax.swing.JButton thumbButton3;
   // End of variables declaration//GEN-END:variables
 }

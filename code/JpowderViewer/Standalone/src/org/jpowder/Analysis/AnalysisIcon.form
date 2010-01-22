@@ -16,24 +16,21 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                      <Group type="102" alignment="1" attributes="1">
-                          <Component id="thumbButton3" min="-2" pref="84" max="-2" attributes="1"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="thumbButton2" min="-2" pref="84" max="-2" attributes="1"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="thumbButton" min="-2" pref="84" max="-2" attributes="1"/>
-                          <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                          <Component id="thumbButton1" min="-2" pref="84" max="-2" attributes="1"/>
-                      </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel1" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel2" min="-2" pref="100" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="thumbButton4" alignment="0" min="-2" pref="84" max="-2" attributes="1"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="AnalysisButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                      <Component id="AnalysisButton1" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="51" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -42,55 +39,45 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="thumbButton1" alignment="0" min="-2" pref="77" max="-2" attributes="0"/>
-                  <Component id="thumbButton" alignment="0" min="-2" pref="77" max="-2" attributes="0"/>
+                  <Component id="AnalysisButton1" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="AnalysisButton" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="thumbButton2" min="-2" pref="77" max="-2" attributes="0"/>
-                  <Component id="thumbButton3" min="-2" pref="77" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="thumbButton4" min="-2" pref="77" max="-2" attributes="0"/>
-              <EmptySpace pref="89" max="32767" attributes="0"/>
+              <EmptySpace pref="220" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="thumbButton">
+    <Component class="javax.swing.JButton" name="AnalysisButton">
+      <Properties>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[80, 80]"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AnalysisButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="AnalysisButton1">
       <Properties>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[80, 80]"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="thumbButton1">
+    <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[80, 80]"/>
-        </Property>
+        <Property name="text" type="java.lang.String" value="Peak Position"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="thumbButton2">
+    <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[80, 80]"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="thumbButton3">
-      <Properties>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[80, 80]"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="thumbButton4">
-      <Properties>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[80, 80]"/>
-        </Property>
+        <Property name="text" type="java.lang.String" value="Rescale Ydata"/>
       </Properties>
     </Component>
   </SubComponents>

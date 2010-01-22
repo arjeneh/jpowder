@@ -343,6 +343,9 @@
                       <Dimension value="[270, 320]"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="analysistab.setLayout(cardLayout);"/>
+                  </AuxValues>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                       <JTabbedPaneConstraints tabName="Analysis">
@@ -351,7 +354,7 @@
                     </Constraint>
                   </Constraints>
 
-                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
                 </Container>
                 <Container class="javax.swing.JPanel" name="chartToolstab">
                   <AuxValues>

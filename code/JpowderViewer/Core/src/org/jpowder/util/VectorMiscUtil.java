@@ -106,7 +106,7 @@ public class VectorMiscUtil {
         return vLastColumn;
     }
 
-    public static Vector getAllElementOf2DVector(Vector<Vector> ori) {
+    public static Vector getAllElementOf2DVector(Vector<Vector> ori ) {
         Vector output = new Vector();
         Vector vRow = new Vector();
 
