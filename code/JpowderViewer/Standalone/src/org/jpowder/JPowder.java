@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
@@ -145,14 +146,15 @@ public class JPowder extends JFrame implements DropTargetListener {
         dataVisibleInChartPanel = new javax.swing.JPanel();
         ChartPlotter = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        fileMenu = new javax.swing.JMenu();
         New = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JSeparator();
         Open = new javax.swing.JMenuItem();
         Save = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JSeparator();
         Exit = new javax.swing.JMenuItem();
-        LookAndFeel = new javax.swing.JMenu();
+        undoMenu = new javax.swing.JMenu();
+        lookAndFeelMenu = new javax.swing.JMenu();
         Windows = new javax.swing.JRadioButtonMenuItem();
         WindowClassic = new javax.swing.JRadioButtonMenuItem();
         MacLookAndFeel = new javax.swing.JRadioButtonMenuItem();
@@ -160,7 +162,7 @@ public class JPowder extends JFrame implements DropTargetListener {
         Nimbus = new javax.swing.JRadioButtonMenuItem();
         Metal = new javax.swing.JRadioButtonMenuItem();
         LinuxSolaris = new javax.swing.JRadioButtonMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        helpMenu = new javax.swing.JMenu();
         Content = new javax.swing.JMenuItem();
         OnlieDocsandSupport = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JSeparator();
@@ -225,8 +227,8 @@ public class JPowder extends JFrame implements DropTargetListener {
 
         jMenuBar1.setFont(new java.awt.Font("Tahoma", 0, 36));
 
-        jMenu1.setText("File");
-        jMenu1.setFont(new java.awt.Font("Tahoma", 0, 14));
+        fileMenu.setText("File");
+        fileMenu.setFont(new java.awt.Font("Tahoma", 0, 14));
 
         New.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         New.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new_small.gif"))); // NOI18N
@@ -236,8 +238,8 @@ public class JPowder extends JFrame implements DropTargetListener {
                 NewActionPerformed(evt);
             }
         });
-        jMenu1.add(New);
-        jMenu1.add(jSeparator2);
+        fileMenu.add(New);
+        fileMenu.add(jSeparator2);
 
         Open.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         Open.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/addFile.gif"))); // NOI18N
@@ -247,7 +249,7 @@ public class JPowder extends JFrame implements DropTargetListener {
                 OpenActionPerformed(evt);
             }
         });
-        jMenu1.add(Open);
+        fileMenu.add(Open);
 
         Save.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         Save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/savas_small.gif"))); // NOI18N
@@ -257,8 +259,8 @@ public class JPowder extends JFrame implements DropTargetListener {
                 SaveActionPerformed(evt);
             }
         });
-        jMenu1.add(Save);
-        jMenu1.add(jSeparator1);
+        fileMenu.add(Save);
+        fileMenu.add(jSeparator1);
 
         Exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         Exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/del_small.gif"))); // NOI18N
@@ -268,12 +270,15 @@ public class JPowder extends JFrame implements DropTargetListener {
                 ExitActionPerformed(evt);
             }
         });
-        jMenu1.add(Exit);
+        fileMenu.add(Exit);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(fileMenu);
 
-        LookAndFeel.setText("LookAndFeel");
-        LookAndFeel.setFont(new java.awt.Font("Tahoma", 0, 14));
+        undoMenu.setText("Undo");
+        jMenuBar1.add(undoMenu);
+
+        lookAndFeelMenu.setText("LookAndFeel");
+        lookAndFeelMenu.setFont(new java.awt.Font("Tahoma", 0, 14));
 
         buttonGroup
         .add(Windows);
@@ -283,7 +288,7 @@ public class JPowder extends JFrame implements DropTargetListener {
                 WindowsActionPerformed(evt);
             }
         });
-        LookAndFeel.add(Windows);
+        lookAndFeelMenu.add(Windows);
 
         buttonGroup
 
@@ -298,7 +303,7 @@ public class JPowder extends JFrame implements DropTargetListener {
                 WindowClassicActionPerformed(evt);
             }
         });
-        LookAndFeel.add(WindowClassic);
+        lookAndFeelMenu.add(WindowClassic);
 
         buttonGroup.add(MacLookAndFeel);
         MacLookAndFeel.setText("MacLookAndFeel");
@@ -311,7 +316,7 @@ public class JPowder extends JFrame implements DropTargetListener {
                 MacLookAndFeelActionPerformed(evt);
             }
         });
-        LookAndFeel.add(MacLookAndFeel);
+        lookAndFeelMenu.add(MacLookAndFeel);
 
         buttonGroup.add(Motif);
         Motif.setText("Motif");
@@ -324,7 +329,7 @@ public class JPowder extends JFrame implements DropTargetListener {
                 MotifActionPerformed(evt);
             }
         });
-        LookAndFeel.add(Motif);
+        lookAndFeelMenu.add(Motif);
 
         buttonGroup.add(Nimbus);
         Nimbus.setText("Nimbus");
@@ -333,7 +338,7 @@ public class JPowder extends JFrame implements DropTargetListener {
                 NimbusActionPerformed(evt);
             }
         });
-        LookAndFeel.add(Nimbus);
+        lookAndFeelMenu.add(Nimbus);
 
         buttonGroup.add(Metal);
         Metal.setText("Metal");
@@ -342,7 +347,7 @@ public class JPowder extends JFrame implements DropTargetListener {
                 MetalActionPerformed(evt);
             }
         });
-        LookAndFeel.add(Metal);
+        lookAndFeelMenu.add(Metal);
 
         buttonGroup.add(LinuxSolaris);
         LinuxSolaris.setText("LinuxandSolaris");
@@ -351,16 +356,16 @@ public class JPowder extends JFrame implements DropTargetListener {
                 LinuxSolarisActionPerformed(evt);
             }
         });
-        LookAndFeel.add(LinuxSolaris);
+        lookAndFeelMenu.add(LinuxSolaris);
 
-        jMenuBar1.add(LookAndFeel);
+        jMenuBar1.add(lookAndFeelMenu);
 
-        jMenu2.setText("Help");
-        jMenu2.setFont(new java.awt.Font("Tahoma", 0, 14));
+        helpMenu.setText("Help");
+        helpMenu.setFont(new java.awt.Font("Tahoma", 0, 14));
 
         Content.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         Content.setText("Content");
-        jMenu2.add(Content);
+        helpMenu.add(Content);
 
         OnlieDocsandSupport.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, java.awt.event.InputEvent.CTRL_MASK));
         OnlieDocsandSupport.setText("Online Docs and Support");
@@ -369,8 +374,8 @@ public class JPowder extends JFrame implements DropTargetListener {
                 OnlieDocsandSupportActionPerformed(evt);
             }
         });
-        jMenu2.add(OnlieDocsandSupport);
-        jMenu2.add(jSeparator3);
+        helpMenu.add(OnlieDocsandSupport);
+        helpMenu.add(jSeparator3);
 
         About.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         About.setText("About");
@@ -379,9 +384,9 @@ public class JPowder extends JFrame implements DropTargetListener {
                 AboutActionPerformed(evt);
             }
         });
-        jMenu2.add(About);
+        helpMenu.add(About);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(helpMenu);
 
         setJMenuBar(jMenuBar1);
 
@@ -608,7 +613,6 @@ public class JPowder extends JFrame implements DropTargetListener {
     private javax.swing.JMenuItem Content;
     private javax.swing.JMenuItem Exit;
     private javax.swing.JRadioButtonMenuItem LinuxSolaris;
-    private javax.swing.JMenu LookAndFeel;
     private javax.swing.JRadioButtonMenuItem MacLookAndFeel;
     private javax.swing.JRadioButtonMenuItem Metal;
     private javax.swing.JRadioButtonMenuItem Motif;
@@ -623,14 +627,16 @@ public class JPowder extends JFrame implements DropTargetListener {
     private javax.swing.JPanel analysistab;
     private javax.swing.JPanel chartToolstab;
     private javax.swing.JPanel dataVisibleInChartPanel;
+    private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenu helpMenu;
     private javax.swing.JPanel home;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JMenu lookAndFeelMenu;
     private javax.swing.JPanel treetab;
+    private javax.swing.JMenu undoMenu;
     // End of variables declaration//GEN-END:variables
 }
