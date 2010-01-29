@@ -137,13 +137,15 @@ public class JPowder extends JFrame implements DropTargetListener {
     private void initComponents() {
 
         jSplitPane1 = new javax.swing.JSplitPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         home = new javax.swing.JPanel();
+        jSplitPane2 = new javax.swing.JSplitPane();
+        dataVisibleInChartPanel = new javax.swing.JPanel();
         Tabs = new javax.swing.JTabbedPane();
         treetab = new javax.swing.JPanel();
         analysistab = new javax.swing.JPanel();
         cardLayout = new CardLayout();
         chartToolstab = new javax.swing.JPanel();
-        dataVisibleInChartPanel = new javax.swing.JPanel();
         ChartPlotter = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
@@ -176,8 +178,17 @@ public class JPowder extends JFrame implements DropTargetListener {
         jSplitPane1.setDividerSize(8);
         jSplitPane1.setAutoscrolls(true);
 
+        home.setLayout(new java.awt.GridLayout(2, 0));
+
+        jSplitPane2.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        dataVisibleInChartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("DataVisibleInChart"));
+        dataVisibleInChartPanel.setPreferredSize(new java.awt.Dimension(270, 260));
+        dataVisibleInChartPanel.setLayout(new java.awt.BorderLayout());
+        jSplitPane2.setRightComponent(dataVisibleInChartPanel);
+
         Tabs.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-        Tabs.setFont(new java.awt.Font("Kartika", 0, 18));
+        Tabs.setFont(new java.awt.Font("Kartika", 0, 18)); // NOI18N
         Tabs.setMaximumSize(new java.awt.Dimension(327, 32767));
 
         treetab.setLayout(new java.awt.CardLayout());
@@ -194,32 +205,13 @@ public class JPowder extends JFrame implements DropTargetListener {
         chartToolstab.setLayout(cardLayout);
         Tabs.addTab("ChartTools", chartToolstab);
 
-        dataVisibleInChartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("DataVisibleInChart"));
-        dataVisibleInChartPanel.setPreferredSize(new java.awt.Dimension(270, 260));
-        dataVisibleInChartPanel.setLayout(new java.awt.BorderLayout());
+        jSplitPane2.setLeftComponent(Tabs);
 
-        javax.swing.GroupLayout homeLayout = new javax.swing.GroupLayout(home);
-        home.setLayout(homeLayout);
-        homeLayout.setHorizontalGroup(
-            homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Tabs, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
-                    .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        homeLayout.setVerticalGroup(
-            homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        home.add(jSplitPane2);
 
-        jSplitPane1.setLeftComponent(home);
+        jScrollPane1.setViewportView(home);
+
+        jSplitPane1.setLeftComponent(jScrollPane1);
 
         ChartPlotter.setBackground(new java.awt.Color(240, 240, 240));
         ChartPlotter.setOpaque(false);
@@ -631,10 +623,12 @@ public class JPowder extends JFrame implements DropTargetListener {
     private javax.swing.JMenu helpMenu;
     private javax.swing.JPanel home;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JMenu lookAndFeelMenu;
     private javax.swing.JPanel treetab;
     private javax.swing.JMenu undoMenu;
