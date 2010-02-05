@@ -37,6 +37,7 @@ public abstract class DatasetPlotter {
     public static DatasetPlotter createDatasetPlotter(Vector<DataSet> datasets) {
         if (datasets.size() >= 1) {
             return new FilesPlotter(datasets);
+
         } else {
             return null;
         }

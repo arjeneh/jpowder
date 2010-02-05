@@ -40,7 +40,7 @@ public class ChartToolsIcon extends javax.swing.JPanel {
     buttons.add(chartToolButton);
     buttons.add(chartToolButton1);
     buttons.add(chartToolButton2);
-
+  
 
     jpowderIcon = new JpowderIcon(buttons, title, imgdir);
     jpowderIcon.set_imgdir(imgdir);
@@ -135,25 +135,32 @@ public class ChartToolsIcon extends javax.swing.JPanel {
 
     private void chartToolButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chartToolButtonActionPerformed
       System.out.println("hi chartToolButton clicked");
-
+      Object source = evt.getSource();
+      if (source instanceof JButton) {
+        JButton button = (JButton) source;
+//        jpowderIcon.setHeight(35);
+//        jpowderIcon.setWidth(35);
+        changePlotStyle.getChangePlotStyleLabel().setIcon(button.getIcon());
+      }
       jpowder.getChartToolstab().add(changePlotStyle, "1");
-      jpowder.getChartToolstab().setComponentZOrder(changePlotStyle, 0);
-      jpowder.getCardLayout().first(jpowder.getChartToolstab());
       changePlotStyle.setVisible(true);
+      this.setVisible(false);
 
       JPowder.jpowderInfoPanelUpdate(changePlotStyle);
     }//GEN-LAST:event_chartToolButtonActionPerformed
 
     private void chartToolButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chartToolButton1ActionPerformed
-
+      Object source = evt.getSource();
+      if (source instanceof JButton) {
+        JButton button = (JButton) source;
+//        jpowderIcon.setHeight(35);
+//        jpowderIcon.setWidth(35);
+        zoomAndPan.getZoomLable().setIcon(button.getIcon());
+      }
       jpowder.getChartToolstab().add(zoomAndPan, "1");
-      jpowder.getChartToolstab().setComponentZOrder(zoomAndPan, 0);
-      jpowder.getCardLayout().first(jpowder.getChartToolstab());
       zoomAndPan.setVisible(true);
-      jpowder.getChartToolstab().updateUI();
-      jpowder.getChartToolstab().repaint();
-
-      JPowder.jpowderInfoPanelUpdate(zoomAndPan);      
+      this.setVisible(false);
+      JPowder.jpowderInfoPanelUpdate(zoomAndPan);
     }//GEN-LAST:event_chartToolButton1ActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton chartToolButton;

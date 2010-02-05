@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.jpowder;
 
 /**
@@ -19,8 +18,6 @@ package org.jpowder;
  *
  * Created on 09-Dec-2009, 15:49:25
  */
-
-
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -30,6 +27,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,20 +35,21 @@ import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
 import javax.swing.SwingWorker;
 
 /**
  *
  * @author qyt21516
  */
-public class JpowderIcon  {
+public class JpowderIcon {
 
-  private int width = 82;
-  private int height = 80;
-  private List<JButton> buttons ;
-  File f = new File("");
-  private String imagedir = f.getAbsolutePath() + File.separator + "src" + File.separator + "images" + File.separator;
+  public int width ;
+  private int height ;
+  private List<JButton> buttons;
+  private ThumbnailAction thumbAction;
+//  File f = new File("");
+//  private String imagedir = f.getAbsolutePath() + File.separator + "src" + File.separator + "images" + File.separator;
+  private String imagedir ="/images/";
   /**
    * List of all the descriptions of the image files. These correspond one to
    * one with the image file names
@@ -61,15 +60,24 @@ public class JpowderIcon  {
    */
   private String[] imgdir = {};
 
-
-  public JpowderIcon(List<JButton> buttons,String [] imgdir,String[] title) {
-    this.buttons=buttons;
+  public JpowderIcon(List<JButton> buttons, String[] imgdir, String[] title) {
+    this.buttons = buttons;
     set_imgdir(imgdir);
     set_title(title);
     // start the image loading SwingWorker in a background thread
     loadimages.execute();
 
 
+  }
+
+  public int setWidth(int x) {
+    this.width = x;
+     return x;
+  }
+
+  public int setHeight(int y) {
+    this.height = y;
+    return y;
   }
 
   public void set_imgdir(String[] imgdir) {
@@ -82,7 +90,9 @@ public class JpowderIcon  {
 
   }
 
-
+  public Icon getDisplayPhoto() {
+    return thumbAction.getDisplayPhoto();
+  }
 
   /**
    * Creates an ImageIcon if the path is valid.
@@ -92,7 +102,11 @@ public class JpowderIcon  {
   protected ImageIcon createImageIcon(String path,
           String description) throws IOException {
     try {
-      BufferedImage img = javax.imageio.ImageIO.read(new FileInputStream(path));
+
+
+//      BufferedImage img = javax.imageio.ImageIO.read(new FileInputStream(getClass().getResource(url)));
+      BufferedImage img = javax.imageio.ImageIO.read(getClass().getResource(path));
+
       if (img != null) {
         return new ImageIcon(img, description);
       } else {
@@ -120,7 +134,6 @@ public class JpowderIcon  {
     g2.dispose();
     return resizedImg;
   }
-
   /**
    * SwingWorker class that loads the images a background thread and calls publish
    * when a new one is ready to be displayed.
@@ -138,15 +151,14 @@ public class JpowderIcon  {
       for (int i = 0; i < imgdir.length; i++) {
         ImageIcon icon;
         icon = createImageIcon(imagedir + imgdir[i], title[i]);
-        ThumbnailAction thumbAction = null;
+        thumbAction = null;
         if (icon != null) {
 
-          ImageIcon thumbnailIcon = new ImageIcon(getScaledImage(icon.getImage(), width, height));
+          ImageIcon thumbnailIcon = new ImageIcon(getScaledImage(icon.getImage(), setHeight(80), setWidth(82)));
 
           thumbAction = new ThumbnailAction(icon, thumbnailIcon, title[i]);
 
         } else {
-
         }
         publish(thumbAction);
 
@@ -167,11 +179,11 @@ public class JpowderIcon  {
       int b = thumnailist.size();
       for (int i = 0; i < b; i++) {
         buttons.get(i).setAction(thumnailist.get(i));
+
       }
 
     }
   };
-
 
   private class ThumbnailAction extends AbstractAction {
 
@@ -186,7 +198,7 @@ public class JpowderIcon  {
      * @param String - The descriptioon of the icon.
      */
     public ThumbnailAction(Icon photo, Icon thumb, String desc) {
-      displayPhoto = photo;
+      displayPhoto = thumb;
       // The LARGE_ICON_KEY is the key for setting the
       // icon when an Action is applied to a button.
       putValue(LARGE_ICON_KEY, thumb);
@@ -196,19 +208,22 @@ public class JpowderIcon  {
 
     }
 
+    public Icon getDisplayPhoto() {
+      return displayPhoto;
+    }
+
     /**
      * Shows the full image in the main area and sets the application title.
+     * @param e
      */
     public void actionPerformed(ActionEvent e) {
 
-//      imagelabel.setIcon(displayPhoto);
-//            setTitle("Icon : " + getValue(SHORT_DESCRIPTION).toString());
+
+      setHeight(35);
+      setWidth(35);
+//     markPeakPosition.getPeakLabel().setIcon(displayPhoto);
 
 
-//      JButton but=(JButton) e.getSource();
-//       if(but.equals(but)){
-//         System.out.println("buttom have been clicked");
-//       }
     }
   }
 }
