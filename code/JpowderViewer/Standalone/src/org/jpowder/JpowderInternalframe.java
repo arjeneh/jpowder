@@ -13,6 +13,8 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -28,9 +30,8 @@ import org.jpowder.jfreechart.FilesPlotter;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
-
-
 
 /**
  *
@@ -45,7 +46,12 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
   private static int numberOfJpowderInternalframe = 0;
   private DatasetPlotter plotMultiCol;
   private ChartPanel jfreeChartPanel;
+  private JFreeChart chart;
+  private JPowder jpowder = new JPowder();
   private Vector<Double> markedPeakPosition = new Vector<Double>();
+  private static int left;
+  private static int top;
+  public Stack<JInternalFrame> internalframeStackes = new Stack<JInternalFrame>();
 
   /**
    *
@@ -56,71 +62,96 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
     super("JPowder");
     numberOfJpowderInternalframe++;
     System.out.println("\n\n" + numberOfJpowderInternalframe);
+    internalframeStackes.push(this);
     javax.swing.JPanel chartPanel = new javax.swing.JPanel();
+
     this.dataVisibleInChartPanel = dataVisibleInChartPanel;
     this.add(chartPanel);
     m_data = data;
     plotMultiCol = DatasetPlotter.createDatasetPlotter(data);
     chartPanel.setLayout(new BorderLayout());
     ChartPanel jfreeChartPanels = plotMultiCol.createPowderChart();
-//    jfreeChartPanels.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
-    this.jfreeChartPanel=jfreeChartPanels;
-    xyPlot = jfreeChartPanels.getChart().getXYPlot();   
+    this.jfreeChartPanel = jfreeChartPanels;
+    chart = FilesPlotter.getchart();
+    xyPlot = jfreeChartPanels.getChart().getXYPlot();
     chartPanel.add(jfreeChartPanels);
+
+
+    this.addComponentListener(new ComponentAdapter() {
+
+      @Override
+      public void componentMoved(ComponentEvent evt) {
+        jpowder.internalFrameMoved(evt);
+      }
+    });
     this.setClosable(true);
     this.setMaximizable(true);
     this.setResizable(false);
     this.setIconifiable(false);
     this.setEnabled(true);
+      JPowder.jpowderInternalFrameUpdate(this);
     System.out.println("Internalframe created");
     droptraget = new DropTarget(this, this);
     this.setPreferredSize(new Dimension(300, 300));
+    this.setMaximumSize(new Dimension(900, 900));
     dataVisibleInChartPanel.newChartInFocus(xyPlot,
             this.getPowderDataSet());
     this.setVisible(true);
+
   }
 
+  private static void incr() {
+    left += 30;
+    top += 30;
+    if (top == 150) {
+      top = 0;
+    }
+  }
 
-/**
- *
- * @return
- */
+  /**
+   *
+   * @return
+   */
   public ChartPanel getChartPanel() {
     return jfreeChartPanel;
   }
-/**
- *
- * @return
- */
+
+  /**
+   *
+   * @return
+   */
   public XYPlot getXYPlot() {
     return xyPlot;
   }
-/**
- *
- * @return
- */
-  public static int getnumberOfJpowderInternalframe() { 
+
+  /**
+   *
+   * @return
+   */
+  public static int getnumberOfJpowderInternalframe() {
     return numberOfJpowderInternalframe;
   }
-/**
- *
- */
+
+  /**
+   *
+   */
   public static void decrementnumberOfJpowderInternalframe() {
     numberOfJpowderInternalframe--;
   }
-/**
- *
- * @return
- */
+
+  /**
+   *
+   * @return
+   */
   public Vector<DataSet> getPowderDataSet() {
     return m_data;
   }
-/**
- *
- * @param comp
- * @return
- */
 
+  /**
+   *
+   * @param comp
+   * @return
+   */
   @Override
   public Component add(Component comp) {
     return super.add(comp);
@@ -132,26 +163,49 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
   public DataVisibleInChart getDataVisibleInChartPanel() {
     return dataVisibleInChartPanel;
   }
-/**
- *
- * @return
- */
-  public Vector<DataSet> addDataset() {
-    return m_data;
-  }
-/**
- *
- * @param peaks
- */
-  public void addMarkedPeakPosition(double peaks){
-   markedPeakPosition.add(peaks);
-  }
+
   /**
    *
    * @return
    */
-  public Vector<Double> getMarkedPeakPosition (){
+  public Vector<DataSet> addDataset() {
+    return m_data;
+  }
+
+  /**
+   *
+   * @param peaks
+   */
+  public void addMarkedPeakPosition(double peaks) {
+    markedPeakPosition.add(peaks);
+  }
+
+
+  /**
+   *
+   * @return
+   */
+  public Vector<Double> getMarkedPeakPosition() {
     return markedPeakPosition;
+  }
+
+   public Vector<Double> removeMarkedPeakPosition() {
+    return markedPeakPosition;
+  }
+
+  public void removeMarkedPeakPosition(double peaks) {
+    markedPeakPosition.remove(peaks);
+  }
+//    public Vector<Double> MarkedPeakPosition (){
+//    return markedPeakPosition.removeAll(Vector<Double> true);
+//  }
+
+  /**
+   *
+   * @return
+   */
+  public JFreeChart getchart() {
+    return chart;
   }
 
   public void dragEnter(DropTargetDragEvent dtde) {
@@ -165,13 +219,15 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
 
   public void dragExit(DropTargetEvent dte) {
   }
-/**
- *
- * @param dtde
- */
+
+  /**
+   *
+   * @param dtde
+   */
   public void drop(DropTargetDropEvent dtde) {
     System.out.println("hashcodeeeeeeeeeee" + hashCode());
     System.out.println("i am getting called nice..");
+    JPowder.jpowderInternalFrameUpdate(this);
     DataSet oneDataset = null;
     ArrayList<File> allfiles = new ArrayList<File>();
     ArrayList<String> allfilesName = new ArrayList<String>();
@@ -258,8 +314,6 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
   private DataVisibleInChart dvic;
   private JpowderInternalframe jpowderinternalframe;
 
-  
-
   /**
    *
    * @param DVIC
@@ -275,16 +329,17 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
   @Override
   public void internalFrameClosed(InternalFrameEvent e) {
     System.out.println("widows is Closed");
+    JPowder.jPowderStackUndo.push(jpowderinternalframe);
     JpowderInternalframe.decrementnumberOfJpowderInternalframe();
-    System.out.println("the number of internalframe in the descktop pane" +
-            JpowderInternalframe.getnumberOfJpowderInternalframe());
+    System.out.println("the number of internalframe in the descktop pane"
+            + JpowderInternalframe.getnumberOfJpowderInternalframe());
 
-    if (JpowderInternalframe.getnumberOfJpowderInternalframe() > 1 ||
-            JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+    if (JpowderInternalframe.getnumberOfJpowderInternalframe() > 1
+            || JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
       dvic.clear();
     }
 
-    //JPowder.jpowderInternalFrameUpdate(null);
+    JPowder.jpowderInternalFrameUpdate(jpowderinternalframe);
   }
 
   /**

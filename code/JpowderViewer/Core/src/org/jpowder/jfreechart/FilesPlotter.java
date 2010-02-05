@@ -8,7 +8,6 @@ import java.util.Vector;
 import org.jfree.chart.ChartColor;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.labels.StandardXYToolTipGenerator;
 import org.jfree.chart.labels.XYToolTipGenerator;
@@ -35,6 +34,8 @@ public class FilesPlotter extends DatasetPlotter {
   private static Vector<DataSet> datasets;
   private int datasetIndex = 0;
   public XYPlot plot;
+  private boolean createLegend=false;
+  private static JFreeChart chart;
   public  static Paint[] allseriescolors={ Color.BLUE, Color.RED,ChartColor.VERY_DARK_GREEN,
                 Color.ORANGE, Color.CYAN,Color.MAGENTA,ChartColor.DARK_YELLOW, Color.BLACK,
                 Color.PINK,Color.LIGHT_GRAY,Color.GRAY
@@ -55,6 +56,7 @@ public class FilesPlotter extends DatasetPlotter {
     System.out.println("MultiFilesPlotter is called ");
   }
 
+
   /**
    *
    * @param d
@@ -71,7 +73,12 @@ public class FilesPlotter extends DatasetPlotter {
   public String description() {
     return "Multiple Files Plotter";
   }
-
+  public  boolean getLegend(){
+  return createLegend;
+  }
+  public  void setLegend(boolean displayLegend){
+    createLegend=displayLegend;
+  }
   /**
    * creating the chart panel
    * @return chartPanel
@@ -79,7 +86,7 @@ public class FilesPlotter extends DatasetPlotter {
   @Override
   public ChartPanel createPowderChart() {
     // get chart
-    JFreeChart chart = createChart();
+     chart = createChart();
     // create panel from chart and set some panel attributes
     ChartPanel chartPanel = new ChartPanel(chart, true);
     chartPanel.setMaximumSize(new java.awt.Dimension(300, 300));
@@ -89,6 +96,10 @@ public class FilesPlotter extends DatasetPlotter {
     //User click and it brings up a new Frame for editing the chart.
     chartPanel.addChartMouseListener(new PowderChartMouseObserver(chartPanel));
     return chartPanel;
+  }
+
+  public static JFreeChart getchart(){
+    return chart;
   }
 
   /**
@@ -141,7 +152,7 @@ public class FilesPlotter extends DatasetPlotter {
       }
     }
     plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
-    JFreeChart chart = new JFreeChart(null,null,plot,false);// for getting the chart header
+    chart = new JFreeChart(null,null,plot,getLegend());// for getting the chart header
     chart.setBackgroundPaint(Color.white);
     return chart;
   }
@@ -218,11 +229,6 @@ public class FilesPlotter extends DatasetPlotter {
 
     plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
 
-  }
-
-  public int newPlotIndex() {
-    int index = plot.getSeriesCount();
-    return index;
   }
 
 

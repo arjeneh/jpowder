@@ -6,6 +6,7 @@ package org.jpowder;
 
 import org.jpowder.JCheckboxList.FileNameListModel;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -36,21 +37,22 @@ public class DataVisibleInChart extends JPanel  {
 
     checkboxList = new JCheckBoxJList(listModel);
     checkboxList.setLayout(new BorderLayout());
-    checkboxList.setFont(new java.awt.Font("Tahoma", 0, 10));
+    checkboxList.setFont(new java.awt.Font("Tahoma", 0, 12));
 
     file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
  
-    file_sp.setPreferredSize(new java.awt.Dimension(270, 260));
+   file_sp.setPreferredSize(new java.awt.Dimension(270, 320));
+ 
 
+//    java.awt.GridBagConstraints gridBagConstraints;
+//    gridBagConstraints = new java.awt.GridBagConstraints();
+//    gridBagConstraints.gridx = 0;
+//    gridBagConstraints.gridy = 0;
+//    gridBagConstraints.gridwidth = 2;
+//    gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
 
-    java.awt.GridBagConstraints gridBagConstraints;
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.gridwidth = 2;
-    gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
-    add(file_sp, gridBagConstraints);
+    add(file_sp);
 
   }
 
