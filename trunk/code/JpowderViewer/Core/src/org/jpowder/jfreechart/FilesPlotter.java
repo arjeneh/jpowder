@@ -121,7 +121,11 @@ public class FilesPlotter extends DatasetPlotter {
     XYToolTipGenerator tooltip = new StandardXYToolTipGenerator(
             "{1},{2}", new DecimalFormat("0.000"), new DecimalFormat("0.000"));
     if (datasets.elementAt(0) instanceof DataSetNoErrors) {
-      plot = new XYPlot(createXYSeriesCollectionFromDataset(datasets.elementAt(0)),
+      //plot = new XYPlot(
+      //        createXYSeriesCollectionFromDataset(datasets.elementAt(0)),
+      //        xAxis, yAxis, renderer1);
+      plot = new XYPlot(
+              new JpowderXYDataset(datasets.elementAt(0)),
               xAxis, yAxis, renderer1);
 
     } else {
@@ -144,7 +148,9 @@ public class FilesPlotter extends DatasetPlotter {
       rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
       if (datasets.elementAt(i) instanceof DataSetNoErrors) {
-        plot.setDataset(i, createXYSeriesCollectionFromDataset(datasets.elementAt(i)));
+        //plot.setDataset(i, createXYSeriesCollectionFromDataset(datasets.elementAt(i)));
+        plot.setDataset(i, new JpowderXYDataset(datasets.elementAt(i)));
+
         plot.setRenderer(i, renderer3);
       } else {
         plot.setDataset(i, createYIntervalSeriesCollectionFromDataset(datasets.elementAt(i)));
