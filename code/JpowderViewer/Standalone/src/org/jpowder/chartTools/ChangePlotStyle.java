@@ -10,6 +10,7 @@
  */
 package org.jpowder.chartTools;
 
+import java.awt.BasicStroke;
 import javax.swing.JLabel;
 import org.jfree.chart.renderer.xy.XYErrorRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;

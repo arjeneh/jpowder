@@ -25,9 +25,9 @@ public class ChartToolsIcon extends javax.swing.JPanel {
 
   private JpowderIcon jpowderIcon;
   private List<JButton> buttons = new ArrayList<JButton>();
-  private String[] title = {"Logo.gif", "PlotChart.gif",
+  private String[] title = {"real_12.png", "3_4u.png",
     "printer.gif"};
-  private String[] imgdir = {"Logo.gif", "PlotChart.gif",
+  private String[] imgdir = {"real_12.png", "3_4u.png",
     "printer.gif"};
   private ChangePlotStyle changePlotStyle = new ChangePlotStyle(this);
   private ZoomAndPan zoomAndPan = new ZoomAndPan(this);

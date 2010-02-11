@@ -89,7 +89,7 @@ public class FilesPlotter extends DatasetPlotter {
      chart = createChart();
     // create panel from chart and set some panel attributes
     ChartPanel chartPanel = new ChartPanel(chart, true);
-    chartPanel.setMaximumSize(new java.awt.Dimension(300, 300));
+//    chartPanel.setMaximumSize(new java.awt.Dimension(300, 300));
     chartPanel.setDisplayToolTips(false);
     chartPanel.getChartRenderingInfo().setEntityCollection(null);
     chartPanel.add(new XYE_PopupMenu(chartPanel));
@@ -229,8 +229,6 @@ public class FilesPlotter extends DatasetPlotter {
         plot.setDataset(newPlotIndex, FilesPlotter.createYIntervalSeriesCollectionFromDataset(data.elementAt(i)));
         plot.setRenderer(newPlotIndex, renderer4);
       }
-      System.out.println("getDatasetCount()" + newPlotIndex);
-      System.out.println("DatasetSize" + data.size() + datasets.size());
     }
 
     plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);

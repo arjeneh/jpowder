@@ -38,7 +38,7 @@ import org.jpowder.util.Stopwatch;
 public class PowderFileCabinet extends javax.swing.JComponent implements Subject, Serializable {
 
   // if ACCEPTED_FILE_TYPE is modified also modify string in loadFiles()
-  private static final String[] ACCEPTED_FILE_TYPE = {"xy", "xye", "txt", "cif"};
+  public static final String[] ACCEPTED_FILE_TYPE = {"xy", "xye", "txt", "cif"};
   private Vector<PowderFileObserver> observers = new Vector<PowderFileObserver>();
   private HashMap<String, DataSet> data = new HashMap<String, DataSet>();
   private String lastUpdateFileName;

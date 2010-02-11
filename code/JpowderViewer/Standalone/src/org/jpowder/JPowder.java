@@ -40,8 +40,8 @@ import org.jpowder.dataset.DataSet;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.util.ScreenUtil;
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
+import org.jpowder.fileCabinet.AcceptFileFilter;
 
 
 /**
@@ -103,9 +103,8 @@ public class JPowder extends JFrame implements DropTargetListener {
     initComponents();
 
     mPowderFileCabinet = new PowderFileCabinet();
-//   chartPlotter.setLayout(new GridLayout(3, 3, 20, 20));
-  chartPlotter.setLayout(new FlowLayout());
-
+//chartPlotter.setLayout(new GridLayout(3, 3, 30, 30));
+  chartPlotter.setLayout(null);
     dt = new DropTarget(chartPlotter, this);
     dataVisibleInChartPanel.add(DVIC);
     treetab.add(tr, "1");
@@ -178,7 +177,6 @@ public class JPowder extends JFrame implements DropTargetListener {
     cardLayout = new CardLayout();
     chartToolstab = new javax.swing.JPanel();
     dataVisibleInChartPanel = new javax.swing.JPanel();
-    jScrollPane1 = new javax.swing.JScrollPane();
     chartPlotter = new javax.swing.JDesktopPane();
     jMenuBar1 = new javax.swing.JMenuBar();
     fileMenu = new javax.swing.JMenu();
@@ -197,7 +195,9 @@ public class JPowder extends JFrame implements DropTargetListener {
     editMenu = new javax.swing.JMenu();
     undoMenu = new javax.swing.JMenuItem();
     redoMenu = new javax.swing.JMenuItem();
+    jSeparator5 = new javax.swing.JSeparator();
     copyMenu = new javax.swing.JMenuItem();
+    jSeparator6 = new javax.swing.JSeparator();
     proptiesMenu = new javax.swing.JMenuItem();
     lookAndFeelMenu = new javax.swing.JMenu();
     Windows = new javax.swing.JRadioButtonMenuItem();
@@ -213,7 +213,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     jSeparator3 = new javax.swing.JSeparator();
     About = new javax.swing.JMenuItem();
 
-    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("JPowder Crystallography Demo");
     setLocationByPlatform(true);
 
@@ -266,10 +266,9 @@ public class JPowder extends JFrame implements DropTargetListener {
 
     jScrollPane2.setViewportView(home);
 
-    chartPlotter.setBackground(new java.awt.Color(236, 233, 216));
+    chartPlotter.setBorder(javax.swing.BorderFactory.createTitledBorder("ChartArea"));
     chartPlotter.setDesktopManager(jPowderDesktopManager);
     chartPlotter.setOpaque(false);
-    jScrollPane1.setViewportView(chartPlotter);
 
     jMenuBar1.setFont(new java.awt.Font("Tahoma", 0, 36));
 
@@ -277,7 +276,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     fileMenu.setFont(new java.awt.Font("Tahoma", 0, 14));
 
     New.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-    New.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new_small.gif"))); // NOI18N
+    New.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/New.png"))); // NOI18N
     New.setText("New...");
     New.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -288,7 +287,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     fileMenu.add(jSeparator2);
 
     Open.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-    Open.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/addFile.gif"))); // NOI18N
+    Open.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/Open.png"))); // NOI18N
     Open.setText("Open");
     Open.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -297,7 +296,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     });
     fileMenu.add(Open);
 
-    saveAs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/savas_small.gif"))); // NOI18N
+    saveAs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/saveas_16x16.png"))); // NOI18N
     saveAs.setText("Save As");
 
     appletMenu.setText("Jpowder Applet File");
@@ -308,6 +307,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     });
     saveAs.add(appletMenu);
 
+    imageMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/Image.png"))); // NOI18N
     imageMenu.setText("Image");
     imageMenu.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -316,6 +316,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     });
     saveAs.add(imageMenu);
 
+    pDfMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/exportdirecttopdf_16x16.png"))); // NOI18N
     pDfMenu.setText("PDF");
     pDfMenu.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -324,6 +325,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     });
     saveAs.add(pDfMenu);
 
+    workspaceMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/10627_16x16.png"))); // NOI18N
     workspaceMenu.setText("WorkSpace");
     workspaceMenu.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -336,7 +338,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     fileMenu.add(jSeparator1);
 
     printMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
-    printMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/printer.gif"))); // NOI18N
+    printMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/05504_16x16.png"))); // NOI18N
     printMenu.setText("Print");
     printMenu.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -346,7 +348,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     fileMenu.add(printMenu);
     fileMenu.add(jSeparator4);
 
-    Exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/del_small.gif"))); // NOI18N
+    Exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/20557_16x16.png"))); // NOI18N
     Exit.setText("Exit");
     Exit.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -358,10 +360,12 @@ public class JPowder extends JFrame implements DropTargetListener {
     jMenuBar1.add(fileMenu);
 
     editMenu.setText("Edit");
-    editMenu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    editMenu.setFont(new java.awt.Font("Tahoma", 0, 14));
 
     undoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
+    undoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/undo_26x26.png"))); // NOI18N
     undoMenu.setText("Undo");
+    undoMenu.setToolTipText("Undo closed frame");
     undoMenu.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         undoMenuActionPerformed(evt);
@@ -370,25 +374,32 @@ public class JPowder extends JFrame implements DropTargetListener {
     editMenu.add(undoMenu);
 
     redoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
+    redoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/redo_26x26.png"))); // NOI18N
     redoMenu.setText("Redo");
+    redoMenu.setToolTipText("Redo closed frame");
     redoMenu.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         redoMenuActionPerformed(evt);
       }
     });
     editMenu.add(redoMenu);
+    editMenu.add(jSeparator5);
 
     copyMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+    copyMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/05711_16x16.png"))); // NOI18N
     copyMenu.setText("Copy");
+    copyMenu.setToolTipText("Copy the selected frame");
     copyMenu.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         copyMenuActionPerformed(evt);
       }
     });
     editMenu.add(copyMenu);
+    editMenu.add(jSeparator6);
 
     proptiesMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
     proptiesMenu.setText("Propoties");
+    proptiesMenu.setToolTipText("set propeties of the selected frame");
     proptiesMenu.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         proptiesMenuActionPerformed(evt);
@@ -485,6 +496,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     helpMenu.setFont(new java.awt.Font("Tahoma", 0, 14));
 
     Content.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+    Content.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/help_16x16.png"))); // NOI18N
     Content.setText("Content");
     helpMenu.add(Content);
 
@@ -499,6 +511,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     helpMenu.add(jSeparator3);
 
     About.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+    About.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/info_16x16.png"))); // NOI18N
     About.setText("About");
     About.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -519,16 +532,16 @@ public class JPowder extends JFrame implements DropTargetListener {
         .addContainerGap()
         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addGap(18, 18, 18)
-        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
+        .addComponent(chartPlotter, javax.swing.GroupLayout.DEFAULT_SIZE, 747, Short.MAX_VALUE)
         .addContainerGap())
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+      .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
-          .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE))
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(chartPlotter, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
+          .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE))
         .addContainerGap())
     );
 
@@ -580,16 +593,71 @@ public class JPowder extends JFrame implements DropTargetListener {
     }//GEN-LAST:event_ExitActionPerformed
 
     private void OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenActionPerformed
-      mPowderFileCabinet.loadFiles();
+
+    Vector<DataSet> datasets = new Vector<DataSet>();
+    HashMap<String, File> hash = new HashMap<String, File>();
+     String fileName;
+     File file;
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setMultiSelectionEnabled(true);
+
+    DataSet oneDataset = null;
+
+    // Set the accepted powder diffraction file extensions
+    // and open a file chooser window for the user to select powder
+    // diffraction file
+    fileChooser.addChoosableFileFilter(new AcceptFileFilter(PowderFileCabinet.ACCEPTED_FILE_TYPE, "File (*.xy, *.xye, *.txt,*cif)"));
+    fileChooser.setAcceptAllFileFilterUsed(false);
+    int returnVal = fileChooser.showOpenDialog(null);
+
+    if (returnVal == JFileChooser.APPROVE_OPTION) {
+      // get the selected files
+      File selectedFiles[] = fileChooser.getSelectedFiles();
+
+      // loop over the selected file
+      for (int i = 0, n = selectedFiles.length; i < n; i++) {
+         file = selectedFiles[i];
+         fileName = selectedFiles[i].getName();
+         hash.put(fileName,file );
+      }//for
+       for (Map.Entry<String, File> entry : hash.entrySet()) {
+       fileName = entry.getKey();
+       file = entry.getValue();
+      if (mPowderFileCabinet.checkAcceptedFileType(fileName)) {
+
+        oneDataset = PowderFileCabinet.createDataSetFromPowderFile(file);
+    
+        if (oneDataset != null) {
+          datasets.add(oneDataset);
+        }
+      } else {
+        javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
+        break;
+      }
+
+    }
+    // finally plot the data
+    JpowderInternalframe internalframe = new JpowderInternalframe(DVIC, datasets);
+    JPowder.jpowderInternalFrameUpdate(internalframe);
+
+    InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(DVIC);
+    internalframe.addInternalFrameListener(internalFrameListener);
+
+    chartPlotter.add(internalframe);
+    setVisible(true);
+
+    }//if open approved
+
+
     }//GEN-LAST:event_OpenActionPerformed
   /**
    * Create an instace of the JPowder.
    * @param evt
    */
     private void NewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewActionPerformed
-      JPowder jpowderfinalgui = new JPowder();
-      ScreenUtil.centerFrame(jpowderfinalgui);
-      jpowderfinalgui.setVisible(true);
+      JPowder newJPowder = new JPowder();
+      ScreenUtil.centerFrame(newJPowder);
+      newJPowder.setVisible(true);
 
     }//GEN-LAST:event_NewActionPerformed
   /**
@@ -740,16 +808,26 @@ public class JPowder extends JFrame implements DropTargetListener {
    * @param evt
    */
     private void printMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printMenuActionPerformed
+
+      if(JpowderInternalframe.getnumberOfJpowderInternalframe()!=0){
       internalFrameInFocus.getChartPanel().createChartPrintJob();
+      }else{javax.swing.JOptionPane.showMessageDialog(null, "There is nothing to PRINT!");}
+      
     }//GEN-LAST:event_printMenuActionPerformed
 
     private void copyMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuActionPerformed
-      internalFrameInFocus.getChartPanel().doCopy();
+
+        if(JpowderInternalframe.getnumberOfJpowderInternalframe()!=0){
+        internalFrameInFocus.getChartPanel().doCopy();
+      }else{javax.swing.JOptionPane.showMessageDialog(null, "There is nothing to COPY!");}
     }//GEN-LAST:event_copyMenuActionPerformed
 
     private void proptiesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proptiesMenuActionPerformed
 
-      internalFrameInFocus.getChartPanel().doEditChartProperties();
+
+              if(JpowderInternalframe.getnumberOfJpowderInternalframe()!=0){
+       internalFrameInFocus.getChartPanel().doEditChartProperties();
+      }else{javax.swing.JOptionPane.showMessageDialog(null, "There is Plotted data");}
     }//GEN-LAST:event_proptiesMenuActionPerformed
 
     private void undoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoMenuActionPerformed
@@ -936,87 +1014,87 @@ public class JPowder extends JFrame implements DropTargetListener {
     });
   }
 
-  public void internalFrameMoved(ComponentEvent evt) {
-    component = evt.getComponent();
-    stayInContainer();
-    chartPlotter.repaint();
-    java.awt.Rectangle cRect = component.getBounds();
-    cRect.setRect(cRect.getX(), cRect.getY(), cRect.getWidth() + 5, cRect.getHeight() + 5);
-    chartPlotter.scrollRectToVisible(cRect);
-  }
-
-  private boolean isInContainer() {
-    c = component.getParent();
-    java.awt.Rectangle r = new java.awt.Rectangle(c.getWidth(), c.getHeight());
-    wC = (int) r.getWidth();
-    hC = (int) r.getHeight();
-    top_leftPointC = r.getLocation();
-    top_rightPointC = new Point((int) top_leftPointC.getX() + wC, (int) top_leftPointC.getY());
-    bottom_leftPointC = new Point((int) top_leftPointC.getX(), (int) top_leftPointC.getY() + hC);
-    bottom_rightPointC = new Point((int) top_leftPointC.getX() + wC, (int) top_leftPointC.getY() + hC);
-    w = component.getWidth();
-    h = component.getHeight();
-    top_leftPoint = component.getLocation();
-    top_rightPoint = new Point((int) top_leftPoint.getX() + w, (int) top_leftPoint.getY());
-    bottom_leftPoint = new Point((int) top_leftPoint.getX(), (int) top_leftPoint.getY() + h);
-    bottom_rightPoint = new Point((int) top_leftPoint.getX() + w, (int) top_leftPoint.getY() + h);
-    if (!r.contains(top_leftPoint)) {
-      return false;
-    }
-    if (!r.contains(top_rightPoint)) {
-      return false;
-    }
-    if (!r.contains(bottom_leftPoint)) {
-      return false;
-    }
-    if (!r.contains(bottom_rightPoint)) {
-      return false;
-    }
-    return true;
-  }
-
-  public void stayInContainer() {
-    // if the internalframe is too far in right-direction, resize desktop
-    if (!isInContainer()) {
-      double x = top_rightPoint.getX();
-      double xC = top_rightPointC.getX();
-      if (x > xC) {
-        Dimension size = new Dimension((int) (chartPlotter.getWidth() + x - xC), chartPlotter.getHeight());
-        chartPlotter.setPreferredSize(size);
-      }
-    }
-//     if the internalframe is too far in left-direction, move it back
-    if (!isInContainer()) {
-      double x = top_leftPoint.getX();
-      double xC = top_leftPointC.getX();
-      if (x < xC) {
-        component.setLocation((int) (top_leftPoint.getX() + xC - x), (int) top_leftPoint.getY());
-      }
-    }
-    // if the internalframe is too far in top-direction, move it back
-    if (!isInContainer()) {
-      double y = top_leftPoint.getY();
-      double yC = top_leftPointC.getY();
-      if (y < yC) {
-        component.setLocation((int) top_leftPoint.getX(), (int) (top_leftPoint.getY() + yC - y));
-      }
-    }
-    /* if the internalframe is is too far in bottom-direction, resize desktop */
-    if (!isInContainer()) {
-      double y = bottom_leftPoint.getY();
-      double yC = bottom_leftPointC.getY();
-      if (y > yC) {
-        component.setLocation((int) top_leftPoint.getX(), (int) (top_leftPoint.getY() + yC - y));
-        Dimension size = new Dimension(chartPlotter.getWidth(), (int) (chartPlotter.getHeight() + y - yC));
-        chartPlotter.setPreferredSize(size);
-      }
-    }
-  }
-  private Component component;
-  private Container c;
-  private Point top_leftPoint, top_rightPoint, bottom_leftPoint, bottom_rightPoint;
-  private Point top_leftPointC, top_rightPointC, bottom_leftPointC, bottom_rightPointC;
-  private int w, h, wC, hC;
+//  public void internalFrameMoved(ComponentEvent evt) {
+//    component = evt.getComponent();
+//    stayInContainer();
+//    chartPlotter.repaint();
+//    java.awt.Rectangle cRect = component.getBounds();
+//    cRect.setRect(cRect.getX(), cRect.getY(), cRect.getWidth() + 5, cRect.getHeight() + 5);
+//    chartPlotter.scrollRectToVisible(cRect);
+//  }
+//
+//  private boolean isInContainer() {
+//    c = component.getParent();
+//    java.awt.Rectangle r = new java.awt.Rectangle(c.getWidth(), c.getHeight());
+//    wC = (int) r.getWidth();
+//    hC = (int) r.getHeight();
+//    top_leftPointC = r.getLocation();
+//    top_rightPointC = new Point((int) top_leftPointC.getX() + wC, (int) top_leftPointC.getY());
+//    bottom_leftPointC = new Point((int) top_leftPointC.getX(), (int) top_leftPointC.getY() + hC);
+//    bottom_rightPointC = new Point((int) top_leftPointC.getX() + wC, (int) top_leftPointC.getY() + hC);
+//    w = component.getWidth();
+//    h = component.getHeight();
+//    top_leftPoint = component.getLocation();
+//    top_rightPoint = new Point((int) top_leftPoint.getX() + w, (int) top_leftPoint.getY());
+//    bottom_leftPoint = new Point((int) top_leftPoint.getX(), (int) top_leftPoint.getY() + h);
+//    bottom_rightPoint = new Point((int) top_leftPoint.getX() + w, (int) top_leftPoint.getY() + h);
+//    if (!r.contains(top_leftPoint)) {
+//      return false;
+//    }
+//    if (!r.contains(top_rightPoint)) {
+//      return false;
+//    }
+//    if (!r.contains(bottom_leftPoint)) {
+//      return false;
+//    }
+//    if (!r.contains(bottom_rightPoint)) {
+//      return false;
+//    }
+//    return true;
+//  }
+//
+//  public void stayInContainer() {
+//    // if the internalframe is too far in right-direction, resize desktop
+//    if (!isInContainer()) {
+//      double x = top_rightPoint.getX();
+//      double xC = top_rightPointC.getX();
+//      if (x > xC) {
+//        Dimension size = new Dimension((int) (chartPlotter.getWidth() + x - xC), chartPlotter.getHeight());
+//        chartPlotter.setPreferredSize(size);
+//      }
+//    }
+////     if the internalframe is too far in left-direction, move it back
+//    if (!isInContainer()) {
+//      double x = top_leftPoint.getX();
+//      double xC = top_leftPointC.getX();
+//      if (x < xC) {
+//        component.setLocation((int) (top_leftPoint.getX() + xC - x), (int) top_leftPoint.getY());
+//      }
+//    }
+//    // if the internalframe is too far in top-direction, move it back
+//    if (!isInContainer()) {
+//      double y = top_leftPoint.getY();
+//      double yC = top_leftPointC.getY();
+//      if (y < yC) {
+//        component.setLocation((int) top_leftPoint.getX(), (int) (top_leftPoint.getY() + yC - y));
+//      }
+//    }
+//    /* if the internalframe is is too far in bottom-direction, resize desktop */
+//    if (!isInContainer()) {
+//      double y = bottom_leftPoint.getY();
+//      double yC = bottom_leftPointC.getY();
+//      if (y > yC) {
+//        component.setLocation((int) top_leftPoint.getX(), (int) (top_leftPoint.getY() + yC - y));
+//        Dimension size = new Dimension(chartPlotter.getWidth(), (int) (chartPlotter.getHeight() + y - yC));
+//        chartPlotter.setPreferredSize(size);
+//      }
+//    }
+//  }
+//  private Component component;
+//  private Container c;
+//  private Point top_leftPoint, top_rightPoint, bottom_leftPoint, bottom_rightPoint;
+//  private Point top_leftPointC, top_rightPointC, bottom_leftPointC, bottom_rightPointC;
+//  private int w, h, wC, hC;
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JMenuItem About;
   private javax.swing.JMenuItem Content;
@@ -1044,12 +1122,13 @@ public class JPowder extends JFrame implements DropTargetListener {
   private javax.swing.JPanel home;
   private javax.swing.JMenuItem imageMenu;
   private javax.swing.JMenuBar jMenuBar1;
-  private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JScrollPane jScrollPane2;
   private javax.swing.JSeparator jSeparator1;
   private javax.swing.JSeparator jSeparator2;
   private javax.swing.JSeparator jSeparator3;
   private javax.swing.JSeparator jSeparator4;
+  private javax.swing.JSeparator jSeparator5;
+  private javax.swing.JSeparator jSeparator6;
   private javax.swing.JMenu lookAndFeelMenu;
   private javax.swing.JMenuItem pDfMenu;
   private javax.swing.JMenuItem printMenu;

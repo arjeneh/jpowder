@@ -15,6 +15,7 @@ import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
 
@@ -51,6 +52,10 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
   private Vector<Double> markedPeakPosition = new Vector<Double>();
   private static int left;
   private static int top;
+  private static int width=300;
+  private static int height=300;
+  private String name = new String();
+  private DataSet oneDataset = null;
   public Stack<JInternalFrame> internalframeStackes = new Stack<JInternalFrame>();
 
   /**
@@ -59,7 +64,8 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
    * @param data
    */
   public JpowderInternalframe(DataVisibleInChart dataVisibleInChartPanel, Vector<DataSet> data) {
-    super("JPowder");
+    super();
+
     numberOfJpowderInternalframe++;
     System.out.println("\n\n" + numberOfJpowderInternalframe);
     internalframeStackes.push(this);
@@ -74,38 +80,59 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
     this.jfreeChartPanel = jfreeChartPanels;
     chart = FilesPlotter.getchart();
     xyPlot = jfreeChartPanels.getChart().getXYPlot();
-    chartPanel.add(jfreeChartPanels);
-
-
-    this.addComponentListener(new ComponentAdapter() {
-
-      @Override
-      public void componentMoved(ComponentEvent evt) {
-        jpowder.internalFrameMoved(evt);
-      }
-    });
-    this.setClosable(true);
-    this.setMaximizable(true);
-    this.setResizable(false);
-    this.setIconifiable(false);
-    this.setEnabled(true);
-      JPowder.jpowderInternalFrameUpdate(this);
+    chartPanel.add(jfreeChartPanels);   
+    JPowder.jpowderInternalFrameUpdate(this);
     System.out.println("Internalframe created");
     droptraget = new DropTarget(this, this);
-    this.setPreferredSize(new Dimension(300, 300));
-    this.setMaximumSize(new Dimension(900, 900));
+//   this.setPreferredSize(new Dimension(width, width));
     dataVisibleInChartPanel.newChartInFocus(xyPlot,
             this.getPowderDataSet());
+    setTitle(getName());
+    this.setLocation(left, top);
     this.setVisible(true);
-
+    this.setClosable(true);
+    this.setMaximizable(true);
+    this.setResizable(true);
+    this.setIconifiable(true);
+    this.setEnabled(true);
+    this.setSize(width,height);
+    incr();
   }
 
-  private static void incr() {
+  /**
+   *Increment the location of each interframe is created by a certain value.
+   */
+   private static void incr() {
     left += 30;
     top += 30;
+       System.out.println("top"+top);
+      System.out.println("Left"+left);
     if (top == 150) {
+      left+=width;
       top = 0;
     }
+    if(left==900){
+    left=0;
+    top+=width+120;
+    }
+     if(top==570){
+       left+=width;
+       top=420;
+     
+     }
+  }
+
+/**
+ * Loops over the names of the file which are plotted.
+ * @return returning the name of files added.
+ */
+  @Override
+  public String getName() {
+    for (int i = 0; i < xyPlot.getDatasetCount(); i++) {
+      this.name = xyPlot.getLegendItems().get(i).getDescription();
+      
+    }
+    return name;
   }
 
   /**
@@ -180,7 +207,6 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
     markedPeakPosition.add(peaks);
   }
 
-
   /**
    *
    * @return
@@ -189,7 +215,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
     return markedPeakPosition;
   }
 
-   public Vector<Double> removeMarkedPeakPosition() {
+  public Vector<Double> removeMarkedPeakPosition() {
     return markedPeakPosition;
   }
 
@@ -228,7 +254,6 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
     System.out.println("hashcodeeeeeeeeeee" + hashCode());
     System.out.println("i am getting called nice..");
     JPowder.jpowderInternalFrameUpdate(this);
-    DataSet oneDataset = null;
     ArrayList<File> allfiles = new ArrayList<File>();
     ArrayList<String> allfilesName = new ArrayList<String>();
     Transferable transfeable = dtde.getTransferable();
@@ -331,11 +356,9 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
     System.out.println("widows is Closed");
     JPowder.jPowderStackUndo.push(jpowderinternalframe);
     JpowderInternalframe.decrementnumberOfJpowderInternalframe();
-    System.out.println("the number of internalframe in the descktop pane"
-            + JpowderInternalframe.getnumberOfJpowderInternalframe());
+    System.out.println("the number of internalframe in the descktop pane" + JpowderInternalframe.getnumberOfJpowderInternalframe());
 
-    if (JpowderInternalframe.getnumberOfJpowderInternalframe() > 1
-            || JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+    if (JpowderInternalframe.getnumberOfJpowderInternalframe() > 1 || JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
       dvic.clear();
     }
 
