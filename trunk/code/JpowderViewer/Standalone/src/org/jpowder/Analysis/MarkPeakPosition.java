@@ -374,10 +374,11 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     return domainRangeMarker;
   }
     private void removeAllButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAllButtActionPerformed
-     jTextPeakArea.setText("");
+//     jTextPeakArea.setText("");
 
        JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
         for (int i = 0; i < string.length; i++) {
+       
           inFocus.removeMarkedPeakPosition(x);
         }
 
@@ -386,7 +387,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
     private void removeButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtActionPerformed
       String str = jTextPeakArea.getSelectedText();
-      jTextPeakArea.cut();
+
 
        JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
        inFocus.removeMarkedPeakPosition(x);

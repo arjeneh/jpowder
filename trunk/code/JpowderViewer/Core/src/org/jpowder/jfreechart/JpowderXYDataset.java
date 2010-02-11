@@ -6,12 +6,9 @@
 package org.jpowder.jfreechart;
 
 import java.util.Vector;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.AbstractXYDataset;
 import org.jpowder.dataset.DataSet;
+import org.jpowder.dataset.DataSetWithErrors;
 
 /**
  *
@@ -30,11 +27,15 @@ public class JpowderXYDataset extends AbstractXYDataset {
     public JpowderXYDataset(DataSet dataset) {
         this.x=dataset.getX();
         this.y=dataset.getY();
+
+
     }
 
 
 
+
   /// Returns the x-value. This method relies on the getX() method being implemented.
+  @Override
   public double getXValue(int series, int item)
   {
       return this.x.elementAt(item);
@@ -42,6 +43,7 @@ public class JpowderXYDataset extends AbstractXYDataset {
   }
 
   /// Returns the y-value. If the value is missing or unknown, this method will return Double.NaN.
+  @Override
   public double getYValue(int series, int item)
   {
       return this.y.elementAt(item);
@@ -81,7 +83,7 @@ public class JpowderXYDataset extends AbstractXYDataset {
     }
 
 
-
+/**
     public static void main(String[] args) {
 
         Vector<Double> x = new Vector<Double>();
@@ -96,10 +98,6 @@ public class JpowderXYDataset extends AbstractXYDataset {
         y.addElement(2.0);
 
         JpowderXYDataset data = new JpowderXYDataset(x,y);
-
-
-        //JFreeChart chart = new JFreeChart(data);
-
         JFreeChart chart = ChartFactory.createXYLineChart(
             "Cast Vector to XY Series Demo",
             "X",
@@ -117,13 +115,8 @@ public class JpowderXYDataset extends AbstractXYDataset {
 
         y.setElementAt(0.5, 2);
 
-        //frame.repaint();
-        //frame.update(null);
-        //chart.getXYPlot().r
-
-        //System.out.println("datapoint " + data.getYValue(0, 2));
 
     }
-
+*/
 
 }

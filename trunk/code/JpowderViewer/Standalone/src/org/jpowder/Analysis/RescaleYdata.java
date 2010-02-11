@@ -155,15 +155,11 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
           .addGroup(layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
               .addGroup(layout.createSequentialGroup()
-                .addComponent(rescaleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
-                .addComponent(jLabel1))
-              .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-              .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(dataSetComboBox, 0, 195, Short.MAX_VALUE))
+                .addComponent(jLabel2)
+                .addGap(13, 13, 13)
+                .addComponent(dataSetComboBox, 0, 206, Short.MAX_VALUE))
               .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                   .addComponent(jLabel3)
@@ -172,7 +168,12 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                   .addComponent(constantField)
                   .addComponent(OperationComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-              .addComponent(applyButt)))
+              .addComponent(applyButt)
+              .addGroup(layout.createSequentialGroup()
+                .addComponent(rescaleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(13, 13, 13))))
           .addGroup(layout.createSequentialGroup()
             .addGap(92, 92, 92)
             .addComponent(Back)))
@@ -182,10 +183,10 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel1)
-          .addComponent(rescaleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(rescaleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jLabel1))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -204,7 +205,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
         .addComponent(applyButt)
         .addGap(50, 50, 50)
         .addComponent(Back)
-        .addContainerGap(68, Short.MAX_VALUE))
+        .addContainerGap(73, Short.MAX_VALUE))
     );
   }// </editor-fold>//GEN-END:initComponents
 
@@ -256,6 +257,8 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
           System.out.println("newY" + vector);
         }
         chartList.add(i, vector);
+        inFocus.getChartPanel().repaint();
+        inFocus.getChartPanel().updateUI();
       }
       System.out.println("chartList" + chartList + "elemment at" + chartList.get(0));
     }//GEN-LAST:event_applyButtActionPerformed
