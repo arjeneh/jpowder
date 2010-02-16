@@ -87,6 +87,8 @@ public class FilesPlotter extends DatasetPlotter {
   public ChartPanel createPowderChart() {
     // get chart
      chart = createChart();
+     plot.setDomainPannable(true);
+     plot.setRangePannable(true);
     // create panel from chart and set some panel attributes
     ChartPanel chartPanel = new ChartPanel(chart, true);
 //    chartPanel.setMaximumSize(new java.awt.Dimension(300, 300));
@@ -111,7 +113,6 @@ public class FilesPlotter extends DatasetPlotter {
     String x = "2\u03D1";//unicode 2thetha
     NumberAxis xAxis = new NumberAxis(x.toUpperCase());
     NumberAxis yAxis = new NumberAxis("Y");
-
     // get a reference to the plot for further customisation...
     JpowderXYLineAndShapeRender renderer1 = new JpowderXYLineAndShapeRender();
     renderer1.setSeriesPaint(0, getSeriescolors(0));

@@ -96,6 +96,7 @@ public class Magnifier extends AbstractLayerUI {
      * @param g2  the graphics device.
      * @param layer  the layer.
      */
+    @Override
     protected void paintLayer(Graphics2D g2, JXLayer layer) {
         super.paintLayer(g2, layer);
         Point2D point = getPoint();
@@ -107,6 +108,7 @@ public class Magnifier extends AbstractLayerUI {
         double clipSize = 2 * scaledRadius;
         Ellipse2D drawGlass = new Ellipse2D.Double(-strokeAdjust,
                 -strokeAdjust, drawSize, drawSize);
+
         Ellipse2D clipGlass = new Ellipse2D.Double(0, 0, clipSize, clipSize);
         g2.setRenderingHint(RenderingHints.KEY_RENDERING,
                 RenderingHints.VALUE_RENDER_QUALITY);
