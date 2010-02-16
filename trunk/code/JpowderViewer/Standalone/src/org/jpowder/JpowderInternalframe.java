@@ -52,8 +52,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
   private Vector<Double> markedPeakPosition = new Vector<Double>();
   private static int left;
   private static int top;
-  private static int width=300;
-  private static int height=300;
+  private static int width=300,height=300;
   private String name = new String();
   private DataSet oneDataset = null;
   public Stack<JInternalFrame> internalframeStackes = new Stack<JInternalFrame>();
@@ -129,7 +128,9 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
   @Override
   public String getName() {
     for (int i = 0; i < xyPlot.getDatasetCount(); i++) {
-      this.name = xyPlot.getLegendItems().get(i).getDescription();
+      this.name = xyPlot.getLegendItems().get(i).getDescription().toString();
+
+        System.out.println("names of the plotted files");
       
     }
     return name;
