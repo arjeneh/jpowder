@@ -130,9 +130,10 @@ public class FilesPlotter extends DatasetPlotter {
               xAxis, yAxis, renderer1);
 
     } else {
-     
-      plot = new XYPlot(createYIntervalSeriesCollectionFromDataset(datasets.elementAt(0)),
+      plot = new XYPlot(new JpowderInternvalXYDataset((DataSetWithErrors) datasets.elementAt(0)),
               xAxis, yAxis, renderer2);
+      //plot = new XYPlot(createYIntervalSeriesCollectionFromDataset(datasets.elementAt(0)),
+      //        xAxis, yAxis, renderer2);
       renderer2.setToolTipGenerator(tooltip);
     }
     plot.setBackgroundPaint(ChartColor.lightGray);
@@ -154,7 +155,8 @@ public class FilesPlotter extends DatasetPlotter {
 
         plot.setRenderer(i, renderer3);
       } else {
-        plot.setDataset(i, createYIntervalSeriesCollectionFromDataset(datasets.elementAt(i)));
+        //plot.setDataset(i, createYIntervalSeriesCollectionFromDataset(datasets.elementAt(i)));
+        plot.setDataset(i, new JpowderInternvalXYDataset((DataSetWithErrors) datasets.elementAt(i)));
         plot.setRenderer(i, renderer4);
       }
     }
@@ -224,10 +226,12 @@ public class FilesPlotter extends DatasetPlotter {
       rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
       if (data.elementAt(i) instanceof DataSetNoErrors) {
-        plot.setDataset(newPlotIndex, FilesPlotter.createXYSeriesCollectionFromDataset(data.elementAt(i)));
+        //plot.setDataset(newPlotIndex, FilesPlotter.createXYSeriesCollectionFromDataset(data.elementAt(i)));
+          plot.setDataset(newPlotIndex, new JpowderXYDataset(data.elementAt(i)));
         plot.setRenderer(newPlotIndex, renderer3);
       } else {
-        plot.setDataset(newPlotIndex, FilesPlotter.createYIntervalSeriesCollectionFromDataset(data.elementAt(i)));
+        //plot.setDataset(newPlotIndex, FilesPlotter.createYIntervalSeriesCollectionFromDataset(data.elementAt(i)));
+        plot.setDataset(newPlotIndex, new JpowderInternvalXYDataset((DataSetWithErrors) data.elementAt(i)));
         plot.setRenderer(newPlotIndex, renderer4);
       }
     }

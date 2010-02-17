@@ -32,8 +32,6 @@ public class JpowderXYDataset extends AbstractXYDataset {
     }
 
 
-
-
   /// Returns the x-value. This method relies on the getX() method being implemented.
   @Override
   public double getXValue(int series, int item)
