@@ -56,6 +56,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
   private String name = new String();
   private DataSet oneDataset = null;
   public Stack<JInternalFrame> internalframeStackes = new Stack<JInternalFrame>();
+ 
 
   /**
    *
@@ -64,7 +65,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
    */
   public JpowderInternalframe(DataVisibleInChart dataVisibleInChartPanel, Vector<DataSet> data) {
     super();
-
+    
     numberOfJpowderInternalframe++;
     System.out.println("\n\n" + numberOfJpowderInternalframe);
     internalframeStackes.push(this);
@@ -86,7 +87,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
 //   this.setPreferredSize(new Dimension(width, width));
     dataVisibleInChartPanel.newChartInFocus(xyPlot,
             this.getPowderDataSet());
-    setTitle(getName());
+    setTitle(getNames());
     this.setLocation(left, top);
     this.setVisible(true);
     this.setClosable(true);
@@ -125,15 +126,16 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
  * Loops over the names of the file which are plotted.
  * @return returning the name of files added.
  */
-  @Override
-  public String getName() {
-    for (int i = 0; i < xyPlot.getDatasetCount(); i++) {
-      this.name = xyPlot.getLegendItems().get(i).getDescription().toString();
 
-        System.out.println("names of the plotted files");
-      
+  public String getNames() {
+    for(int i=0;i<xyPlot.getDatasetCount();i++){
+    name = m_data.elementAt(0).getFileName();
     }
     return name;
+  }
+
+  public String getNames(int i) {
+    return m_data.elementAt(i).getFileName();
   }
 
   /**
@@ -222,6 +224,9 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
 
   public void removeMarkedPeakPosition(double peaks) {
     markedPeakPosition.remove(peaks);
+  }
+   public void removeAllMarkedPeakPosition() {
+    markedPeakPosition.clear();
   }
 //    public Vector<Double> MarkedPeakPosition (){
 //    return markedPeakPosition.removeAll(Vector<Double> true);
@@ -377,7 +382,6 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
 
     jpowderinternalframe = (JpowderInternalframe) e.getInternalFrame();
     JPowder.jpowderInternalFrameUpdate(jpowderinternalframe);
-    jpowderinternalframe.moveToFront();
     DataVisibleInChart DVIC = jpowderinternalframe.getDataVisibleInChartPanel();
     DVIC.newChartInFocus(jpowderinternalframe.getXYPlot(),
             jpowderinternalframe.getPowderDataSet());

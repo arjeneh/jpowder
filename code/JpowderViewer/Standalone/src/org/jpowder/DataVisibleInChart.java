@@ -6,17 +6,15 @@ package org.jpowder;
 
 import org.jpowder.JCheckboxList.FileNameListModel;
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.ScrollPaneLayout;
 import org.jfree.chart.plot.XYPlot;
 import org.jpowder.JCheckboxList.CheckableFileItem;
 import org.jpowder.JCheckboxList.JCheckBoxJList;
 import org.jpowder.dataset.DataSet;
-import org.jpowder.fileCabinet.PowderFileCabinet;
+
 
 
 /**
@@ -41,17 +39,7 @@ public class DataVisibleInChart extends JPanel  {
 
     file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
- 
-   file_sp.setPreferredSize(new java.awt.Dimension(270, 320));
- 
-
-//    java.awt.GridBagConstraints gridBagConstraints;
-//    gridBagConstraints = new java.awt.GridBagConstraints();
-//    gridBagConstraints.gridx = 0;
-//    gridBagConstraints.gridy = 0;
-//    gridBagConstraints.gridwidth = 2;
-//    gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
-
+   file_sp.setPreferredSize(new java.awt.Dimension(270, 230));
     add(file_sp);
 
   }

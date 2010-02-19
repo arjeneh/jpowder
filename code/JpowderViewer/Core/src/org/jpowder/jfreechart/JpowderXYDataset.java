@@ -8,7 +8,7 @@ package org.jpowder.jfreechart;
 import java.util.Vector;
 import org.jfree.data.xy.AbstractXYDataset;
 import org.jpowder.dataset.DataSet;
-import org.jpowder.dataset.DataSetWithErrors;
+
 
 /**
  *
@@ -30,7 +30,6 @@ public class JpowderXYDataset extends AbstractXYDataset {
 
 
     }
-
 
   /// Returns the x-value. This method relies on the getX() method being implemented.
   @Override
@@ -81,7 +80,7 @@ public class JpowderXYDataset extends AbstractXYDataset {
     }
 
 
-/**
+/*
     public static void main(String[] args) {
 
         Vector<Double> x = new Vector<Double>();

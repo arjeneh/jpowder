@@ -184,7 +184,6 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
       for (int i = 0; i < inFocus.getPowderDataSet().size(); i++) {
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer(i);
         boolean status = renderer.getBaseShapesVisible();
-        System.out.println("TEA? NO, WHITE COFFEE!");
         renderer.setBaseShapesVisible(!status);
       }
 

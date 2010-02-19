@@ -81,11 +81,11 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
     string = new String[size];
     for (int i = 0; i < size; i++) {
 
-      string[i] = inFocus.getXYPlot().getLegendItems().get(i).getDescription();
+//      string[i] = inFocus.getXYPlot().getLegendItems().get(i).getDescription();
+        string[i] = inFocus.getPowderDataSet().elementAt(i).getFileName();
+//    dataSetComboBox.setForeground((Color) FilesPlotter.allseriescolors[i]);
+//      dataSetComboBox.setBackground((Color) FilesPlotter.allseriescolors[i]);
 
-//      dataSetComboBox.setForeground((Color) FilesPlotter.allseriescolors[i]);
-      dataSetComboBox.setBackground((Color) FilesPlotter.allseriescolors[i]);
-      System.out.println("legend   " + string);
     }
     return string;
   }
@@ -119,10 +119,11 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
     jLabel1.setText("Rescale YData");
 
     dataSetComboBox.setEditable(true);
-    dataSetComboBox.setFont(new java.awt.Font("Tahoma", 0, 10));
+    dataSetComboBox.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+    dataSetComboBox.setMaximumRowCount(20);
 
-    OperationComboBox.setFont(new java.awt.Font("Tahoma", 1, 14));
-    OperationComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "+", "-" }));
+    OperationComboBox.setFont(new java.awt.Font("Tahoma", 1, 12));
+    OperationComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "+", "-", "x" }));
 
     jLabel2.setText("DataSet:");
 
@@ -217,50 +218,34 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
     private void applyButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtActionPerformed
       JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
 
-      List chartList = new Vector<Double>();
-      //Multiple series in case of series in a chart.
       int seriescount = inFocus.getXYPlot().getDatasetCount();
       for (int i = 0; i < seriescount; i++) {
-        Vector<Double> Y = new Vector<Double>();
-
-        DataSet oneDataset = new DataSet(vector, inFocus.getXYPlot().getLegendItems().get(0).getDescription()) {
-
-          @Override
-          public String description() {
-            return "this is stupid method";
-          }
-        };
-//        chartList.add(i, vector);
-        System.out.println("chartList" + chartList);
+        if(inFocus.getPowderDataSet().elementAt(i).getFileName().equals(
+                dataSetComboBox.getSelectedItem())){
+        inFocus.getPowderDataSet().elementAt(i).getY();
         XYDataset ds = inFocus.getXYPlot().getDataset(i);
+        for (int j = 0; j < ds.getItemCount(i); j++) {
 
-        for (int j = 0; j < ds.getItemCount(0); j++) {
-          Y.add(ds.getYValue(0, j));
-
-
-        }
-        System.out.println("Y" + Y);
-        for (int j = 0; j < ds.getItemCount(0); j++) {
-
+           Double y = (Double)inFocus.getPowderDataSet().elementAt(i).getY().get(j);
+           double newY = Double.parseDouble(constantField.getText());
           if (OperationComboBox.getSelectedItem().toString().equals("+")) {
-
-            double newY = Y.elementAt(j) + Double.parseDouble(constantField.getText());
-            vector.add(newY);
+            
+            inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y + newY, j);
           }
           if (OperationComboBox.getSelectedItem().toString().equals("-")) {
-
-            double newY = Y.elementAt(j) - Double.parseDouble(constantField.getText());
-            vector.add(newY);
+        
+            inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y - newY, j);
           }
-          setVector(vector);
-          oneDataset.setY(vector);
-          System.out.println("newY" + vector);
+               if (OperationComboBox.getSelectedItem().toString().equals("x")) {
+        
+            inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y *newY, j);
+          }
         }
-        chartList.add(i, vector);
-        inFocus.getChartPanel().repaint();
-        inFocus.getChartPanel().updateUI();
+        }
+//        System.out.println("" + inFocus.getPowderDataSet().elementAt(i).getY());
       }
-      System.out.println("chartList" + chartList + "elemment at" + chartList.get(0));
+
+ 
     }//GEN-LAST:event_applyButtActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton Back;
