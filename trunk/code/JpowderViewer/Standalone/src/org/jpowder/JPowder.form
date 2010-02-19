@@ -57,6 +57,9 @@
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="appletMenu">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/images/NewImages/java16x16.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Jpowder Applet File"/>
                   </Properties>
                   <Events>
@@ -210,10 +213,24 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="copyMenuActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="clossAllMenu">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+Alt+A"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Close All"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clossAllMenuActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="moveMenu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Move"/>
                 <Property name="toolTipText" type="java.lang.String" value="To move hold CTRL and press &amp;drag the mouse"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/NewImages/arrowshapes.quad-arrow_16x16.png"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="moveMenuActionPerformed"/>
@@ -459,21 +476,25 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="dataVisibleInChartPanel" min="-2" pref="320" max="-2" attributes="0"/>
-                          <Component id="Tabs" alignment="0" min="-2" pref="320" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="10" pref="10" max="10" attributes="0"/>
+                              <Component id="dataVisibleInChartPanel" pref="300" max="32767" attributes="1"/>
+                          </Group>
+                          <Component id="Tabs" alignment="1" pref="310" max="32767" attributes="1"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="Tabs" min="-2" pref="419" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="Tabs" min="-2" pref="511" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="dataVisibleInChartPanel" pref="247" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="dataVisibleInChartPanel" min="-2" pref="362" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

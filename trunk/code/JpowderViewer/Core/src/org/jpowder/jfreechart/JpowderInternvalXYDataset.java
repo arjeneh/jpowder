@@ -7,7 +7,6 @@ package org.jpowder.jfreechart;
 
 import java.util.Vector;
 import org.jfree.data.xy.AbstractIntervalXYDataset;
-import org.jfree.data.xy.XYDataset;
 import org.jpowder.dataset.DataSetWithErrors;
 
 /**
@@ -18,16 +17,17 @@ public class JpowderInternvalXYDataset extends AbstractIntervalXYDataset {
 
     private Vector<Double> x;
     private Vector<Double> y;
-    //private Vector<Double> e;
-    private Vector<Double> yLower;
-    private Vector<Double> yUpper;
+    private Vector<Double> e;
+    //private Vector<Double> yLower;
+    //private Vector<Double> yUpper;
     
  
     public JpowderInternvalXYDataset(DataSetWithErrors dataset) {
         this.x=dataset.getX();
         this.y=dataset.getY();
-        this.yLower=dataset.getYLower();
-        this.yUpper=dataset.getYLower();
+        this.e=dataset.getE();
+       // this.yLower=dataset.getYLower();
+       // this.yUpper=dataset.getYUpper();
     }
 
 
@@ -37,7 +37,6 @@ public class JpowderInternvalXYDataset extends AbstractIntervalXYDataset {
       return this.x.elementAt(item);
 
   }
-
   // Returns the end value for the x-interval.
   @Override
   public double getEndXValue(int series, int item)
@@ -49,12 +48,13 @@ public class JpowderInternvalXYDataset extends AbstractIntervalXYDataset {
   @Override
   public double getStartYValue(int series, int item)
   {
-      return this.yLower.elementAt(item);
+      return this.y.elementAt(item)-this.e.elementAt(item);
   }
 
+  @Override
   public double getEndYValue(int series, int item)
   {
-      return this.yUpper.elementAt(item);
+      return this.y.elementAt(item)+this.e.elementAt(item);
   }
 
     @Override
