@@ -407,12 +407,24 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel, ChangeL
 //        inFocus.updateUI();
         recalcScrollBar(inFocus.getchart().getPlot());
       }
-
 }//GEN-LAST:event_jCheckBoxDomainActionPerformed
 
     private void jCheckBoxRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxRangeActionPerformed
       JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
 
+      javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+      this.setLayout(layout);
+      layout.setHorizontalGroup(
+              layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(scrollBar, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE));
+      layout.setVerticalGroup(
+              layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup().addContainerGap(400, Short.MAX_VALUE).addComponent(scrollBar, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)));
+
+      scrollBar.updateUI();
+      if (jCheckBoxDomain.isSelected() || jCheckBoxRange.isSelected()) {
+//        inFocus.getContentPane().add(scrollBar, BorderLayout.SOUTH);
+//        inFocus.updateUI();
+        recalcScrollBar(inFocus.getchart().getPlot());
+      }
 
 
     }//GEN-LAST:event_jCheckBoxRangeActionPerformed

@@ -3,9 +3,17 @@
  * and open the template in the editor.
  */
 
-import java.awt.Color;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import javax.swing.JApplet;
-import javax.swing.JPanel;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
 
 /**
  *
@@ -13,19 +21,40 @@ import javax.swing.JPanel;
  */
 public class JpowderApplet extends JApplet {
 
-    /**
-     * Initialization method that will be called after the applet is loaded
-     * into the browser.
-     */
-    public void init() {
-        // TODO start asynchronous download of heavy resources
-      JPanel panel = new JPanel();
-      panel.setBackground(Color.red);
+private JFreeChart createChart() {
 
-      add(panel);
 
+    JFileChooser chooser = new JFileChooser();
+    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+            ".Ser ", "Ser");
+    chooser.setFileFilter(filter);
+    int returnVal = chooser.showOpenDialog(this);
+    File fileName = chooser.getSelectedFile();
+    JFreeChart serializedChart = null;
+    if (returnVal == JFileChooser.APPROVE_OPTION) {
+      try {
+        FileInputStream f = new FileInputStream(fileName);
+        ObjectInputStream charts = new ObjectInputStream(f);
+        serializedChart = (JFreeChart) charts.readObject();
+      } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Invalid file!");
+      }
+    } else {
+      return null;
     }
+    return serializedChart;
+  }
 
-    // TODO overwrite start(), stop() and destroy() methods
+  @Override
+  public void init() {
+
+    try {
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    } catch (Exception e) {
+    }
+    JFreeChart chart = createChart();
+    final ChartPanel chartPanel = new ChartPanel(chart);
+    add(chartPanel);
+  }
 
 }
