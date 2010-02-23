@@ -13,6 +13,7 @@ package org.jpowder.Analysis;
 import java.awt.Color;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import org.jfree.data.xy.XYDataset;
 import org.jpowder.InfoPanel;
@@ -29,9 +30,9 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 
   private AnalysisIcon analysisIcon;
   private String[] string;
-  private Vector vector= new Vector();
 
-  Color color = (Color) FilesPlotter.getSeriescolors(0);
+
+  private Color color = (Color) FilesPlotter.getSeriescolors(0);
 
   /** Creates new form RescaleYdata */
   public RescaleYdata(AnalysisIcon analysisIcon) {
@@ -44,7 +45,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 
   public void update() {
     System.out.println("updattttttt");
-    dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(addDataSet()));
+   dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(addDataSet()));
 
 
   }
@@ -53,46 +54,19 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
     return rescaleLabel;
   }
 
-  public void addingDataSetToComboBox() {
-    JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-    inFocus.getXYPlot().getLegendItems().get(0).getDescription();
-
-//   Color color = (Color) FilesPlotter.getSeriescolors(0);
-    Color color1 = (Color) FilesPlotter.getSeriescolors(1);
-    Color color2 = (Color) FilesPlotter.getSeriescolors(2);
-
-    dataSetComboBox.addItem(color);
-    dataSetComboBox.addItem(color1);
-    dataSetComboBox.addItem(color2);
-
-//    dataSetComboBox.setRenderer(new ListCellRenderer() {
-//
-//      public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-//         if (value instanceof Color)
-//      color= (Color) value;
-//          return dataSetComboBox;
-//      }
-//    });
-  }
-
   public String[] addDataSet() {
     JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
     int size = inFocus.getXYPlot().getDatasetCount();
     string = new String[size];
     for (int i = 0; i < size; i++) {
-
-//      string[i] = inFocus.getXYPlot().getLegendItems().get(i).getDescription();
         string[i] = inFocus.getPowderDataSet().elementAt(i).getFileName();
-//    dataSetComboBox.setForeground((Color) FilesPlotter.allseriescolors[i]);
+   dataSetComboBox.setForeground((Color) FilesPlotter.allseriescolors[i]);
 //      dataSetComboBox.setBackground((Color) FilesPlotter.allseriescolors[i]);
-
     }
     return string;
   }
 
-  public void setVector(Vector nVector) {
-    this.vector = nVector;
-  }
+ 
 
   /** This method is called from within the constructor to
    * initialize the form.
@@ -244,7 +218,8 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
         }
 //        System.out.println("" + inFocus.getPowderDataSet().elementAt(i).getY());
       }
-
+      inFocus.getChartPanel().restoreAutoBounds();
+        inFocus.getchart().setNotify(true);
  
     }//GEN-LAST:event_applyButtActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables

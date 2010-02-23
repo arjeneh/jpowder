@@ -16,6 +16,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import org.jpowder.JPowder;
 import org.jpowder.JpowderIcon;
+import org.jpowder.JpowderInternalframe;
+import org.jpowder.jfreechart.FilesPlotter;
 
 /**
  *
@@ -81,6 +83,11 @@ public class ChartToolsIcon extends javax.swing.JPanel {
     });
 
     chartToolButton2.setPreferredSize(new java.awt.Dimension(80, 80));
+    chartToolButton2.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        chartToolButton2ActionPerformed(evt);
+      }
+    });
 
     chartToolButton1.setPreferredSize(new java.awt.Dimension(80, 80));
     chartToolButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -162,6 +169,17 @@ public class ChartToolsIcon extends javax.swing.JPanel {
       this.setVisible(false);
       JPowder.jpowderInfoPanelUpdate(zoomAndPan);
     }//GEN-LAST:event_chartToolButton1ActionPerformed
+
+    private void chartToolButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chartToolButton2ActionPerformed
+      JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
+//      FilesPlotter filesPlotter = new FilesPlotter(inFocus.getPowderDataSet());
+      FilesPlotter.setLegend(true);
+      inFocus.getchart().setNotify(true);
+      inFocus.getChartPanel().setDisplayToolTips(true);
+      inFocus.getXYPlot().setNotify(true);
+      repaint();
+    }//GEN-LAST:event_chartToolButton2ActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton chartToolButton;
   private javax.swing.JButton chartToolButton1;

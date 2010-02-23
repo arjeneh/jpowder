@@ -135,6 +135,10 @@ public class JPowder extends JFrame implements DropTargetListener {
     return chartToolstab;
   }
 
+  public JPanel getThumbnail(){
+    return thumbnailPanel;
+  }
+
   /**
    *
    * @return
@@ -160,7 +164,6 @@ public class JPowder extends JFrame implements DropTargetListener {
     if (internalFrame != internalFrameInFocus) {
       internalFrameInFocus = internalFrame;
     }
-
       if (infoPanelInfocus != null) {
         infoPanelInfocus.update();
       }
@@ -184,6 +187,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     cardLayout = new CardLayout();
     chartToolstab = new javax.swing.JPanel();
     dataVisibleInChartPanel = new javax.swing.JPanel();
+    thumbnailPanel = new javax.swing.JPanel();
     chartPlotter = new javax.swing.JDesktopPane();
     jMenuBar1 = new javax.swing.JMenuBar();
     fileMenu = new javax.swing.JMenu();
@@ -257,30 +261,48 @@ public class JPowder extends JFrame implements DropTargetListener {
     dataVisibleInChartPanel.setPreferredSize(new java.awt.Dimension(270, 260));
     dataVisibleInChartPanel.setLayout(new java.awt.BorderLayout());
 
+    thumbnailPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+    thumbnailPanel.setPreferredSize(new java.awt.Dimension(300, 150));
+
+    javax.swing.GroupLayout thumbnailPanelLayout = new javax.swing.GroupLayout(thumbnailPanel);
+    thumbnailPanel.setLayout(thumbnailPanelLayout);
+    thumbnailPanelLayout.setHorizontalGroup(
+      thumbnailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 296, Short.MAX_VALUE)
+    );
+    thumbnailPanelLayout.setVerticalGroup(
+      thumbnailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 138, Short.MAX_VALUE)
+    );
+
     javax.swing.GroupLayout homeLayout = new javax.swing.GroupLayout(home);
     home.setLayout(homeLayout);
     homeLayout.setHorizontalGroup(
       homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeLayout.createSequentialGroup()
         .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addGroup(homeLayout.createSequentialGroup()
-            .addGap(10, 10, 10)
+          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, homeLayout.createSequentialGroup()
+            .addContainerGap()
             .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, homeLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(thumbnailPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
           .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))
         .addContainerGap())
     );
     homeLayout.setVerticalGroup(
       homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(homeLayout.createSequentialGroup()
-        .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(18, 18, 18)
-        .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+        .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(thumbnailPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
         .addContainerGap())
     );
 
     jScrollPane2.setViewportView(home);
 
-    chartPlotter.setBorder(javax.swing.BorderFactory.createTitledBorder("ChartArea"));
     chartPlotter.setDesktopManager(jPowderDesktopManager);
     chartPlotter.setOpaque(false);
 
@@ -592,8 +614,8 @@ public class JPowder extends JFrame implements DropTargetListener {
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(chartPlotter, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
-          .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE))
+          .addComponent(chartPlotter, javax.swing.GroupLayout.DEFAULT_SIZE, 843, Short.MAX_VALUE)
+          .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 843, Short.MAX_VALUE))
         .addContainerGap())
     );
 
@@ -1102,8 +1124,17 @@ public class JPowder extends JFrame implements DropTargetListener {
 
     chartPlotter.add(internalframe);
     setVisible(true);
+ChartPanel chartPanel = null;
+    try {
 
-    
+       chartPanel = new ChartPanel((JFreeChart) internalframe.getchart().clone());
+      chartPanel.setSize(thumbnailPanel.getSize()) ;
+      thumbnailPanel.add(chartPanel);
+      System.out.println("internalframes"+JpowderInternalframe.getnumberOfJpowderInternalframe());
+    } catch (CloneNotSupportedException ex) {
+      Logger.getLogger(JPowder.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
 
   }
 
@@ -1249,6 +1280,7 @@ public class JPowder extends JFrame implements DropTargetListener {
   private javax.swing.JMenuItem proptiesMenu;
   private javax.swing.JMenuItem redoMenu;
   private javax.swing.JMenu saveAs;
+  private javax.swing.JPanel thumbnailPanel;
   private javax.swing.JPanel treetab;
   private javax.swing.JMenuItem undoMenu;
   private javax.swing.JMenuItem workspaceMenu;

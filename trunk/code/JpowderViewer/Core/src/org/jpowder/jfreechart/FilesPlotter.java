@@ -34,7 +34,7 @@ public class FilesPlotter extends DatasetPlotter {
   private static Vector<DataSet> datasets;
   private int datasetIndex = 0;
   public XYPlot plot;
-  private boolean createLegend=false;
+  private static boolean createLegend=false;
   private static JFreeChart chart;
   public  static Paint[] allseriescolors={ Color.BLUE, Color.RED,ChartColor.VERY_DARK_GREEN,
                 Color.ORANGE, Color.CYAN,Color.MAGENTA,ChartColor.DARK_YELLOW, Color.BLACK,
@@ -76,7 +76,7 @@ public class FilesPlotter extends DatasetPlotter {
   public  boolean getLegend(){
   return createLegend;
   }
-  public  void setLegend(boolean displayLegend){
+  public static  void setLegend(boolean displayLegend){
     createLegend=displayLegend;
   }
   /**

@@ -10,7 +10,9 @@
  */
 package org.jpowder.chartTools;
 
-import java.awt.BasicStroke;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import javax.swing.JLabel;
 import org.jfree.chart.renderer.xy.XYErrorRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -155,15 +157,6 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
 
   public void update() {
     JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-    System.out.println("the number of internalframe"+JpowderInternalframe.getnumberOfJpowderInternalframe());
-    if (JpowderInternalframe.getnumberOfJpowderInternalframe()==0){
-    
-    jCheckBox3.setSelected(false);
-    jCheckBox1.setSelected(false);
-    jCheckBox2.setSelected(false);
-
-    }
-
     XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer();
 
     if (inFocus.getPowderDataSet().get(0) instanceof DataSetWithErrors) {
@@ -174,7 +167,11 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     jCheckBox2.setSelected(!renderer.getBaseLinesVisible());
 
   
-
+if(JpowderInternalframe.getnumberOfJpowderInternalframe()==0){
+    jCheckBox3.setSelected(false);
+    jCheckBox1.setSelected(false);
+    jCheckBox2.setSelected(false);
+}
 
   }
 
@@ -184,6 +181,9 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
       for (int i = 0; i < inFocus.getPowderDataSet().size(); i++) {
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer(i);
         boolean status = renderer.getBaseShapesVisible();
+      renderer.setSeriesShape( 0, new Rectangle2D.Double( -1.0, -1.0, 3.0, 3.0 ) );
+//         renderer.setSeriesShape( 0, new Ellipse2D.Double( -1.0, -1.0, 3.0, 3.0 ) );
+
         renderer.setBaseShapesVisible(!status);
       }
 
@@ -194,7 +194,6 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
       for (int i = 0; i < inFocus.getPowderDataSet().size(); i++) {
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer(i);
         boolean status = renderer.getBaseLinesVisible();
-        System.out.println("the bae line is set visible");
         renderer.setBaseLinesVisible(!status);
       }
     }//GEN-LAST:event_jCheckBox2ActionPerformed
@@ -202,12 +201,10 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
       JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
       for (int i = 0; i < inFocus.getPowderDataSet().size(); i++) {
-        System.out.println("name of the file" + inFocus.getPowderDataSet());
 
         if (inFocus.getPowderDataSet().get(i) instanceof DataSetWithErrors) {
           XYErrorRenderer renderer = (XYErrorRenderer) inFocus.getXYPlot().getRenderer(i);
           boolean status = renderer.getDrawYError();
-          System.out.println("Render Error bar is " + status);
           renderer.setDrawYError(!status);//show opposite Y error bar.
         }
       }
@@ -215,14 +212,10 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
 
-
-      System.out.println("backbut is clicked");
       chartToolsIcon.setComponentZOrder(this, 1);
       chartToolsIcon.add(this);
-
       chartToolsIcon.setVisible(true);
       this.setVisible(false);
-
 
     }//GEN-LAST:event_BackActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
