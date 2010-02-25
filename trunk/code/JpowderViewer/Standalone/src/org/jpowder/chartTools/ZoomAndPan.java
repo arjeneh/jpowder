@@ -11,8 +11,7 @@
 package org.jpowder.chartTools;
 
 import java.awt.Cursor;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
+import java.awt.geom.Rectangle2D;
 import javax.swing.BoundedRangeModel;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
@@ -44,6 +43,7 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel, ChangeL
   private double upperBound;
   private NumberAxis domainAxis;
   private ButtonGroup buttonGroup = new ButtonGroup();
+  private ButtonGroup checkBoxGroup = new ButtonGroup();
   /** The scroll factor. */
   private double scrollFactor = 1000;
   /** The scroll bar. */
@@ -70,6 +70,9 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel, ChangeL
   }
 
   public void update() {
+
+
+
   }
 
   /**
@@ -317,9 +320,6 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel, ChangeL
         setPanMode(false);
       }
 
-
-
-
     }//GEN-LAST:event_moveButtActionPerformed
 
     private void reserButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserButtActionPerformed
@@ -374,8 +374,10 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel, ChangeL
       JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
       JXLayer layer = new JXLayer(inFocus.getChartPanel());
       Magnifier magnifier = new Magnifier();
+      magnifier.setMagnifyingFactor(4.0);
       layer.setUI(magnifier);
       inFocus.setContentPane(layer);
+
       if (magnifierCheckBox.isSelected()) {
 
         magnifier.setRadius(90);
@@ -386,6 +388,9 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel, ChangeL
         magnifier.setRadius(0);
 
       }
+
+//       Rectangle2D zoomRectangle = new Rectangle2D.Double(198, 116, 394, 239);
+//      inFocus.getChartPanel().zoom(zoomRectangle);
 
 
     }//GEN-LAST:event_magnifierCheckBoxActionPerformed
@@ -434,12 +439,13 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel, ChangeL
       if (zoomAnchorCheckbox_X.isSelected()) {
         inFocus.getChartPanel().setRangeZoomable(false);
         inFocus.getChartPanel().setZoomAroundAnchor(true);
-
-      }
+          }
       if (!zoomAnchorCheckbox_X.isSelected()) {
         inFocus.getChartPanel().setRangeZoomable(true);
         inFocus.getChartPanel().setZoomAroundAnchor(false);
       }
+
+
     }//GEN-LAST:event_zoomAnchorCheckbox_XActionPerformed
 
     private void zoomAnchorCheckbox_YActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoomAnchorCheckbox_YActionPerformed

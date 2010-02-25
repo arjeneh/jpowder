@@ -24,24 +24,24 @@ public class JpowderApplet extends JApplet {
 private JFreeChart createChart() {
 
 
-    JFileChooser chooser = new JFileChooser();
-    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            ".Ser ", "Ser");
-    chooser.setFileFilter(filter);
-    int returnVal = chooser.showOpenDialog(this);
-    File fileName = chooser.getSelectedFile();
+//    JFileChooser chooser = new JFileChooser();
+//    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+//            ".Ser ", "Ser");
+//    chooser.setFileFilter(filter);
+//    int returnVal = chooser.showOpenDialog(this);
+//    File fileName = chooser.getSelectedFile();
     JFreeChart serializedChart = null;
-    if (returnVal == JFileChooser.APPROVE_OPTION) {
+//    if (returnVal == JFileChooser.APPROVE_OPTION) {
       try {
-        FileInputStream f = new FileInputStream(fileName);
+        FileInputStream f = new FileInputStream("4.ser");
         ObjectInputStream charts = new ObjectInputStream(f);
         serializedChart = (JFreeChart) charts.readObject();
       } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Invalid file!");
       }
-    } else {
-      return null;
-    }
+//    } else {
+//      return null;
+//    }
     return serializedChart;
   }
 

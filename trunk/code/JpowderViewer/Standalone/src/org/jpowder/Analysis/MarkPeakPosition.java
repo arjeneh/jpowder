@@ -50,7 +50,6 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
   private double y;
 
 //  private String[] strings;
-
   /** Creates new form Peack */
   public MarkPeakPosition(AnalysisIcon analysisIcon) {
     initComponents();
@@ -58,9 +57,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
   }
 
-
   public void update() {
-
   }
 
   public JLabel getPeakLabel() {
@@ -82,7 +79,6 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     jSeparator1 = new javax.swing.JSeparator();
     Back = new javax.swing.JButton();
     jToggleButton1 = new javax.swing.JToggleButton();
-    jCheckMultiPeak = new javax.swing.JCheckBox();
     peakLabel = new javax.swing.JLabel();
     jScrollPane1 = new javax.swing.JScrollPane();
     jTextPeakArea = new javax.swing.JTextArea();
@@ -120,11 +116,8 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
       }
     });
 
-    jCheckMultiPeak.setText("Get Multi Peak");
-
     jTextPeakArea.setColumns(1);
-    jTextPeakArea.setEditable(false);
-    jTextPeakArea.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+    jTextPeakArea.setFont(new java.awt.Font("Arial", 1, 14));
     jTextPeakArea.setForeground(new java.awt.Color(255, 0, 51));
     jTextPeakArea.setLineWrap(true);
     jTextPeakArea.setTabSize(20);
@@ -166,13 +159,9 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
               .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addGroup(layout.createSequentialGroup()
                 .addComponent(peakLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(jLabel1))
-              .addGroup(layout.createSequentialGroup()
-                .addComponent(jToggleButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckMultiPeak)
-                .addGap(77, 77, 77))
+              .addComponent(jToggleButton1)
               .addGroup(layout.createSequentialGroup()
                 .addComponent(removeAllButt)
                 .addGap(0, 0, 0)
@@ -195,9 +184,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jToggleButton1)
-          .addComponent(jCheckMultiPeak))
+        .addComponent(jToggleButton1)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -227,14 +214,15 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
 
       JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-        XYDataset dataset = inFocus.getXYPlot().getDataset();
-      if (jToggleButton1.isSelected()&&inFocus == null) {
-         javax.swing.JOptionPane.showMessageDialog(null, "There Is No Plotted Data");
+      XYDataset dataset = inFocus.getXYPlot().getDataset();
+      if (jToggleButton1.isSelected() && inFocus == null) {
+        javax.swing.JOptionPane.showMessageDialog(null, "There Is No Plotted Data");
       }
 
       if (jToggleButton1.isSelected()) {
-       
-        
+
+
+
         inFocus.getChartPanel().addChartMouseListener(this);
         inFocus.getChartPanel().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         //Domain
@@ -251,13 +239,12 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         inFocus.getChartPanel().setVerticalAxisTrace(true);
 
 
+
         JXLayer layer = new JXLayer(inFocus.getChartPanel());
         Magnifier magnifier = new Magnifier();
         magnifier.setRadius(22);
         layer.setUI(magnifier);
         inFocus.setContentPane(layer);
-
-
 
       }
       if (!jToggleButton1.isSelected()) {
@@ -282,7 +269,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         //magnifier
         JXLayer layer = new JXLayer(inFocus.getChartPanel());
         Magnifier magnifier = new Magnifier();
-        magnifier.radius = 0;
+        magnifier.setRadius(0);
         layer.setUI(magnifier);
         inFocus.setContentPane(layer);
 
@@ -302,7 +289,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     return string;
   }
     private void copyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyActionPerformed
-  jTextPeakArea.copy();
+      jTextPeakArea.copy();
     }//GEN-LAST:event_copyActionPerformed
   /**
    *
@@ -314,13 +301,13 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
       public void run() {
         JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
         inFocus.getXYPlot().clearAnnotations();
-   
+
         x = inFocus.getXYPlot().getDomainCrosshairValue();
         y = inFocus.getXYPlot().getRangeCrosshairValue();
         inFocus.addMarkedPeakPosition(x);
         final String[] strings = convertDoubleToString(inFocus.getMarkedPeakPosition());
         jTextPeakArea.setText("");
-        for (int i = 0; i < strings.length; i++) {          
+        for (int i = 0; i < strings.length; i++) {
           jTextPeakArea.append(strings[i] + "\n");
         }
 
@@ -329,23 +316,22 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         inFocus.getXYPlot().addAnnotation(annotation);
 
 
-        if (jCheckMultiPeak.isSelected()) {
-          ValueMarker rangeMarker = new ValueMarker(y);
-          rangeMarker.setStroke(new BasicStroke(1.4f));
-          rangeMarker.setPaint(Color.yellow);
+        ValueMarker rangeMarker = new ValueMarker(y);
+        rangeMarker.setStroke(new BasicStroke(1.4f));
+        rangeMarker.setPaint(Color.yellow);
 
-          ValueMarker domainMarker = new ValueMarker(x);
-          domainMarker.setStroke(new BasicStroke(1.4f));
-          domainMarker.setPaint(Color.yellow);
+        ValueMarker domainMarker = new ValueMarker(x);
+        domainMarker.setStroke(new BasicStroke(1.4f));
+        domainMarker.setPaint(Color.yellow);
 
-          peakRangeMarker.add(rangeMarker);
-          domainRangeMarker.add(domainMarker);
+        peakRangeMarker.add(rangeMarker);
+        domainRangeMarker.add(domainMarker);
 
-          inFocus.getXYPlot().addRangeMarker(rangeMarker);
-          inFocus.getXYPlot().addDomainMarker(domainMarker);
+//        inFocus.getXYPlot().addRangeMarker(rangeMarker);
+        inFocus.getXYPlot().addDomainMarker(domainMarker);
 
 
-        }
+
       }
     });
   }
@@ -374,31 +360,54 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     return domainRangeMarker;
   }
     private void removeAllButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAllButtActionPerformed
-     jTextPeakArea.setText("");
-       JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-       inFocus.removeAllMarkedPeakPosition();
+      jTextPeakArea.setText("");
+      JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
+      inFocus.removeAllMarkedPeakPosition();
+      inFocus.getChartPanel().removeChartMouseListener(this);
+      inFocus.getChartPanel().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+
+      //Domain
+      inFocus.getXYPlot().setDomainCrosshairVisible(false);
+      inFocus.getChartPanel().setHorizontalAxisTrace(false);
+      inFocus.getXYPlot().setDomainCrosshairLockedOnData(false);
+
+      for (int i = 0; i < domainRangeMarker.size() && i < peakRangeMarker.size(); i++) {
+//        inFocus.getXYPlot().removeRangeMarker(peakRangeMarker.get(i));
+        inFocus.getXYPlot().removeDomainMarker(domainRangeMarker.get(i));
+      }
+      //Range
+      inFocus.getXYPlot().setRangeCrosshairVisible(false);
+      inFocus.getChartPanel().setVerticalAxisTrace(false);
+      inFocus.getXYPlot().setRangeCrosshairLockedOnData(false);
+      //Anotation
+      inFocus.getXYPlot().clearAnnotations();
+      //magnifier
+      JXLayer layer = new JXLayer(inFocus.getChartPanel());
+      Magnifier magnifier = new Magnifier();
+      magnifier.setRadius(0);
+      layer.setUI(magnifier);
+      inFocus.setContentPane(layer);
 
     }//GEN-LAST:event_removeAllButtActionPerformed
 
     private void removeButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtActionPerformed
-     
-       JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-       inFocus.removeMarkedPeakPosition(x);
-       jTextPeakArea.setText(string[string.length-1]); 
+
+      JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
+      inFocus.removeMarkedPeakPosition(x);
+      jTextPeakArea.setText(string[string.length - 1]);
     }//GEN-LAST:event_removeButtActionPerformed
 
     private void jTextPeakAreaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextPeakAreaMouseReleased
-    showPopup(evt);
+      showPopup(evt);
     }//GEN-LAST:event_jTextPeakAreaMouseReleased
   private void showPopup(MouseEvent e) {
-      if (e.isPopupTrigger()) {
-        jTextAreaPopMenu.show(e.getComponent(), e.getX(), e.getY());
-      }
-      }
+    if (e.isPopupTrigger()) {
+      jTextAreaPopMenu.show(e.getComponent(), e.getX(), e.getY());
+    }
+  }
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton Back;
   private javax.swing.JMenuItem copy;
-  private javax.swing.JCheckBox jCheckMultiPeak;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JSeparator jSeparator1;
@@ -409,6 +418,5 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
   private javax.swing.JButton removeAllButt;
   private javax.swing.JButton removeButt;
   // End of variables declaration//GEN-END:variables
-
 }
 

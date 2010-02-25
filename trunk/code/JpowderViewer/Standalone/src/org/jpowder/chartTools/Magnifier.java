@@ -20,6 +20,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import javax.swing.SwingUtilities;
 import org.jdesktop.jxlayer.JXLayer;
 import org.jdesktop.jxlayer.plaf.AbstractLayerUI;
@@ -30,9 +31,13 @@ import org.jdesktop.jxlayer.plaf.AbstractLayerUI;
  */
 public class Magnifier extends AbstractLayerUI {
 
-    public int radius ;
+    private int radius ;
+    private Shape shape;
+    private Rectangle2D.Double rectangle;
 
-    private double magnifyingFactor = 4.0;
+
+
+    private double magnifyingFactor = 1;
 
     private Point2D point = new Point2D.Double();
 
@@ -82,6 +87,7 @@ public class Magnifier extends AbstractLayerUI {
     }
 
     /**
+     *
      * Sets the location of the magnifying glass.
      *
      * @param point  the new location.
@@ -106,10 +112,11 @@ public class Magnifier extends AbstractLayerUI {
         double strokeAdjust = 0.1;
         double drawSize = 2 * (baseRadius + strokeAdjust);
         double clipSize = 2 * scaledRadius;
-        Ellipse2D drawGlass = new Ellipse2D.Double(-strokeAdjust,
+ 
+        Rectangle2D drawGlass = new Rectangle2D.Double(-strokeAdjust,
                 -strokeAdjust, drawSize, drawSize);
 
-        Ellipse2D clipGlass = new Ellipse2D.Double(0, 0, clipSize, clipSize);
+        Rectangle2D clipGlass = new Rectangle2D.Double(0, 0, clipSize, clipSize);
         g2.setRenderingHint(RenderingHints.KEY_RENDERING,
                 RenderingHints.VALUE_RENDER_QUALITY);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -140,11 +147,12 @@ public class Magnifier extends AbstractLayerUI {
      * @param e  the event.
      * @param layer  the layer.
      */
+  @Override
     protected void processMouseEvent(MouseEvent e, JXLayer layer) {
         super.processMouseEvent(e, layer);
         setPoint(SwingUtilities.convertPoint(e.getComponent(),
                 e.getPoint(), layer));
-        setDirty(true);
+       setDirty(true);
     }
 
     /**
@@ -153,12 +161,13 @@ public class Magnifier extends AbstractLayerUI {
      * @param e  the event.
      * @param layer  the layer.
      */
+  @Override
     protected void processMouseMotionEvent(MouseEvent e,
         JXLayer layer) {
         super.processMouseMotionEvent(e, layer);
         setPoint(SwingUtilities.convertPoint(e.getComponent(),
                 e.getPoint(), layer));
-        setDirty(true);
+     setDirty(true);
     }
 
     /**
@@ -169,7 +178,7 @@ public class Magnifier extends AbstractLayerUI {
      *
      * @return The paint.
      */
-    private Paint createPaint(Ellipse2D glass, boolean transparent) {
+    private Paint createPaint(Rectangle2D glass, boolean transparent) {
         Point2D center = new Point2D.Double(glass.getCenterX(),
                 glass.getCenterY());
         float radius = (float) (glass.getCenterX() - glass.getX());

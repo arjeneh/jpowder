@@ -622,7 +622,6 @@
         <Property name="desktopManager" type="javax.swing.DesktopManager" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="jPowderDesktopManager" type="code"/>
         </Property>
-        <Property name="opaque" type="boolean" value="false"/>
       </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout"/>

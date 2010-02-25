@@ -94,10 +94,13 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
     this.setIconifiable(true);
     this.setEnabled(true);
     this.setSize(width,height);
-
     incr();
+       SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    select();
+                }
+            });
   }
-
   /**
    *Increment the location of each interframe is created by a certain value.
    */
@@ -107,15 +110,15 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
 
        System.out.println("top"+top);
       System.out.println("Left"+left);
-    if (top ==150) {
+    if (top ==(height/2)) {
       left+=width;
       top =0;
     }
-    if(left==900){
+    if(left==(width*3)){
     left=0;
-    top+=width+120;
+    top+=width+(width/2.5);
     }
-     if(top==570){
+     if(top==(height*1.9)){
        left+=width;
        top=420;
      
@@ -137,7 +140,16 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
   public String getNames(int i) {
     return m_data.elementAt(i).getFileName();
   }
-
+  /**
+   * moves the last created internal frame to the front and sets it selected.
+   */
+  public void select() {
+    try {
+      this.moveToFront();
+      this.setSelected(true);
+    } catch (java.beans.PropertyVetoException e) {
+    }
+  }
   /**
    *
    * @return

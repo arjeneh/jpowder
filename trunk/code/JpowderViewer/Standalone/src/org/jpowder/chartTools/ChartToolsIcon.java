@@ -10,6 +10,7 @@
  */
 package org.jpowder.chartTools;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
@@ -172,10 +173,8 @@ public class ChartToolsIcon extends javax.swing.JPanel {
 
     private void chartToolButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chartToolButton2ActionPerformed
       JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-//      FilesPlotter filesPlotter = new FilesPlotter(inFocus.getPowderDataSet());
       FilesPlotter.setLegend(true);
       inFocus.getchart().setNotify(true);
-      inFocus.getChartPanel().setDisplayToolTips(true);
       inFocus.getXYPlot().setNotify(true);
       repaint();
     }//GEN-LAST:event_chartToolButton2ActionPerformed
