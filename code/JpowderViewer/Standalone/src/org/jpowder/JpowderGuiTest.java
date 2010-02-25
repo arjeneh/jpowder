@@ -27,7 +27,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JList;
-import javax.swing.JSplitPane;
 import javax.swing.TransferHandler;
 import javax.swing.UIManager;
 import javax.swing.event.InternalFrameListener;
@@ -177,6 +176,16 @@ public class JpowderGuiTest extends JFrame implements DropTargetListener{
           UIManager.setLookAndFeel(new WindowsLookAndFeel());
         } catch (Exception e) {
         }
+        if (isWindows()) {
+          System.out.println("This is Windows");
+        } else if (isMac()) {
+          System.out.println("This is Mac");
+        } else if (isUnix()) {
+          System.out.println("This is Unix or Linux");
+        } else {
+          System.out.println("Your OS is not support!!");
+        }
+
         JpowderGuiTest JPOWDER = new JpowderGuiTest();
         JPOWDER.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPOWDER.setSize(800, 600);
@@ -184,5 +193,28 @@ public class JpowderGuiTest extends JFrame implements DropTargetListener{
         JPOWDER.setVisible(true);
       }
     });
+  }
+  public static boolean isWindows() {
+
+    String os = System.getProperty("os.name").toLowerCase();
+    //windows
+    return (os.indexOf("win") >= 0);
+
+  }
+
+  public static boolean isMac() {
+
+    String os = System.getProperty("os.name").toLowerCase();
+    //Mac
+    return (os.indexOf("mac") >= 0);
+
+  }
+
+  public static boolean isUnix() {
+
+    String os = System.getProperty("os.name").toLowerCase();
+    //linux or unix
+    return (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0);
+
   }
 }

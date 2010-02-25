@@ -11,15 +11,16 @@
 package org.jpowder.Analysis;
 
 import java.awt.Color;
-import java.util.List;
-import java.util.Vector;
-import javax.swing.DefaultComboBoxModel;
+import java.awt.Color;
+import java.awt.Component;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+import javax.swing.border.LineBorder;
 import org.jfree.data.xy.XYDataset;
 import org.jpowder.InfoPanel;
 import org.jpowder.JPowder;
 import org.jpowder.JpowderInternalframe;
-import org.jpowder.dataset.DataSet;
 import org.jpowder.jfreechart.FilesPlotter;
 
 /**
@@ -30,6 +31,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 
   private AnalysisIcon analysisIcon;
   private String[] string;
+  private int index;
 
 
   private Color color = (Color) FilesPlotter.getSeriescolors(0);
@@ -60,8 +62,40 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
     string = new String[size];
     for (int i = 0; i < size; i++) {
         string[i] = inFocus.getPowderDataSet().elementAt(i).getFileName();
-   dataSetComboBox.setForeground((Color) FilesPlotter.allseriescolors[i]);
-//      dataSetComboBox.setBackground((Color) FilesPlotter.allseriescolors[i]);
+   
+        
+//  dataSetComboBox.setForeground((Color) FilesPlotter.allseriescolors[i]);
+  dataSetComboBox.setRenderer(new ListCellRenderer() {
+
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+
+          JLabel j = new JLabel(value.toString());
+
+          if(index>=0){
+          j.setForeground((Color) FilesPlotter.allseriescolors[index]);
+          j.setBackground((Color) FilesPlotter.allseriescolors[index]);
+          }
+
+          if(cellHasFocus){
+            System.out.println("cellhasfocus");
+            j.setBackground(Color.BLUE);
+
+          }
+
+          if(isSelected){
+            j.setBorder(LineBorder.createBlackLineBorder());
+              j.setBackground(Color.BLUE);
+          }
+
+
+          return j;
+
+
+        }
+      });
+
+//    dataSetComboBox.setBackground((Color) FilesPlotter.allseriescolors[i]);
+
     }
     return string;
   }
