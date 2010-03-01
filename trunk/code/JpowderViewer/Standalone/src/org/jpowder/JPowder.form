@@ -174,7 +174,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/NewImages/undo_26x26.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Undo"/>
+                <Property name="text" type="java.lang.String" value="Undo closed frame"/>
                 <Property name="toolTipText" type="java.lang.String" value="Undo closed frame"/>
               </Properties>
               <Events>
@@ -189,7 +189,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/NewImages/redo_26x26.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Redo"/>
+                <Property name="text" type="java.lang.String" value="Redo closed frame"/>
                 <Property name="toolTipText" type="java.lang.String" value="Redo closed frame"/>
               </Properties>
               <Events>
@@ -236,6 +236,45 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="moveMenuActionPerformed"/>
               </Events>
             </MenuItem>
+            <Menu class="javax.swing.JMenu" name="windowsLayoutMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Layout"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="tileMenu">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Tile"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tileMenuActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="tileHorizontallyMenu">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Tile Windows Horizontally "/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tileHorizontallyMenuActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="tileVerticallyMenu">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Tile Windows Vertically"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tileVerticallyMenuActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="cascadeMenu">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Cascade"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cascadeMenuActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
             <MenuItem class="javax.swing.JSeparator" name="jSeparator6">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="proptiesMenu">
@@ -619,6 +658,9 @@
     </Container>
     <Container class="javax.swing.JDesktopPane" name="chartPlotter">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="d8" green="e9" red="ec" type="rgb"/>
+        </Property>
         <Property name="desktopManager" type="javax.swing.DesktopManager" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="jPowderDesktopManager" type="code"/>
         </Property>

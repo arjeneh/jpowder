@@ -10,22 +10,7 @@
  */
 package org.jpowder.chartTools;
 
-import java.awt.Cursor;
-import java.awt.geom.Rectangle2D;
-import javax.swing.BoundedRangeModel;
-import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
-import javax.swing.JScrollBar;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import org.jdesktop.jxlayer.JXLayer;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.event.ChartChangeEvent;
-import org.jfree.chart.event.ChartChangeListener;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.Range;
 import org.jpowder.InfoPanel;
 import org.jpowder.JPowder;
 import org.jpowder.JpowderInternalframe;
@@ -34,26 +19,10 @@ import org.jpowder.JpowderInternalframe;
  *
  * @author Arjeneh
  */
-public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel, ChangeListener,
-        ChartChangeListener {
+public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
 
   private ChartToolsIcon chartToolsIcon;
-  private static final double ZOOM_FACTOR = 10000;
-  private double lowerBound;
-  private double upperBound;
-  private NumberAxis domainAxis;
-  private ButtonGroup buttonGroup = new ButtonGroup();
-  private ButtonGroup checkBoxGroup = new ButtonGroup();
-  /** The scroll factor. */
-  private double scrollFactor = 1000;
-  /** The scroll bar. */
-  private JScrollBar scrollBar = new JScrollBar(JScrollBar.HORIZONTAL);
-  /** The starting point for panning. */
-  /** The min/max values for the primary axis. */
-  private double[] primYMinMax = new double[2];
-  /** The min/max values for the secondary axis. */
-  private double[] secondYMinMax = new double[2];
-//  private JScrollBar jScrollBar= new JScrollBar(JScrollBar.HORIZONTAL);
+
 
   /**
    *
@@ -75,21 +44,6 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel, ChangeL
 
   }
 
-  /**
-   * Sets the pan mode.
-   *
-   * @param val  a boolean.
-   */
-  private void setPanMode(boolean val) {
-
-    JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-    if (val) {
-      inFocus.getChartPanel().setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
-
-    } else {
-      inFocus.getChartPanel().setCursor(Cursor.getDefaultCursor());
-    }
-  }
 
   /** This method is called from within the constructor to
    * initialize the form.
@@ -104,20 +58,14 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel, ChangeL
     jSeparator1 = new javax.swing.JSeparator();
     backButt = new javax.swing.JButton();
     jToggleButton2 = new javax.swing.JToggleButton();
-    moveButt = new javax.swing.JToggleButton();
     reserButt = new javax.swing.JToggleButton();
-    jCheckBoxDomain = new javax.swing.JCheckBox();
-    jCheckBoxRange = new javax.swing.JCheckBox();
-    zoomIn = new javax.swing.JToggleButton();
-    zoomOut = new javax.swing.JToggleButton();
     zoomLabel = new javax.swing.JLabel();
-    magnifierCheckBox = new javax.swing.JCheckBox();
-    zoomAnchorCheckbox_X = new javax.swing.JCheckBox();
-    zoomAnchorCheckbox_Y = new javax.swing.JCheckBox();
+    jScrollPane1 = new javax.swing.JScrollPane();
+    jTextArea1 = new javax.swing.JTextArea();
 
     setPreferredSize(new java.awt.Dimension(297, 347));
 
-    jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
+    jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
     jLabel1.setText("Zoom And Pan");
 
     backButt.setText("Back");
@@ -129,18 +77,7 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel, ChangeL
 
     jToggleButton2.setText("pan");
 
-    moveButt.setFont(new java.awt.Font("Tahoma", 0, 9));
-    moveButt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/zoompanning_26x26.png"))); // NOI18N
-    moveButt.setSelected(true);
-    moveButt.setText("Move");
-    moveButt.setToolTipText("To move hold CTRL and press &drag the mouse");
-    moveButt.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        moveButtActionPerformed(evt);
-      }
-    });
-
-    reserButt.setFont(new java.awt.Font("Tahoma", 0, 9));
+    reserButt.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
     reserButt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/arrowshapes.quad-arrow-callout_26x26.png"))); // NOI18N
     reserButt.setText("Reset");
     reserButt.setToolTipText("Fit plot to original size");
@@ -150,68 +87,14 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel, ChangeL
       }
     });
 
-    jCheckBoxDomain.setText("Zoom in X Axis");
-    jCheckBoxDomain.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jCheckBoxDomainActionPerformed(evt);
-      }
-    });
-
-    jCheckBoxRange.setText("Zoom in Y Axis");
-    jCheckBoxRange.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jCheckBoxRangeActionPerformed(evt);
-      }
-    });
-
-    buttonGroup.add(zoomIn);
-    zoomIn.setFont(new java.awt.Font("Arial Narrow", 1, 12));
-    zoomIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/zoomin_26x26.png"))); // NOI18N
-    zoomIn.setToolTipText("Zoom in");
-    zoomIn.setMinimumSize(new java.awt.Dimension(30, 25));
-    zoomIn.addMouseListener(new java.awt.event.MouseAdapter() {
-      public void mousePressed(java.awt.event.MouseEvent evt) {
-        zoomInMousePressed(evt);
-      }
-    });
-    zoomIn.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        zoomInActionPerformed(evt);
-      }
-    });
-
-    buttonGroup.add(zoomOut);
-    zoomOut.setFont(new java.awt.Font("Arial Narrow", 1, 12));
-    zoomOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/zoomout_26x26.png"))); // NOI18N
-    zoomOut.setToolTipText("Zoom out");
-    zoomOut.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        zoomOutActionPerformed(evt);
-      }
-    });
-
-    magnifierCheckBox.setText("Magnifier");
-    magnifierCheckBox.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        magnifierCheckBoxActionPerformed(evt);
-      }
-    });
-
-    zoomAnchorCheckbox_X.setText("Zoom around anchor X");
-    zoomAnchorCheckbox_X.setToolTipText("zoom operations are centered around the current anchor point");
-    zoomAnchorCheckbox_X.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        zoomAnchorCheckbox_XActionPerformed(evt);
-      }
-    });
-
-    zoomAnchorCheckbox_Y.setText("Zoom around anchor Y");
-    zoomAnchorCheckbox_Y.setToolTipText("zoom operations are centered around the current anchor point");
-    zoomAnchorCheckbox_Y.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        zoomAnchorCheckbox_YActionPerformed(evt);
-      }
-    });
+    jTextArea1.setBackground(new java.awt.Color(236, 233, 216));
+    jTextArea1.setColumns(20);
+    jTextArea1.setLineWrap(true);
+    jTextArea1.setRows(5);
+    jTextArea1.setText("To zoom in click on the left mouse and drag the mouse across the chart and to move the chart hold Ctrl and left mouse. to reset left mouse and drag to right.");
+    jTextArea1.setWrapStyleWord(true);
+    jTextArea1.setOpaque(false);
+    jScrollPane1.setViewportView(jTextArea1);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
@@ -219,87 +102,51 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel, ChangeL
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
           .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(zoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
-            .addComponent(jLabel1))
-          .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(jCheckBoxRange)
-                  .addComponent(jCheckBoxDomain))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(reserButt))
               .addGroup(layout.createSequentialGroup()
-                .addComponent(reserButt, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(moveButt)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(zoomOut)
-                .addComponent(zoomIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-          .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(magnifierCheckBox))
-          .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(zoomAnchorCheckbox_Y))
-          .addGroup(layout.createSequentialGroup()
-            .addGap(104, 104, 104)
-            .addComponent(backButt))
-          .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(zoomAnchorCheckbox_X)))
+                .addGap(13, 13, 13)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jLabel1)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addContainerGap())
+      .addGroup(layout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(zoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(192, Short.MAX_VALUE))
+      .addGroup(layout.createSequentialGroup()
+        .addGap(118, 118, 118)
+        .addComponent(backButt)
+        .addContainerGap(111, Short.MAX_VALUE))
     );
-
-    layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {zoomIn, zoomOut});
-
-    layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {moveButt, reserButt});
-
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
+        .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(zoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(layout.createSequentialGroup()
-            .addGap(20, 20, 20)
-            .addComponent(jLabel1)))
+          .addComponent(zoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(18, 18, 18)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(jToggleButton2)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
-            .addComponent(jCheckBoxDomain)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jCheckBoxRange)))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(reserButt)
-          .addComponent(moveButt)
-          .addComponent(zoomOut)
-          .addComponent(zoomIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(12, 12, 12)
+            .addComponent(jToggleButton2))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(reserButt)
+            .addGap(2, 2, 2)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(magnifierCheckBox)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(zoomAnchorCheckbox_X)
-        .addGap(6, 6, 6)
-        .addComponent(zoomAnchorCheckbox_Y)
-        .addGap(18, 18, 18)
         .addComponent(backButt)
-        .addContainerGap(15, Short.MAX_VALUE))
+        .addContainerGap(48, Short.MAX_VALUE))
     );
-
-    layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {zoomIn, zoomOut});
-
-    layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {moveButt, reserButt});
-
   }// </editor-fold>//GEN-END:initComponents
 
     private void backButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtActionPerformed
@@ -310,18 +157,6 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel, ChangeL
       this.setVisible(false);
     }//GEN-LAST:event_backButtActionPerformed
 
-    private void moveButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveButtActionPerformed
-      JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-      if (moveButt.isSelected()) {
-        setPanMode(true);
-      }
-
-      if (!moveButt.isSelected()) {
-        setPanMode(false);
-      }
-
-    }//GEN-LAST:event_moveButtActionPerformed
-
     private void reserButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserButtActionPerformed
       JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
       inFocus.getChartPanel().restoreAutoBounds();
@@ -330,265 +165,16 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel, ChangeL
 
     }//GEN-LAST:event_reserButtActionPerformed
 
-    private void zoomOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoomOutActionPerformed
-      JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-      inFocus.getChartPanel().setZoomOutFactor(1.1);
-//      getScrollBar();
-      if (jCheckBoxDomain.isSelected()) {
-        inFocus.getChartPanel().zoomOutDomain(0, 0);
-      }
-      if (jCheckBoxRange.isSelected()) {
-        inFocus.getChartPanel().zoomOutRange(ZOOM_FACTOR, ZOOM_FACTOR);
-      }
-      if (jCheckBoxDomain.isSelected() && jCheckBoxRange.isSelected()) {
-        inFocus.getChartPanel().zoomOutBoth(ZOOM_FACTOR, ZOOM_FACTOR);
-
-      }
-
-
-    }//GEN-LAST:event_zoomOutActionPerformed
-
-    private void zoomInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoomInActionPerformed
-      JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-      inFocus.getChartPanel().zoomInDomain(0, 15);
-      inFocus.getChartPanel().setZoomInFactor(0.9);
-//      getScrollBar();
-
-      if (jCheckBoxDomain.isSelected()) {
-        inFocus.getChartPanel().zoomInDomain(0, 0);
-      }
-      if (jCheckBoxRange.isSelected()) {
-        inFocus.getChartPanel().zoomInRange(ZOOM_FACTOR, ZOOM_FACTOR);
-
-      }
-      if (jCheckBoxDomain.isSelected() && jCheckBoxRange.isSelected()) {
-        inFocus.getChartPanel().zoomInBoth(ZOOM_FACTOR, ZOOM_FACTOR);
-
-      }
-}//GEN-LAST:event_zoomInActionPerformed
-
-    private void zoomInMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_zoomInMousePressed
-    }//GEN-LAST:event_zoomInMousePressed
-
-    private void magnifierCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_magnifierCheckBoxActionPerformed
-      JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-      JXLayer layer = new JXLayer(inFocus.getChartPanel());
-      Magnifier magnifier = new Magnifier();
-      magnifier.setMagnifyingFactor(4.0);
-      layer.setUI(magnifier);
-      inFocus.setContentPane(layer);
-
-      if (magnifierCheckBox.isSelected()) {
-
-        magnifier.setRadius(90);
-
-      }
-      if (!magnifierCheckBox.isSelected()) {
-
-        magnifier.setRadius(0);
-
-      }
-
-//       Rectangle2D zoomRectangle = new Rectangle2D.Double(198, 116, 394, 239);
-//      inFocus.getChartPanel().zoom(zoomRectangle);
-
-
-    }//GEN-LAST:event_magnifierCheckBoxActionPerformed
-
-    private void jCheckBoxDomainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxDomainActionPerformed
-
-      JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-
-      javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-      this.setLayout(layout);
-      layout.setHorizontalGroup(
-              layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(scrollBar, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE));
-      layout.setVerticalGroup(
-              layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup().addContainerGap(400, Short.MAX_VALUE).addComponent(scrollBar, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)));
-
-      scrollBar.updateUI();
-      if (jCheckBoxDomain.isSelected() || jCheckBoxRange.isSelected()) {
-//        inFocus.getContentPane().add(scrollBar, BorderLayout.SOUTH);
-//        inFocus.updateUI();
-        recalcScrollBar(inFocus.getchart().getPlot());
-      }
-}//GEN-LAST:event_jCheckBoxDomainActionPerformed
-
-    private void jCheckBoxRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxRangeActionPerformed
-      JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-
-      javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-      this.setLayout(layout);
-      layout.setHorizontalGroup(
-              layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(scrollBar, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE));
-      layout.setVerticalGroup(
-              layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup().addContainerGap(400, Short.MAX_VALUE).addComponent(scrollBar, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)));
-
-      scrollBar.updateUI();
-      if (jCheckBoxDomain.isSelected() || jCheckBoxRange.isSelected()) {
-//        inFocus.getContentPane().add(scrollBar, BorderLayout.SOUTH);
-//        inFocus.updateUI();
-        recalcScrollBar(inFocus.getchart().getPlot());
-      }
-
-
-    }//GEN-LAST:event_jCheckBoxRangeActionPerformed
-
-    private void zoomAnchorCheckbox_XActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoomAnchorCheckbox_XActionPerformed
-      JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-      if (zoomAnchorCheckbox_X.isSelected()) {
-        inFocus.getChartPanel().setRangeZoomable(false);
-        inFocus.getChartPanel().setZoomAroundAnchor(true);
-          }
-      if (!zoomAnchorCheckbox_X.isSelected()) {
-        inFocus.getChartPanel().setRangeZoomable(true);
-        inFocus.getChartPanel().setZoomAroundAnchor(false);
-      }
-
-
-    }//GEN-LAST:event_zoomAnchorCheckbox_XActionPerformed
-
-    private void zoomAnchorCheckbox_YActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoomAnchorCheckbox_YActionPerformed
-      JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-      if (zoomAnchorCheckbox_Y.isSelected()) {
-        inFocus.getChartPanel().setDomainZoomable(false);
-        inFocus.getChartPanel().setZoomAroundAnchor(true);
-
-      }
-      if (!zoomAnchorCheckbox_Y.isSelected()) {
-        inFocus.getChartPanel().setDomainZoomable(true);
-        inFocus.getChartPanel().setZoomAroundAnchor(false);
-      }
-
-    }//GEN-LAST:event_zoomAnchorCheckbox_YActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton backButt;
-  private javax.swing.JCheckBox jCheckBoxDomain;
-  private javax.swing.JCheckBox jCheckBoxRange;
   private javax.swing.JLabel jLabel1;
+  private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JSeparator jSeparator1;
+  private javax.swing.JTextArea jTextArea1;
   private javax.swing.JToggleButton jToggleButton2;
-  private javax.swing.JCheckBox magnifierCheckBox;
-  private javax.swing.JToggleButton moveButt;
   private javax.swing.JToggleButton reserButt;
-  private javax.swing.JCheckBox zoomAnchorCheckbox_X;
-  private javax.swing.JCheckBox zoomAnchorCheckbox_Y;
-  private javax.swing.JToggleButton zoomIn;
   private javax.swing.JLabel zoomLabel;
-  private javax.swing.JToggleButton zoomOut;
   // End of variables declaration//GEN-END:variables
 
-  public void stateChanged(ChangeEvent e) {
-    JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-    try {
-      Object src = e.getSource();
-      BoundedRangeModel scrollBarModel = scrollBar.getModel();
-      if (src == scrollBarModel) {
-        int val = scrollBarModel.getValue();
-        int ext = scrollBarModel.getExtent();
-//         inFocus.getXYPlot() = (XYPlot)inFocus.getChartPanel().getChart().getPlot();
-        if (inFocus.getXYPlot() instanceof XYPlot) {
-          XYPlot hvp = (XYPlot) inFocus.getXYPlot();
-          ValueAxis axis = hvp.getDomainAxis();
-          // avoid problems
-          inFocus.getchart().removeChangeListener(this);
-          axis.setRange(val / this.scrollFactor, (val + ext) / this.scrollFactor);
-          // restore chart listener
-          inFocus.getchart().addChangeListener(this);
-        }
-      }
-    } catch (Exception ex) {
-      ex.printStackTrace();
-    }
-  }
-
-  public void chartChanged(ChartChangeEvent arg0) {
-    JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-
-    try {
-
-
-      BoundedRangeModel scrollBarModel = this.scrollBar.getModel();
-      if (scrollBarModel == null) {
-        return;
-      }
-      boolean chartIsZoomed = false;
-      inFocus.getXYPlot();
-      if (inFocus.getXYPlot() instanceof XYPlot) {
-        XYPlot hvp = (XYPlot) inFocus.getXYPlot();
-        ValueAxis xAxis = hvp.getDomainAxis();
-        Range xAxisRange = xAxis.getRange();
-        // avoid recursion
-        scrollBarModel.removeChangeListener(this);
-        int low = (int) (xAxisRange.getLowerBound() * this.scrollFactor);
-        scrollBarModel.setValue(low);
-        int ext = (int) (xAxisRange.getUpperBound() * this.scrollFactor - low);
-        scrollBarModel.setExtent(ext);
-        // restore
-        scrollBarModel.addChangeListener(this);
-        // check if zoomed horizontally
-        //Range hdr = hvp.getHorizontalDataRange(xAxis);
-        Range hdr = hvp.getDataRange(xAxis);
-        double len = hdr == null ? 0 : hdr.getLength();
-        chartIsZoomed |= xAxisRange.getLength() < len;
-      }
-      if (!chartIsZoomed && inFocus.getXYPlot() instanceof XYPlot) {
-        // check if zoomed vertically
-        XYPlot vvp = (XYPlot) inFocus.getXYPlot();
-        ValueAxis yAxis = vvp.getRangeAxis();
-        if (yAxis != null) {
-          chartIsZoomed = yAxis.getLowerBound() > this.primYMinMax[0] || yAxis.getUpperBound() < this.primYMinMax[1];
-
-          // right y-axis
-          if (!chartIsZoomed && inFocus.getXYPlot() instanceof XYPlot) {
-            XYPlot xyPlot = (XYPlot) inFocus.getXYPlot();
-            yAxis = xyPlot.getDomainAxis(0);//getSecondaryRangeAxis(0);
-            if (yAxis != null) {
-              chartIsZoomed = yAxis.getLowerBound() > this.secondYMinMax[0] || yAxis.getUpperBound() < this.secondYMinMax[1];
-            }
-          }
-        }
-      }
-
-      this.scrollBar.setEnabled(chartIsZoomed);
-
-    } catch (Exception ex) {
-      ex.printStackTrace();
-    }
-  }
-
-  public void recalcScrollBar(Plot plot) {
-    JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-
-
-    if (inFocus.getXYPlot() instanceof XYPlot) {
-      XYPlot hvp = (XYPlot) inFocus.getXYPlot();
-      ValueAxis axis = hvp.getDomainAxis();
-
-      axis.setLowerMargin(0);
-      axis.setUpperMargin(0);
-
-      Range rng = axis.getRange();
-
-      BoundedRangeModel scrollBarModel = scrollBar.getModel();
-      int len = scrollBarModel.getMaximum() - scrollBarModel.getMinimum();
-      if (rng.getLength() > 0) {
-        this.scrollFactor = len / rng.getLength();
-      }
-
-      double dblow = rng.getLowerBound();
-      int ilow = (int) (dblow * this.scrollFactor);
-      scrollBarModel.setMinimum(ilow);
-      int val = ilow;
-      scrollBarModel.setValue(val);
-
-      double dbup = rng.getUpperBound();
-      int iup = (int) (dbup * this.scrollFactor);
-      scrollBarModel.setMaximum(iup);
-      int ext = iup - ilow;
-      scrollBarModel.setExtent(ext);
-
-      scrollBarModel.addChangeListener(this);
-    }
-  }
+ 
 }

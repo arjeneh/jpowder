@@ -127,11 +127,11 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
     jLabel1.setText("Rescale YData");
 
     dataSetComboBox.setEditable(true);
-    dataSetComboBox.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+    dataSetComboBox.setFont(new java.awt.Font("Tahoma", 1, 10));
     dataSetComboBox.setMaximumRowCount(20);
 
-    OperationComboBox.setFont(new java.awt.Font("Tahoma", 1, 12));
-    OperationComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "+", "-", "x" }));
+    OperationComboBox.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+    OperationComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "+", "-", "x", "/" }));
 
     jLabel2.setText("DataSet:");
 
@@ -247,6 +247,10 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
                if (OperationComboBox.getSelectedItem().toString().equals("x")) {
         
             inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y *newY, j);
+          }
+                  if (OperationComboBox.getSelectedItem().toString().equals("/")) {
+
+            inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y /newY, j);
           }
         }
         }

@@ -32,8 +32,7 @@ import org.jdesktop.jxlayer.plaf.AbstractLayerUI;
 public class Magnifier extends AbstractLayerUI {
 
     private int radius ;
-    private Shape shape;
-    private Rectangle2D.Double rectangle;
+
 
 
 
@@ -113,10 +112,10 @@ public class Magnifier extends AbstractLayerUI {
         double drawSize = 2 * (baseRadius + strokeAdjust);
         double clipSize = 2 * scaledRadius;
  
-        Rectangle2D drawGlass = new Rectangle2D.Double(-strokeAdjust,
+         Ellipse2D drawGlass = new Ellipse2D.Double(-strokeAdjust,
                 -strokeAdjust, drawSize, drawSize);
 
-        Rectangle2D clipGlass = new Rectangle2D.Double(0, 0, clipSize, clipSize);
+        Ellipse2D clipGlass = new Ellipse2D.Double(0, 0, clipSize, clipSize);
         g2.setRenderingHint(RenderingHints.KEY_RENDERING,
                 RenderingHints.VALUE_RENDER_QUALITY);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -178,7 +177,7 @@ public class Magnifier extends AbstractLayerUI {
      *
      * @return The paint.
      */
-    private Paint createPaint(Rectangle2D glass, boolean transparent) {
+    private Paint createPaint(Ellipse2D glass, boolean transparent) {
         Point2D center = new Point2D.Double(glass.getCenterX(),
                 glass.getCenterY());
         float radius = (float) (glass.getCenterX() - glass.getX());

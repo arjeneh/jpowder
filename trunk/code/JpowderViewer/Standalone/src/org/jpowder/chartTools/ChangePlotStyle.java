@@ -10,15 +10,15 @@
  */
 package org.jpowder.chartTools;
 
-import java.awt.geom.Ellipse2D;
+
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
 import javax.swing.JLabel;
+import org.jfree.chart.editor.ChartEditorManager;
+import org.jfree.chart.editor.DefaultChartEditorFactory;
 import org.jfree.chart.renderer.xy.XYErrorRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jpowder.InfoPanel;
 import org.jpowder.JPowder;
-import org.jpowder.JPowderDesktopManager;
 import org.jpowder.JpowderInternalframe;
 import org.jpowder.dataset.DataSetWithErrors;
 
@@ -29,7 +29,7 @@ import org.jpowder.dataset.DataSetWithErrors;
 public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
 
   private ChartToolsIcon chartToolsIcon;
-  private JPowderDesktopManager jPowderDesktopManager;
+
 
 
 //   JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
@@ -75,7 +75,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
       }
     });
 
-    jCheckBox3.setText("Turn off the error bar");
+    jCheckBox3.setText("Turn off the error bars");
     jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         jCheckBox3ActionPerformed(evt);
@@ -94,7 +94,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     jTextArea1.setRows(5);
     jTextArea1.setText("Click on the Check Box to change the plotted data in the frame \nwhich is in focus.This is also \navaliable when you right click on\nthe frame.   ");
     jTextArea1.setWrapStyleWord(true);
-    jTextArea1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(240, 240, 240), 1, true));
+    jTextArea1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(236, 233, 216), 1, true));
     jTextArea1.setOpaque(false);
     jScrollPane1.setViewportView(jTextArea1);
 
@@ -183,9 +183,14 @@ if(JpowderInternalframe.getnumberOfJpowderInternalframe()==0){
         boolean status = renderer.getBaseShapesVisible();
       renderer.setSeriesShape( 0, new Rectangle2D.Double( -1.0, -1.0, 3.0, 3.0 ) );
 //         renderer.setSeriesShape( 0, new Ellipse2D.Double( -1.0, -1.0, 3.0, 3.0 ) );
-
+     
         renderer.setBaseShapesVisible(!status);
+    
+
+ 
       }
+      
+
 
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
