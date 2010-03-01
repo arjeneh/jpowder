@@ -37,6 +37,7 @@ public class DataVisibleInChart extends JPanel  {
     checkboxList.setLayout(new BorderLayout());
     checkboxList.setFont(new java.awt.Font("Tahoma", 0, 12));
 
+
     file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
    file_sp.setPreferredSize(new java.awt.Dimension(270, 230));
@@ -58,15 +59,15 @@ public class DataVisibleInChart extends JPanel  {
    * @param xyplot
    * @param datasets
    */
-  public void newChartInFocus(XYPlot xyplot,Vector<DataSet> datasets) {
-       clear();
-    for (DataSet d : datasets) {
-      CheckableFileItem a = new CheckableFileItem(d.getFileName());
-      
+  public void newChartInFocus(XYPlot xyplot, Vector<DataSet> datasets) {
+    clear();
+
+    for (int i = 0; i < datasets.size(); i++) {
+      CheckableFileItem a = new CheckableFileItem(datasets.elementAt(i).getFileName());
       listModel.addCheckableFile(a);
     }
-    
-       checkboxList.setm_plot(xyplot);
+
+    checkboxList.setm_plot(xyplot);
     System.out.println("chartInFocus chartInFocus chartInFocus");
   }
 }

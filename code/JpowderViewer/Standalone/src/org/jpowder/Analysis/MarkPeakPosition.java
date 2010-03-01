@@ -242,7 +242,8 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
         JXLayer layer = new JXLayer(inFocus.getChartPanel());
         Magnifier magnifier = new Magnifier();
-        magnifier.setRadius(22);
+        magnifier.setMagnifyingFactor(4);
+        magnifier.setRadius(20);
         layer.setUI(magnifier);
         inFocus.setContentPane(layer);
 
@@ -394,7 +395,12 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
       JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
       inFocus.removeMarkedPeakPosition(x);
-      jTextPeakArea.setText(string[string.length - 1]);
+
+//      jTextPeakArea.setText(string[string.length - 1]);
+
+//      inFocus.getXYPlot().removeDomainMarker(domainRangeMarker.get(string.length-1));
+
+
     }//GEN-LAST:event_removeButtActionPerformed
 
     private void jTextPeakAreaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextPeakAreaMouseReleased

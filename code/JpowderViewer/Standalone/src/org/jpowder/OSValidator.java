@@ -11,7 +11,10 @@ package org.jpowder;
  */
 public class OSValidator{
 
-
+/**
+ * the method check the if the operating system is windows.
+ * @return string
+ */
 
 	public static boolean isWindows(){
 
@@ -20,7 +23,10 @@ public class OSValidator{
 	    return (os.indexOf( "win" ) >= 0);
 
 	}
-
+/**
+ * the method check the if the operating system is Mac.
+ * @return string
+ */
 	public static boolean isMac(){
 
 		String os = System.getProperty("os.name").toLowerCase();
@@ -28,7 +34,10 @@ public class OSValidator{
 	    return (os.indexOf( "mac" ) >= 0);
 
 	}
-
+/**
+ * the method check the if the operating system is Linux.
+ * @return string
+ */
 	public static boolean isUnix(){
 
 		String os = System.getProperty("os.name").toLowerCase();

@@ -13,10 +13,6 @@ import org.jfree.chart.labels.StandardXYToolTipGenerator;
 import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.chart.plot.DatasetRenderingOrder;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.data.xy.YIntervalSeries;
-import org.jfree.data.xy.YIntervalSeriesCollection;
 import org.jfree.ui.RectangleInsets;
 
 
@@ -32,7 +28,6 @@ import org.jfree.ui.RectangleInsets;
 public class FilesPlotter extends DatasetPlotter {
 
   private static Vector<DataSet> datasets;
-  private int datasetIndex = 0;
   public XYPlot plot;
   private static boolean createLegend=false;
   private static JFreeChart chart;
@@ -122,9 +117,7 @@ public class FilesPlotter extends DatasetPlotter {
     XYToolTipGenerator tooltip = new StandardXYToolTipGenerator(
             "{1},{2}", new DecimalFormat("0.000"), new DecimalFormat("0.000"));
     if (datasets.elementAt(0) instanceof DataSetNoErrors) {
-      //plot = new XYPlot(
-      //        createXYSeriesCollectionFromDataset(datasets.elementAt(0)),
-      //        xAxis, yAxis, renderer1);
+  
       plot = new XYPlot(
               new JpowderXYDataset(datasets.elementAt(0)),
               xAxis, yAxis, renderer1);
@@ -132,8 +125,7 @@ public class FilesPlotter extends DatasetPlotter {
     } else {
       plot = new XYPlot(new JpowderInternvalXYDataset((DataSetWithErrors) datasets.elementAt(0)),
               xAxis, yAxis, renderer2);
-      //plot = new XYPlot(createYIntervalSeriesCollectionFromDataset(datasets.elementAt(0)),
-      //        xAxis, yAxis, renderer2);
+
       renderer2.setToolTipGenerator(tooltip);
     }
     plot.setBackgroundPaint(ChartColor.lightGray);
@@ -150,12 +142,12 @@ public class FilesPlotter extends DatasetPlotter {
       rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
       if (datasets.elementAt(i) instanceof DataSetNoErrors) {
-        //plot.setDataset(i, createXYSeriesCollectionFromDataset(datasets.elementAt(i)));
+
         plot.setDataset(i, new JpowderXYDataset(datasets.elementAt(i)));
 
         plot.setRenderer(i, renderer3);
       } else {
-        //plot.setDataset(i, createYIntervalSeriesCollectionFromDataset(datasets.elementAt(i)));
+
         plot.setDataset(i, new JpowderInternvalXYDataset((DataSetWithErrors) datasets.elementAt(i)));
         plot.setRenderer(i, renderer4);
       }
@@ -164,48 +156,6 @@ public class FilesPlotter extends DatasetPlotter {
     chart = new JFreeChart(null,null,plot,getLegend());// for getting the chart header
     chart.setBackgroundPaint(Color.white);
     return chart;
-  }
-
-  /**
-   * Create collection which contains a XYSeriesCollection container for each
-   * DataSetNoErrors
-   * @param dataset
-   * @return datasetCol
-   */
-  public static XYSeriesCollection createXYSeriesCollectionFromDataset(DataSet dataset) {
-    XYSeriesCollection datasetCol = new XYSeriesCollection();
-    XYSeries series = new XYSeries(dataset.getFileName());
-    Vector<Double> x = dataset.getX();
-    Vector<Double> y = dataset.getY();
-    for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
-      series.add(x.elementAt(rowIndex), y.elementAt(rowIndex));
-    }//for
-    datasetCol.addSeries(series);
-    return datasetCol;
-  }
-
-  /**
-   * Create collection which contains a YIntervalSeries container for each
-   * DataSetWithErrors
-   * @param dataset
-   * @return datasetCol
-   */
-  public static YIntervalSeriesCollection createYIntervalSeriesCollectionFromDataset(DataSet dataset) {
-    YIntervalSeriesCollection datasetCol = new YIntervalSeriesCollection();
-    YIntervalSeries s1 = new YIntervalSeries(dataset.getFileName());
-    DataSetWithErrors xye = (DataSetWithErrors) dataset;
-    Vector<Double> x = xye.getX();
-    Vector<Double> y = xye.getY();
-    Vector<Double> minusY = xye.getYLower();
-    Vector<Double> addY = xye.getYUpper();
-    for (int rowIndex = 0; rowIndex < x.size(); rowIndex++) {
-      s1.add(x.elementAt(rowIndex), y.elementAt(rowIndex),
-              minusY.elementAt(rowIndex), addY.elementAt(rowIndex));
-    }//for
-
-    datasetCol.addSeries(s1);
-
-    return datasetCol;
   }
 
   /**
@@ -226,11 +176,9 @@ public class FilesPlotter extends DatasetPlotter {
       rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
       if (data.elementAt(i) instanceof DataSetNoErrors) {
-        //plot.setDataset(newPlotIndex, FilesPlotter.createXYSeriesCollectionFromDataset(data.elementAt(i)));
           plot.setDataset(newPlotIndex, new JpowderXYDataset(data.elementAt(i)));
         plot.setRenderer(newPlotIndex, renderer3);
-      } else {
-        //plot.setDataset(newPlotIndex, FilesPlotter.createYIntervalSeriesCollectionFromDataset(data.elementAt(i)));
+      } else {    
         plot.setDataset(newPlotIndex, new JpowderInternvalXYDataset((DataSetWithErrors) data.elementAt(i)));
         plot.setRenderer(newPlotIndex, renderer4);
       }

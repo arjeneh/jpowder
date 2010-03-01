@@ -48,8 +48,8 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
   private JFreeChart chart;
   private JPowder jpowder = new JPowder();
   private Vector<Double> markedPeakPosition = new Vector<Double>();
-  private static int left;
-  private static int top;
+  public static int left;
+  public static int top;
   private static int width=300,height=300;
   private String name = new String();
   private DataSet oneDataset = null;
@@ -65,7 +65,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
     super();
     
     numberOfJpowderInternalframe++;
-    System.out.println("\n\n" + numberOfJpowderInternalframe);
+
     internalframeStackes.push(this);
     javax.swing.JPanel chartPanel = new javax.swing.JPanel();
 
@@ -92,7 +92,6 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
     this.setMaximizable(true);
     this.setResizable(true);
     this.setIconifiable(true);
-    this.setEnabled(true);
     this.setSize(width,height);
     incr();
        SwingUtilities.invokeLater(new Runnable() {
@@ -104,7 +103,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
   /**
    *Increment the location of each interframe is created by a certain value.
    */
-   private static void incr() {
+   public static  void incr() {
     left += 30;
     top += 30;
 
@@ -123,6 +122,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
        top=420;
      
      }
+   
   }
 
 /**
@@ -152,6 +152,22 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
   }
   /**
    *
+   * @param width
+   */
+  public static void  setLeft(int left){
+  JpowderInternalframe.left=left;
+  }
+   public static void  setTop(int top){
+  JpowderInternalframe.top=top;
+  }
+
+   public void countNumberDatasetPlotted(){
+
+   xyPlot.getDatasetCount();
+
+   }
+  /**
+   * this methods return ChartPanel.
    * @return
    */
   public ChartPanel getChartPanel() {
@@ -177,8 +193,9 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
   /**
    *
    */
-  public static void decrementnumberOfJpowderInternalframe() {
+  public static int decrementnumberOfJpowderInternalframe() {
     numberOfJpowderInternalframe--;
+     return numberOfJpowderInternalframe;
   }
 
   /**
@@ -240,18 +257,6 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
    public void removeAllMarkedPeakPosition() {
     markedPeakPosition.clear();
   }
-//    public Vector<Double> MarkedPeakPosition (){
-//    return markedPeakPosition.removeAll(Vector<Double> true);
-//  }
-   public void setSelected(){
-    try {
-      this.setSelected(true);
-    } catch (PropertyVetoException ex) {
-      Logger.getLogger(JpowderInternalframe.class.getName()).log(Level.SEVERE, null, ex);
-    }
-      this.moveToFront();
-   }
-
 
   /**
    *
@@ -278,8 +283,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
    * @param dtde
    */
   public void drop(DropTargetDropEvent dtde) {
-    System.out.println("hashcodeeeeeeeeeee" + hashCode());
-    System.out.println("i am getting called nice..");
+
     JPowder.jpowderInternalFrameUpdate(this);
     ArrayList<File> allfiles = new ArrayList<File>();
     ArrayList<String> allfilesName = new ArrayList<String>();
@@ -381,11 +385,8 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
    */
   @Override
   public void internalFrameClosed(InternalFrameEvent e) {
-    System.out.println("widows is Closed");
     JPowder.jPowderStackUndo.push(jpowderinternalframe);
-    JpowderInternalframe.decrementnumberOfJpowderInternalframe();
-    System.out.println("the number of internalframe in the descktop pane" + JpowderInternalframe.getnumberOfJpowderInternalframe());
-    System.out.println("JpowderInternalframe.getnumberOfJpowderInternalframe()"+JpowderInternalframe.getnumberOfJpowderInternalframe());
+      System.out.println("n frame "+JpowderInternalframe.decrementnumberOfJpowderInternalframe());
     if (JpowderInternalframe.getnumberOfJpowderInternalframe() > 1 || JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
       dvic.clear();
     }
@@ -399,14 +400,7 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
    */
   @Override
   public void internalFrameActivated(InternalFrameEvent e) {
-      System.out.println("widows is Activated");
-//    try {
-//      ChartPanel chartPanel = new ChartPanel((JFreeChart) jpowderinternalframe.getchart().clone());
-//      chartPanel.setSize(jpowder.getThumbnail().getSize());
-//      jpowder.getThumbnail().add(chartPanel);
-//    } catch (CloneNotSupportedException ex) {
-//      Logger.getLogger(InternalFrameIconifyListener.class.getName()).log(Level.SEVERE, null, ex);
-//    }
+
     jpowderinternalframe = (JpowderInternalframe) e.getInternalFrame();
     JPowder.jpowderInternalFrameUpdate(jpowderinternalframe);
     DataVisibleInChart DVIC = jpowderinternalframe.getDataVisibleInChartPanel();

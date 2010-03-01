@@ -45,6 +45,7 @@ import java.awt.*;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.util.ArrayList;
 import javax.swing.*;
 import org.jfree.chart.ChartColor;
 import org.jfree.chart.ChartPanel;
@@ -96,6 +97,7 @@ public class JPowder extends JFrame implements DropTargetListener {
   public static InfoPanel infoPanelInfocus;
   public static JPowderStack jPowderStackUndo = new JPowderStack(9);
   public static JPowderStack jPowderStackRedo = new JPowderStack(9);
+
 
 //  private stackInternalFrames;
   /**
@@ -220,6 +222,11 @@ public class JPowder extends JFrame implements DropTargetListener {
     copyMenu = new javax.swing.JMenuItem();
     clossAllMenu = new javax.swing.JMenuItem();
     moveMenu = new javax.swing.JCheckBoxMenuItem();
+    windowsLayoutMenu = new javax.swing.JMenu();
+    tileMenu = new javax.swing.JMenuItem();
+    tileHorizontallyMenu = new javax.swing.JMenuItem();
+    tileVerticallyMenu = new javax.swing.JMenuItem();
+    cascadeMenu = new javax.swing.JMenuItem();
     jSeparator6 = new javax.swing.JSeparator();
     proptiesMenu = new javax.swing.JMenuItem();
     lookAndFeelMenu = new javax.swing.JMenu();
@@ -311,6 +318,7 @@ public class JPowder extends JFrame implements DropTargetListener {
 
     jScrollPane2.setViewportView(home);
 
+    chartPlotter.setBackground(new java.awt.Color(236, 233, 216));
     chartPlotter.setDesktopManager(jPowderDesktopManager);
 
     jMenuBar1.setFont(new java.awt.Font("Tahoma", 0, 36));
@@ -425,7 +433,7 @@ public class JPowder extends JFrame implements DropTargetListener {
 
     undoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
     undoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/undo_26x26.png"))); // NOI18N
-    undoMenu.setText("Undo");
+    undoMenu.setText("Undo closed frame");
     undoMenu.setToolTipText("Undo closed frame");
     undoMenu.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -436,7 +444,7 @@ public class JPowder extends JFrame implements DropTargetListener {
 
     redoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
     redoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/redo_26x26.png"))); // NOI18N
-    redoMenu.setText("Redo");
+    redoMenu.setText("Redo closed frame");
     redoMenu.setToolTipText("Redo closed frame");
     redoMenu.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -475,6 +483,42 @@ public class JPowder extends JFrame implements DropTargetListener {
       }
     });
     editMenu.add(moveMenu);
+
+    windowsLayoutMenu.setText("Layout");
+
+    tileMenu.setText("Tile");
+    tileMenu.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        tileMenuActionPerformed(evt);
+      }
+    });
+    windowsLayoutMenu.add(tileMenu);
+
+    tileHorizontallyMenu.setText("Tile Windows Horizontally ");
+    tileHorizontallyMenu.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        tileHorizontallyMenuActionPerformed(evt);
+      }
+    });
+    windowsLayoutMenu.add(tileHorizontallyMenu);
+
+    tileVerticallyMenu.setText("Tile Windows Vertically");
+    tileVerticallyMenu.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        tileVerticallyMenuActionPerformed(evt);
+      }
+    });
+    windowsLayoutMenu.add(tileVerticallyMenu);
+
+    cascadeMenu.setText("Cascade");
+    cascadeMenu.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cascadeMenuActionPerformed(evt);
+      }
+    });
+    windowsLayoutMenu.add(cascadeMenu);
+
+    editMenu.add(windowsLayoutMenu);
     editMenu.add(jSeparator6);
 
     proptiesMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
@@ -896,9 +940,6 @@ public class JPowder extends JFrame implements DropTargetListener {
         javax.swing.JOptionPane.showMessageDialog(null, "There is nothing to COPY!");
       }
 
-
-
-
     }//GEN-LAST:event_copyMenuActionPerformed
 
     private void proptiesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proptiesMenuActionPerformed
@@ -993,6 +1034,53 @@ public class JPowder extends JFrame implements DropTargetListener {
 
       }
     }//GEN-LAST:event_clossAllMenuActionPerformed
+
+    private void tileHorizontallyMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tileHorizontallyMenuActionPerformed
+
+          JInternalFrame jInternalFrames[] = chartPlotter.getAllFrames(); // get all open frames
+          chartPlotter.setLayout(new GridLayout(jInternalFrames.length, 1, 0, 0));
+          chartPlotter.updateUI();
+      
+        
+    }//GEN-LAST:event_tileHorizontallyMenuActionPerformed
+
+    private void tileVerticallyMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tileVerticallyMenuActionPerformed
+           JInternalFrame jInternalFrames[] = chartPlotter.getAllFrames(); // get all open frames
+          chartPlotter.setLayout(new GridLayout(1, jInternalFrames.length, 0, 0));
+          chartPlotter.updateUI();
+    }//GEN-LAST:event_tileVerticallyMenuActionPerformed
+
+    private void cascadeMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cascadeMenuActionPerformed
+
+
+      SwingUtilities.invokeLater(new Runnable() {
+
+        public void run() {
+          JInternalFrame jInternalFrames[] = chartPlotter.getAllFrames(); // get all open frames
+          int top = 0;
+          int left = 0;
+          for (int i = 0; i < jInternalFrames.length; i++) {
+            chartPlotter.setLayout(null);
+            internalFrameInFocus.select();
+            jInternalFrames[i].setSize(internalFrameInFocus.getSize());
+            jInternalFrames[i].setLocation(top, left);
+            top += 30;
+            left += 30;
+            chartPlotter.updateUI();
+            internalFrameInFocus.updateUI();
+          }
+        }
+      });
+
+         
+   
+    }//GEN-LAST:event_cascadeMenuActionPerformed
+
+    private void tileMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tileMenuActionPerformed
+         JInternalFrame jInternalFrames[] = chartPlotter.getAllFrames(); // get all open frames
+      chartPlotter.setLayout(new GridLayout(jInternalFrames.length, jInternalFrames.length, 20, 20));
+      chartPlotter.updateUI();
+    }//GEN-LAST:event_tileMenuActionPerformed
 
   /**
    * responsible for saving and writng the chart as pdf
@@ -1300,6 +1388,7 @@ public class JPowder extends JFrame implements DropTargetListener {
   private javax.swing.JRadioButtonMenuItem Windows;
   private javax.swing.JPanel analysistab;
   private javax.swing.JMenuItem appletMenu;
+  private javax.swing.JMenuItem cascadeMenu;
   private javax.swing.JDesktopPane chartPlotter;
   private javax.swing.JPanel chartToolstab;
   private javax.swing.JMenuItem clossAllMenu;
@@ -1327,8 +1416,12 @@ public class JPowder extends JFrame implements DropTargetListener {
   private javax.swing.JMenuItem redoMenu;
   private javax.swing.JMenu saveAs;
   private javax.swing.JPanel thumbnailPanel;
+  private javax.swing.JMenuItem tileHorizontallyMenu;
+  private javax.swing.JMenuItem tileMenu;
+  private javax.swing.JMenuItem tileVerticallyMenu;
   private javax.swing.JPanel treetab;
   private javax.swing.JMenuItem undoMenu;
+  private javax.swing.JMenu windowsLayoutMenu;
   private javax.swing.JMenuItem workspaceMenu;
   // End of variables declaration//GEN-END:variables
 }

@@ -89,7 +89,7 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="jCheckBox3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Turn off the error bar"/>
+        <Property name="text" type="java.lang.String" value="Turn off the error bars"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox3ActionPerformed"/>
@@ -135,7 +135,7 @@
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                 <LineBorder roundedCorners="true">
-                  <Color PropertyName="color" blue="f0" green="f0" red="f0" type="rgb"/>
+                  <Color PropertyName="color" blue="d8" green="e9" red="ec" type="rgb"/>
                 </LineBorder>
               </Border>
             </Property>
