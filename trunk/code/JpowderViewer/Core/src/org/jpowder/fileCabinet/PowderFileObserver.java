@@ -13,7 +13,6 @@ public interface PowderFileObserver {
      *
      * @param data powder diffraction data.
      */
-    public void powderFileCabinetUpdate (Subject data);
-
+    public void powderFileCabinetUpdate(Subject data);
 }
 

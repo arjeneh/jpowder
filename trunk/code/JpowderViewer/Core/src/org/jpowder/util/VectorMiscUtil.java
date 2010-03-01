@@ -18,7 +18,7 @@ public class VectorMiscUtil {
      * */
     public static Vector initXYEData() {
         Vector row1 = new Vector();
-        
+
         row1.add(3.000);
         row1.add(171.863);
         row1.add(14.82657);
@@ -38,10 +38,10 @@ public class VectorMiscUtil {
         data.add(row2);
         data.add(row3);
 
-         
+
 
         return data;
-        
+
     }
 
     public static Vector initXYData() {
@@ -82,7 +82,6 @@ public class VectorMiscUtil {
         return a;
     }
 
-
     /** 
      * Get the last column of 2D vector, in this case we have 3 columns dataset.
      * @param ori is the vector to be extracted
@@ -106,7 +105,7 @@ public class VectorMiscUtil {
         return vLastColumn;
     }
 
-    public static Vector getAllElementOf2DVector(Vector<Vector> ori ) {
+    public static Vector getAllElementOf2DVector(Vector<Vector> ori) {
         Vector output = new Vector();
         Vector vRow = new Vector();
 

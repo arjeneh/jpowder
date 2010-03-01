@@ -15,59 +15,55 @@ import org.jpowder.JCheckboxList.CheckableFileItem;
 import org.jpowder.JCheckboxList.JCheckBoxJList;
 import org.jpowder.dataset.DataSet;
 
-
-
 /**
  * @author Kreecha Puphaiboon
  *
  */
-public class DataVisibleInChart extends JPanel  {
+public class DataVisibleInChart extends JPanel {
 
-  public FileNameListModel listModel;
-  private JCheckBoxJList checkboxList;
-  private javax.swing.JScrollPane file_sp;
+    public FileNameListModel listModel;
+    private JCheckBoxJList checkboxList;
+    private javax.swing.JScrollPane file_sp;
 
-
-  public DataVisibleInChart() {
-
-
-    listModel = new FileNameListModel();
-
-    checkboxList = new JCheckBoxJList(listModel);
-    checkboxList.setLayout(new BorderLayout());
-    checkboxList.setFont(new java.awt.Font("Tahoma", 0, 12));
+    public DataVisibleInChart() {
 
 
-    file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-   file_sp.setPreferredSize(new java.awt.Dimension(270, 230));
-    add(file_sp);
+        listModel = new FileNameListModel();
 
-  }
+        checkboxList = new JCheckBoxJList(listModel);
+        checkboxList.setLayout(new BorderLayout());
+        checkboxList.setFont(new java.awt.Font("Tahoma", 0, 12));
 
-  /**
-   * clear the selection from the checkboxlist.
-   */
-  public void clear() 
-  {
-    listModel.clear();
-  }
 
-  /**
-   * To inform DataVisibleInChart that a new chart has been highlighted and
-   * pass it information so that DataVisibleInChart can update its checkbox list
-   * @param xyplot
-   * @param datasets
-   */
-  public void newChartInFocus(XYPlot xyplot, Vector<DataSet> datasets) {
-    clear();
+        file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        file_sp.setPreferredSize(new java.awt.Dimension(270, 230));
+        add(file_sp);
 
-    for (int i = 0; i < datasets.size(); i++) {
-      CheckableFileItem a = new CheckableFileItem(datasets.elementAt(i).getFileName());
-      listModel.addCheckableFile(a);
     }
 
-    checkboxList.setm_plot(xyplot);
-    System.out.println("chartInFocus chartInFocus chartInFocus");
-  }
+    /**
+     * clear the selection from the checkboxlist.
+     */
+    public void clear() {
+        listModel.clear();
+    }
+
+    /**
+     * To inform DataVisibleInChart that a new chart has been highlighted and
+     * pass it information so that DataVisibleInChart can update its checkbox list
+     * @param xyplot
+     * @param datasets
+     */
+    public void newChartInFocus(XYPlot xyplot, Vector<DataSet> datasets) {
+        clear();
+
+        for (int i = 0; i < datasets.size(); i++) {
+            CheckableFileItem a = new CheckableFileItem(datasets.elementAt(i).getFileName());
+            listModel.addCheckableFile(a);
+        }
+
+        checkboxList.setm_plot(xyplot);
+        System.out.println("chartInFocus chartInFocus chartInFocus");
+    }
 }

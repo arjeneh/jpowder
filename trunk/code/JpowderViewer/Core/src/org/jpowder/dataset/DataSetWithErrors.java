@@ -64,6 +64,5 @@ public class DataSetWithErrors extends DataSet {
     public void setYUpper(Vector yUpper) {
         this.yUpper = yUpper;
     }
-    
 }
 

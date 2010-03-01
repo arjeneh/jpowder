@@ -1,6 +1,4 @@
-
 package org.jpowder.JCheckboxList;
-
 
 import java.awt.Color;
 import java.awt.Component;
@@ -14,7 +12,6 @@ import org.jpowder.jfreechart.FilesPlotter;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 public class CheckFileListRenderer extends CheckFileRenderer implements ListCellRenderer {
 
     private Icon commonIcon;
@@ -29,13 +26,13 @@ public class CheckFileListRenderer extends CheckFileRenderer implements ListCell
         // TODO: Modify for draw zebra stripe.
         //final java.awt.Component c = ren.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
         /*if (!isSelected && drawStripes) {
-            c.setBackground( rowColors[index & 1] );
+        c.setBackground( rowColors[index & 1] );
         }*/
         setEnabled(list.isEnabled());
         //
         check.setSelected(((CheckableFileItem) value).isSelected());
         //
-       // label.setFont(list.getFont());
+        // label.setFont(list.getFont());
         label.setForeground((Color) FilesPlotter.getSeriescolors(index));
         label.setText(value.toString());
         label.setSelected(true);//hilighting the string

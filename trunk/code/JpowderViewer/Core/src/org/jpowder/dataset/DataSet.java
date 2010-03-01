@@ -3,20 +3,16 @@ package org.jpowder.dataset;
 import java.util.Vector;
 import org.jpowder.util.VectorMiscUtil;
 
-
 /**
  * Base class for holding the content of a powder diffraction file
  *
  *
  */
-public abstract  class DataSet
-{
+public abstract class DataSet {
 
     private Vector<Double> x;
     private Vector<Double> y;
-
     private String fileName;
-  
 
     //@param data: data from a powder diffraction file
     //@param fileName: filename of powder diffraction file.
@@ -27,7 +23,6 @@ public abstract  class DataSet
         this.x = VectorMiscUtil.getColumn(data, 0);
         this.y = VectorMiscUtil.getColumn(data, 1);
     }
-
 
     /// Do we really need this method
     public abstract String description();
@@ -55,7 +50,5 @@ public abstract  class DataSet
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
-
-  
 }
 

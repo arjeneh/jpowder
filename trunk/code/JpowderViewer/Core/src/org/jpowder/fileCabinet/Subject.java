@@ -15,14 +15,13 @@ public interface Subject {
      *
      * @param o The observer which you want to register.
      */
-    public void registerObserver (PowderFileObserver o);
+    public void registerObserver(PowderFileObserver o);
 
-    public void removeObserver (PowderFileObserver o);
+    public void removeObserver(PowderFileObserver o);
 
     /**
      * Method which notify observers
      */
-    public void notifyObservers ();
-
+    public void notifyObservers();
 }
 

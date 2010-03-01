@@ -34,53 +34,53 @@ public class ReadWriteFileUtil {
     //Process the file information items into the table
     //return a vector which can be parsed as multi dimensional array .
 /*    public static Vector getLocalFileToTable(File aFile, JPowder theframe) {
-        String aLine;
-        Vector data = new Vector();
-        File file = aFile;
-        double filter = 0;
-        double compare = 0; //make sure things are number.
-        JPowder frame = theframe;
+    String aLine;
+    Vector data = new Vector();
+    File file = aFile;
+    double filter = 0;
+    double compare = 0; //make sure things are number.
+    JPowder frame = theframe;
 
-        try {
-            FileInputStream fis = new FileInputStream(file);
-            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+    try {
+    FileInputStream fis = new FileInputStream(file);
+    BufferedReader br = new BufferedReader(new InputStreamReader(fis));
 
-            while ((aLine = br.readLine()) != null) {
-                // create a vector to hold the field values
-                Vector newRow = new Vector();
-                StringTokenizer st2 = new StringTokenizer(aLine);
-                int numToken = st2.countTokens();
-                for (int i = 0; i < numToken; i++) { //< numtoken -1
-                    //ignore the last STD by minusing 1.
-                    String stoken = st2.nextToken();
-                    compare = Double.parseDouble(stoken);//check number or not, if yes add element
-                    if (compare >= filter) {
-                        newRow.addElement(stoken);
-                    } else {
-                        return null;
-                    }
-                } //for
-                data.addElement(newRow);
-            }//while readLine
+    while ((aLine = br.readLine()) != null) {
+    // create a vector to hold the field values
+    Vector newRow = new Vector();
+    StringTokenizer st2 = new StringTokenizer(aLine);
+    int numToken = st2.countTokens();
+    for (int i = 0; i < numToken; i++) { //< numtoken -1
+    //ignore the last STD by minusing 1.
+    String stoken = st2.nextToken();
+    compare = Double.parseDouble(stoken);//check number or not, if yes add element
+    if (compare >= filter) {
+    newRow.addElement(stoken);
+    } else {
+    return null;
+    }
+    } //for
+    data.addElement(newRow);
+    }//while readLine
 
-            fis.close();
-            br.close();
+    fis.close();
+    br.close();
 
-            return data;
-        } catch (MalformedURLException e) {
-            System.out.println("Malformed URL = " + e);
-            return null;
-        } catch (IOException io) {
-            System.out.println("IOException throws " + io);
-            return null;
-        } catch (java.lang.NumberFormatException nfe) {
-            //TODO: prevent - java.lang.NumberFormatException: For input string: "xxx"
-            javax.swing.JOptionPane.showMessageDialog((Component) frame, "The file contains an alphabet, we can not process.");
-            System.out.println("NumberFormatException throws " + nfe);
-            return null;
-        }
+    return data;
+    } catch (MalformedURLException e) {
+    System.out.println("Malformed URL = " + e);
+    return null;
+    } catch (IOException io) {
+    System.out.println("IOException throws " + io);
+    return null;
+    } catch (java.lang.NumberFormatException nfe) {
+    //TODO: prevent - java.lang.NumberFormatException: For input string: "xxx"
+    javax.swing.JOptionPane.showMessageDialog((Component) frame, "The file contains an alphabet, we can not process.");
+    System.out.println("NumberFormatException throws " + nfe);
+    return null;
+    }
     }//end readLocalFileToTable
- */
+     */
 
     //For users, the example is given. It read from our net url.
     public void getURLFileToTable(java.net.URL codeURL) {
@@ -116,7 +116,7 @@ public class ReadWriteFileUtil {
         java.io.Reader r = new java.io.BufferedReader(new java.io.FileReader(filename));
         java.io.StreamTokenizer stok = new java.io.StreamTokenizer(r);
         stok.parseNumbers();
-        
+
         double sum = 0;
         stok.nextToken();
         while (stok.ttype != java.io.StreamTokenizer.TT_EOF) {

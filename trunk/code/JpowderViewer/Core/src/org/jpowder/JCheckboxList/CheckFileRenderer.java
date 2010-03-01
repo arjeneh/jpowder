@@ -7,18 +7,15 @@ package org.jpowder.JCheckboxList;
 /**
  *
  */
-
 import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.tree.*;
 import javax.swing.plaf.ColorUIResource;
 
-
 public class CheckFileRenderer extends JPanel implements TreeCellRenderer {
 
     protected JCheckBox check;
-
     protected TreeLabel label;
 
     public CheckFileRenderer() {
@@ -26,21 +23,22 @@ public class CheckFileRenderer extends JPanel implements TreeCellRenderer {
         add(check = new JCheckBox());
         add(label = new TreeLabel());
     }
+
     public Component getTreeCellRendererComponent(JTree tree, Object value,
             boolean isSelected, boolean expanded,
             boolean leaf, int row, boolean hasFocus) {
         String stringValue = tree.convertValueToText(value, isSelected,
                 expanded, leaf, row, hasFocus);
         setEnabled(tree.isEnabled());
-       // check.setSelected(((CheckFileNode) value).isSelected());
+        // check.setSelected(((CheckFileNode) value).isSelected());
         label.setFont(tree.getFont());
         label.setText(stringValue);
         label.setSelected(isSelected);
         label.setFocus(hasFocus);
         if (leaf) {
-         //   label.setIcon(UIManager.getIcon("Tree.leafIcon"));
+            //   label.setIcon(UIManager.getIcon("Tree.leafIcon"));
         } else if (expanded) {
-           /// label.setIcon(UIManager.getIcon("Tree.openIcon"));
+            /// label.setIcon(UIManager.getIcon("Tree.openIcon"));
         } else {
             ///label.setIcon(UIManager.getIcon("Tree.closedIcon"));
         }
@@ -85,16 +83,16 @@ public class CheckFileRenderer extends JPanel implements TreeCellRenderer {
         boolean isSelected;
         boolean hasFocus;
         private JCheckBoxJList checkboxList;
-        
+
         public TreeLabel() {
 
-          System.out.println("");
+            System.out.println("");
         }
 
         @Override
         public void setBackground(Color color) {
             if (color instanceof ColorUIResource) {
-               color = null;
+                color = null;
             }
             super.setBackground(color);
         }
@@ -105,10 +103,9 @@ public class CheckFileRenderer extends JPanel implements TreeCellRenderer {
             if ((str = getText()) != null) {
                 if (0 < str.length()) {
                     if (isSelected) {
-          
-                    g.setColor(Color.WHITE);
-                    } else {
 
+                        g.setColor(Color.WHITE);
+                    } else {
                         //g.setColor(UIManager.getColor("Tree.textBackground"));
                     }
                     Dimension d = getPreferredSize();
@@ -145,7 +142,6 @@ public class CheckFileRenderer extends JPanel implements TreeCellRenderer {
             this.hasFocus = hasFocus;
         }
     }
-
 } 
 
 

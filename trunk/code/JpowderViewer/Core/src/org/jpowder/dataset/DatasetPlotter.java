@@ -3,7 +3,6 @@ package org.jpowder.dataset;
 import org.jpowder.jfreechart.FilesPlotter;
 import java.util.Vector;
 
-
 /**
  * Base class for (temporarely) holding the content of a powder diffraction
  * files and then create JFreeChart plots of such data
@@ -18,9 +17,8 @@ public abstract class DatasetPlotter {
     }
 
     public DatasetPlotter(Vector<DataSet> d) {
-      System.out.println("");
+        System.out.println("");
     }
-   
 
     public abstract String description();
 
@@ -55,6 +53,5 @@ public abstract class DatasetPlotter {
             return null;
         }
     }
-    
 }
 

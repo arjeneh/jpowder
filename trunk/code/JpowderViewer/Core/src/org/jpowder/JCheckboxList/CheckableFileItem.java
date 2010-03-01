@@ -1,4 +1,3 @@
-
 package org.jpowder.JCheckboxList;
 
 import java.awt.Color;
@@ -13,12 +12,10 @@ public class CheckableFileItem {
     private boolean isSelected;
     private Icon icon;
 
-
-
     public CheckableFileItem(String str) {
         this.str = str;
-        isSelected=true;
- 
+        isSelected = true;
+
     }
 
     public void setSelected(boolean b) {
@@ -42,5 +39,4 @@ public class CheckableFileItem {
     public Icon getIcon() {
         return icon;
     }
- 
 }

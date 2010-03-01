@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.jpowder.dataset;
 
 import java.io.BufferedReader;
@@ -47,7 +46,7 @@ public class XYandXYE_Reader {
                     newRow.addElement(Double.parseDouble(stringToken));
                 } //for
                 localData.addElement(newRow);
-              // System.out.println(localData);
+                // System.out.println(localData);
             }//while readLine
 
             //System.out.print("Total LineNumber is: " + lineNum);
