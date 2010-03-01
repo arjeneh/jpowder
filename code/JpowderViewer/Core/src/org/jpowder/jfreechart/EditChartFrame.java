@@ -1,4 +1,3 @@
-
 package org.jpowder.jfreechart;
 
 import java.awt.Cursor;
@@ -12,10 +11,10 @@ import org.jpowder.util.ScreenUtil;
 
 /*
  * Class name: EditChartFrame.java
-    @author: Kreecha Puphaiboon
-    Date: Created on 22 May 2007, 10:51
-    Modf:
-    Description:
+@author: Kreecha Puphaiboon
+Date: Created on 22 May 2007, 10:51
+Modf:
+Description:
  *
  * A frame allocated a chart from the main JPowder class. With functionalities
  * such as zoom, save, delete, edit and etc. But none has yet implemented!
@@ -24,17 +23,15 @@ import org.jpowder.util.ScreenUtil;
  * chartMouseClicked(ChartMouseEvent chartMouseEvent)
 
  */
-
-public class EditChartFrame extends javax.swing.JFrame{
+public class EditChartFrame extends javax.swing.JFrame {
 
     private org.jfree.chart.JFreeChart jFreeChart;
     private org.jfree.chart.ChartPanel chartPanel;
     private EditChartFrame singletonObject;
-      /** The zoom factor. */
+    /** The zoom factor. */
     private static final double ZOOM_FACTOR = 0.85;
-       /** The min/max values for the primary axis. */
+    /** The min/max values for the primary axis. */
     private double[] primYMinMax = new double[2];
-
     /** The min/max values for the secondary axis. */
     private double[] secondYMinMax = new double[2];
 
@@ -74,7 +71,7 @@ public class EditChartFrame extends javax.swing.JFrame{
         jFreeChart = null;
         chartPanel = null;
         singletonObject = null;
-    //this = null;
+        //this = null;
     }
 
     private void initComponents() {
@@ -100,7 +97,7 @@ public class EditChartFrame extends javax.swing.JFrame{
         zoomOutGraph_btn.addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent event) {
-               ChartRenderingInfo info = chartPanel.getChartRenderingInfo();
+                ChartRenderingInfo info = chartPanel.getChartRenderingInfo();
                 Rectangle2D rect = info.getPlotInfo().getDataArea();
                 zoomBoth(rect.getCenterX(), rect.getCenterY(), 1 / ZOOM_FACTOR);
 
@@ -169,29 +166,29 @@ public class EditChartFrame extends javax.swing.JFrame{
         setLocationRelativeTo(this);
         setVisible(true);
         ScreenUtil.centerFrame(this);
-    //setBounds(0, 0, screenSize.width, screenSize.height); //fill screen
+        //setBounds(0, 0, screenSize.width, screenSize.height); //fill screen
 
     }
 
-     /**
+    /**
      * Sets the pan mode.
      *
      * @param val  a boolean.
      */
     private void setPanMode(boolean val) {
 
-       this.chartPanel.setDomainZoomable(!val);
-         chartPanel.setHorizontalAxisTrace(! val);
+        this.chartPanel.setDomainZoomable(!val);
+        chartPanel.setHorizontalAxisTrace(!val);
         //this.chartPanel.setVerticalZoom(!val);
         // chartPanel.setVerticalAxisTrace(! val);
 
         if (val) {
             this.chartPanel.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
-        }
-        else {
+        } else {
             this.chartPanel.setCursor(Cursor.getDefaultCursor());
         }
     }
+
     /**
      * Zooms in on an anchor point (measured in Java2D coordinates).
      *
@@ -221,12 +218,10 @@ public class EditChartFrame extends javax.swing.JFrame{
             ValueAxis axis = hvp.getDomainAxis();
             if (axis != null) {
                 double anchorValue = axis.java2DToValue(
-                    (float) x, info.getPlotInfo().getDataArea(), hvp.getDomainAxisEdge()
-                );
+                        (float) x, info.getPlotInfo().getDataArea(), hvp.getDomainAxisEdge());
                 if (zoomFactor < 1.0) {
                     axis.resizeRange(zoomFactor, anchorValue);
-                }
-                else if (zoomFactor > 1.0) {
+                } else if (zoomFactor > 1.0) {
                     Range range = hvp.getDataRange(axis);
                     adjustRange(axis, range, zoomFactor, anchorValue);
                 }
@@ -254,17 +249,15 @@ public class EditChartFrame extends javax.swing.JFrame{
             ValueAxis primYAxis = vvp.getDomainAxis();//getRangeAxis();
             if (primYAxis != null) {
                 double anchorValue =
-                    primYAxis.java2DToValue(
-                        (float) y, info.getPlotInfo().getDataArea(), vvp.getRangeAxisEdge()
-                    );
+                        primYAxis.java2DToValue(
+                        (float) y, info.getPlotInfo().getDataArea(), vvp.getRangeAxisEdge());
                 if (zoomFactor < 1.0) {
                     // zoom in
                     primYAxis.resizeRange(zoomFactor, anchorValue);
 
-                }
-                else if (zoomFactor > 1.0) {
+                } else if (zoomFactor > 1.0) {
                     // zoom out
-                    Range range = new Range(0,jFreeChart.getXYPlot().getRangeAxisIndex(primYAxis));
+                    Range range = new Range(0, jFreeChart.getXYPlot().getRangeAxisIndex(primYAxis));
                     adjustRange(primYAxis, range, zoomFactor, anchorValue);
                 }
             }
@@ -276,7 +269,7 @@ public class EditChartFrame extends javax.swing.JFrame{
                 ValueAxis secYAxis = xyp.getRangeAxis();//SecondaryRangeAxis(0);
                 if (secYAxis != null) {
                     double anchorValue =
-                        secYAxis.java2DToValue(
+                            secYAxis.java2DToValue(
                             (float) y,
                             info.getPlotInfo().getDataArea(),
                             xyp.getRangeAxisEdge(0));//getSecondaryRangeAxisEdge(0));
@@ -284,8 +277,7 @@ public class EditChartFrame extends javax.swing.JFrame{
                         // zoom in
                         secYAxis.resizeRange(zoomFactor, anchorValue);
 
-                    }
-                    else if (zoomFactor > 1.0) {
+                    } else if (zoomFactor > 1.0) {
                         // zoom out
                         Range range = new Range(0, 200000);
                         adjustRange(secYAxis, range, zoomFactor, anchorValue);

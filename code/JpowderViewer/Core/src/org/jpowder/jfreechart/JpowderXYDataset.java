@@ -2,13 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.jpowder.jfreechart;
 
 import java.util.Vector;
 import org.jfree.data.xy.AbstractXYDataset;
 import org.jpowder.dataset.DataSet;
-
 
 /**
  *
@@ -16,36 +14,34 @@ import org.jpowder.dataset.DataSet;
  */
 public class JpowderXYDataset extends AbstractXYDataset {
 
-  private Vector<Double> x;
-  private Vector<Double> y;
+    private Vector<Double> x;
+    private Vector<Double> y;
 
     public JpowderXYDataset(Vector<Double> x, Vector<Double> y) {
-        this.x=x;
-        this.y=y;
+        this.x = x;
+        this.y = y;
     }
 
     public JpowderXYDataset(DataSet dataset) {
-        this.x=dataset.getX();
-        this.y=dataset.getY();
+        this.x = dataset.getX();
+        this.y = dataset.getY();
 
 
     }
 
-  /// Returns the x-value. This method relies on the getX() method being implemented.
-  @Override
-  public double getXValue(int series, int item)
-  {
-      return this.x.elementAt(item);
+    /// Returns the x-value. This method relies on the getX() method being implemented.
+    @Override
+    public double getXValue(int series, int item) {
+        return this.x.elementAt(item);
 
-  }
+    }
 
-  /// Returns the y-value. If the value is missing or unknown, this method will return Double.NaN.
-  @Override
-  public double getYValue(int series, int item)
-  {
-      return this.y.elementAt(item);
+    /// Returns the y-value. If the value is missing or unknown, this method will return Double.NaN.
+    @Override
+    public double getYValue(int series, int item) {
+        return this.y.elementAt(item);
 
-  }
+    }
 
     @Override
     public int getSeriesCount() {
@@ -78,42 +74,39 @@ public class JpowderXYDataset extends AbstractXYDataset {
     public Number getY(int i, int i1) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
-
-/*
+    /*
     public static void main(String[] args) {
 
-        Vector<Double> x = new Vector<Double>();
-        Vector<Double> y = new Vector<Double>();
+    Vector<Double> x = new Vector<Double>();
+    Vector<Double> y = new Vector<Double>();
 
-        x.addElement(0.0);
-        x.addElement(5.0);
-        x.addElement(20.0);
+    x.addElement(0.0);
+    x.addElement(5.0);
+    x.addElement(20.0);
 
-        y.addElement(0.0);
-        y.addElement(1.0);
-        y.addElement(2.0);
+    y.addElement(0.0);
+    y.addElement(1.0);
+    y.addElement(2.0);
 
-        JpowderXYDataset data = new JpowderXYDataset(x,y);
-        JFreeChart chart = ChartFactory.createXYLineChart(
-            "Cast Vector to XY Series Demo",
-            "X",
-            "Y",
-            data,
-            PlotOrientation.VERTICAL,
-            true,
-            true,
-            false
-        );
+    JpowderXYDataset data = new JpowderXYDataset(x,y);
+    JFreeChart chart = ChartFactory.createXYLineChart(
+    "Cast Vector to XY Series Demo",
+    "X",
+    "Y",
+    data,
+    PlotOrientation.VERTICAL,
+    true,
+    true,
+    false
+    );
 
-        ChartFrame frame = new ChartFrame("Cast Vector to XY Series Demo", chart);
-        frame.pack();
-        frame.setVisible(true);
+    ChartFrame frame = new ChartFrame("Cast Vector to XY Series Demo", chart);
+    frame.pack();
+    frame.setVisible(true);
 
-        y.setElementAt(0.5, 2);
+    y.setElementAt(0.5, 2);
 
 
     }
-*/
-
+     */
 }

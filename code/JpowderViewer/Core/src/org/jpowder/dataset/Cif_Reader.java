@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.jpowder.dataset;
 
 import java.io.BufferedReader;
@@ -65,8 +64,8 @@ public class Cif_Reader {
                                 if (stringToken.contains("(")) {
                                     newRow.addElement(Double.parseDouble(stringToken.substring(0, stringToken.indexOf("("))));
                                     // System.out.println(stringToken.substring(0,stringToken.indexOf("(")));
-                                    newRow.addElement(Double.parseDouble(stringToken.substring(stringToken.indexOf("(")+1, stringToken.indexOf(")"))));
-                                      // System.out.println(stringToken.substring(stringToken.indexOf(")")+1,stringToken.indexOf(")")));
+                                    newRow.addElement(Double.parseDouble(stringToken.substring(stringToken.indexOf("(") + 1, stringToken.indexOf(")"))));
+                                    // System.out.println(stringToken.substring(stringToken.indexOf(")")+1,stringToken.indexOf(")")));
                                 } else {
                                     newRow.addElement(Double.parseDouble(stringToken));
 
@@ -76,12 +75,12 @@ public class Cif_Reader {
                             }
                         }
                     }
-                    
+
                 }
             }
             fr.close();
             br.close();
-         // Determine how many columns there are
+            // Determine how many columns there are
             int countColumn = localData.firstElement().size();
 
             DataSet retVal = null;

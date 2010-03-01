@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.jpowder.jfreechart;
 
 import java.util.Vector;
@@ -20,42 +19,37 @@ public class JpowderInternvalXYDataset extends AbstractIntervalXYDataset {
     private Vector<Double> e;
     //private Vector<Double> yLower;
     //private Vector<Double> yUpper;
-    
- 
+
     public JpowderInternvalXYDataset(DataSetWithErrors dataset) {
-        this.x=dataset.getX();
-        this.y=dataset.getY();
-        this.e=dataset.getE();
-       // this.yLower=dataset.getYLower();
-       // this.yUpper=dataset.getYUpper();
+        this.x = dataset.getX();
+        this.y = dataset.getY();
+        this.e = dataset.getE();
+        // this.yLower=dataset.getYLower();
+        // this.yUpper=dataset.getYUpper();
     }
 
+    @Override
+    public double getStartXValue(int series, int item) {
+        return this.x.elementAt(item);
 
-  @Override
-  public double getStartXValue(int series, int item)
-  {
-      return this.x.elementAt(item);
+    }
+    // Returns the end value for the x-interval.
 
-  }
-  // Returns the end value for the x-interval.
-  @Override
-  public double getEndXValue(int series, int item)
-  {
-      return this.x.elementAt(item);
-  }
+    @Override
+    public double getEndXValue(int series, int item) {
+        return this.x.elementAt(item);
+    }
 
-  /// Returns the start value for the y-interval.
-  @Override
-  public double getStartYValue(int series, int item)
-  {
-      return this.y.elementAt(item)-this.e.elementAt(item);
-  }
+    /// Returns the start value for the y-interval.
+    @Override
+    public double getStartYValue(int series, int item) {
+        return this.y.elementAt(item) - this.e.elementAt(item);
+    }
 
-  @Override
-  public double getEndYValue(int series, int item)
-  {
-      return this.y.elementAt(item)+this.e.elementAt(item);
-  }
+    @Override
+    public double getEndYValue(int series, int item) {
+        return this.y.elementAt(item) + this.e.elementAt(item);
+    }
 
     @Override
     public int getSeriesCount() {
@@ -100,5 +94,4 @@ public class JpowderInternvalXYDataset extends AbstractIntervalXYDataset {
     public Number getEndY(int i, int i1) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
 }

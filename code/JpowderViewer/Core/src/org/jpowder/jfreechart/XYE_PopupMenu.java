@@ -22,7 +22,6 @@ import org.jfree.chart.renderer.xy.XYErrorRenderer;
  *
  * @Return:
  */
-
 public class XYE_PopupMenu extends XY_PopupMenu {
 
     private javax.swing.JCheckBoxMenuItem offErrorBar;
@@ -51,7 +50,7 @@ public class XYE_PopupMenu extends XY_PopupMenu {
         });
         //ADD THESE THREE ONTO changePlotStyle
         changePlotStyle.add(offErrorBar);
-        
+
 
     }
 }

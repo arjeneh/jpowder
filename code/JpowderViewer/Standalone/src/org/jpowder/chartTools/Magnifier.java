@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.jpowder.chartTools;
 
 /**
@@ -25,19 +24,13 @@ import javax.swing.SwingUtilities;
 import org.jdesktop.jxlayer.JXLayer;
 import org.jdesktop.jxlayer.plaf.AbstractLayerUI;
 
-
 /**
  * Shows a magnification glass on top of a component.
  */
 public class Magnifier extends AbstractLayerUI {
 
-    private int radius ;
-
-
-
-
+    private int radius;
     private double magnifyingFactor = 1;
-
     private Point2D point = new Point2D.Double();
 
     /**
@@ -111,8 +104,8 @@ public class Magnifier extends AbstractLayerUI {
         double strokeAdjust = 0.1;
         double drawSize = 2 * (baseRadius + strokeAdjust);
         double clipSize = 2 * scaledRadius;
- 
-         Ellipse2D drawGlass = new Ellipse2D.Double(-strokeAdjust,
+
+        Ellipse2D drawGlass = new Ellipse2D.Double(-strokeAdjust,
                 -strokeAdjust, drawSize, drawSize);
 
         Ellipse2D clipGlass = new Ellipse2D.Double(0, 0, clipSize, clipSize);
@@ -123,7 +116,7 @@ public class Magnifier extends AbstractLayerUI {
         g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
                 RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
         g2.translate(point.getX() - baseRadius, point.getY() - baseRadius);
-                Color oldColor = g2.getColor();
+        Color oldColor = g2.getColor();
         g2.setPaint(createPaint(drawGlass, false));
         g2.fill(drawGlass);
         g2.setColor(oldColor);
@@ -146,12 +139,12 @@ public class Magnifier extends AbstractLayerUI {
      * @param e  the event.
      * @param layer  the layer.
      */
-  @Override
+    @Override
     protected void processMouseEvent(MouseEvent e, JXLayer layer) {
         super.processMouseEvent(e, layer);
         setPoint(SwingUtilities.convertPoint(e.getComponent(),
                 e.getPoint(), layer));
-       setDirty(true);
+        setDirty(true);
     }
 
     /**
@@ -160,13 +153,13 @@ public class Magnifier extends AbstractLayerUI {
      * @param e  the event.
      * @param layer  the layer.
      */
-  @Override
+    @Override
     protected void processMouseMotionEvent(MouseEvent e,
-        JXLayer layer) {
+            JXLayer layer) {
         super.processMouseMotionEvent(e, layer);
         setPoint(SwingUtilities.convertPoint(e.getComponent(),
                 e.getPoint(), layer));
-     setDirty(true);
+        setDirty(true);
     }
 
     /**
@@ -183,14 +176,13 @@ public class Magnifier extends AbstractLayerUI {
         float radius = (float) (glass.getCenterX() - glass.getX());
         Point2D focus = new Point2D.Double(center.getX() - 0.5 * radius,
                 center.getY() - 0.5 * radius);
-        Color[] colors = new Color[] {
-                transparent ? new Color(255, 255, 255, 128) : Color.WHITE,
-                transparent ? new Color(0, 255, 255, 32) : Color.CYAN };
-        float[] fractions = new float[] { 0f, 1f };
+        Color[] colors = new Color[]{
+            transparent ? new Color(255, 255, 255, 128) : Color.WHITE,
+            transparent ? new Color(0, 255, 255, 32) : Color.CYAN};
+        float[] fractions = new float[]{0f, 1f};
         RadialGradientPaint paint = new RadialGradientPaint(center, radius,
                 focus, fractions, colors,
                 MultipleGradientPaint.CycleMethod.NO_CYCLE);
         return paint;
     }
-
 }

@@ -8,7 +8,6 @@
  *
  * Created on 11-Aug-2009, 09:56:09
  */
-
 package org.jpowder;
 
 /**
@@ -16,15 +15,13 @@ package org.jpowder;
  * @author qyt21516
  */
 public class about extends javax.swing.JFrame {
- 
-  private JPowder jp = new JPowder();
 
-
+    private JPowder jp = new JPowder();
 
     /** Creates new form About */
     public about() {
         initComponents();
-     
+
 
     }
 
@@ -140,12 +137,11 @@ public class about extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         dispose();
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
 //    public static void main(String args[]) {
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
@@ -156,7 +152,6 @@ public class about extends javax.swing.JFrame {
 //            }
 //        });
 //    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -166,5 +161,4 @@ public class about extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
-
 }
