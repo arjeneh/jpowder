@@ -7,89 +7,40 @@ package org.jpowder.tree;
 /**
  *
  * @author qyt21516
+ * Original Author:  Mirad.
+ * Contributor(s):   -;
+ *
+ * $Id: Tree.java,v 1.2 2010/03/03 13:58:03 Kreecha Exp $
+ *
+ * Changes
+ * -------
+ * 17-Dec-2009 : Version 1;
+ * 03-March-2010 : Use TreeModel -> JpowderFileSystemTreeModel (KP);
+ *                  add features for open and collapse JTree.
+ *                  move FileSystemView to the JpowderFileSystemTreeModel.java
  */
 import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import java.io.File;
-import java.util.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileSystemView;
-import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreePath;
 
 /**
  *
  */
 public class Tree extends JPanel {
 
-    /**
-     * File system view.
-     */
-    protected static FileSystemView fsv = FileSystemView.getFileSystemView();
+    private JpowderFileSystemTreeModel model = new JpowderFileSystemTreeModel();
+    private JpowderFileTreeRenderer renderer = new JpowderFileTreeRenderer();
     private java.awt.dnd.DropTarget dt;
     private JTree tree;
 
     /**
-     * Renderer for the file tree.
-     *
-     *
-     */
-    private static class FileTreeCellRenderer extends DefaultTreeCellRenderer {
-
-        /**
-         * Icon cache to speed the rendering.
-         */
-        private Map<String, Icon> iconCache = new HashMap<String, Icon>();
-        /**
-         * Root name cache to speed the rendering.
-         */
-        private Map<File, String> rootNameCache = new HashMap<File, String>();
-
-        @Override
-        public Component getTreeCellRendererComponent(JTree tree, Object value,
-                boolean sel, boolean expanded, boolean leaf, int row,
-                boolean hasFocus) {
-            FileTreeNode ftn = (FileTreeNode) value;
-            File file = ftn.file;
-            String filename = "";
-            DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) tree.getCellRenderer();
-            //tool tip
-            ToolTipManager.sharedInstance().registerComponent(tree);
-            renderer.setToolTipText(FileTreeNode.class.toString());
-            if (file != null) {
-                if (ftn.isFileSystemRoot) {
-                    // long start = System.currentTimeMillis();
-                    filename = this.rootNameCache.get(file);
-                    if (filename == null) {
-                        filename = fsv.getSystemDisplayName(file);
-                        this.rootNameCache.put(file, filename);
-                    }
-                    // long end = System.currentTimeMillis();
-                    // System.out.println(filename + ":" + (end - start));
-                } else {
-                    filename = file.getName();
-                }
-            }
-            JLabel result = (JLabel) super.getTreeCellRendererComponent(tree,
-                    filename, sel, expanded, leaf, row, hasFocus);
-            if (file != null) {
-                Icon icon = this.iconCache.get(filename);
-                if (icon == null) {
-                    // System.out.println("Getting icon of " + filename);
-                    icon = fsv.getSystemIcon(file);
-                    this.iconCache.put(filename, icon);
-                }
-                result.setIcon(icon);
-            }
-            return result;
-        }
-    }
-
-    /**
-     * The file tree.
-     */
-    /**
      * Creates the file tree panel.
+     * Milad created.
      */
     public Tree() {
 
@@ -98,13 +49,102 @@ public class Tree extends JPanel {
         FileTreeNode rootTreeNode = new FileTreeNode(roots);
         this.tree = new JTree(rootTreeNode);
         this.tree.setDragEnabled(true);
+        this.tree.expandRow(1);
+        this.tree.setRootVisible(true);
 
-        tree.expandRow(1);
-        this.tree.setCellRenderer(new FileTreeCellRenderer());
-        this.tree.setRootVisible(false);
         final JScrollPane jsp = new JScrollPane(this.tree);
         jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
         this.add(jsp, BorderLayout.CENTER);
+    }
+
+    /**
+     *
+     * Use DataModel for easy manipulation later.
+     * KP created.
+     * @param model  the TreeModel.
+     */
+    public Tree(JpowderFileSystemTreeModel model) {
+        this.model = model;
+        
+        this.setLayout(new BorderLayout());
+
+        this.tree = new JTree(this.model);        
+        this.tree.setCellRenderer(this.renderer);
+        this.tree.setRootVisible(false);
+        this.tree.setShowsRootHandles(true);
+        this.tree.setDragEnabled(true);
+
+        //TODO: when user double-click, it plot the graph.
+        //JpowderFileTreeMouseListener ml = new JpowderFileTreeMouseListener();
+        //this.tree.addMouseListener(ml);
+
+
+        final JScrollPane jsp = new JScrollPane(this.tree);
+        jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
+        this.add(jsp, BorderLayout.CENTER);
+    }
+
+
+    /**
+     * Collapse the tree
+     *
+     * @param tree  the JTree
+     */
+    public void collapseAll(JTree tree) {
+        int row = tree.getRowCount() - 1;
+        while (row >= 0) {
+            tree.collapseRow(row);
+            row--;
+        }
+    }
+
+    /**
+     * View the last node of the tree
+     *
+     * @param tree  the JTree
+     */
+    public void expandToLast(JTree tree) {
+        TreeModel data = tree.getModel();
+        Object node = data.getRoot();
+
+        if (node == null) {
+            return;
+        }
+
+        TreePath p = new TreePath(node);
+        while (true) {
+            int count = data.getChildCount(node);
+            if (count == 0) {
+                break;
+            }
+            node = data.getChild(node, count - 1);
+            p = p.pathByAddingChild(node);
+        }
+        tree.scrollPathToVisible(p);
+    }
+
+    /**
+     * View all nodes of the tree
+     *
+     * @param tree  the JTree
+     */
+    public void expandAll(JTree tree) {
+        int row = 0;
+        while (row < tree.getRowCount()) {
+            tree.expandRow(row);
+            row++;
+        }
+    }
+
+    /**
+     * Returns the JTree.
+     *
+     * @param
+     *
+     * @return The value of the JTree.
+     */
+    public JTree getTree() {
+        return tree;
     }
 
     public static void main(String[] args) {
@@ -114,7 +154,11 @@ public class Tree extends JPanel {
                 JFrame frame = new JFrame("File tree");
                 frame.setSize(200, 400);
                 frame.setLocationRelativeTo(null);
-                frame.add(new Tree());
+
+                JpowderFileSystemTreeModel treeModel = new JpowderFileSystemTreeModel();
+                frame.add(new Tree(treeModel));
+
+
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setVisible(true);
             }
