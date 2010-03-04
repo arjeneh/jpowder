@@ -48,6 +48,7 @@ import java.awt.print.PrinterJob;
 import javax.swing.*;
 import org.jfree.chart.ChartColor;
 import org.jpowder.fileCabinet.AcceptFileFilter;
+import org.jpowder.tree.JpowderFileSystemTreeModel;
 
 /**
  * Jpowder is the starting class for the Jpowder project {@link www.jpowder.org}.
@@ -71,18 +72,24 @@ import org.jpowder.fileCabinet.AcceptFileFilter;
  * <p>
  * File change history is stored at: <a target="_blank" href=https://jpowder.org/svn/Jpowder>www.jpowder.org/svn/Jpowder</a>
  *
- * @author  Kreecha Puphaiboon
+ * @author Kreecha Puphaiboon (KP)
  * @since 07
  *
+ *  * Changes
+ * -------
+ * 22-August-2007: Version 1 (KP);
+ * 04-March-2010 : Add JTree and its model (KP).
  *
  */
 public class JPowder extends JFrame implements DropTargetListener {
 
     private org.jfree.chart.JFreeChart chart;
-    private Tree tr = new Tree();
+    //
+    private JpowderFileSystemTreeModel treeModel = new JpowderFileSystemTreeModel();
+    private Tree tr = new Tree(treeModel);
     private LookAndFeel LAF = new LookAndFeel(this);
     private OSValidator oSValidator = new OSValidator();
-    public DataVisibleInChart DVIC = new DataVisibleInChart();
+    public DataVisibleInChart dataVisibleInChart = new DataVisibleInChart();
     private PowderFileCabinet mPowderFileCabinet;
     private java.awt.dnd.DropTarget dt;
     private TransferHandler th;
@@ -96,26 +103,24 @@ public class JPowder extends JFrame implements DropTargetListener {
     public static JPowderStack jPowderStackUndo = new JPowderStack(9);
     public static JPowderStack jPowderStackRedo = new JPowderStack(9);
 
-//  private stackInternalFrames;
+    //  private stackInternalFrames;
     /**
      * JVM starting point
      *
      * @param args
      */
     public JPowder() {
-
         initComponents();
 
         mPowderFileCabinet = new PowderFileCabinet();
 
-//    chartPlotter.setLayout(new GridLayout(3, 3, 30, 30));
-
-//    chartPlotter.setLayout(null);
         dt = new DropTarget(chartPlotter, this);
-        dataVisibleInChartPanel.add(DVIC);
+        dataVisibleInChartPanel.add(dataVisibleInChart);
         treetab.add(tr, "1");
         analysistab.add(icon, "1");
         chartToolstab.add(icons, "1");
+
+        ScreenUtil.adjustBounds(this);
     }
 
     /**
@@ -735,10 +740,10 @@ public class JPowder extends JFrame implements DropTargetListener {
 
             }
             // finally plot the data
-            JpowderInternalframe internalframe = new JpowderInternalframe(DVIC, datasets);
+            JpowderInternalframe internalframe = new JpowderInternalframe(dataVisibleInChart, datasets);
             JPowder.jpowderInternalFrameUpdate(internalframe);
 
-            InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(DVIC);
+            InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
             internalframe.addInternalFrameListener(internalFrameListener);
             chartPlotter.add(internalframe);
             setVisible(true);
@@ -1134,7 +1139,6 @@ public class JPowder extends JFrame implements DropTargetListener {
 
         // Find all filenames which have been draged into the chart plotter area
         // and to allFilenames
-
         for (int i = 0; i < flavors.length; i++) {
             if (flavors[i].isFlavorJavaFileListType()) {
                 try {
@@ -1182,24 +1186,21 @@ public class JPowder extends JFrame implements DropTargetListener {
                     datasets.add(oneDataset);
                 }
             } else {
+                //return so no chart object is created and Expception is not thrown.
                 javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
-                break;
+                return;
             }
         }
+
         // finally plot the data
-        JpowderInternalframe internalframe = new JpowderInternalframe(DVIC, datasets);
+        JpowderInternalframe internalframe = new JpowderInternalframe(dataVisibleInChart, datasets);
         JPowder.jpowderInternalFrameUpdate(internalframe);
 
-        InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(DVIC);
+        InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
         internalframe.addInternalFrameListener(internalFrameListener);
-
-
 
         chartPlotter.add(internalframe);
         setVisible(true);
-
-
-
     }
 
     /**
@@ -1242,6 +1243,7 @@ public class JPowder extends JFrame implements DropTargetListener {
                 javax.swing.JOptionPane.showMessageDialog(null, e.getMessage());
             }
         }
+
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             JPowder jpowder = new JPowder();
@@ -1253,87 +1255,7 @@ public class JPowder extends JFrame implements DropTargetListener {
             }
         });
     }
-//  public void internalFrameMoved(ComponentEvent evt) {
-//    component = evt.getComponent();
-//    stayInContainer();
-//    chartPlotter.repaint();
-//    java.awt.Rectangle cRect = component.getBounds();
-//    cRect.setRect(cRect.getX(), cRect.getY(), cRect.getWidth() + 5, cRect.getHeight() + 5);
-//    chartPlotter.scrollRectToVisible(cRect);
-//  }
-//
-//  private boolean isInContainer() {
-//    c = component.getParent();
-//    java.awt.Rectangle r = new java.awt.Rectangle(c.getWidth(), c.getHeight());
-//    wC = (int) r.getWidth();
-//    hC = (int) r.getHeight();
-//    top_leftPointC = r.getLocation();
-//    top_rightPointC = new Point((int) top_leftPointC.getX() + wC, (int) top_leftPointC.getY());
-//    bottom_leftPointC = new Point((int) top_leftPointC.getX(), (int) top_leftPointC.getY() + hC);
-//    bottom_rightPointC = new Point((int) top_leftPointC.getX() + wC, (int) top_leftPointC.getY() + hC);
-//    w = component.getWidth();
-//    h = component.getHeight();
-//    top_leftPoint = component.getLocation();
-//    top_rightPoint = new Point((int) top_leftPoint.getX() + w, (int) top_leftPoint.getY());
-//    bottom_leftPoint = new Point((int) top_leftPoint.getX(), (int) top_leftPoint.getY() + h);
-//    bottom_rightPoint = new Point((int) top_leftPoint.getX() + w, (int) top_leftPoint.getY() + h);
-//    if (!r.contains(top_leftPoint)) {
-//      return false;
-//    }
-//    if (!r.contains(top_rightPoint)) {
-//      return false;
-//    }
-//    if (!r.contains(bottom_leftPoint)) {
-//      return false;
-//    }
-//    if (!r.contains(bottom_rightPoint)) {
-//      return false;
-//    }
-//    return true;
-//  }
-//
-//  public void stayInContainer() {
-//    // if the internalframe is too far in right-direction, resize desktop
-//    if (!isInContainer()) {
-//      double x = top_rightPoint.getX();
-//      double xC = top_rightPointC.getX();
-//      if (x > xC) {
-//        Dimension size = new Dimension((int) (chartPlotter.getWidth() + x - xC), chartPlotter.getHeight());
-//        chartPlotter.setPreferredSize(size);
-//      }
-//    }
-////     if the internalframe is too far in left-direction, move it back
-//    if (!isInContainer()) {
-//      double x = top_leftPoint.getX();
-//      double xC = top_leftPointC.getX();
-//      if (x < xC) {
-//        component.setLocation((int) (top_leftPoint.getX() + xC - x), (int) top_leftPoint.getY());
-//      }
-//    }
-//    // if the internalframe is too far in top-direction, move it back
-//    if (!isInContainer()) {
-//      double y = top_leftPoint.getY();
-//      double yC = top_leftPointC.getY();
-//      if (y < yC) {
-//        component.setLocation((int) top_leftPoint.getX(), (int) (top_leftPoint.getY() + yC - y));
-//      }
-//    }
-//    /* if the internalframe is is too far in bottom-direction, resize desktop */
-//    if (!isInContainer()) {
-//      double y = bottom_leftPoint.getY();
-//      double yC = bottom_leftPointC.getY();
-//      if (y > yC) {
-//        component.setLocation((int) top_leftPoint.getX(), (int) (top_leftPoint.getY() + yC - y));
-//        Dimension size = new Dimension(chartPlotter.getWidth(), (int) (chartPlotter.getHeight() + y - yC));
-//        chartPlotter.setPreferredSize(size);
-//      }
-//    }
-//  }
-//  private Component component;
-//  private Container c;
-//  private Point top_leftPoint, top_rightPoint, bottom_leftPoint, bottom_rightPoint;
-//  private Point top_leftPointC, top_rightPointC, bottom_leftPointC, bottom_rightPointC;
-//  private int w, h, wC, hC;
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem About;
     private javax.swing.JMenuItem Content;

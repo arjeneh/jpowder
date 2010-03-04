@@ -45,7 +45,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
     private DatasetPlotter plotMultiCol;
     private ChartPanel jfreeChartPanel;
     private JFreeChart chart;
-    private JPowder jpowder = new JPowder();
+
     private Vector<Double> markedPeakPosition = new Vector<Double>();
     public static int left;
     public static int top;
@@ -80,7 +80,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         JPowder.jpowderInternalFrameUpdate(this);
         System.out.println("Internalframe created");
         droptraget = new DropTarget(this, this);
-//   this.setPreferredSize(new Dimension(width, width));
+
         dataVisibleInChartPanel.newChartInFocus(xyPlot,
                 this.getPowderDataSet());
         setTitle(getNames());
@@ -316,6 +316,8 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
                     Logger.getLogger(JPowder.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
                     Logger.getLogger(JPowder.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NullPointerException ex){
+                    Logger.getLogger(JPowder.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else if (flavors[i].equals(DataFlavor.stringFlavor)) {
 
@@ -377,7 +379,7 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
 
     /**
      *
-     * @param DVIC
+     * @param dataVisibleInChart
      */
     public InternalFrameIconifyListener(DataVisibleInChart dvic) {
         this.dvic = dvic;
