@@ -14,7 +14,7 @@ public class OSValidator {
      * the method check the if the operating system is windows.
      * @return string
      */
-    public static boolean isWindows() {
+    public static boolean windows() {
 
         String os = System.getProperty("os.name").toLowerCase();
         //windows
@@ -26,7 +26,7 @@ public class OSValidator {
      * the method check the if the operating system is Mac.
      * @return string
      */
-    public static boolean isMac() {
+    public static boolean mac() {
 
         String os = System.getProperty("os.name").toLowerCase();
         //Mac
@@ -38,7 +38,7 @@ public class OSValidator {
      * the method check the if the operating system is Linux.
      * @return string
      */
-    public static boolean isUnix() {
+    public static boolean linux() {
 
         String os = System.getProperty("os.name").toLowerCase();
         //linux or unix

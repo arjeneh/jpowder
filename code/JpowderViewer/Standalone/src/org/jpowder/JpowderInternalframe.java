@@ -30,6 +30,7 @@ import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 
 /**
  *
@@ -45,7 +46,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
     private DatasetPlotter plotMultiCol;
     private ChartPanel jfreeChartPanel;
     private JFreeChart chart;
-
+    private static int datasetCount = 0;
     private Vector<Double> markedPeakPosition = new Vector<Double>();
     public static int left;
     public static int top;
@@ -83,6 +84,10 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
 
         dataVisibleInChartPanel.newChartInFocus(xyPlot,
                 this.getPowderDataSet());
+
+        datasetCount += xyPlot.getDatasetCount();
+
+        System.out.println("the dataset count" + datasetCount);
         setTitle(getNames());
         this.setLocation(left, top);
         this.setVisible(true);
@@ -163,10 +168,20 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         JpowderInternalframe.top = top;
     }
 
-    public void countNumberDatasetPlotted() {
+    /**
+     *
+     * @return
+     */
+    public static int countNumberDatasetPlotted() {
+        return datasetCount;
 
-        xyPlot.getDatasetCount();
+    }
 
+    public void setSeriesPaint() {
+        for (int i = 0; i < datasetCount; i++) {
+            XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) getXYPlot().getRenderer();
+            renderer.setSeriesPaint(i, FilesPlotter.getSeriescolors(datasetCount));
+        }
     }
 
     /**
@@ -316,7 +331,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
                     Logger.getLogger(JPowder.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
                     Logger.getLogger(JPowder.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (NullPointerException ex){
+                } catch (NullPointerException ex) {
                     Logger.getLogger(JPowder.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else if (flavors[i].equals(DataFlavor.stringFlavor)) {

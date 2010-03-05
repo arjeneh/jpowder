@@ -37,7 +37,7 @@ public class DataVisibleInChart extends JPanel {
 
         file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        file_sp.setPreferredSize(new java.awt.Dimension(270, 230));
+        file_sp.setPreferredSize(new java.awt.Dimension(270, 280));
         add(file_sp);
 
     }

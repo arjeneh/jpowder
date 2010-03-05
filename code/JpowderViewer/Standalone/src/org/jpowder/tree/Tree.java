@@ -6,8 +6,8 @@ package org.jpowder.tree;
 
 /**
  *
- * @author qyt21516
- * Original Author:  Mirad.
+ * 
+ * Original Author:  Kirill Grouchnikov.
  * Contributor(s):   -;
  *
  * $Id: Tree.java,v 1.2 2010/03/03 13:58:03 Kreecha Exp $
@@ -20,8 +20,6 @@ package org.jpowder.tree;
  *                  move FileSystemView to the JpowderFileSystemTreeModel.java
  */
 import java.awt.BorderLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
 import java.io.File;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -65,10 +63,10 @@ public class Tree extends JPanel {
      */
     public Tree(JpowderFileSystemTreeModel model) {
         this.model = model;
-        
+
         this.setLayout(new BorderLayout());
 
-        this.tree = new JTree(this.model);        
+        this.tree = new JTree(this.model);
         this.tree.setCellRenderer(this.renderer);
         this.tree.setRootVisible(false);
         this.tree.setShowsRootHandles(true);
@@ -83,7 +81,6 @@ public class Tree extends JPanel {
         jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
         this.add(jsp, BorderLayout.CENTER);
     }
-
 
     /**
      * Collapse the tree
