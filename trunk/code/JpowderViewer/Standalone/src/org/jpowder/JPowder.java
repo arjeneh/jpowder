@@ -178,6 +178,20 @@ public class JPowder extends JFrame implements DropTargetListener {
 
     }
 
+    public void displayingMessageLabel() {
+
+
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 1) {
+            chartPlotter.remove(messageLabel);
+            chartPlotter.repaint();
+        }
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            chartPlotter.add(messageLabel);
+            chartPlotter.repaint();
+        }
+
+    }
+
     /** This method is called from within the constructor to
      * initialise the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -196,6 +210,7 @@ public class JPowder extends JFrame implements DropTargetListener {
         chartToolstab = new javax.swing.JPanel();
         dataVisibleInChartPanel = new javax.swing.JPanel();
         chartPlotter = new javax.swing.JDesktopPane();
+        messageLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         New = new javax.swing.JMenuItem();
@@ -297,7 +312,17 @@ public class JPowder extends JFrame implements DropTargetListener {
         jScrollPane2.setViewportView(home);
 
         chartPlotter.setBackground(new java.awt.Color(236, 233, 216));
+        chartPlotter.setBorder(javax.swing.BorderFactory.createTitledBorder("PlotArea"));
+        chartPlotter.setForeground(new java.awt.Color(102, 102, 102));
         chartPlotter.setDesktopManager(jPowderDesktopManager);
+        chartPlotter.setOpaque(false);
+
+        messageLabel.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
+        messageLabel.setForeground(new java.awt.Color(153, 153, 153));
+        messageLabel.setText("Drag & Drop Files Here.");
+        messageLabel.setEnabled(false);
+        messageLabel.setBounds(240, 370, 400, 50);
+        chartPlotter.add(messageLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenuBar1.setFont(new java.awt.Font("Tahoma", 0, 36));
 
@@ -1201,6 +1226,7 @@ public class JPowder extends JFrame implements DropTargetListener {
 
         chartPlotter.add(internalframe);
         setVisible(true);
+        displayingMessageLabel();
     }
 
     /**
@@ -1209,7 +1235,7 @@ public class JPowder extends JFrame implements DropTargetListener {
      */
     public static void main(String args[]) {
 
-        if (OSValidator.isWindows()) {
+        if (OSValidator.windows()) {
             try {
                 UIManager.setLookAndFeel(
                         new WindowsLookAndFeel());
@@ -1217,7 +1243,7 @@ public class JPowder extends JFrame implements DropTargetListener {
                 j.printStackTrace();
             }
         }
-        if (OSValidator.isMac()) {
+        if (OSValidator.mac()) {
             try {
                 UIManager.setLookAndFeel("com.apple.mrj.swing.MacLookAndFeel");
 
@@ -1227,7 +1253,7 @@ public class JPowder extends JFrame implements DropTargetListener {
             }
         }
 
-        if (OSValidator.isUnix()) {
+        if (OSValidator.linux()) {
             try {
                 UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
 
@@ -1255,7 +1281,6 @@ public class JPowder extends JFrame implements DropTargetListener {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem About;
     private javax.swing.JMenuItem Content;
@@ -1296,6 +1321,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JMenu lookAndFeelMenu;
+    private javax.swing.JLabel messageLabel;
     private javax.swing.JCheckBoxMenuItem moveMenu;
     private javax.swing.JMenuItem pDfMenu;
     private javax.swing.JMenuItem proptiesMenu;

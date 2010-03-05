@@ -52,6 +52,7 @@ public class FilesPlotter extends DatasetPlotter {
     }
 
     public static Paint getSeriescolors(int i) {
+
         return allseriescolors[i % allseriescolors.length];
     }
 

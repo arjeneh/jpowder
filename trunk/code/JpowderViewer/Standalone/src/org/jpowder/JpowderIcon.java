@@ -23,11 +23,8 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,7 +43,7 @@ public class JpowderIcon {
     public int width;
     private int height;
     private List<JButton> buttons;
-    private ThumbnailAction thumbAction;
+    private Thumbnail thumbAction;
 //  File f = new File("");
 //  private String imagedir = f.getAbsolutePath() + File.separator + "src" + File.separator + "images" + File.separator;
     private String imagedir = "/images/";
@@ -141,7 +138,7 @@ public class JpowderIcon {
      * We use Void as the first SwingWroker param as we do not need to return
      * anything from doInBackground().
      */
-    private SwingWorker<Void, ThumbnailAction> loadimages = new SwingWorker<Void, ThumbnailAction>() {
+    private SwingWorker<Void, Thumbnail> loadimages = new SwingWorker<Void, Thumbnail>() {
 
         /**
          * Creates full size and thumbnail versions of the target image files.
@@ -156,7 +153,7 @@ public class JpowderIcon {
 
                     ImageIcon thumbnailIcon = new ImageIcon(getScaledImage(icon.getImage(), setHeight(80), setWidth(82)));
 
-                    thumbAction = new ThumbnailAction(icon, thumbnailIcon, title[i]);
+                    thumbAction = new Thumbnail(icon, thumbnailIcon, title[i]);
 
                 } else {
                 }
@@ -175,7 +172,7 @@ public class JpowderIcon {
          * Process all loaded images.``
          */
         @Override
-        protected void process(List<ThumbnailAction> thumnailist) {
+        protected void process(List<Thumbnail> thumnailist) {
             int b = thumnailist.size();
             for (int i = 0; i < b; i++) {
                 buttons.get(i).setAction(thumnailist.get(i));
@@ -185,7 +182,7 @@ public class JpowderIcon {
         }
     };
 
-    private class ThumbnailAction extends AbstractAction {
+    private class Thumbnail extends AbstractAction {
 
         /**
          *The icon if the full image we want to display.
@@ -197,13 +194,13 @@ public class JpowderIcon {
          * @param Icon - The thumbnail to show in the button.
          * @param String - The descriptioon of the icon.
          */
-        public ThumbnailAction(Icon photo, Icon thumb, String desc) {
-            displayPhoto = thumb;
+        public Thumbnail(Icon photo, Icon thumbnail, String tooltip) {
+            displayPhoto = thumbnail;
             // The LARGE_ICON_KEY is the key for setting the
             // icon when an Action is applied to a button.
-            putValue(LARGE_ICON_KEY, thumb);
+            putValue(LARGE_ICON_KEY, thumbnail);
             // The short description becomes the tooltip of a button.
-            putValue(SHORT_DESCRIPTION, desc);
+            putValue(SHORT_DESCRIPTION, tooltip);
 
 
         }
