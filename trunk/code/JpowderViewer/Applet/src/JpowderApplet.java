@@ -31,7 +31,7 @@ public class JpowderApplet extends JApplet {
 
 //        if (returnVal == JFileChooser.APPROVE_OPTION) {
             try {
-                FileInputStream f = new FileInputStream("testing.ser");
+                FileInputStream f = new FileInputStream("C:\\newFormate.ser");
                 ObjectInputStream charts = new ObjectInputStream(f);
                 serializedChart = (JFreeChart) charts.readObject();
             } catch (Exception e) {

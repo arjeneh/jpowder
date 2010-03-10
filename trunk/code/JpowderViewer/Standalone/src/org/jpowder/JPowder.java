@@ -100,8 +100,8 @@ public class JPowder extends JFrame implements DropTargetListener {
     public static JpowderInternalframe internalFrameInFocus;
     private JPowderDesktopManager jPowderDesktopManager = new JPowderDesktopManager();
     public static InfoPanel infoPanelInfocus;
-    public static JPowderStack jPowderStackUndo = new JPowderStack(9);
-    public static JPowderStack jPowderStackRedo = new JPowderStack(9);
+    public static JPowderStack jPowderStackUndo = new JPowderStack(5);
+    public static JPowderStack jPowderStackRedo = new JPowderStack(5);
 
     //  private stackInternalFrames;
     /**
@@ -214,17 +214,18 @@ public class JPowder extends JFrame implements DropTargetListener {
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         New = new javax.swing.JMenuItem();
-        jSeparator2 = new javax.swing.JSeparator();
         Open = new javax.swing.JMenuItem();
-        saveAs = new javax.swing.JMenu();
         appletMenu = new javax.swing.JMenuItem();
+        saveAs = new javax.swing.JMenu();
         imageMenu = new javax.swing.JMenuItem();
         pDfMenu = new javax.swing.JMenuItem();
-        workspaceMenu = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
         Print = new javax.swing.JMenu();
         jPrintMenu = new javax.swing.JMenuItem();
         jPrintPublishingMenu = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JSeparator();
+        closeFrameMenu = new javax.swing.JMenuItem();
+        clossAllMenu = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JSeparator();
         Exit = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
@@ -232,27 +233,15 @@ public class JPowder extends JFrame implements DropTargetListener {
         redoMenu = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JSeparator();
         copyMenu = new javax.swing.JMenuItem();
-        clossAllMenu = new javax.swing.JMenuItem();
-        moveMenu = new javax.swing.JCheckBoxMenuItem();
-        windowsLayoutMenu = new javax.swing.JMenu();
+        jSeparator6 = new javax.swing.JSeparator();
+        proptiesMenu = new javax.swing.JMenuItem();
+        windowMenu = new javax.swing.JMenu();
         tileMenu = new javax.swing.JMenuItem();
         tileHorizontallyMenu = new javax.swing.JMenuItem();
         tileVerticallyMenu = new javax.swing.JMenuItem();
         cascadeMenu = new javax.swing.JMenuItem();
-        jSeparator6 = new javax.swing.JSeparator();
-        proptiesMenu = new javax.swing.JMenuItem();
-        lookAndFeelMenu = new javax.swing.JMenu();
-        Windows = new javax.swing.JRadioButtonMenuItem();
-        WindowClassic = new javax.swing.JRadioButtonMenuItem();
-        MacLookAndFeel = new javax.swing.JRadioButtonMenuItem();
-        Motif = new javax.swing.JRadioButtonMenuItem();
-        Nimbus = new javax.swing.JRadioButtonMenuItem();
-        Metal = new javax.swing.JRadioButtonMenuItem();
-        LinuxSolaris = new javax.swing.JRadioButtonMenuItem();
         helpMenu = new javax.swing.JMenu();
-        Content = new javax.swing.JMenuItem();
         OnlieDocsandSupport = new javax.swing.JMenuItem();
-        jSeparator3 = new javax.swing.JSeparator();
         About = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -265,13 +254,13 @@ public class JPowder extends JFrame implements DropTargetListener {
         home.setPreferredSize(new java.awt.Dimension(320, 727));
 
         Tabs.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-        Tabs.setFont(new java.awt.Font("Kartika", 0, 18));
+        Tabs.setFont(new java.awt.Font("Kartika", 0, 18)); // NOI18N
         Tabs.setMaximumSize(new java.awt.Dimension(327, 32767));
         Tabs.setPreferredSize(new java.awt.Dimension(275, 800));
 
         treetab.setPreferredSize(new java.awt.Dimension(275, 400));
         treetab.setLayout(new java.awt.CardLayout());
-        Tabs.addTab(" Tree ", treetab);
+        Tabs.addTab("Explorer", treetab);
 
         analysistab.setPreferredSize(new java.awt.Dimension(270, 320));
         analysistab.setLayout(new java.awt.CardLayout());
@@ -282,7 +271,7 @@ public class JPowder extends JFrame implements DropTargetListener {
 
         chartToolstab.setLayout(new java.awt.CardLayout());
         chartToolstab.setLayout(cardLayout);
-        Tabs.addTab("ChartTools", chartToolstab);
+        Tabs.addTab("Chart Tools", chartToolstab);
 
         dataVisibleInChartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("DataVisibleInChart"));
         dataVisibleInChartPanel.setPreferredSize(new java.awt.Dimension(270, 260));
@@ -317,7 +306,7 @@ public class JPowder extends JFrame implements DropTargetListener {
         chartPlotter.setDesktopManager(jPowderDesktopManager);
         chartPlotter.setOpaque(false);
 
-        messageLabel.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
+        messageLabel.setFont(new java.awt.Font("Arial", 0, 36));
         messageLabel.setForeground(new java.awt.Color(153, 153, 153));
         messageLabel.setText("Drag & Drop Files Here.");
         messageLabel.setEnabled(false);
@@ -330,7 +319,7 @@ public class JPowder extends JFrame implements DropTargetListener {
         fileMenu.setFont(new java.awt.Font("Tahoma", 0, 14));
 
         New.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        New.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/New.png"))); // NOI18N
+        New.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/newdoc2_16x16.png"))); // NOI18N
         New.setText("New...");
         New.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -338,10 +327,9 @@ public class JPowder extends JFrame implements DropTargetListener {
             }
         });
         fileMenu.add(New);
-        fileMenu.add(jSeparator2);
 
         Open.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        Open.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/Open.png"))); // NOI18N
+        Open.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Open1.png"))); // NOI18N
         Open.setText("Open");
         Open.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -350,19 +338,19 @@ public class JPowder extends JFrame implements DropTargetListener {
         });
         fileMenu.add(Open);
 
-        saveAs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/saveas_16x16.png"))); // NOI18N
-        saveAs.setText("Save As");
-
-        appletMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/java16x16.png"))); // NOI18N
+        appletMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exportto_16x16.png"))); // NOI18N
         appletMenu.setText("Jpowder Applet File");
         appletMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 appletMenuActionPerformed(evt);
             }
         });
-        saveAs.add(appletMenu);
+        fileMenu.add(appletMenu);
 
-        imageMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/Image.png"))); // NOI18N
+        saveAs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/saveas_16x16.png"))); // NOI18N
+        saveAs.setText("Save As");
+
+        imageMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Image.png"))); // NOI18N
         imageMenu.setText("Image");
         imageMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -371,7 +359,7 @@ public class JPowder extends JFrame implements DropTargetListener {
         });
         saveAs.add(imageMenu);
 
-        pDfMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/exportdirecttopdf_16x16.png"))); // NOI18N
+        pDfMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exportdirecttopdf_16x16.png"))); // NOI18N
         pDfMenu.setText("PDF");
         pDfMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -380,23 +368,13 @@ public class JPowder extends JFrame implements DropTargetListener {
         });
         saveAs.add(pDfMenu);
 
-        workspaceMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/10627_16x16.png"))); // NOI18N
-        workspaceMenu.setText("WorkSpace");
-        workspaceMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                workspaceMenuActionPerformed(evt);
-            }
-        });
-        saveAs.add(workspaceMenu);
-
         fileMenu.add(saveAs);
-        fileMenu.add(jSeparator1);
+        fileMenu.add(jSeparator2);
 
-        Print.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/05504_16x16.png"))); // NOI18N
+        Print.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Print.png"))); // NOI18N
         Print.setText("Print As");
 
         jPrintMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
-        jPrintMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/Print.png"))); // NOI18N
         jPrintMenu.setText("Print");
         jPrintMenu.setToolTipText("Print ");
         jPrintMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -407,7 +385,6 @@ public class JPowder extends JFrame implements DropTargetListener {
         Print.add(jPrintMenu);
 
         jPrintPublishingMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jPrintPublishingMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/Print1.png"))); // NOI18N
         jPrintPublishingMenu.setText("Print Publishing");
         jPrintPublishingMenu.setToolTipText("Print with white background");
         jPrintPublishingMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -418,9 +395,28 @@ public class JPowder extends JFrame implements DropTargetListener {
         Print.add(jPrintPublishingMenu);
 
         fileMenu.add(Print);
+        fileMenu.add(jSeparator1);
+
+        closeFrameMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Close.png"))); // NOI18N
+        closeFrameMenu.setText("Close Frame");
+        closeFrameMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeFrameMenuActionPerformed(evt);
+            }
+        });
+        fileMenu.add(closeFrameMenu);
+
+        clossAllMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        clossAllMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/CloseAll.png"))); // NOI18N
+        clossAllMenu.setText("Close All");
+        clossAllMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clossAllMenuActionPerformed(evt);
+            }
+        });
+        fileMenu.add(clossAllMenu);
         fileMenu.add(jSeparator4);
 
-        Exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/20557_16x16.png"))); // NOI18N
         Exit.setText("Exit");
         Exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -435,7 +431,7 @@ public class JPowder extends JFrame implements DropTargetListener {
         editMenu.setFont(new java.awt.Font("Tahoma", 0, 14));
 
         undoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
-        undoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/undo_26x26.png"))); // NOI18N
+        undoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/undo_26x26.png"))); // NOI18N
         undoMenu.setText("Undo closed frame");
         undoMenu.setToolTipText("Undo closed frame");
         undoMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -446,7 +442,7 @@ public class JPowder extends JFrame implements DropTargetListener {
         editMenu.add(undoMenu);
 
         redoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
-        redoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/redo_26x26.png"))); // NOI18N
+        redoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/redo_26x26.png"))); // NOI18N
         redoMenu.setText("Redo closed frame");
         redoMenu.setToolTipText("Redo closed frame");
         redoMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -458,7 +454,7 @@ public class JPowder extends JFrame implements DropTargetListener {
         editMenu.add(jSeparator5);
 
         copyMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
-        copyMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/05711_16x16.png"))); // NOI18N
+        copyMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/copy_16x16.png"))); // NOI18N
         copyMenu.setText("Copy");
         copyMenu.setToolTipText("Copy the selected frame");
         copyMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -467,65 +463,9 @@ public class JPowder extends JFrame implements DropTargetListener {
             }
         });
         editMenu.add(copyMenu);
-
-        clossAllMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        clossAllMenu.setText("Close All");
-        clossAllMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clossAllMenuActionPerformed(evt);
-            }
-        });
-        editMenu.add(clossAllMenu);
-
-        moveMenu.setText("Move");
-        moveMenu.setToolTipText("To move hold CTRL and press &drag the mouse");
-        moveMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/arrowshapes.quad-arrow_16x16.png"))); // NOI18N
-        moveMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                moveMenuActionPerformed(evt);
-            }
-        });
-        editMenu.add(moveMenu);
-
-        windowsLayoutMenu.setText("Layout");
-
-        tileMenu.setText("Tile");
-        tileMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tileMenuActionPerformed(evt);
-            }
-        });
-        windowsLayoutMenu.add(tileMenu);
-
-        tileHorizontallyMenu.setText("Tile Windows Horizontally ");
-        tileHorizontallyMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tileHorizontallyMenuActionPerformed(evt);
-            }
-        });
-        windowsLayoutMenu.add(tileHorizontallyMenu);
-
-        tileVerticallyMenu.setText("Tile Windows Vertically");
-        tileVerticallyMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tileVerticallyMenuActionPerformed(evt);
-            }
-        });
-        windowsLayoutMenu.add(tileVerticallyMenu);
-
-        cascadeMenu.setText("Cascade");
-        cascadeMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cascadeMenuActionPerformed(evt);
-            }
-        });
-        windowsLayoutMenu.add(cascadeMenu);
-
-        editMenu.add(windowsLayoutMenu);
         editMenu.add(jSeparator6);
 
         proptiesMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        proptiesMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/selectall_16x16.png"))); // NOI18N
         proptiesMenu.setText("Propoties");
         proptiesMenu.setToolTipText("set propeties of the selected frame");
         proptiesMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -537,98 +477,51 @@ public class JPowder extends JFrame implements DropTargetListener {
 
         jMenuBar1.add(editMenu);
 
-        lookAndFeelMenu.setText("LookAndFeel");
-        lookAndFeelMenu.setFont(new java.awt.Font("Tahoma", 0, 14));
+        windowMenu.setText("Window");
+        windowMenu.setFont(new java.awt.Font("Tahoma", 0, 14));
 
-        buttonGroup
-        .add(Windows);
-        Windows.setText("Windows");
-        Windows.addActionListener(new java.awt.event.ActionListener() {
+        tileMenu.setText("Tile");
+        tileMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                WindowsActionPerformed(evt);
+                tileMenuActionPerformed(evt);
             }
         });
-        lookAndFeelMenu.add(Windows);
+        windowMenu.add(tileMenu);
 
-        buttonGroup
-
-        .add(WindowClassic);
-        WindowClassic.setText("WindowClassic");
-        WindowClassic.setContentAreaFilled(false);
-        WindowClassic.setFocusPainted(true);
-        WindowClassic.setHideActionText(true);
-        WindowClassic.setMargin(new java.awt.Insets(4, 4, 4, 4));
-        WindowClassic.addActionListener(new java.awt.event.ActionListener() {
+        tileHorizontallyMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TileHorizontally.png"))); // NOI18N
+        tileHorizontallyMenu.setText("Tile Windows Horizontally ");
+        tileHorizontallyMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                WindowClassicActionPerformed(evt);
+                tileHorizontallyMenuActionPerformed(evt);
             }
         });
-        lookAndFeelMenu.add(WindowClassic);
+        windowMenu.add(tileHorizontallyMenu);
 
-        buttonGroup.add(MacLookAndFeel);
-        MacLookAndFeel.setText("MacLookAndFeel");
-        MacLookAndFeel.setContentAreaFilled(false);
-        MacLookAndFeel.setFocusPainted(true);
-        MacLookAndFeel.setHideActionText(true);
-        MacLookAndFeel.setMargin(new java.awt.Insets(4, 4, 4, 4));
-        MacLookAndFeel.addActionListener(new java.awt.event.ActionListener() {
+        tileVerticallyMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TileVertically.png"))); // NOI18N
+        tileVerticallyMenu.setText("Tile Windows Vertically");
+        tileVerticallyMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MacLookAndFeelActionPerformed(evt);
+                tileVerticallyMenuActionPerformed(evt);
             }
         });
-        lookAndFeelMenu.add(MacLookAndFeel);
+        windowMenu.add(tileVerticallyMenu);
 
-        buttonGroup.add(Motif);
-        Motif.setText("Motif");
-        Motif.setContentAreaFilled(false);
-        Motif.setFocusPainted(true);
-        Motif.setHideActionText(true);
-        Motif.setMargin(new java.awt.Insets(4, 4, 4, 4));
-        Motif.addActionListener(new java.awt.event.ActionListener() {
+        cascadeMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TileCascade.png"))); // NOI18N
+        cascadeMenu.setText("Cascade");
+        cascadeMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MotifActionPerformed(evt);
+                cascadeMenuActionPerformed(evt);
             }
         });
-        lookAndFeelMenu.add(Motif);
+        windowMenu.add(cascadeMenu);
 
-        buttonGroup.add(Nimbus);
-        Nimbus.setText("Nimbus");
-        Nimbus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NimbusActionPerformed(evt);
-            }
-        });
-        lookAndFeelMenu.add(Nimbus);
-
-        buttonGroup.add(Metal);
-        Metal.setText("Metal");
-        Metal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MetalActionPerformed(evt);
-            }
-        });
-        lookAndFeelMenu.add(Metal);
-
-        buttonGroup.add(LinuxSolaris);
-        LinuxSolaris.setText("LinuxandSolaris");
-        LinuxSolaris.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LinuxSolarisActionPerformed(evt);
-            }
-        });
-        lookAndFeelMenu.add(LinuxSolaris);
-
-        jMenuBar1.add(lookAndFeelMenu);
+        jMenuBar1.add(windowMenu);
 
         helpMenu.setText("Help");
         helpMenu.setFont(new java.awt.Font("Tahoma", 0, 14));
 
-        Content.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        Content.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/help_16x16.png"))); // NOI18N
-        Content.setText("Content");
-        helpMenu.add(Content);
-
         OnlieDocsandSupport.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, java.awt.event.InputEvent.CTRL_MASK));
+        OnlieDocsandSupport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Web.png"))); // NOI18N
         OnlieDocsandSupport.setText("Online Docs and Support");
         OnlieDocsandSupport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -636,10 +529,9 @@ public class JPowder extends JFrame implements DropTargetListener {
             }
         });
         helpMenu.add(OnlieDocsandSupport);
-        helpMenu.add(jSeparator3);
 
         About.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
-        About.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/info_16x16.png"))); // NOI18N
+        About.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/info_16x16.png"))); // NOI18N
         About.setText("About");
         About.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -787,85 +679,7 @@ public class JPowder extends JFrame implements DropTargetListener {
         newJPowder.setVisible(true);
 
     }//GEN-LAST:event_NewActionPerformed
-    /**
-     * set look and feel to windows classic.
-     * @param evt
-     */
-    private void WindowClassicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WindowClassicActionPerformed
-        LAF.windosclassic();
-    }//GEN-LAST:event_WindowClassicActionPerformed
-    /**
-     * set look and feel to Apple Mac.
-     * @param evt
-     */
-    private void MacLookAndFeelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MacLookAndFeelActionPerformed
-        LAF.appleLook();
-    }//GEN-LAST:event_MacLookAndFeelActionPerformed
-    /**
-     * Set look and feel to Motif.
-     * @param evt
-     */
-    private void MotifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MotifActionPerformed
-        LAF.motif();
-    }//GEN-LAST:event_MotifActionPerformed
-    /**
-     * Set look and feel to Nimbus.
-     * @param evt
-     */
-    private void NimbusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NimbusActionPerformed
-        LAF.nimbus();
-    }//GEN-LAST:event_NimbusActionPerformed
-    /**
-     * set look and feel to original java look and feel
-     * @param evt
-     */
-    private void MetalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MetalActionPerformed
-        LAF.metal();
-    }//GEN-LAST:event_MetalActionPerformed
-    /**
-     * set look and feel to current windows operation system.
-     * @param evt
-     */
-    private void WindowsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WindowsActionPerformed
-        LAF.windows();
-    }//GEN-LAST:event_WindowsActionPerformed
-    /**
-     * set look and feel to the Linux and Solaries operating system.
-     * @param evt
-     */
-    private void LinuxSolarisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LinuxSolarisActionPerformed
-        LAF.LinuxandSolaris();
-    }//GEN-LAST:event_LinuxSolarisActionPerformed
-    /**
-     *
-     * @param evt
-     */
-    private void workspaceMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workspaceMenuActionPerformed
-        boolean[] JPowder = new boolean[16654];
-        for (int i = 0; i < 16654; i++) {
-        }
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                ".ISIS ", "ISIS");
-        chooser.setFileFilter(filter);
-        int returnVal = chooser.showSaveDialog(chooser);
-        File fileName = chooser.getSelectedFile();
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            try {
-                FileOutputStream buffer = new FileOutputStream(fileName);
-                final ObjectOutput out = new ObjectOutputStream(buffer);
-                out.writeObject(JPowder);
 
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(this, "Invalid file!",
-                        "error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }//GEN-LAST:event_workspaceMenuActionPerformed
-    /**
-     *
-     * @param evt
-     */
     private void appletMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appletMenuActionPerformed
         System.out.println("Save as serialize");
         JFileChooser chooser = new JFileChooser();
@@ -1010,17 +824,6 @@ public class JPowder extends JFrame implements DropTargetListener {
         }
         internalFrameInFocus.getXYPlot().setBackgroundPaint(ChartColor.LIGHT_GRAY);
     }//GEN-LAST:event_jPrintPublishingMenuActionPerformed
-
-    private void moveMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveMenuActionPerformed
-        if (moveMenu.isSelected()) {
-            internalFrameInFocus.getXYPlot().setDomainPannable(true);
-            internalFrameInFocus.getXYPlot().setRangePannable(true);
-        } else {
-            internalFrameInFocus.getXYPlot().setDomainPannable(false);
-            internalFrameInFocus.getXYPlot().setRangePannable(false);
-
-        }
-    }//GEN-LAST:event_moveMenuActionPerformed
     /**
      * To close all the internal frames which are in the ChartPlotter(jDesktopPane).
      * @param evt
@@ -1084,6 +887,15 @@ public class JPowder extends JFrame implements DropTargetListener {
         chartPlotter.setLayout(new GridLayout(jInternalFrames.length, jInternalFrames.length, 20, 20));
         chartPlotter.updateUI();
     }//GEN-LAST:event_tileMenuActionPerformed
+
+    private void closeFrameMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeFrameMenuActionPerformed
+        try {
+            internalFrameInFocus.setClosed(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(JPowder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_closeFrameMenuActionPerformed
 
     /**
      * responsible for saving and writng the chart as pdf
@@ -1283,25 +1095,18 @@ public class JPowder extends JFrame implements DropTargetListener {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem About;
-    private javax.swing.JMenuItem Content;
     private javax.swing.JMenuItem Exit;
-    private javax.swing.JRadioButtonMenuItem LinuxSolaris;
-    private javax.swing.JRadioButtonMenuItem MacLookAndFeel;
-    private javax.swing.JRadioButtonMenuItem Metal;
-    private javax.swing.JRadioButtonMenuItem Motif;
     private javax.swing.JMenuItem New;
-    private javax.swing.JRadioButtonMenuItem Nimbus;
     private javax.swing.JMenuItem OnlieDocsandSupport;
     private javax.swing.JMenuItem Open;
     private javax.swing.JMenu Print;
     private javax.swing.JTabbedPane Tabs;
-    private javax.swing.JRadioButtonMenuItem WindowClassic;
-    private javax.swing.JRadioButtonMenuItem Windows;
     private javax.swing.JPanel analysistab;
     private javax.swing.JMenuItem appletMenu;
     private javax.swing.JMenuItem cascadeMenu;
     private javax.swing.JDesktopPane chartPlotter;
     private javax.swing.JPanel chartToolstab;
+    private javax.swing.JMenuItem closeFrameMenu;
     private javax.swing.JMenuItem clossAllMenu;
     private javax.swing.JMenuItem copyMenu;
     private javax.swing.JPanel dataVisibleInChartPanel;
@@ -1316,13 +1121,10 @@ public class JPowder extends JFrame implements DropTargetListener {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JMenu lookAndFeelMenu;
     private javax.swing.JLabel messageLabel;
-    private javax.swing.JCheckBoxMenuItem moveMenu;
     private javax.swing.JMenuItem pDfMenu;
     private javax.swing.JMenuItem proptiesMenu;
     private javax.swing.JMenuItem redoMenu;
@@ -1332,7 +1134,6 @@ public class JPowder extends JFrame implements DropTargetListener {
     private javax.swing.JMenuItem tileVerticallyMenu;
     private javax.swing.JPanel treetab;
     private javax.swing.JMenuItem undoMenu;
-    private javax.swing.JMenu windowsLayoutMenu;
-    private javax.swing.JMenuItem workspaceMenu;
+    private javax.swing.JMenu windowMenu;
     // End of variables declaration//GEN-END:variables
 }

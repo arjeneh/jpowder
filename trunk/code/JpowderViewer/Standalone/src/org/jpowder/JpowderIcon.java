@@ -151,7 +151,7 @@ public class JpowderIcon {
                 thumbAction = null;
                 if (icon != null) {
 
-                    ImageIcon thumbnailIcon = new ImageIcon(getScaledImage(icon.getImage(), setHeight(80), setWidth(82)));
+                    ImageIcon thumbnailIcon = new ImageIcon(getScaledImage(icon.getImage(), setHeight(78), setWidth(78)));
 
                     thumbAction = new Thumbnail(icon, thumbnailIcon, title[i]);
 

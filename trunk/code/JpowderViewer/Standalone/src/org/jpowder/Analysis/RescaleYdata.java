@@ -121,7 +121,6 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
         applyButt = new javax.swing.JButton();
         Back = new javax.swing.JButton();
         rescaleLabel = new javax.swing.JLabel();
-        reserButt = new javax.swing.JToggleButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Rescale YData");
@@ -152,16 +151,6 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
         Back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BackActionPerformed(evt);
-            }
-        });
-
-        reserButt.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
-        reserButt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NewImages/arrowshapes.quad-arrow_16x16.png"))); // NOI18N
-        reserButt.setText("Reset");
-        reserButt.setToolTipText("Fit plot to original size");
-        reserButt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reserButtActionPerformed(evt);
             }
         });
 
@@ -197,14 +186,9 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
                         .addComponent(Back))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(applyButt)
-                        .addGap(36, 36, 36)
-                        .addComponent(reserButt)))
+                        .addComponent(applyButt)))
                 .addContainerGap())
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {applyButt, reserButt});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -228,16 +212,11 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
                             .addComponent(jLabel4)
                             .addComponent(constantField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(applyButt)
-                    .addComponent(reserButt))
+                .addComponent(applyButt)
                 .addGap(46, 46, 46)
                 .addComponent(Back)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {applyButt, reserButt});
-
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
@@ -284,15 +263,6 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 
     }//GEN-LAST:event_applyButtActionPerformed
 
-    private void reserButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserButtActionPerformed
-        JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-        Vector<Double> ve = new Vector<Double>();
-     
-          inFocus.getPowderDataSet().elementAt(0).getY().clone();
-          System.out.println(""+ inFocus.getPowderDataSet().elementAt(0).getY());
-        
-
-    }//GEN-LAST:event_reserButtActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back;
     private javax.swing.JComboBox OperationComboBox;
@@ -305,7 +275,6 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel rescaleLabel;
-    private javax.swing.JToggleButton reserButt;
     // End of variables declaration//GEN-END:variables
 }
 

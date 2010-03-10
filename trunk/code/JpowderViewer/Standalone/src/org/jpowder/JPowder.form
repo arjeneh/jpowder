@@ -23,7 +23,7 @@
                   <KeyStroke key="Ctrl+N"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/NewImages/New.png"/>
+                  <Image iconType="3" name="/images/newdoc2_16x16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="New..."/>
               </Properties>
@@ -31,15 +31,13 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NewActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JSeparator" name="jSeparator2">
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="Open">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+O"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/NewImages/Open.png"/>
+                  <Image iconType="3" name="/images/Open1.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Open"/>
               </Properties>
@@ -47,29 +45,29 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OpenActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="appletMenu">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/exportto_16x16.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Jpowder Applet File"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="appletMenuActionPerformed"/>
+              </Events>
+            </MenuItem>
             <Menu class="javax.swing.JMenu" name="saveAs">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/NewImages/saveas_16x16.png"/>
+                  <Image iconType="3" name="/images/saveas_16x16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Save As"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="appletMenu">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/NewImages/java16x16.png"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Jpowder Applet File"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="appletMenuActionPerformed"/>
-                  </Events>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="imageMenu">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/NewImages/Image.png"/>
+                      <Image iconType="3" name="/images/Image.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Image"/>
                   </Properties>
@@ -80,7 +78,7 @@
                 <MenuItem class="javax.swing.JMenuItem" name="pDfMenu">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/NewImages/exportdirecttopdf_16x16.png"/>
+                      <Image iconType="3" name="/images/exportdirecttopdf_16x16.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="PDF"/>
                   </Properties>
@@ -88,25 +86,14 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pDfMenuActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="workspaceMenu">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/NewImages/10627_16x16.png"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="WorkSpace"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="workspaceMenuActionPerformed"/>
-                  </Events>
-                </MenuItem>
               </SubComponents>
             </Menu>
-            <MenuItem class="javax.swing.JSeparator" name="jSeparator1">
+            <MenuItem class="javax.swing.JSeparator" name="jSeparator2">
             </MenuItem>
             <Menu class="javax.swing.JMenu" name="Print">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/NewImages/05504_16x16.png"/>
+                  <Image iconType="3" name="/images/Print.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Print As"/>
               </Properties>
@@ -115,9 +102,6 @@
                   <Properties>
                     <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                       <KeyStroke key="Ctrl+P"/>
-                    </Property>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/NewImages/Print.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Print"/>
                     <Property name="toolTipText" type="java.lang.String" value="Print "/>
@@ -131,9 +115,6 @@
                     <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                       <KeyStroke key="Ctrl+Alt+P"/>
                     </Property>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/NewImages/Print1.png"/>
-                    </Property>
                     <Property name="text" type="java.lang.String" value="Print Publishing"/>
                     <Property name="toolTipText" type="java.lang.String" value="Print with white background"/>
                   </Properties>
@@ -143,13 +124,37 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
+            <MenuItem class="javax.swing.JSeparator" name="jSeparator1">
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="closeFrameMenu">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/Close.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Close Frame"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeFrameMenuActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="clossAllMenu">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+Alt+A"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/CloseAll.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Close All"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clossAllMenuActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JSeparator" name="jSeparator4">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="Exit">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/NewImages/20557_16x16.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Exit"/>
               </Properties>
               <Events>
@@ -172,7 +177,7 @@
                   <KeyStroke key="Ctrl+Z"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/NewImages/undo_26x26.png"/>
+                  <Image iconType="3" name="/images/undo_26x26.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Undo closed frame"/>
                 <Property name="toolTipText" type="java.lang.String" value="Undo closed frame"/>
@@ -187,7 +192,7 @@
                   <KeyStroke key="Ctrl+Y"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/NewImages/redo_26x26.png"/>
+                  <Image iconType="3" name="/images/redo_26x26.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Redo closed frame"/>
                 <Property name="toolTipText" type="java.lang.String" value="Redo closed frame"/>
@@ -204,7 +209,7 @@
                   <KeyStroke key="Ctrl+C"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/NewImages/05711_16x16.png"/>
+                  <Image iconType="3" name="/images/copy_16x16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Copy"/>
                 <Property name="toolTipText" type="java.lang.String" value="Copy the selected frame"/>
@@ -213,77 +218,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="copyMenuActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="clossAllMenu">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+Alt+A"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Close All"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clossAllMenuActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="moveMenu">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Move"/>
-                <Property name="toolTipText" type="java.lang.String" value="To move hold CTRL and press &amp;drag the mouse"/>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/NewImages/arrowshapes.quad-arrow_16x16.png"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="moveMenuActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <Menu class="javax.swing.JMenu" name="windowsLayoutMenu">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Layout"/>
-              </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="tileMenu">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Tile"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tileMenuActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="tileHorizontallyMenu">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Tile Windows Horizontally "/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tileHorizontallyMenuActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="tileVerticallyMenu">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Tile Windows Vertically"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tileVerticallyMenuActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="cascadeMenu">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Cascade"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cascadeMenuActionPerformed"/>
-                  </Events>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
             <MenuItem class="javax.swing.JSeparator" name="jSeparator6">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="proptiesMenu">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+Alt+P"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/NewImages/selectall_16x16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Propoties"/>
                 <Property name="toolTipText" type="java.lang.String" value="set propeties of the selected frame"/>
@@ -294,107 +234,53 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="lookAndFeelMenu">
+        <Menu class="javax.swing.JMenu" name="windowMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="LookAndFeel"/>
+            <Property name="text" type="java.lang.String" value="Window"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="Windows">
+            <MenuItem class="javax.swing.JMenuItem" name="tileMenu">
               <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="buttonGroup&#xd;&#xa;" type="code"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Windows"/>
+                <Property name="text" type="java.lang.String" value="Tile"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="WindowsActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tileMenuActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="WindowClassic">
+            <MenuItem class="javax.swing.JMenuItem" name="tileHorizontallyMenu">
               <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="buttonGroup&#xd;&#xa;&#xd;&#xa;" type="code"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/TileHorizontally.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="WindowClassic"/>
-                <Property name="contentAreaFilled" type="boolean" value="false"/>
-                <Property name="focusPainted" type="boolean" value="true"/>
-                <Property name="hideActionText" type="boolean" value="true"/>
-                <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                  <Insets value="[4, 4, 4, 4]"/>
-                </Property>
+                <Property name="text" type="java.lang.String" value="Tile Windows Horizontally "/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="WindowClassicActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tileHorizontallyMenuActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="MacLookAndFeel">
+            <MenuItem class="javax.swing.JMenuItem" name="tileVerticallyMenu">
               <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="buttonGroup" type="code"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/TileVertically.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="MacLookAndFeel"/>
-                <Property name="contentAreaFilled" type="boolean" value="false"/>
-                <Property name="focusPainted" type="boolean" value="true"/>
-                <Property name="hideActionText" type="boolean" value="true"/>
-                <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                  <Insets value="[4, 4, 4, 4]"/>
-                </Property>
+                <Property name="text" type="java.lang.String" value="Tile Windows Vertically"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MacLookAndFeelActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tileVerticallyMenuActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="Motif">
+            <MenuItem class="javax.swing.JMenuItem" name="cascadeMenu">
               <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="buttonGroup" type="code"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/TileCascade.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Motif"/>
-                <Property name="contentAreaFilled" type="boolean" value="false"/>
-                <Property name="focusPainted" type="boolean" value="true"/>
-                <Property name="hideActionText" type="boolean" value="true"/>
-                <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                  <Insets value="[4, 4, 4, 4]"/>
-                </Property>
+                <Property name="text" type="java.lang.String" value="Cascade"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MotifActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="Nimbus">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="buttonGroup" type="code"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Nimbus"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NimbusActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="Metal">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="buttonGroup" type="code"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Metal"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MetalActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="LinuxSolaris">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="buttonGroup" type="code"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="LinuxandSolaris"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LinuxSolarisActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cascadeMenuActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -407,21 +293,13 @@
             </Property>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="Content">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="F1"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/NewImages/help_16x16.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Content"/>
-              </Properties>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="OnlieDocsandSupport">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+F2"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/Web.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Online Docs and Support"/>
               </Properties>
@@ -429,15 +307,13 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OnlieDocsandSupportActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JSeparator" name="jSeparator3">
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="About">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+A"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/NewImages/info_16x16.png"/>
+                  <Image iconType="3" name="/images/info_16x16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="About"/>
               </Properties>
@@ -563,8 +439,8 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName=" Tree ">
-                        <Property name="tabTitle" type="java.lang.String" value=" Tree "/>
+                      <JTabbedPaneConstraints tabName="Explorer">
+                        <Property name="tabTitle" type="java.lang.String" value="Explorer"/>
                       </JTabbedPaneConstraints>
                     </Constraint>
                   </Constraints>
@@ -597,8 +473,8 @@
                   </AuxValues>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="ChartTools">
-                        <Property name="tabTitle" type="java.lang.String" value="ChartTools"/>
+                      <JTabbedPaneConstraints tabName="Chart Tools">
+                        <Property name="tabTitle" type="java.lang.String" value="Chart Tools"/>
                       </JTabbedPaneConstraints>
                     </Constraint>
                   </Constraints>

@@ -58,6 +58,14 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     }
 
     public void update() {
+
+        JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
+        jTextPeakArea.setText("");
+        getPeakButt.setSelected(false);
+
+        for (int i = 0; i < domainRangeMarker.size() && i < peakRangeMarker.size(); i++) {
+            inFocus.getXYPlot().removeDomainMarker(domainRangeMarker.get(i));
+        }
     }
 
     public JLabel getPeakLabel() {
@@ -397,10 +405,14 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
         JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
         inFocus.removeMarkedPeakPosition(x);
+        final String[] strings = convertDoubleToString(inFocus.getMarkedPeakPosition());
+        jTextPeakArea.setText("");
 
-//      jTextPeakArea.setText(string[string.length - 1]);
+        inFocus.getXYPlot().removeDomainMarker(domainRangeMarker.get(domainRangeMarker.size() - 1));
 
-//      inFocus.getXYPlot().removeDomainMarker(domainRangeMarker.get(string.length-1));
+        for (int i = 0; i < strings.length; i++) {
+            jTextPeakArea.append(strings[i] + "\n");
+        }
 
 
     }//GEN-LAST:event_removeButtActionPerformed
