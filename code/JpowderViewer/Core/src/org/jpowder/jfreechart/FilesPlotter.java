@@ -83,7 +83,7 @@ public class FilesPlotter extends DatasetPlotter {
 //    chartPanel.setMaximumSize(new java.awt.Dimension(300, 300));
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
-        chartPanel.add(new XYE_PopupMenu(chartPanel));
+        chartPanel.add(new XY_PopupMenu(chartPanel));
         //User click and it brings up a new Frame for editing the chart.
         chartPanel.addChartMouseListener(new PowderChartMouseObserver(chartPanel));
         return chartPanel;
