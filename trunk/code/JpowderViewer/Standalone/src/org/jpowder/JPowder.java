@@ -120,6 +120,9 @@ public class JPowder extends JFrame implements DropTargetListener {
         analysistab.add(icon, "1");
         chartToolstab.add(icons, "1");
 
+        //to keep newly added JInternalFrame inside the JDesktopPane (KP)
+        chartPlotter.addContainerListener(new FrameAddedSupervisor());
+
         ScreenUtil.adjustBounds(this);
     }
 
