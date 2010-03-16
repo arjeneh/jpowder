@@ -6,8 +6,10 @@ package org.jpowder.chartTools;
 
 /**
  *
- * @author qyt21516
+ * @author Piet Blok, with amendments by David Gilbert.
  */
+
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.MultipleGradientPaint;
@@ -19,7 +21,6 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import javax.swing.SwingUtilities;
 import org.jdesktop.jxlayer.JXLayer;
 import org.jdesktop.jxlayer.plaf.AbstractLayerUI;

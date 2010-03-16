@@ -96,7 +96,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         this.setResizable(true);
         this.setIconifiable(true);
         this.setSize(width, height);
-        incr();
+        increment();
         SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
@@ -108,7 +108,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
     /**
      *Increment the location of each interframe is created by a certain value.
      */
-    public static void incr() {
+    public static void increment() {
         left += 30;
         top += 30;
 
@@ -117,6 +117,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         if (top == (height / 2)) {
             left += width;
             top = 0;
+
         }
         if (left == (width * 3)) {
             left = 0;
@@ -424,6 +425,7 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
 
         jpowderinternalframe = (JpowderInternalframe) e.getInternalFrame();
         JPowder.jpowderInternalFrameUpdate(jpowderinternalframe);
+
         DataVisibleInChart DVIC = jpowderinternalframe.getDataVisibleInChartPanel();
         DVIC.newChartInFocus(jpowderinternalframe.getXYPlot(),
                 jpowderinternalframe.getPowderDataSet());

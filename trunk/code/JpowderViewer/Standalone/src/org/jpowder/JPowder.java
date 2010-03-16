@@ -164,6 +164,8 @@ public class JPowder extends JFrame implements DropTargetListener {
      */
     public static void jpowderInfoPanelUpdate(InfoPanel info) {
         infoPanelInfocus = info;
+        infoPanelInfocus.update();
+
     }
 
     /**
@@ -257,7 +259,7 @@ public class JPowder extends JFrame implements DropTargetListener {
         home.setPreferredSize(new java.awt.Dimension(320, 727));
 
         Tabs.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-        Tabs.setFont(new java.awt.Font("Kartika", 0, 18)); // NOI18N
+        Tabs.setFont(new java.awt.Font("Kartika", 0, 18));
         Tabs.setMaximumSize(new java.awt.Dimension(327, 32767));
         Tabs.setPreferredSize(new java.awt.Dimension(275, 800));
 
@@ -678,6 +680,7 @@ public class JPowder extends JFrame implements DropTargetListener {
      */
     private void NewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewActionPerformed
         JPowder newJPowder = new JPowder();
+        newJPowder.setDefaultCloseOperation(EXIT_ON_CLOSE);
         ScreenUtil.centerFrame(newJPowder);
         newJPowder.setVisible(true);
 
@@ -1091,7 +1094,6 @@ public class JPowder extends JFrame implements DropTargetListener {
 
             public void run() {
                 jpowder.setLocationRelativeTo(null);
-                jpowder.setDefaultCloseOperation(JPowder.EXIT_ON_CLOSE);
                 jpowder.setVisible(true);
             }
         });

@@ -264,13 +264,13 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
 
 
                     JLabel j = new JLabel(value.toString());
-                  
+                    j.setOpaque(isSelected);
                     if (index >= 1) {
                         j.setForeground((Color) FilesPlotter.allseriescolors[index - 1]);
                     }
-                    if (isSelected) {
-                        j.setBackground(list.getSelectionBackground());
+                     if (isSelected) {
                         j.setBorder(LineBorder.createBlackLineBorder());
+
                     }
                     return j;
 
