@@ -12,7 +12,7 @@ import javax.swing.JInternalFrame;
 
 /**
  *
- * @author qyt21516
+ * @author 
  *
  * Changes
  * -------

@@ -71,21 +71,15 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
                 public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 
                     JLabel j = new JLabel(value.toString());
-
+                    j.setOpaque(isSelected);
                     if (index >= 0) {
                         j.setForeground((Color) FilesPlotter.allseriescolors[index]);
-                        j.setBackground((Color) FilesPlotter.allseriescolors[index]);
-                    }
-
-                    if (cellHasFocus) {
-                        System.out.println("cellhasfocus");
-                        j.setBackground(Color.BLUE);
-
+//                        j.setBackground((Color) FilesPlotter.allseriescolors[index]);
                     }
 
                     if (isSelected) {
                         j.setBorder(LineBorder.createBlackLineBorder());
-                        j.setBackground(Color.BLUE);
+                    
                     }
 
 

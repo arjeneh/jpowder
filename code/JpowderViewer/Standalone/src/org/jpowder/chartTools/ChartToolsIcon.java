@@ -25,8 +25,10 @@ public class ChartToolsIcon extends javax.swing.JPanel {
 
     private JpowderIcon jpowderIcon;
     private List<JButton> buttons = new ArrayList<JButton>();
+
     private String[] title = {"real_12.png", "3_4u.png"};
-    private String[] imgdir = {"Appearance-Small.PNG", "zoompanning_26x26.png"};
+    private String[] imgdir = {"Appearance-Small.PNG", "Zoom-Small.PNG"};
+
     private ChangePlotStyle changePlotStyle = new ChangePlotStyle(this);
     private ZoomAndPan zoomAndPan = new ZoomAndPan(this);
     private JPowder jpowder;
