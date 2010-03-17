@@ -102,6 +102,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     public static InfoPanel infoPanelInfocus;
     public static JPowderStack jPowderStackUndo = new JPowderStack(5);
     public static JPowderStack jPowderStackRedo = new JPowderStack(5);
+    private static double DropLocationX, DropLocationY;
 
     //  private stackInternalFrames;
     /**
@@ -119,6 +120,7 @@ public class JPowder extends JFrame implements DropTargetListener {
         treetab.add(tr, "1");
         analysistab.add(icon, "1");
         chartToolstab.add(icons, "1");
+        messageLabel.setLocation(chartPlotter.getWidth() / 3, chartPlotter.getHeight() / 2);
 
         //to keep newly added JInternalFrame inside the JDesktopPane (KP)
         chartPlotter.addContainerListener(new FrameAddedSupervisor());
@@ -156,6 +158,22 @@ public class JPowder extends JFrame implements DropTargetListener {
      */
     public CardLayout getCardLayout() {
         return cardLayout;
+    }
+
+    /**
+     * this method return the x location of whereever the file is droped.
+     * @return
+     */
+    public static double getDropLocationX() {
+        return DropLocationX;
+    }
+
+    /**
+     * this method return the y location of the where the file is droped.
+     * @return
+     */
+    public static double getDropLocationY() {
+        return DropLocationY;
     }
 
     /**
@@ -971,6 +989,12 @@ public class JPowder extends JFrame implements DropTargetListener {
     }
 
     public void drop(DropTargetDropEvent dtde) {
+
+
+        double x = dtde.getLocation().getX();
+        double y = dtde.getLocation().getY();
+        DropLocationX = x;
+        DropLocationY = y;
 
         DataSet oneDataset = null;
         Vector<DataSet> datasets = new Vector<DataSet>();

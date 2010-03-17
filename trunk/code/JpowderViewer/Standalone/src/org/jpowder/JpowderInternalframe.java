@@ -96,7 +96,8 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         this.setResizable(true);
         this.setIconifiable(true);
         this.setSize(width, height);
-        increment();
+
+        this.setLocation((int) JPowder.getDropLocationX(), (int) JPowder.getDropLocationY());
         SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
@@ -107,30 +108,30 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
 
     /**
      *Increment the location of each interframe is created by a certain value.
-     */
+     *
     public static void increment() {
-        left += 30;
-        top += 30;
+    left += 30;
+    top += 30;
 
-        System.out.println("top" + top);
-        System.out.println("Left" + left);
-        if (top == (height / 2)) {
-            left += width;
-            top = 0;
+    System.out.println("top" + top);
+    System.out.println("Left" + left);
+    if (top == (height / 2)) {
+    left += width;
+    top = 0;
 
-        }
-        if (left == (width * 3)) {
-            left = 0;
-            top += width + (width / 2.5);
-        }
-        if (top == (height * 1.9)) {
-            left += width;
-            top = 420;
-
-        }
+    }
+    if (left == (width * 3)) {
+    left = 0;
+    top += width + (width / 2.5);
+    }
+    if (top == (height * 1.9)) {
+    left += width;
+    top = 420;
 
     }
 
+    }
+     */
     /**
      * Loops over the names of the file which are plotted.
      * @return returning the name of files added.
