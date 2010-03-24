@@ -16,8 +16,6 @@ package org.jpowder;
  */
 public class about extends javax.swing.JFrame {
 
-    private JPowder jp = new JPowder();
-
     /** Creates new form About */
     public about() {
         initComponents();

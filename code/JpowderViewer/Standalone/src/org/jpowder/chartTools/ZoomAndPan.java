@@ -11,6 +11,7 @@
 package org.jpowder.chartTools;
 
 import javax.swing.JLabel;
+import org.jpowder.Analysis.ToolsIcon;
 import org.jpowder.InfoPanel;
 import org.jpowder.JPowder;
 import org.jpowder.JpowderInternalframe;
@@ -21,15 +22,16 @@ import org.jpowder.JpowderInternalframe;
  */
 public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
 
-    private ChartToolsIcon chartToolsIcon;
+
+    private ToolsIcon toolsIcon;
 
     /**
      *
      * @param chartToolsIcon
      */
-    public ZoomAndPan(ChartToolsIcon chartToolsIcon) {
+    public ZoomAndPan(ToolsIcon analysisIcon) {
         initComponents();
-        this.chartToolsIcon = chartToolsIcon;
+        this.toolsIcon = analysisIcon;
 
     }
 
@@ -49,43 +51,38 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        backButt = new javax.swing.JButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
-        reserButt = new javax.swing.JToggleButton();
+        backButton = new javax.swing.JButton();
         zoomLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
-        setPreferredSize(new java.awt.Dimension(297, 347));
+        setPreferredSize(new java.awt.Dimension(320, 420));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel1.setText("Zoom And Pan");
-
-        backButt.setText("Back");
-        backButt.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.PNG"))); // NOI18N
+        backButton.setText("Back");
+        backButton.setAlignmentY(0.0F);
+        backButton.setBorderPainted(false);
+        backButton.setFocusable(false);
+        backButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backButtActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
 
-        jToggleButton2.setText("pan");
+        zoomLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        zoomLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Zoom-Large.PNG"))); // NOI18N
 
-        reserButt.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
-        reserButt.setText("Reset");
-        reserButt.setToolTipText("Fit plot to original size");
-        reserButt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reserButtActionPerformed(evt);
-            }
-        });
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         jTextArea1.setBackground(new java.awt.Color(236, 233, 216));
         jTextArea1.setColumns(20);
         jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
-        jTextArea1.setText("To zoom in click on the left mouse and drag the mouse across the chart and to move the chart hold Ctrl and left mouse. to reset left mouse and drag to right.");
+        jTextArea1.setText("Zoom In: Hold left click and drag to right.\n\nZoom Out: Hold left click and drag to left.\n\nMove Plot: Hold Ctrl and left click and drag to left or right.");
         jTextArea1.setWrapStyleWord(true);
         jTextArea1.setOpaque(false);
         jScrollPane1.setViewportView(jTextArea1);
@@ -94,76 +91,45 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(reserButt))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(13, 13, 13)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel1)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(zoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(backButt)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(222, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(59, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(zoomLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(zoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(zoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jToggleButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(reserButt)
-                        .addGap(2, 2, 2)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(backButt)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void backButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtActionPerformed
-        System.out.println("backbutt has been cliked");
-        chartToolsIcon.setComponentZOrder(this, 1);
-        chartToolsIcon.add(this);
-        chartToolsIcon.setVisible(true);
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        toolsIcon.add(this);
+        toolsIcon.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_backButtActionPerformed
+    }//GEN-LAST:event_backButtonActionPerformed
 
-    private void reserButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserButtActionPerformed
-        JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-        inFocus.getChartPanel().restoreAutoBounds();
-//      inFocus.remove(getScrollBar());
-        reserButt.setSelected(false);
-
-    }//GEN-LAST:event_reserButtActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton backButt;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton backButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JToggleButton jToggleButton2;
-    private javax.swing.JToggleButton reserButt;
     private javax.swing.JLabel zoomLabel;
     // End of variables declaration//GEN-END:variables
 }

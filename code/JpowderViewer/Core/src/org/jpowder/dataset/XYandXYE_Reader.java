@@ -29,20 +29,20 @@ public class XYandXYE_Reader {
         Vector<Vector<Double>> localData = new Vector<Vector<Double>>();
 
         try {
-            FileInputStream fis = new FileInputStream(aFile);
-            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+            FileInputStream fileInputStream = new FileInputStream(aFile);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
             int lineNum = 0;
 
-            while ((aLine = br.readLine()) != null) {
+            while ((aLine = bufferedReader.readLine()) != null) {
                 lineNum++;
                 // create a vector to hold the field values
                 Vector<Double> newRow = new Vector<Double>();
-                StringTokenizer st2 = new StringTokenizer(aLine);
+                StringTokenizer stringTokenizer = new StringTokenizer(aLine);
                 //
-                int numToken = st2.countTokens();
+                int numToken = stringTokenizer.countTokens();
                 for (int i = 0; i < numToken; i++) {
                     //ignore the last STD by minusing 1.
-                    String stringToken = st2.nextToken();
+                    String stringToken = stringTokenizer.nextToken();
                     newRow.addElement(Double.parseDouble(stringToken));
                 } //for
                 localData.addElement(newRow);
@@ -51,8 +51,8 @@ public class XYandXYE_Reader {
 
             //System.out.print("Total LineNumber is: " + lineNum);
 
-            fis.close();
-            br.close();
+            fileInputStream.close();
+            bufferedReader.close();
 
             // Determine how many columns there are
             int countColumn = localData.firstElement().size();

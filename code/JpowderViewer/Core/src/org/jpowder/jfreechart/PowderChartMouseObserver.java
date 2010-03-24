@@ -43,7 +43,7 @@ public class PowderChartMouseObserver implements ChartMouseListener {
                 java.awt.EventQueue.invokeLater(new Runnable() {
 
                     public void run() {
-                        EditChartFrame obj = new EditChartFrame(plot_copy);
+                        EditChartFrame editChartFrame = new EditChartFrame(plot_copy);
                         System.out.println(plot_copy.toString() + " is clicked from PowderChartMouseObserver class.");
                     }
                 });

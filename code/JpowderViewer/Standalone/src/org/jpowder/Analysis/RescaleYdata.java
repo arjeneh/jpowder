@@ -12,7 +12,6 @@ package org.jpowder.Analysis;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.util.Vector;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -29,15 +28,15 @@ import org.jpowder.jfreechart.FilesPlotter;
  */
 public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 
-    private AnalysisIcon analysisIcon;
+    private ToolsIcon toolsIcon;
     private String[] string;
     private int index;
-    private Color color = (Color) FilesPlotter.getSeriescolors(0);
+    private Color color = (Color) FilesPlotter.getSeriesColors(0);
 
     /** Creates new form RescaleYdata */
-    public RescaleYdata(AnalysisIcon analysisIcon) {
+    public RescaleYdata(ToolsIcon analysisIcon) {
         initComponents();
-        this.analysisIcon = analysisIcon;
+        this.toolsIcon = analysisIcon;
 
 
 
@@ -45,7 +44,13 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 
     public void update() {
         System.out.println("updattttttt");
-        dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(addDataSet()));
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
+            dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(addDataSet()));
+        }
+        if(JpowderInternalframe.getnumberOfJpowderInternalframe() == 0){
+              String labels[] = { "No Chart Added"};
+             dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(labels));
+        }
 
 
     }
@@ -73,7 +78,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
                     JLabel j = new JLabel(value.toString());
                     j.setOpaque(isSelected);
                     if (index >= 0) {
-                        j.setForeground((Color) FilesPlotter.allseriescolors[index]);
+                        j.setForeground((Color) FilesPlotter.allSeriescolors[index]);
 //                        j.setBackground((Color) FilesPlotter.allseriescolors[index]);
                     }
 
@@ -104,29 +109,28 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         dataSetComboBox = new javax.swing.JComboBox();
-        OperationComboBox = new javax.swing.JComboBox();
+        operationComboBox = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         constantField = new javax.swing.JTextField();
-        applyButt = new javax.swing.JButton();
-        Back = new javax.swing.JButton();
+        applyButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
         rescaleLabel = new javax.swing.JLabel();
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel1.setText("Rescale YData");
+        setPreferredSize(new java.awt.Dimension(320, 400));
 
+        dataSetComboBox.setBackground(javax.swing.UIManager.getDefaults().getColor("ComboBox.selectionBackground"));
         dataSetComboBox.setEditable(true);
         dataSetComboBox.setFont(new java.awt.Font("Tahoma", 1, 10));
         dataSetComboBox.setMaximumRowCount(20);
 
-        OperationComboBox.setFont(new java.awt.Font("Tahoma", 1, 12));
-        OperationComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "+", "-", "x", "/" }));
+        operationComboBox.setFont(new java.awt.Font("Tahoma", 1, 12));
+        operationComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "+", "-", "x", "/" }));
 
-        jLabel2.setText("DataSet:");
+        jLabel2.setText("Plot:");
 
         jLabel3.setText("Operation:");
 
@@ -134,91 +138,85 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 
         constantField.setText("1");
 
-        applyButt.setText("Apply");
-        applyButt.addActionListener(new java.awt.event.ActionListener() {
+        applyButton.setText("Apply");
+        applyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                applyButtActionPerformed(evt);
+                applyButtonActionPerformed(evt);
             }
         });
 
-        Back.setText("Back");
-        Back.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.PNG"))); // NOI18N
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BackActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
+
+        rescaleLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rescale-Large.png"))); // NOI18N
+        rescaleLabel.setToolTipText("Rescale And Move The Plot");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rescaleLabel)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(13, 13, 13)
-                                .addComponent(dataSetComboBox, 0, 206, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(constantField)
-                                    .addComponent(OperationComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(rescaleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                                .addComponent(jLabel1)
-                                .addGap(13, 13, 13))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(Back))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(applyButt)))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dataSetComboBox, 0, 244, Short.MAX_VALUE)
+                            .addComponent(applyButton)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(constantField, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(operationComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 41, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rescaleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                .addComponent(rescaleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(dataSetComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dataSetComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(OperationComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(operationComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(constantField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
-                .addComponent(applyButt)
-                .addGap(46, 46, 46)
-                .addComponent(Back)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addComponent(applyButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 
         this.setVisible(false);
-}//GEN-LAST:event_BackActionPerformed
+}//GEN-LAST:event_backButtonActionPerformed
 
-    private void applyButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtActionPerformed
+    private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
         JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
 
         int seriescount = inFocus.getXYPlot().getDatasetCount();
@@ -231,19 +229,19 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 
                     Double y = (Double) inFocus.getPowderDataSet().elementAt(i).getY().get(j);
                     double newY = Double.parseDouble(constantField.getText());
-                    if (OperationComboBox.getSelectedItem().toString().equals("+")) {
+                    if (operationComboBox.getSelectedItem().toString().equals("+")) {
 
                         inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y + newY, j);
                     }
-                    if (OperationComboBox.getSelectedItem().toString().equals("-")) {
+                    if (operationComboBox.getSelectedItem().toString().equals("-")) {
 
                         inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y - newY, j);
                     }
-                    if (OperationComboBox.getSelectedItem().toString().equals("x")) {
+                    if (operationComboBox.getSelectedItem().toString().equals("x")) {
 
                         inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y * newY, j);
                     }
-                    if (OperationComboBox.getSelectedItem().toString().equals("/")) {
+                    if (operationComboBox.getSelectedItem().toString().equals("/")) {
 
                         inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y / newY, j);
                     }
@@ -255,19 +253,18 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
         inFocus.getChartPanel().restoreAutoRangeBounds();
         inFocus.getchart().setNotify(true);
 
-    }//GEN-LAST:event_applyButtActionPerformed
+    }//GEN-LAST:event_applyButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Back;
-    private javax.swing.JComboBox OperationComboBox;
-    private javax.swing.JButton applyButt;
+    private javax.swing.JButton applyButton;
+    private javax.swing.JButton backButton;
     private javax.swing.JTextField constantField;
     private javax.swing.JComboBox dataSetComboBox;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JComboBox operationComboBox;
     private javax.swing.JLabel rescaleLabel;
     // End of variables declaration//GEN-END:variables
 }

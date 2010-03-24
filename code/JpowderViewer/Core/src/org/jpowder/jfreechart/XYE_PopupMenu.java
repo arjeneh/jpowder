@@ -5,7 +5,6 @@
 package org.jpowder.jfreechart;
 
 import org.jpowder.*;
-import org.jfree.chart.renderer.xy.XYErrorRenderer;
 
 /**
  *
@@ -23,7 +22,6 @@ import org.jfree.chart.renderer.xy.XYErrorRenderer;
  * @Return:
  */
 //public class XYE_PopupMenu extends XY_PopupMenu {
-
 //    private javax.swing.JCheckBoxMenuItem offErrorBar;
 //    private org.jfree.chart.plot.XYPlot plot;
 //    private javax.swing.JMenu changePlotStyle;
@@ -54,3 +52,4 @@ import org.jfree.chart.renderer.xy.XYErrorRenderer;
 //
 //    }
 //}
+

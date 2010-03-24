@@ -42,7 +42,7 @@ import org.jpowder.chartTools.Magnifier;
  */
 public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, ChartMouseListener {
 
-    private AnalysisIcon analysisIcon;
+    private ToolsIcon toolsIcon;
     private List<Marker> peakRangeMarker = new ArrayList<Marker>();
     private List<Marker> domainRangeMarker = new ArrayList<Marker>();
     private String[] string;
@@ -51,9 +51,9 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
 //  private String[] strings;
     /** Creates new form Peack */
-    public MarkPeakPosition(AnalysisIcon analysisIcon) {
+    public MarkPeakPosition(ToolsIcon analysisIcon) {
         initComponents();
-        this.analysisIcon = analysisIcon;
+        this.toolsIcon = analysisIcon;
 
     }
 
@@ -83,9 +83,8 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
         jTextAreaPopMenu = new javax.swing.JPopupMenu();
         copy = new javax.swing.JMenuItem();
-        jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        Back = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
         getPeakButt = new javax.swing.JToggleButton();
         peakLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -105,15 +104,13 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         jTextAreaPopMenu.getAccessibleContext().setAccessibleParent(jTextPeakArea);
 
         setMaximumSize(new java.awt.Dimension(274, 362));
-        setPreferredSize(new java.awt.Dimension(274, 362));
+        setPreferredSize(new java.awt.Dimension(320, 420));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel1.setText("Mark The Peak Position");
-
-        Back.setText("Back");
-        Back.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.PNG"))); // NOI18N
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BackActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
 
@@ -123,6 +120,8 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
                 getPeakButtActionPerformed(evt);
             }
         });
+
+        peakLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Peaks-Large.png"))); // NOI18N
 
         jTextPeakArea.setColumns(1);
         jTextPeakArea.setFont(new java.awt.Font("Arial", 1, 14));
@@ -137,7 +136,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         });
         jScrollPane1.setViewportView(jTextPeakArea);
 
-        removeAllButt.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        removeAllButt.setFont(new java.awt.Font("Tahoma", 0, 10));
         removeAllButt.setText("Remove All");
         removeAllButt.setToolTipText("Clear The Text Area");
         removeAllButt.addActionListener(new java.awt.event.ActionListener() {
@@ -159,25 +158,22 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(226, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(peakLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(getPeakButt)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(peakLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                                .addComponent(jLabel1))
-                            .addComponent(getPeakButt)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(removeAllButt)
-                                .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Back)
-                                    .addComponent(removeButt))))
-                        .addContainerGap())
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(removeAllButt)
+                        .addGap(0, 0, 0)
+                        .addComponent(removeButt))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {removeAllButt, removeButt});
@@ -186,12 +182,10 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(peakLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                .addComponent(peakLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(getPeakButt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,22 +193,22 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(removeAllButt)
                     .addComponent(removeButt))
-                .addGap(18, 18, 18)
-                .addComponent(Back)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {removeAllButt, removeButt});
 
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 
         System.out.println("backbut is clicked");
-        analysisIcon.setComponentZOrder(this, 0);
-        analysisIcon.setVisible(true);
+        toolsIcon.setComponentZOrder(this, 0);
+        toolsIcon.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_BackActionPerformed
+    }//GEN-LAST:event_backButtonActionPerformed
 
     private void getPeakButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getPeakButtActionPerformed
 
@@ -222,7 +216,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
 
         JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
-        XYDataset dataset = inFocus.getXYPlot().getDataset();
+      
         if (getPeakButt.isSelected() && inFocus == null) {
             javax.swing.JOptionPane.showMessageDialog(null, "There Is No Plotted Data");
         }
@@ -426,10 +420,9 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Back;
+    private javax.swing.JButton backButton;
     private javax.swing.JMenuItem copy;
     private javax.swing.JToggleButton getPeakButt;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPopupMenu jTextAreaPopMenu;

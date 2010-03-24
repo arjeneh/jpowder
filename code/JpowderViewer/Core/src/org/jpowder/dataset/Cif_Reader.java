@@ -23,15 +23,15 @@ public class Cif_Reader {
         String aLine;
         Vector<Vector<Double>> localData = new Vector<Vector<Double>>();
         try {
-            FileReader fr = new FileReader(aFile);
-            BufferedReader br = new BufferedReader(fr);
-            while ((aLine = br.readLine()) != null) {
+            FileReader fileReader = new FileReader(aFile);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while ((aLine = bufferedReader.readLine()) != null) {
                 if (aLine.contains("loop_")) // is cif case sensitive
                 {
                     int countColumns = 0;
                     int pd_proc_2theta_corrected_index = 0;
                     int pd_proc_intensity_total_index = 0;
-                    while ((aLine = br.readLine()) != null) {
+                    while ((aLine = bufferedReader.readLine()) != null) {
                         if (aLine.contains("_")) {
                             countColumns++;
                             if (aLine.contains("_pd_proc_2theta_corrected")) {
@@ -47,15 +47,15 @@ public class Cif_Reader {
                     if (pd_proc_2theta_corrected_index == 0) {
                         break;
                     }
-                    while ((aLine = br.readLine()) != null) {
+                    while ((aLine = bufferedReader.readLine()) != null) {
                         Vector<Double> newRow = new Vector<Double>();
-                        StringTokenizer st2 = new StringTokenizer(aLine);
-                        int numToken = st2.countTokens();
+                        StringTokenizer stringTokenizer = new StringTokenizer(aLine);
+                        int numToken = stringTokenizer.countTokens();
                         if (numToken != countColumns) {
                             break;
                         }
                         for (int i = 1; i <= numToken; i++) {
-                            String stringToken = st2.nextToken();
+                            String stringToken = stringTokenizer.nextToken();
                             if (i == pd_proc_2theta_corrected_index) {
                                 newRow.addElement(Double.parseDouble(stringToken));
                                 // System.out.println(stringToken);
@@ -78,8 +78,8 @@ public class Cif_Reader {
 
                 }
             }
-            fr.close();
-            br.close();
+            fileReader.close();
+            bufferedReader.close();
             // Determine how many columns there are
             int countColumn = localData.firstElement().size();
 
