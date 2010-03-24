@@ -1,6 +1,5 @@
 package org.jpowder.JCheckboxList;
 
-import java.awt.Color;
 import javax.swing.Icon;
 
 /**

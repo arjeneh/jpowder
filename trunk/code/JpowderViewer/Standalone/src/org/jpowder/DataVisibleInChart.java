@@ -24,6 +24,8 @@ public class DataVisibleInChart extends JPanel {
     public FileNameListModel listModel;
     private JCheckBoxJList checkboxList;
     private javax.swing.JScrollPane file_sp;
+    private int SP_WIDTH=270;
+    private int SP_HEIGHT=270;
 
     public DataVisibleInChart() {
 
@@ -37,7 +39,7 @@ public class DataVisibleInChart extends JPanel {
 
         file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        file_sp.setPreferredSize(new java.awt.Dimension(270, 280));
+        file_sp.setPreferredSize(new java.awt.Dimension(SP_WIDTH, SP_HEIGHT));
         add(file_sp);
 
     }
@@ -55,12 +57,12 @@ public class DataVisibleInChart extends JPanel {
      * @param xyplot
      * @param datasets
      */
-    public void newChartInFocus(XYPlot xyplot, Vector<DataSet> datasets) {
+    public void newChartInFocus(XYPlot xyplot, Vector<DataSet> dataSets) {
         clear();
 
-        for (int i = 0; i < datasets.size(); i++) {
-            CheckableFileItem a = new CheckableFileItem(datasets.elementAt(i).getFileName());
-            listModel.addCheckableFile(a);
+        for (int i = 0; i < dataSets.size(); i++) {
+            CheckableFileItem checkableFileItem = new CheckableFileItem(dataSets.elementAt(i).getFileName());
+            listModel.addCheckableFile(checkableFileItem);
         }
 
         checkboxList.setm_plot(xyplot);

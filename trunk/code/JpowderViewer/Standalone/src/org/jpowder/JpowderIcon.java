@@ -40,8 +40,8 @@ import javax.swing.SwingWorker;
  */
 public class JpowderIcon {
 
-    public int width;
-    private int height;
+    public int ICON_WIDTH;
+    private int ICON_HEIGHT;
     private List<JButton> buttons;
     private Thumbnail thumbAction;
 //  File f = new File("");
@@ -68,12 +68,12 @@ public class JpowderIcon {
     }
 
     public int setWidth(int x) {
-        this.width = x;
+        this.ICON_WIDTH = x;
         return x;
     }
 
     public int setHeight(int y) {
-        this.height = y;
+        this.ICON_HEIGHT = y;
         return y;
     }
 
@@ -209,18 +209,8 @@ public class JpowderIcon {
             return displayPhoto;
         }
 
-        /**
-         * Shows the full image in the main area and sets the application title.
-         * @param e
-         */
         public void actionPerformed(ActionEvent e) {
-
-
-            setHeight(35);
-            setWidth(35);
-//     markPeakPosition.getPeakLabel().setIcon(displayPhoto);
-
-
+       
         }
     }
 }

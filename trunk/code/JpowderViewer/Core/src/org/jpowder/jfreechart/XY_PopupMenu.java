@@ -13,8 +13,6 @@ import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfTemplate;
 import com.lowagie.text.pdf.PdfWriter;
 import java.io.OutputStream;
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.io.BufferedOutputStream;
@@ -23,20 +21,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.util.List;
-import java.util.Vector;
 import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.Marker;
-import org.jfree.chart.plot.ValueMarker;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.ui.LengthAdjustmentType;
-import org.jfree.ui.RectangleAnchor;
-import org.jfree.ui.TextAnchor;
-import org.jpowder.util.VectorMiscUtil;
+import org.jfree.chart.plot.XYPlot;
 
 /**
  *@Class name:   XY_PopupMenu.java
@@ -53,20 +45,20 @@ turn off connecting line, turn off marker,
  */
 public class XY_PopupMenu extends javax.swing.JPopupMenu {
 
-    private org.jfree.chart.JFreeChart chart;
-    private javax.swing.JPopupMenu jFreeChartPopup;
-    private org.jfree.chart.ChartPanel chartPanel;
-    private org.jfree.chart.plot.XYPlot plot;
+    private JFreeChart chart;
+    private JPopupMenu jFreeChartPopup;
+    private ChartPanel chartPanel;
+    private XYPlot plot;
     //
-    private javax.swing.JMenuItem Saveserialize;
-    private javax.swing.JMenuItem Saveaspdf;
+    private JMenuItem saveAsSerialize;
+    private JMenuItem saveAsPDF;
 
     public XY_PopupMenu(org.jfree.chart.ChartPanel chartPanel) {
 
         this.chartPanel = chartPanel;
         this.chart = this.chartPanel.getChart();
         this.jFreeChartPopup = this.chartPanel.getPopupMenu();
-        this.plot = (org.jfree.chart.plot.XYPlot) this.chart.getPlot();
+        this.plot = (XYPlot) this.chart.getPlot();
 
 
 
@@ -76,8 +68,8 @@ public class XY_PopupMenu extends javax.swing.JPopupMenu {
          * Saves the data as a seriliazed object
          */
         //ADD serili
-        Saveserialize = new javax.swing.JMenuItem("Save as Ser...");
-        Saveserialize.addActionListener(new java.awt.event.ActionListener() {
+        saveAsSerialize = new javax.swing.JMenuItem("Save as Ser...");
+        saveAsSerialize.addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent event) {
                 System.out.println("Save as serialize");
@@ -106,8 +98,8 @@ public class XY_PopupMenu extends javax.swing.JPopupMenu {
          * the saved pdf file imdiately'
          */
         //Save As pdf
-        Saveaspdf = new javax.swing.JMenuItem("Save as pdf");
-        Saveaspdf.addActionListener(new java.awt.event.ActionListener() {
+        saveAsPDF = new javax.swing.JMenuItem("Save as pdf");
+        saveAsPDF.addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent event) {
                 System.out.println("saved as pdf");
@@ -177,10 +169,10 @@ public class XY_PopupMenu extends javax.swing.JPopupMenu {
 
 
         this.jFreeChartPopup.addSeparator();
-        this.jFreeChartPopup.add(Saveserialize);
+        this.jFreeChartPopup.add(saveAsSerialize);
         //
         this.jFreeChartPopup.addSeparator();
-        this.jFreeChartPopup.add(Saveaspdf);
+        this.jFreeChartPopup.add(saveAsPDF);
 
     }
 
