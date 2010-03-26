@@ -14,8 +14,6 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.multi.MultiLookAndFeel;
-import javax.swing.plaf.synth.SynthLookAndFeel;
 
 /**
  *
@@ -30,11 +28,11 @@ public class LookAndFeel {
 
     }
 
-    public void metal() {
+    public static void metal() {
         try {
             // Set cross-platform Java L&F (also called "Metal")
             UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-            SwingUtilities.updateComponentTreeUI(jpowderFrame);
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(LookAndFeel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -48,50 +46,50 @@ public class LookAndFeel {
 
     }
 
-    public void nimbus() {
+    public static void nimbus() {
         try {
             UIManager.setLookAndFeel(
                     new WindowsClassicLookAndFeel());
-            SwingUtilities.updateComponentTreeUI(jpowderFrame);
+  
         } catch (Exception j) {
             j.printStackTrace();
         }
     }
 
-    public void windows() {
+    public static void windows() {
         try {
             UIManager.setLookAndFeel(
                     new WindowsLookAndFeel());
-            SwingUtilities.updateComponentTreeUI(jpowderFrame);
+
         } catch (Exception j) {
             j.printStackTrace();
         }
     }
 
-    public void motif() {
+    public static void motif() {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-            SwingUtilities.updateComponentTreeUI(jpowderFrame);
+ 
 
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
-    public void java() {
+    public static void java() {
         try {
             UIManager.getCrossPlatformLookAndFeelClassName();
-            SwingUtilities.updateComponentTreeUI(jpowderFrame);
+ 
 
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
-    public void appleLook() {
+    public static void appleLook() {
         try {
             UIManager.setLookAndFeel("com.apple.mrj.swing.MacLookAndFeel");
-            SwingUtilities.updateComponentTreeUI(jpowderFrame);
+
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Need Mac operating system ",
@@ -102,17 +100,17 @@ public class LookAndFeel {
     public void windosclassic() {
         try {
             UIManager.setLookAndFeel(new WindowsClassicLookAndFeel());
-            SwingUtilities.updateComponentTreeUI(jpowderFrame);
+  
 
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
-    public void LinuxandSolaris() {
+    public static void LinuxandSolaris() {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-            SwingUtilities.updateComponentTreeUI(jpowderFrame);
+
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Need Linux operating system ",

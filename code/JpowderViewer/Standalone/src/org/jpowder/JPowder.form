@@ -58,7 +58,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/images/exportto_16x16.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Jpowder Applet File"/>
+                    <Property name="text" type="java.lang.String" value="Jpowder Applet "/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="appletMenuActionPerformed"/>
@@ -115,7 +115,7 @@
                     <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                       <KeyStroke key="Ctrl+Alt+P"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Print Publishing"/>
+                    <Property name="text" type="java.lang.String" value="Print For Publication"/>
                     <Property name="toolTipText" type="java.lang.String" value="Print with white background"/>
                   </Properties>
                   <Events>
@@ -131,7 +131,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/Close.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Close Frame"/>
+                <Property name="text" type="java.lang.String" value="Close Window"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeFrameMenuActionPerformed"/>
@@ -179,7 +179,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/undo_26x26.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Undo closed frame"/>
+                <Property name="text" type="java.lang.String" value="Undo Closed Window"/>
                 <Property name="toolTipText" type="java.lang.String" value="Undo closed frame"/>
               </Properties>
               <Events>
@@ -194,7 +194,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/redo_26x26.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Redo closed frame"/>
+                <Property name="text" type="java.lang.String" value="Redo Closed Window"/>
                 <Property name="toolTipText" type="java.lang.String" value="Redo closed frame"/>
               </Properties>
               <Events>

@@ -58,14 +58,15 @@ public class DataVisibleInChart extends JPanel {
      * @param datasets
      */
     public void newChartInFocus(XYPlot xyplot, Vector<DataSet> dataSets) {
-        clear();
 
+
+        clear();
         for (int i = 0; i < dataSets.size(); i++) {
             CheckableFileItem checkableFileItem = new CheckableFileItem(dataSets.elementAt(i).getFileName());
             listModel.addCheckableFile(checkableFileItem);
+            checkableFileItem.setSelected(xyplot.getRenderer(i).isSeriesVisible(0));
         }
-
         checkboxList.setm_plot(xyplot);
-        System.out.println("chartInFocus chartInFocus chartInFocus");
+
     }
 }

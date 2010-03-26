@@ -1,4 +1,4 @@
-/*
+         /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -27,6 +27,7 @@ public class JCheckBoxJList extends JList implements Serializable {
     private PropertyChangeSupport propertySupport;
     private DefaultListModel model;
     private XYPlot m_plot = null;
+    private CheckableFileItem checkableFileItem;
 
     public JCheckBoxJList(DefaultListModel model) {
         super(model);
@@ -52,16 +53,20 @@ public class JCheckBoxJList extends JList implements Serializable {
                 // turn off/on tick in tickbox
                 item.setSelected(!item.isSelected());
 
+       
                 //this neccessary for checking and unchecking the jcheckbox list
                 java.awt.Rectangle rect = list.getCellBounds(index, index);
                 list.repaint(rect);
 
                 if (!item.isSelected()) {
-                    m_plot.getRenderer(index).setSeriesVisible(0, Boolean.FALSE);
+                    m_plot.getRenderer(index).setSeriesVisible(0, Boolean.FALSE);       
+                    
                 }
                 if (item.isSelected()) {
                     m_plot.getRenderer(index).setSeriesVisible(0, Boolean.TRUE);
+        
                 }
+        
 
             }
         });

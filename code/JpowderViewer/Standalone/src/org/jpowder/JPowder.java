@@ -1,16 +1,7 @@
 package org.jpowder;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.pdf.DefaultFontMapper;
-import com.lowagie.text.pdf.FontMapper;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfTemplate;
-import com.lowagie.text.pdf.PdfWriter;
-import com.lowagie.text.Rectangle;
-import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
+
 import java.beans.PropertyVetoException;
-import java.io.OutputStream;
 import org.jpowder.tree.Tree;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -21,21 +12,14 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
-import java.awt.geom.Rectangle2D;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.event.InternalFrameListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import org.jfree.chart.JFreeChart;
 import org.jpowder.Analysis.ToolsIcon;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.fileCabinet.PowderFileCabinet;
@@ -47,6 +31,7 @@ import java.awt.print.PrinterJob;
 import javax.swing.*;
 import org.jfree.chart.ChartColor;
 import org.jpowder.fileCabinet.AcceptFileFilter;
+import org.jpowder.jfreechart.JpowderPopupMenu;
 import org.jpowder.tree.JpowderFileSystemTreeModel;
 
 /**
@@ -260,7 +245,7 @@ public class JPowder extends JFrame implements DropTargetListener {
         homePanel.setPreferredSize(new java.awt.Dimension(320, 727));
 
         tabs.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-        tabs.setFont(new java.awt.Font("Kartika", 0, 18)); // NOI18N
+        tabs.setFont(new java.awt.Font("Kartika", 0, 18));
         tabs.setMaximumSize(new java.awt.Dimension(327, 32767));
         tabs.setPreferredSize(new java.awt.Dimension(275, 800));
         tabs.setVerifyInputWhenFocusTarget(false);
@@ -343,7 +328,7 @@ public class JPowder extends JFrame implements DropTargetListener {
         saveAsMenu.setText("Save As");
 
         appletMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exportto_16x16.png"))); // NOI18N
-        appletMenu.setText("Jpowder Applet File");
+        appletMenu.setText("Jpowder Applet ");
         appletMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 appletMenuActionPerformed(evt);
@@ -386,7 +371,7 @@ public class JPowder extends JFrame implements DropTargetListener {
         printMenu.add(jPrintMenu);
 
         jPrintPublishingMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jPrintPublishingMenu.setText("Print Publishing");
+        jPrintPublishingMenu.setText("Print For Publication");
         jPrintPublishingMenu.setToolTipText("Print with white background");
         jPrintPublishingMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -399,7 +384,7 @@ public class JPowder extends JFrame implements DropTargetListener {
         fileMenu.add(jSeparator1);
 
         closeFrameMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Close.png"))); // NOI18N
-        closeFrameMenu.setText("Close Frame");
+        closeFrameMenu.setText("Close Window");
         closeFrameMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeFrameMenuActionPerformed(evt);
@@ -433,7 +418,7 @@ public class JPowder extends JFrame implements DropTargetListener {
 
         undoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         undoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/undo_26x26.png"))); // NOI18N
-        undoMenu.setText("Undo closed frame");
+        undoMenu.setText("Undo Closed Window");
         undoMenu.setToolTipText("Undo closed frame");
         undoMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -444,7 +429,7 @@ public class JPowder extends JFrame implements DropTargetListener {
 
         redoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
         redoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/redo_26x26.png"))); // NOI18N
-        redoMenu.setText("Redo closed frame");
+        redoMenu.setText("Redo Closed Window");
         redoMenu.setToolTipText("Redo closed frame");
         redoMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -683,26 +668,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     }//GEN-LAST:event_newMenuActionPerformed
 
     private void appletMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appletMenuActionPerformed
-        System.out.println("Save as serialize");
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                ".Ser ", "Ser");
-        chooser.setFileFilter(filter);
-        int returnVal = chooser.showSaveDialog(chooser);
-        File fileName = chooser.getSelectedFile();
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            try {
-                FileOutputStream buffer = new FileOutputStream(fileName);
-                final ObjectOutput out = new ObjectOutputStream(buffer);
-                out.writeObject(chart);
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(null, "Can Not Save!",
-                        "error", JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Can Not Save!",
-                    "error", JOptionPane.ERROR_MESSAGE);
-        }
+        JpowderPopupMenu.saveAsJpowderApplet();
     }//GEN-LAST:event_appletMenuActionPerformed
     /**
      *
@@ -720,31 +686,7 @@ public class JPowder extends JFrame implements DropTargetListener {
      * @param evt
      */
     private void pDfMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pDfMenuActionPerformed
-        System.out.println("saved as pdf");
-
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                ".pdf ", "pdf");
-        chooser.setFileFilter(filter);
-
-        int returnVal = chooser.showSaveDialog(chooser);
-        File fileName = chooser.getSelectedFile();
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            try {
-                saveChartAsPDF(fileName, internalFrameInFocus.getchart(), 10000, 10000, new DefaultFontMapper());
-                System.out.println(fileName.getPath());
-                try //try statement
-                {
-                    Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + fileName.getPath());   //open the file chart.pdf
-
-                } catch (Exception e) //catch any exceptions here
-                {
-                    System.out.println("Error" + e);  //print the error
-                }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        JpowderPopupMenu.pDF();
     }//GEN-LAST:event_pDfMenuActionPerformed
     /**
      *  Call method from Library to bring on the print panel up.
@@ -777,7 +719,6 @@ public class JPowder extends JFrame implements DropTargetListener {
         if (frame != null) {
 
             internalFrameInFocus = frame;
-
             internalFrameInFocus.setVisible(true);
             jPowderStackRedo.push(internalFrameInFocus);
         }
@@ -809,7 +750,7 @@ public class JPowder extends JFrame implements DropTargetListener {
 
 
         internalFrameInFocus.getXYPlot().setBackgroundPaint(ChartColor.white);
-
+        internalFrameInFocus.getXYPlot().setOutlinePaint(ChartColor.white);
         PrinterJob job = PrinterJob.getPrinterJob();
         PageFormat pf = job.defaultPage();
         PageFormat pf2 = job.pageDialog(pf);
@@ -825,6 +766,7 @@ public class JPowder extends JFrame implements DropTargetListener {
             }
         }
         internalFrameInFocus.getXYPlot().setBackgroundPaint(ChartColor.LIGHT_GRAY);
+        internalFrameInFocus.getXYPlot().setOutlinePaint(ChartColor.LIGHT_GRAY);
     }//GEN-LAST:event_jPrintPublishingMenuActionPerformed
     /**
      * To close all the internal frames which are in the ChartPlotter(jDesktopPane).
@@ -898,57 +840,6 @@ public class JPowder extends JFrame implements DropTargetListener {
         }
 
     }//GEN-LAST:event_closeFrameMenuActionPerformed
-
-    /**
-     * responsible for saving and writng the chart as pdf
-     * @param file
-     * @param chart
-     * @param width
-     * @param height
-     * @param mapper
-     * @throws IOException
-     */
-    public void saveChartAsPDF(File file,
-            JFreeChart chart,
-            int width,
-            int height,
-            FontMapper mapper) throws IOException {
-        OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
-        writeChartAsPDF(out, chart, 1500, 2500, mapper);
-        out.close();
-    }
-
-    /**
-     * write the chart into the pdf and setting the size of the pdf document.
-     * @param out
-     * @param chart
-     * @param width
-     * @param height
-     * @param mapper
-     * @throws IOException
-     */
-    public void writeChartAsPDF(OutputStream out,
-            JFreeChart chart,
-            int width,
-            int height,
-            FontMapper mapper) throws IOException {
-        Rectangle pagesize = new Rectangle(width, height);
-        Document document = new Document(pagesize, 50, 50, 50, 50);
-        try {
-            PdfWriter writer = PdfWriter.getInstance(document, out);
-            document.open();
-            PdfContentByte cb = writer.getDirectContent();
-            PdfTemplate tp = cb.createTemplate(width, height);
-            Graphics2D g2 = tp.createGraphics(width, height, mapper);
-            Rectangle2D r2D = new Rectangle2D.Double(0, 0, width, height);
-            chart.draw(g2, r2D);
-            g2.dispose();
-            cb.addTemplate(tp, 0, 0);
-        } catch (DocumentException de) {
-            System.err.println(de.getMessage());
-        }
-        document.close();
-    }
 
     public void dragEnter(DropTargetDragEvent dtde) {
     }
@@ -1056,38 +947,16 @@ public class JPowder extends JFrame implements DropTargetListener {
     public static void main(String args[]) {
 
         if (OSValidator.windows()) {
-            try {
-                UIManager.setLookAndFeel(
-                        new WindowsLookAndFeel());
-            } catch (Exception j) {
-                j.printStackTrace();
-            }
+            LookAndFeel.windows();
         }
         if (OSValidator.mac()) {
-            try {
-                UIManager.setLookAndFeel("com.apple.mrj.swing.MacLookAndFeel");
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Need Mac operating system ",
-                        "error", JOptionPane.ERROR_MESSAGE);
-            }
+            LookAndFeel.appleLook();
         }
 
         if (OSValidator.linux()) {
-            try {
-                UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Need Linux operating system ",
-                        "error", JOptionPane.ERROR_MESSAGE);
-            }
+            LookAndFeel.LinuxandSolaris();
         } else {
-            try {
-                UIManager.getCrossPlatformLookAndFeelClassName();
-
-            } catch (Exception e) {
-                javax.swing.JOptionPane.showMessageDialog(null, e.getMessage());
-            }
+            LookAndFeel.java();
         }
 
         java.awt.EventQueue.invokeLater(new Runnable() {
