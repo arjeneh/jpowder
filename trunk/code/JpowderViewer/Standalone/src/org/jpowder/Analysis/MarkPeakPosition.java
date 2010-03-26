@@ -68,9 +68,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         }
     }
 
-    public JLabel getPeakLabel() {
-        return peakLabel;
-    }
+    
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -166,7 +164,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(peakLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(peakLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                     .addComponent(getPeakButt)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(removeAllButt)
@@ -193,7 +191,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(removeAllButt)
                     .addComponent(removeButt))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
