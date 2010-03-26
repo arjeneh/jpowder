@@ -27,8 +27,8 @@ public class ToolsIcon extends javax.swing.JPanel {
     private JpowderIcon jpowderIcon;
     private List<JButton> buttons = new ArrayList<JButton>();
     private String[] title = {"Selecting Peaks", "Rescale and Moving Plots","Changing Plot's Appearance", "Zooming Information"};
-    private String[] imgdir = {"Peaks-Small.PNG",
-        "Rescale-Small.PNG","Appearance-Small.PNG", "Zoom-Small.PNG"};
+    private String[] imgdir = {"Peaks-Small.png",
+        "Rescale-Small.png","Appearance-Small.png", "Zoom-Small.png"};
     private MarkPeakPosition markPeakPosition = new MarkPeakPosition(this);
     private RescaleYdata rescaleYdata = new RescaleYdata(this);
     private ChangePlotStyle changePlotStyle = new ChangePlotStyle(this);
