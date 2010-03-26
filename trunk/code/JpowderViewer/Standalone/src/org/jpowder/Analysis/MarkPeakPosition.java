@@ -119,7 +119,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
             }
         });
 
-        peakLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Peaks-Large.png"))); // NOI18N
+        peakLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Peaks_Large.png"))); // NOI18N
 
         jTextPeakArea.setColumns(1);
         jTextPeakArea.setFont(new java.awt.Font("Arial", 1, 14));

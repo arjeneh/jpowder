@@ -108,7 +108,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
             }
         });
 
-        changePlotStyleLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Appearance-Large.PNG"))); // NOI18N
+        changePlotStyleLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Appearance_Large.png"))); // NOI18N
         changePlotStyleLabel.setPreferredSize(new java.awt.Dimension(300, 144));
 
         dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Every" }));

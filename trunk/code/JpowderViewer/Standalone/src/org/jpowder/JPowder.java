@@ -668,7 +668,7 @@ public class JPowder extends JFrame implements DropTargetListener {
     }//GEN-LAST:event_newMenuActionPerformed
 
     private void appletMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appletMenuActionPerformed
-        JpowderPopupMenu.saveAsJpowderApplet();
+      JpowderPopupMenu.saveAsJpowderApplet();
     }//GEN-LAST:event_appletMenuActionPerformed
     /**
      *
