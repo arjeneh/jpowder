@@ -13,6 +13,7 @@ public abstract class DataSet {
     private Vector<Double> x;
     private Vector<Double> y;
     private String fileName;
+    private double waveLength;
 
     //@param data: data from a powder diffraction file
     //@param fileName: filename of powder diffraction file.
@@ -49,6 +50,18 @@ public abstract class DataSet {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+    public double getWaveLength() {
+        return waveLength;
+    }
+
+    public void setWaveLength(double waveLength) {
+        if(waveLength!=0){
+         this.waveLength=waveLength;
+        }else{
+            this.waveLength=1.0;
+        }
+       
     }
 }
 

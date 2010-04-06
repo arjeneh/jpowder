@@ -49,7 +49,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
     private Vector<Double> markedPeakPosition = new Vector<Double>();
     public static int left;
     public static int top;
-    private static int INTERNALFRAME_WIDTH = 300, INTERNALFRAME_HEIGHT = 300;
+    private static int INTERNALFRAME_WIDTH = 500, INTERNALFRAME_HEIGHT = 300;
     private String name = new String();
     private DataSet oneDataset = null;
     public Stack<JInternalFrame> internalframeStackes = new Stack<JInternalFrame>();
@@ -91,7 +91,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         this.setMaximizable(true);
         this.setResizable(true);
         this.setIconifiable(true);
-        this.setSize(INTERNALFRAME_WIDTH, INTERNALFRAME_HEIGHT);
+        this.setSize(JPowder.getChartPlotter().getWidth()/2, INTERNALFRAME_HEIGHT);
 
         this.setLocation((int) JPowder.getDropLocationX(), (int) JPowder.getDropLocationY());
         SwingUtilities.invokeLater(new Runnable() {

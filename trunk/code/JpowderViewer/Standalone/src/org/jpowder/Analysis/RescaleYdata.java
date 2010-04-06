@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.LineBorder;
 import org.jfree.data.xy.XYDataset;
@@ -47,17 +48,18 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
             dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(addDataSet()));
         }
-        if(JpowderInternalframe.getnumberOfJpowderInternalframe() == 0){
-              String labels[] = { "No Chart Added"};
-             dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(labels));
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            String labels[] = {"No Chart Added"};
+            dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(labels));
         }
 
 
     }
-/**
- * This Label is for adding the
- * @return
- */
+
+    /**
+     * This Label is for adding the
+     * @return
+     */
     public JLabel getRescalLabel() {
         return rescaleLabel;
     }
@@ -84,7 +86,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 
                     if (isSelected) {
                         j.setBorder(LineBorder.createBlackLineBorder());
-                    
+
                     }
 
 
@@ -226,35 +228,37 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
                 inFocus.getPowderDataSet().elementAt(i).getY();
                 XYDataset ds = inFocus.getXYPlot().getDataset(i);
                 for (int j = 0; j < ds.getItemCount(i); j++) {
+                    try {
+                        Double y = (Double) inFocus.getPowderDataSet().elementAt(i).getY().get(j);
+                        double newY = Double.parseDouble(constantField.getText());
+                        if (operationComboBox.getSelectedItem().toString().equals("+")) {
 
-                    Double y = (Double) inFocus.getPowderDataSet().elementAt(i).getY().get(j);
-                    double newY = Double.parseDouble(constantField.getText());
-                    if (operationComboBox.getSelectedItem().toString().equals("+")) {
+                            inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y + newY, j);
+                        }
+                        if (operationComboBox.getSelectedItem().toString().equals("-")) {
 
-                        inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y + newY, j);
-                    }
-                    if (operationComboBox.getSelectedItem().toString().equals("-")) {
+                            inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y - newY, j);
+                        }
+                        if (operationComboBox.getSelectedItem().toString().equals("x")) {
 
-                        inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y - newY, j);
-                    }
-                    if (operationComboBox.getSelectedItem().toString().equals("x")) {
+                            inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y * newY, j);
+                        }
+                        if (operationComboBox.getSelectedItem().toString().equals("/")) {
 
-                        inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y * newY, j);
-                    }
-                    if (operationComboBox.getSelectedItem().toString().equals("/")) {
-
-                        inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y / newY, j);
+                            inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y / newY, j);
+                        }
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(null, "Enter Valid Number.");
                     }
                 }
             }
 
         }
-//        inFocus.getChartPanel().restoreAutoBounds();
+
         inFocus.getChartPanel().restoreAutoRangeBounds();
         inFocus.getchart().setNotify(true);
 
     }//GEN-LAST:event_applyButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton applyButton;
     private javax.swing.JButton backButton;

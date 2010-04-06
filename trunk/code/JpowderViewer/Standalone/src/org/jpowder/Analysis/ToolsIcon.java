@@ -26,13 +26,14 @@ public class ToolsIcon extends javax.swing.JPanel {
 
     private JpowderIcon jpowderIcon;
     private List<JButton> buttons = new ArrayList<JButton>();
-    private String[] title = {"Selecting Peaks", "Rescale and Moving Plots","Changing Plot's Appearance", "Zooming Information"};
+    private String[] title = {"Selecting Peaks", "Rescale and Moving Plots","Changing Plot's Appearance", "Zooming Information","Apply Bragg's Law To Change The XAxis"};
     private String[] imgdir = {"Peaks_Small.png",
-        "Rescale_Small.png","Appearance_Small.png", "Zoom_Small.png"};
+        "Rescale_Small.png","Appearance_Small.png", "Zoom_Small.png","ChangeXAxis_Small.png"};
     private MarkPeakPosition markPeakPosition = new MarkPeakPosition(this);
     private RescaleYdata rescaleYdata = new RescaleYdata(this);
     private ChangePlotStyle changePlotStyle = new ChangePlotStyle(this);
     private ZoomAndPan zoomAndPan = new ZoomAndPan(this);
+    private BraggsLaw braggsLow= new BraggsLaw(this);
     private JPowder jpowder;
 
     /** Creates new form AnalysisIcon */
@@ -43,6 +44,7 @@ public class ToolsIcon extends javax.swing.JPanel {
         buttons.add(rescaleButton);
         buttons.add(appearanceButton);
         buttons.add(zoomButton);
+        buttons.add(changeXAxisButton);
   
 
 
@@ -67,6 +69,8 @@ public class ToolsIcon extends javax.swing.JPanel {
         appearanceButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        changeXAxisButton = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(320, 420));
 
@@ -114,8 +118,21 @@ public class ToolsIcon extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 13));
         jLabel3.setText("Appearance");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 13));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel4.setText("Zoom ");
+
+        changeXAxisButton.setBackground(javax.swing.UIManager.getDefaults().getColor("ComboBox.disabledBackground"));
+        changeXAxisButton.setForeground(new java.awt.Color(255, 255, 255));
+        changeXAxisButton.setOpaque(false);
+        changeXAxisButton.setPreferredSize(new java.awt.Dimension(80, 80));
+        changeXAxisButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeXAxisButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel5.setText("Change X-Axis");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -140,13 +157,15 @@ public class ToolsIcon extends javax.swing.JPanel {
                                     .addComponent(peakButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(26, 26, 26)
                                     .addComponent(rescaleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 0, Short.MAX_VALUE)))))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 0, Short.MAX_VALUE))
+                                .addComponent(changeXAxisButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel5))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addComponent(jLabel3)
                         .addGap(56, 56, 56)
                         .addComponent(jLabel4)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {appearanceButton, peakButton, rescaleButton, zoomButton});
@@ -170,7 +189,11 @@ public class ToolsIcon extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(changeXAxisButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {appearanceButton, peakButton, rescaleButton, zoomButton});
@@ -224,12 +247,22 @@ public class ToolsIcon extends javax.swing.JPanel {
         JPowder.jpowderInfoPanelUpdate(changePlotStyle);
 }//GEN-LAST:event_appearanceButtonActionPerformed
 
+    private void changeXAxisButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeXAxisButtonActionPerformed
+       jpowder.getanalysistab().add(braggsLow, "1");
+        braggsLow.setVisible(true);
+        this.setVisible(false);
+
+        JPowder.jpowderInfoPanelUpdate(braggsLow);
+    }//GEN-LAST:event_changeXAxisButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton appearanceButton;
+    private javax.swing.JButton changeXAxisButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JButton peakButton;
     private javax.swing.JButton rescaleButton;
     private javax.swing.JButton zoomButton;

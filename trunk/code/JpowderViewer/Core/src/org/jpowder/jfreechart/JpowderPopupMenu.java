@@ -38,6 +38,7 @@ import org.jfree.chart.ChartColor;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.ui.ExtensionFileFilter;
 
 /**
  * This class created some new popupMenu and also amodifiies the default
@@ -230,13 +231,14 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
     public static void saveAsJpowderApplet() {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                ".Ser ", "Ser");
+                "Save As Jpowder Applet ", ".ser");
         chooser.setFileFilter(filter);
         int returnVal = chooser.showSaveDialog(chooser);
         File fileName = chooser.getSelectedFile();
+
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             try {
-                FileOutputStream buffer = new FileOutputStream(fileName);
+                FileOutputStream buffer = new FileOutputStream(fileName + ".ser");
                 final ObjectOutput out = new ObjectOutputStream(buffer);
                 out.writeObject(chart);
             } catch (IOException e) {
@@ -252,16 +254,25 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
      */
     public static void pDF() {
         JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                ".pdf ", "pdf");
-        chooser.setFileFilter(filter);
+        ExtensionFileFilter filter = new ExtensionFileFilter(
+                "Save As PDF ", ".pdf");
+        chooser.addChoosableFileFilter(filter);
 
         int returnVal = chooser.showSaveDialog(chooser);
         File fileName = chooser.getSelectedFile();
+//        try {
+//            ChartUtilities.saveChartAsJPEG(fileName, chart, 500, 500);
+//        } catch (IOException ex) {
+//            Logger.getLogger(JpowderPopupMenu.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
+        System.out.println("" + fileName.getName());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
+
             try {
                 saveChartAsPDF(fileName, chart, 10000, 10000, new DefaultFontMapper());
                 System.out.println(fileName.getPath());
+
                 try //try statement
                 {
                     Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + fileName.getPath());   //open the file chart.pdf
@@ -290,7 +301,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
             int width,
             int height,
             FontMapper mapper) throws IOException {
-        OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
+        OutputStream out = new BufferedOutputStream(new FileOutputStream(file + ".pdf"));
         writeChartAsPDF(out, chart, 1500, 2500, mapper);
         out.close();
     }

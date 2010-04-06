@@ -112,6 +112,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
             }
         });
 
+        getPeakButt.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.highlight"));
         getPeakButt.setText("Get Peak ");
         getPeakButt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,8 +123,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         peakLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Peaks_Large.png"))); // NOI18N
 
         jTextPeakArea.setColumns(1);
-        jTextPeakArea.setFont(new java.awt.Font("Arial", 1, 14));
-        jTextPeakArea.setForeground(new java.awt.Color(255, 0, 51));
+        jTextPeakArea.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jTextPeakArea.setLineWrap(true);
         jTextPeakArea.setTabSize(20);
         jTextPeakArea.setToolTipText("Value of 2θ at a peak");
