@@ -101,7 +101,7 @@ public class FilesPlotter extends DatasetPlotter {
     public JFreeChart createChart() {
         String x = "2\u03D1";//unicode 2thetha
         NumberAxis xAxis = new NumberAxis(x.toUpperCase());
-        NumberAxis yAxis = new NumberAxis("Y");
+        NumberAxis yAxis = new NumberAxis("Intensity");
         // get a reference to the plot for further customisation...
         JpowderXYLineAndShapeRender renderer1 = new JpowderXYLineAndShapeRender();
         renderer1.setSeriesPaint(0, getSeriesColors(0));

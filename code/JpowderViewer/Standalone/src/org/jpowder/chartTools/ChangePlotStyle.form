@@ -23,43 +23,48 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jSeparator1" alignment="1" pref="320" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="backButton" alignment="0" min="-2" pref="84" max="-2" attributes="0"/>
+                  <Component id="changePlotStyleLabel" alignment="0" pref="303" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Component id="jSeparator1" alignment="1" pref="323" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="backButton" min="-2" pref="84" max="-2" attributes="0"/>
-              <EmptySpace pref="226" max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="10" pref="10" max="10" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="21" pref="21" max="21" attributes="0"/>
+                      <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="dataSetComboBox" min="-2" pref="142" max="-2" attributes="0"/>
-                          <Component id="applyButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="shapesComboBox" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="markerSizeField" min="-2" pref="27" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="conectingLines" alignment="0" min="-2" max="-2" attributes="1"/>
+                          <Component id="errorBars" alignment="0" min="-2" max="-2" attributes="1"/>
                       </Group>
                   </Group>
-                  <Component id="conectingLines" alignment="0" min="-2" max="-2" attributes="1"/>
-                  <Component id="errorBars" alignment="0" min="-2" max="-2" attributes="1"/>
+                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
+              <EmptySpace pref="125" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jLabel3" max="32767" attributes="1"/>
+                  <Component id="jLabel4" alignment="0" max="32767" attributes="1"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="changePlotStyleLabel" pref="300" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="applyButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="shapesComboBox" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="markerSizeField" min="-2" pref="27" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="dataSetComboBox" min="-2" pref="142" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="65" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -69,15 +74,17 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="changePlotStyleLabel" min="-2" pref="97" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jSeparator1" min="-2" pref="11" max="-2" attributes="0"/>
+              <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="conectingLines" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
               <Component id="errorBars" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="dataSetComboBox" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="dataSetComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -88,7 +95,7 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="applyButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="111" max="32767" attributes="0"/>
+              <EmptySpace pref="68" max="32767" attributes="0"/>
               <Component id="backButton" min="-2" pref="25" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -113,8 +120,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="errorBarsActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
     <Component class="javax.swing.JButton" name="backButton">
       <Properties>
@@ -151,22 +156,29 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Plot:"/>
+        <Property name="text" type="java.lang.String" value="Plot(s):"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="shapesComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="9">
+          <StringArray count="16">
             <StringItem index="0" value="None"/>
-            <StringItem index="1" value="Square"/>
-            <StringItem index="2" value="Circle"/>
-            <StringItem index="3" value="Oval"/>
-            <StringItem index="4" value="Diamond"/>
-            <StringItem index="5" value="DownTriangle"/>
-            <StringItem index="6" value="UpTriangle"/>
-            <StringItem index="7" value="Rectangle"/>
-            <StringItem index="8" value=" "/>
+            <StringItem index="1" value="Fill Square"/>
+            <StringItem index="2" value="Square"/>
+            <StringItem index="3" value="Fill Circle"/>
+            <StringItem index="4" value="Circle"/>
+            <StringItem index="5" value="Fill Oval"/>
+            <StringItem index="6" value="Oval"/>
+            <StringItem index="7" value="Fill Diamond"/>
+            <StringItem index="8" value="Diamon"/>
+            <StringItem index="9" value="Fill DownTriangle"/>
+            <StringItem index="10" value="DownTriangle"/>
+            <StringItem index="11" value="Fill UpTriangle"/>
+            <StringItem index="12" value="UpTriangle"/>
+            <StringItem index="13" value="Fill Rectangle"/>
+            <StringItem index="14" value="Rectangle"/>
+            <StringItem index="15" value=" "/>
           </StringArray>
         </Property>
       </Properties>
@@ -193,6 +205,13 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="applyButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Change appearance of plots in a chart."/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
   </SubComponents>
 </Form>

@@ -26,6 +26,7 @@ import org.jpowder.Analysis.ToolsIcon;
 import org.jpowder.InfoPanel;
 import org.jpowder.JPowder;
 import org.jpowder.JpowderInternalframe;
+import org.jpowder.dataset.DataSetNoErrors;
 import org.jpowder.dataset.DataSetWithErrors;
 import org.jpowder.jfreechart.FilesPlotter;
 
@@ -34,7 +35,6 @@ import org.jpowder.jfreechart.FilesPlotter;
  * @author qyt21516
  */
 public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
-
 
     private ToolsIcon toolsIcon;
     /*Array of string which contains the all the file names that have been plotted. */
@@ -49,7 +49,6 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         this.toolsIcon = analysisIcon;
 
     }
-    
 
     /**
      *
@@ -71,7 +70,6 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         jLabel2 = new javax.swing.JLabel();
         conectingLines = new javax.swing.JCheckBox();
         errorBars = new javax.swing.JCheckBox();
-        jSeparator1 = new javax.swing.JSeparator();
         backButton = new javax.swing.JButton();
         changePlotStyleLabel = new javax.swing.JLabel();
         dataSetComboBox = new javax.swing.JComboBox();
@@ -81,6 +79,8 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         markerSizeField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         applyButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         jLabel2.setText("jLabel2");
 
@@ -118,9 +118,9 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
             }
         });
 
-        jLabel3.setText("Plot:");
+        jLabel3.setText("Plot(s):");
 
-        shapesComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "None", "Square", "Circle", "Oval", "Diamond", "DownTriangle", "UpTriangle", "Rectangle", " " }));
+        shapesComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "None", "Fill Square", "Square", "Fill Circle", "Circle", "Fill Oval", "Oval", "Fill Diamond", "Diamon", "Fill DownTriangle", "DownTriangle", "Fill UpTriangle", "UpTriangle", "Fill Rectangle", "Rectangle", " " }));
 
         jLabel4.setText("Shapes:");
 
@@ -135,40 +135,45 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
             }
         });
 
+        jLabel1.setText("Change appearance of plots in a chart.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(226, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(changePlotStyleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE))
+                .addContainerGap())
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
+                        .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dataSetComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(applyButton)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(shapesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(16, 16, 16)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(markerSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(conectingLines)
-                    .addComponent(errorBars))
-                .addGap(74, 74, 74))
+                            .addComponent(conectingLines)
+                            .addComponent(errorBars)))
+                    .addComponent(jLabel1))
+                .addContainerGap(125, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(changePlotStyleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(applyButton)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(shapesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(markerSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dataSetComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,15 +181,17 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
                 .addContainerGap()
                 .addComponent(changePlotStyleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(conectingLines)
                 .addGap(3, 3, 3)
                 .addComponent(errorBars)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(dataSetComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dataSetComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(shapesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -193,7 +200,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(applyButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -207,21 +214,33 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
             dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(addDataSet()));
         }
-        if(JpowderInternalframe.getnumberOfJpowderInternalframe() == 0){
-              String labels[] = { "No Chart Added"};
-             dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(labels));
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            String labels[] = {"No Chart Added"};
+            dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(labels));
+            return;
         }
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer();
 
         if (inFocus.getPowderDataSet().get(0) instanceof DataSetWithErrors) {
             XYErrorRenderer renderer1 = (XYErrorRenderer) inFocus.getXYPlot().getRenderer();
             errorBars.setSelected(renderer1.getDrawYError());
+
         }
         conectingLines.setSelected(renderer.getBaseLinesVisible());
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
             errorBars.setSelected(false);
             conectingLines.setSelected(false);
 
+        }
+        for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
+
+            if (inFocus.getPowderDataSet().get(i) instanceof DataSetNoErrors) {
+                errorBars.setEnabled(false);
+            }
+            if (inFocus.getPowderDataSet().get(i) instanceof DataSetWithErrors) {
+                errorBars.setEnabled(true);
+
+            }
         }
 
     }
@@ -241,6 +260,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         for (int i = 1; i < size; i++) {
 
             string[i] = inFocus.getPowderDataSet().elementAt(i - 1).getFileName();
+
             dataSetComboBox.setRenderer(new ListCellRenderer() {
 
                 public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -322,37 +342,74 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
 
         int seriescount = inFocus.getXYPlot().getDatasetCount();
         for (int i = 0; i < seriescount; i++) {
+
             if (inFocus.getPowderDataSet().elementAt(i).getFileName().equals(
                     dataSetComboBox.getSelectedItem())) {
-                XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer(i);
-                renderer.setBaseShapesVisible(true);
-                double dble = Double.parseDouble(markerSizeField.getText());
-                float flot = Float.valueOf(markerSizeField.getText());
+                try {
+                    double dble = Double.parseDouble(markerSizeField.getText());
+                    float flot = Float.valueOf(markerSizeField.getText());
 
-                if (shapesComboBox.getSelectedItem().toString().equals("None")) {
-                    renderer.setBaseShapesVisible(false);
-                }
+                    XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer(i);
+                    renderer.setBaseShapesVisible(true);
 
-                if (shapesComboBox.getSelectedItem().toString().equals("Square")) {
-                    renderer.setSeriesShape(0, new Rectangle2D.Double(-dble / 2, -dble / 2, dble, dble));
-                }
-                if (shapesComboBox.getSelectedItem().toString().equals("Circle")) {
-                    renderer.setSeriesShape(0, new Ellipse2D.Double(-dble / 2, -dble / 2, dble, dble));
-                }
-                if (shapesComboBox.getSelectedItem().toString().equals("Oval")) {
-                    renderer.setSeriesShape(0, new Ellipse2D.Double(-dble / 2, -dble / 2, dble, dble / 2));
-                }
-                if (shapesComboBox.getSelectedItem().toString().equals("Diamond")) {
-                    renderer.setSeriesShape(0, ShapeUtilities.createDiamond(flot));
-                }
-                if (shapesComboBox.getSelectedItem().toString().equals("DownTriangle")) {
-                    renderer.setSeriesShape(0, ShapeUtilities.createDownTriangle(flot));
-                }
-                if (shapesComboBox.getSelectedItem().toString().equals("UpTriangle")) {
-                    renderer.setSeriesShape(0, ShapeUtilities.createUpTriangle(flot));
-                }
-                if (shapesComboBox.getSelectedItem().toString().equals("Rectangle")) {
-                    renderer.setSeriesShape(0, new Rectangle2D.Double(-dble / 2, -dble / 2, dble, dble / 2));
+                    if (shapesComboBox.getSelectedItem().toString().equals("None")) {
+                        renderer.setBaseShapesVisible(false);
+
+                    }
+
+                    if (shapesComboBox.getSelectedItem().toString().equals("Square")) {
+                        renderer.setSeriesShape(0, new Rectangle2D.Double(-dble / 2, -dble / 2, dble, dble));
+                        renderer.setBaseShapesFilled(false);
+
+                    }
+                    if (shapesComboBox.getSelectedItem().toString().equals("Fill Square")) {
+                        renderer.setSeriesShape(0, new Rectangle2D.Double(-dble / 2, -dble / 2, dble, dble));
+                    }
+                    if (shapesComboBox.getSelectedItem().toString().equals("Fill Circle")) {
+                        renderer.setSeriesShape(0, new Ellipse2D.Double(-dble / 2, -dble / 2, dble, dble));
+                    }
+                    if (shapesComboBox.getSelectedItem().toString().equals("Circle")) {
+                        renderer.setSeriesShape(0, new Ellipse2D.Double(-dble / 2, -dble / 2, dble, dble));
+                        renderer.setBaseShapesFilled(false);
+                    }
+                    if (shapesComboBox.getSelectedItem().toString().equals("Fill Oval")) {
+                        renderer.setSeriesShape(0, new Ellipse2D.Double(-dble / 2, -dble / 2, dble, dble / 2));
+                    }
+                    if (shapesComboBox.getSelectedItem().toString().equals("Oval")) {
+                        renderer.setSeriesShape(0, new Ellipse2D.Double(-dble / 2, -dble / 2, dble, dble / 2));
+                        renderer.setBaseShapesFilled(false);
+                    }
+                    if (shapesComboBox.getSelectedItem().toString().equals("Fill Diamond")) {
+                        renderer.setSeriesShape(0, ShapeUtilities.createDiamond(flot));
+                    }
+                    if (shapesComboBox.getSelectedItem().toString().equals("Diamond")) {
+                        renderer.setSeriesShape(0, ShapeUtilities.createDiamond(flot));
+                        renderer.setBaseShapesFilled(false);
+                    }
+                    if (shapesComboBox.getSelectedItem().toString().equals("Fill DownTriangle")) {
+                        renderer.setSeriesShape(0, ShapeUtilities.createDownTriangle(flot));
+                    }
+                    if (shapesComboBox.getSelectedItem().toString().equals("DownTriangle")) {
+                        renderer.setSeriesShape(0, ShapeUtilities.createDownTriangle(flot));
+                        renderer.setBaseShapesFilled(false);
+                    }
+                    if (shapesComboBox.getSelectedItem().toString().equals("Fill UpTriangle")) {
+                        renderer.setSeriesShape(0, ShapeUtilities.createUpTriangle(flot));
+                    }
+                    if (shapesComboBox.getSelectedItem().toString().equals("UpTriangle")) {
+                        renderer.setSeriesShape(0, ShapeUtilities.createUpTriangle(flot));
+                        renderer.setBaseShapesFilled(false);
+                    }
+                    if (shapesComboBox.getSelectedItem().toString().equals("Fill Rectangle")) {
+                        renderer.setSeriesShape(0, new Rectangle2D.Double(-dble / 2, -dble / 2, dble, dble / 2));
+                    }
+                    if (shapesComboBox.getSelectedItem().toString().equals("Rectangle")) {
+                        renderer.setSeriesShape(0, new Rectangle2D.Double(-dble / 2, -dble / 2, dble, dble / 2));
+                        renderer.setBaseShapesFilled(false);
+                    }
+                } catch (NumberFormatException e) {
+                    javax.swing.JOptionPane.showMessageDialog(null, "Enter Valid Number.");
+                    markerSizeField.setText("");
                 }
             }
         }
@@ -364,6 +421,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     private javax.swing.JCheckBox conectingLines;
     private javax.swing.JComboBox dataSetComboBox;
     private javax.swing.JCheckBox errorBars;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

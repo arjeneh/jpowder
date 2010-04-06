@@ -18,6 +18,8 @@ import java.util.Vector;
  */
 public class Cif_Reader {
 
+    private static double waveLength;
+
     public static DataSet read(File aFile) {
 
         String aLine;
@@ -26,6 +28,33 @@ public class Cif_Reader {
             FileReader fileReader = new FileReader(aFile);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             while ((aLine = bufferedReader.readLine()) != null) {
+
+                if (aLine.contains("_diffrn_radiation_wavelength")) {
+//                    aLine = aLine.replace("_diffrn_radiation_wavelength", "");
+//                    aLine = aLine.replaceAll(" ", "");
+//                    System.out.println(aLine);
+
+                    String[]  splits = aLine.split(" ");
+                    if(splits==null||splits.length==0){
+
+                     javax.swing.JOptionPane.showMessageDialog(null, "Can not find the Wavelength");
+
+                    }else{
+                        try{
+                   waveLength = Double.parseDouble(splits[splits.length-1]);
+                            System.out.println(waveLength);
+
+                        }catch(NumberFormatException ex){
+
+                         javax.swing.JOptionPane.showMessageDialog(null, "Can not find the Wavelength");
+
+                            System.out.println(ex.getMessage());
+                        }
+                    }
+                }
+
+
+
                 if (aLine.contains("loop_")) // is cif case sensitive
                 {
                     int countColumns = 0;
@@ -93,6 +122,8 @@ public class Cif_Reader {
             } else {
                 javax.swing.JOptionPane.showMessageDialog(null, "File must contain either 2 or 3 columns");
             }
+            retVal.setWaveLength(waveLength);
+
             return retVal;
 
         } catch (MalformedURLException e) {
