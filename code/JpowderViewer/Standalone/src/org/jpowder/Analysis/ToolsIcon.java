@@ -13,7 +13,7 @@ package org.jpowder.Analysis;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
-import org.jpowder.JPowder;
+import org.jpowder.Jpowder;
 import org.jpowder.JpowderIcon;
 import org.jpowder.chartTools.ChangePlotStyle;
 import org.jpowder.chartTools.ZoomAndPan;
@@ -34,10 +34,10 @@ public class ToolsIcon extends javax.swing.JPanel {
     private ChangePlotStyle changePlotStyle = new ChangePlotStyle(this);
     private ZoomAndPan zoomAndPan = new ZoomAndPan(this);
     private BraggsLaw braggsLow= new BraggsLaw(this);
-    private JPowder jpowder;
+    private Jpowder jpowder;
 
     /** Creates new form AnalysisIcon */
-    public ToolsIcon(JPowder jpowder) {
+    public ToolsIcon(Jpowder jpowder) {
         initComponents();
         this.jpowder = jpowder;
         buttons.add(peakButton);
@@ -118,7 +118,7 @@ public class ToolsIcon extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 13));
         jLabel3.setText("Appearance");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 13));
         jLabel4.setText("Zoom ");
 
         changeXAxisButton.setBackground(javax.swing.UIManager.getDefaults().getColor("ComboBox.disabledBackground"));
@@ -139,33 +139,30 @@ public class ToolsIcon extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(32, 32, 32)
+                            .addGap(8, 8, 8)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(36, 36, 36)
                             .addComponent(jLabel2, 0, 0, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(24, 24, 24)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(appearanceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                                    .addComponent(zoomButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(peakButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(26, 26, 26)
-                                    .addComponent(rescaleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 0, Short.MAX_VALUE))
-                                .addComponent(changeXAxisButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel5))))
+                            .addComponent(appearanceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                            .addComponent(zoomButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(peakButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(26, 26, 26)
+                            .addComponent(rescaleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(changeXAxisButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
+                        .addGap(9, 9, 9)
                         .addComponent(jLabel3)
                         .addGap(56, 56, 56)
                         .addComponent(jLabel4)))
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {appearanceButton, peakButton, rescaleButton, zoomButton});
@@ -212,7 +209,7 @@ public class ToolsIcon extends javax.swing.JPanel {
         jpowder.getanalysistab().add(markPeakPosition, "1");
         markPeakPosition.setVisible(true);
         this.setVisible(false);
-        JPowder.jpowderInfoPanelUpdate(markPeakPosition);
+        Jpowder.jpowderInfoPanelUpdate(markPeakPosition);
 
     }//GEN-LAST:event_peakButtonActionPerformed
 
@@ -227,7 +224,7 @@ public class ToolsIcon extends javax.swing.JPanel {
         jpowder.getanalysistab().add(rescaleYdata, "1");
         rescaleYdata.setVisible(true);
         this.setVisible(false);
-        JPowder.jpowderInfoPanelUpdate(rescaleYdata);
+        Jpowder.jpowderInfoPanelUpdate(rescaleYdata);
     }//GEN-LAST:event_rescaleButtonActionPerformed
 
     private void zoomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoomButtonActionPerformed
@@ -235,7 +232,7 @@ public class ToolsIcon extends javax.swing.JPanel {
         jpowder.getanalysistab().add(zoomAndPan, "1");
         zoomAndPan.setVisible(true);
         this.setVisible(false);
-        JPowder.jpowderInfoPanelUpdate(zoomAndPan);
+        Jpowder.jpowderInfoPanelUpdate(zoomAndPan);
 }//GEN-LAST:event_zoomButtonActionPerformed
 
     private void appearanceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appearanceButtonActionPerformed
@@ -244,7 +241,7 @@ public class ToolsIcon extends javax.swing.JPanel {
         changePlotStyle.setVisible(true);
         this.setVisible(false);
 
-        JPowder.jpowderInfoPanelUpdate(changePlotStyle);
+        Jpowder.jpowderInfoPanelUpdate(changePlotStyle);
 }//GEN-LAST:event_appearanceButtonActionPerformed
 
     private void changeXAxisButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeXAxisButtonActionPerformed
@@ -252,7 +249,7 @@ public class ToolsIcon extends javax.swing.JPanel {
         braggsLow.setVisible(true);
         this.setVisible(false);
 
-        JPowder.jpowderInfoPanelUpdate(braggsLow);
+        Jpowder.jpowderInfoPanelUpdate(braggsLow);
     }//GEN-LAST:event_changeXAxisButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

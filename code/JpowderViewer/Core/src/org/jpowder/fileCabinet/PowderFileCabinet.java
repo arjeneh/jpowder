@@ -38,7 +38,7 @@ import org.jpowder.util.Stopwatch;
 public class PowderFileCabinet extends javax.swing.JComponent implements Subject, Serializable {
 
     // if ACCEPTED_FILE_TYPE is modified also modify string in loadFiles()
-    public static final String[] ACCEPTED_FILE_TYPE = {"xy", "xye", "txt", "cif"};
+    public static final String[] ACCEPTED_FILE_TYPE = {""};
     private Vector<PowderFileObserver> observers = new Vector<PowderFileObserver>();
     private HashMap<String, DataSet> data = new HashMap<String, DataSet>();
     private String lastUpdateFileName;
@@ -103,7 +103,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         // Set the accepted powder diffraction file extensions
         // and open a file chooser window for the user to select powder
         // diffraction file
-        fileChooser.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, "File (*.xy, *.xye, *.txt,*cif)"));
+        fileChooser.addChoosableFileFilter(new AcceptFileFilter(ACCEPTED_FILE_TYPE, ""));
         fileChooser.setAcceptAllFileFilterUsed(false);
         int returnVal = fileChooser.showOpenDialog(null);
         Stopwatch totalStopwatch = new Stopwatch();
@@ -169,11 +169,22 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
             if (aFile.getName().endsWith("cif")) {
                 return Cif_Reader.read(aFile);
             }
+               if (aFile.getName().endsWith("")) {
+                return XYandXYE_Reader.read(aFile);
+            }
+            if (aFile.getName().endsWith("")) {
+                return Cif_Reader.read(aFile);
+            }
+
+          
             return null;
         } catch (Exception ex) {
         } finally {
             try {
-                fis.close();
+
+                if (fis != null) {
+                    fis.close();
+                }
             } catch (IOException ex) {
                 Logger.getLogger(PowderFileCabinet.class.getName()).log(Level.SEVERE, null, ex);
             }
