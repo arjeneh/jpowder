@@ -24,7 +24,7 @@ import javax.swing.table.TableModel;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.data.xy.XYDataset;
 import org.jpowder.InfoPanel;
-import org.jpowder.JPowder;
+import org.jpowder.Jpowder;
 import org.jpowder.JpowderInternalframe;
 import org.jpowder.jfreechart.FilesPlotter;
 
@@ -52,7 +52,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
     public void update() {
 
-        JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
             clearTable();
             return;
@@ -96,7 +96,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
      */
     public String[][] getDataSetAndWaveLength() {
 
-        JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         int size = inFocus.getXYPlot().getDatasetCount();
         dataSetAndWaveLength = new String[size][2];
         for (int i = 0; i < size; i++) {
@@ -146,7 +146,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
      * Adding a message to table to ask user to add a value for the wave length.
      */
     public void requestMessage() {
-        JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             if (!inFocus.getPowderDataSet().get(i).getFileName().endsWith(".cif")) {
                 defaultTableModel.setValueAt("Value", i, 1);
@@ -167,7 +167,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
     }
 
     public void setDomainAxis() {
-        JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         NumberAxis numberAxis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
         numberAxis.setRange(0, 1);
     }
@@ -325,7 +325,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
      * @param evt
      */
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
-        JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         dataTable.clearSelection();
         dataTable.getSelectedColumn();
         int seriescount = inFocus.getXYPlot().getDatasetCount();

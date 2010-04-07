@@ -32,7 +32,7 @@ import org.jfree.chart.plot.ValueMarker;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.TextAnchor;
 import org.jpowder.InfoPanel;
-import org.jpowder.JPowder;
+import org.jpowder.Jpowder;
 import org.jpowder.JpowderInternalframe;
 import org.jpowder.chartTools.Magnifier;
 
@@ -59,7 +59,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
     public void update() {
 
-        JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         jTextPeakArea.setText("");
         getPeakButt.setSelected(false);
 
@@ -213,7 +213,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 //        FilesPlotter.createLegend=true;// test to see if the legend can be set again
 
 
-        JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
       
         if (getPeakButt.isSelected() && inFocus == null) {
             javax.swing.JOptionPane.showMessageDialog(null, "There Is No Plotted Data");
@@ -300,7 +300,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
-                JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
+                JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
                 inFocus.getXYPlot().clearAnnotations();
 
                 x = inFocus.getXYPlot().getDomainCrosshairValue();
@@ -362,7 +362,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     }
     private void removeAllButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAllButtActionPerformed
         jTextPeakArea.setText("");
-        JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         inFocus.removeAllMarkedPeakPosition();
         inFocus.getChartPanel().removeChartMouseListener(this);
         inFocus.getChartPanel().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -395,7 +395,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
     private void removeButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtActionPerformed
 
-        JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         inFocus.removeMarkedPeakPosition(x);
         final String[] strings = convertDoubleToString(inFocus.getMarkedPeakPosition());
         jTextPeakArea.setText("");

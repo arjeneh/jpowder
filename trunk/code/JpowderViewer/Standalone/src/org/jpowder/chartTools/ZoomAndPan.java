@@ -13,7 +13,7 @@ package org.jpowder.chartTools;
 import javax.swing.JLabel;
 import org.jpowder.Analysis.ToolsIcon;
 import org.jpowder.InfoPanel;
-import org.jpowder.JPowder;
+import org.jpowder.Jpowder;
 import org.jpowder.JpowderInternalframe;
 
 /**

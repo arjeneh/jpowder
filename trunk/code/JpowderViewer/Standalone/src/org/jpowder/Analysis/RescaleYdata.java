@@ -19,7 +19,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.border.LineBorder;
 import org.jfree.data.xy.XYDataset;
 import org.jpowder.InfoPanel;
-import org.jpowder.JPowder;
+import org.jpowder.Jpowder;
 import org.jpowder.JpowderInternalframe;
 import org.jpowder.jfreechart.FilesPlotter;
 
@@ -65,7 +65,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
     }
 
     public String[] addDataSet() {
-        JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         int size = inFocus.getXYPlot().getDatasetCount();
         string = new String[size];
         for (int i = 0; i < size; i++) {
@@ -219,7 +219,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 }//GEN-LAST:event_backButtonActionPerformed
 
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
-        JpowderInternalframe inFocus = JPowder.internalFrameInFocus;
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
 
         int seriescount = inFocus.getXYPlot().getDatasetCount();
         for (int i = 0; i < seriescount; i++) {

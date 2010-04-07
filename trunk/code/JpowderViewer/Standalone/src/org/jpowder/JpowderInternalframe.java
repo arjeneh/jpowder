@@ -68,7 +68,9 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         javax.swing.JPanel chartPanel = new javax.swing.JPanel();
 
         this.dataVisibleInChartPanel = dataVisibleInChartPanel;
+
         this.add(chartPanel);
+
         m_data = data;
         plotMultiCol = DatasetPlotter.createDatasetPlotter(data);
         chartPanel.setLayout(new BorderLayout());
@@ -77,23 +79,17 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         chart = FilesPlotter.getchart();
         xYPlot = jfreeChartPanels.getChart().getXYPlot();
         chartPanel.add(jfreeChartPanels);
-        JPowder.jpowderInternalFrameUpdate(this);
-        System.out.println("Internalframe created");
-        dropTarget = new DropTarget(this, this);
-
-        dataVisibleInChartPanel.newChartInFocus(xYPlot,
-                this.getPowderDataSet());
 
 
-        setTitle(getNames());
+        this.setTitle(getNames());
         this.setVisible(true);
         this.setClosable(true);
         this.setMaximizable(true);
         this.setResizable(true);
         this.setIconifiable(true);
-        this.setSize(JPowder.getChartPlotter().getWidth()/2, INTERNALFRAME_HEIGHT);
+        this.setSize(Jpowder.getChartPlotter().getWidth() / 2, INTERNALFRAME_HEIGHT);
 
-        this.setLocation((int) JPowder.getDropLocationX(), (int) JPowder.getDropLocationY());
+        this.setLocation((int) Jpowder.getDropLocationX(), (int) Jpowder.getDropLocationY());
         SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
@@ -104,30 +100,30 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
 
     /**
      *Increment the location of each interframe is created by a certain value.
-     *
-    public static void increment() {
-    left += 30;
-    top += 30;
-
-    System.out.println("top" + top);
-    System.out.println("Left" + left);
-    if (top == (height / 2)) {
-    left += width;
-    top = 0;
-
-    }
-    if (left == (width * 3)) {
-    left = 0;
-    top += width + (width / 2.5);
-    }
-    if (top == (height * 1.9)) {
-    left += width;
-    top = 420;
-
-    }
-
-    }
      */
+    public static void increment() {
+        left += 30;
+        top += 30;
+
+//        System.out.println("top" + top);
+//        System.out.println("Left" + left);
+        if (top == (INTERNALFRAME_HEIGHT / 2)) {
+            left += INTERNALFRAME_WIDTH;
+            top = 0;
+
+        }
+        if (left == (INTERNALFRAME_WIDTH * 3)) {
+            left = 0;
+            top += INTERNALFRAME_WIDTH + (INTERNALFRAME_WIDTH / 2.5);
+        }
+        if (top == (INTERNALFRAME_HEIGHT * 1.9)) {
+            left += INTERNALFRAME_WIDTH;
+            top = 420;
+
+        }
+
+    }
+
     /**
      * Loops over the names of the file which are plotted.
      * @return returning the name of files added.
@@ -288,7 +284,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
      */
     public void drop(DropTargetDropEvent dtde) {
 
-        JPowder.jpowderInternalFrameUpdate(this);
+        Jpowder.jpowderInternalFrameUpdate(this);
         ArrayList<File> allfiles = new ArrayList<File>();
         ArrayList<String> allfilesName = new ArrayList<String>();
         Transferable transfeable = dtde.getTransferable();
@@ -313,11 +309,11 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
                     System.out.println("files added to Internalframe " + allfiles);
 
                 } catch (UnsupportedFlavorException ex) {
-                    Logger.getLogger(JPowder.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(JPowder.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (NullPointerException ex) {
-                    Logger.getLogger(JPowder.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else if (flavors[i].equals(DataFlavor.stringFlavor)) {
 
@@ -390,13 +386,15 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
      */
     @Override
     public void internalFrameClosed(InternalFrameEvent e) {
-        JPowder.jPowderStackUndo.push(jpowderinternalframe);
+        Jpowder.jPowderStackUndo.push(jpowderinternalframe);
         System.out.println("n frame " + JpowderInternalframe.decrementnumberOfJpowderInternalframe());
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() > 1 || JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
             dataVisibleInChart.clear();
         }
 
-        JPowder.jpowderInternalFrameUpdate(jpowderinternalframe);
+        Jpowder.jpowderInternalFrameUpdate(jpowderinternalframe);
+
+        Jpowder.getChartPlotter().remove(jpowderinternalframe);
     }
 
     /**
@@ -407,7 +405,7 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
     public void internalFrameActivated(InternalFrameEvent e) {
 
         jpowderinternalframe = (JpowderInternalframe) e.getInternalFrame();
-        JPowder.jpowderInternalFrameUpdate(jpowderinternalframe);
+        Jpowder.jpowderInternalFrameUpdate(jpowderinternalframe);
 
         dataVisibleInChart = jpowderinternalframe.getDataVisibleInChartPanel();
         dataVisibleInChart.newChartInFocus(jpowderinternalframe.getXYPlot(),

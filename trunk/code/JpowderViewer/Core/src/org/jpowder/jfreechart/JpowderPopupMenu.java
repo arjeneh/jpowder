@@ -270,17 +270,19 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
 
             try {
-                saveChartAsPDF(fileName, chart, 10000, 10000, new DefaultFontMapper());
+
+                chart.getXYPlot().getDomainAxis().setLabel("X");
+                saveChartAsPDF(fileName, chart, 800, 600, new DefaultFontMapper());
                 System.out.println(fileName.getPath());
 
-                try //try statement
-                {
-                    Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + fileName.getPath());   //open the file chart.pdf
-
-                } catch (Exception e) //catch any exceptions here
-                {
-                    System.out.println("Error" + e);  //print the error
-                }
+//                try //try statement
+//                {
+//                    Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + fileName.getPath());   //open the file chart.pdf
+//
+//                } catch (Exception e) //catch any exceptions here
+//                {
+//                    System.out.println("Error" + e);  //print the error
+//                }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -302,7 +304,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
             int height,
             FontMapper mapper) throws IOException {
         OutputStream out = new BufferedOutputStream(new FileOutputStream(file + ".pdf"));
-        writeChartAsPDF(out, chart, 1500, 2500, mapper);
+        writeChartAsPDF(out, chart, 800, 600, mapper);
         out.close();
     }
 
