@@ -107,6 +107,13 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.PNG"))); // NOI18N
         backButton.setText("Back");
+        backButton.setAlignmentY(0.0F);
+        backButton.setBorderPainted(false);
+        backButton.setFocusable(false);
+        backButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        backButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        backButton.setIconTextGap(2);
+        backButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
@@ -152,7 +159,6 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         });
 
         buttonGroup1.add(noneRadioButton);
-        noneRadioButton.setSelected(true);
         noneRadioButton.setText("None");
         noneRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -263,10 +269,10 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
      * this is an update method which updates this info Panel.
      */
     public void update() {
-        setMarkersBuidInEnableFalse();
-        noneRadioButton.setSelected(true);
 
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+     JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        setMarkersBuidInEnableFalse();
+ 
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
             dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(addDataSet()));
         }
@@ -277,6 +283,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         }
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer();
 
+   
         if (inFocus.getPowderDataSet().get(0) instanceof DataSetWithErrors) {
             XYErrorRenderer renderer1 = (XYErrorRenderer) inFocus.getXYPlot().getRenderer();
             errorBars.setSelected(renderer1.getDrawYError());
@@ -284,6 +291,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
 
         }
         conectingLines.setSelected(renderer.getBaseLinesVisible());
+
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
             errorBars.setSelected(false);
             conectingLines.setSelected(false);
@@ -298,6 +306,18 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
                 errorBars.setEnabled(true);
 
             }
+        }
+        if(renderer.getBaseShapesVisible()){
+             automaticRadioButton.setSelected(true);
+//            if(automaticRadioButton.isSelected()){
+//           automaticRadioButton.setSelected(true);
+//
+//            }
+//            if(buitInRadioButton.isSelected()){
+//                buitInRadioButton.setSelected(true);
+//            }
+        }else if(!renderer.getBaseShapesVisible()){
+            noneRadioButton.setSelected(true);
         }
 
     }

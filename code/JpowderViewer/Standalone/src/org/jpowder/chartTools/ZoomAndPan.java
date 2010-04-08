@@ -64,6 +64,9 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
         backButton.setAlignmentY(0.0F);
         backButton.setBorderPainted(false);
         backButton.setFocusable(false);
+        backButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        backButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        backButton.setIconTextGap(2);
         backButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

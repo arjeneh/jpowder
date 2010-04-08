@@ -63,7 +63,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         super();
 
         numberOfJpowderInternalframe++;
-
+        dropTarget = new DropTarget(this, this);
         internalframeStackes.push(this);
         javax.swing.JPanel chartPanel = new javax.swing.JPanel();
 
@@ -100,7 +100,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
 
     /**
      *Increment the location of each interframe is created by a certain value.
-     */
+     *
     public static void increment() {
         left += 30;
         top += 30;
@@ -123,6 +123,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         }
 
     }
+     * */
 
     /**
      * Loops over the names of the file which are plotted.

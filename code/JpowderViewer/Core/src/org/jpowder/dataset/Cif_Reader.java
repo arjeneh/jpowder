@@ -63,13 +63,14 @@ public class Cif_Reader {
                     while ((aLine = bufferedReader.readLine()) != null) {
                         if (aLine.contains("_")) {
                             countColumns++;
-                            if (aLine.contains("_pd_proc_2theta_corrected")) {
+                            if (aLine.contains("_pd_proc_2theta_corrected")||aLine.contains("_pd_meas_2theta_scan")) {
                                 pd_proc_2theta_corrected_index = countColumns;
                             }
                             if (aLine.contains("_pd_proc_intensity_total")) {
                                 pd_proc_intensity_total_index = countColumns;
                             }
                         } else {
+                             
                             break;
                         }
                     }
