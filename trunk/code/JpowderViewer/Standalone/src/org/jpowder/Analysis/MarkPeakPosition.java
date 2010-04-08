@@ -106,6 +106,10 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.PNG"))); // NOI18N
         backButton.setText("Back");
+        backButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        backButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        backButton.setIconTextGap(2);
+        backButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
@@ -123,7 +127,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         peakLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Peaks_Large.png"))); // NOI18N
 
         jTextPeakArea.setColumns(1);
-        jTextPeakArea.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jTextPeakArea.setFont(new java.awt.Font("Arial", 1, 14));
         jTextPeakArea.setLineWrap(true);
         jTextPeakArea.setTabSize(20);
         jTextPeakArea.setToolTipText("Value of 2θ at a peak");
@@ -201,10 +205,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-
-        System.out.println("backbut is clicked");
-        toolsIcon.setComponentZOrder(this, 0);
-        toolsIcon.setVisible(true);
+        removePeaksPosition();
         this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
 
@@ -361,7 +362,38 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         return domainRangeMarker;
     }
     private void removeAllButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAllButtActionPerformed
+
+        removePeaksPosition();
+    }//GEN-LAST:event_removeAllButtActionPerformed
+
+    private void removeButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtActionPerformed
+
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        inFocus.removeMarkedPeakPosition(x);
+        final String[] strings = convertDoubleToString(inFocus.getMarkedPeakPosition());
         jTextPeakArea.setText("");
+
+        inFocus.getXYPlot().removeDomainMarker(domainRangeMarker.get(domainRangeMarker.size() - 1));
+
+        for (int i = 0; i < strings.length; i++) {
+            jTextPeakArea.append(strings[i] + "\n");
+        }
+
+
+    }//GEN-LAST:event_removeButtActionPerformed
+
+    private void jTextPeakAreaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextPeakAreaMouseReleased
+        showPopup(evt);
+    }//GEN-LAST:event_jTextPeakAreaMouseReleased
+    private void showPopup(MouseEvent e) {
+        if (e.isPopupTrigger()) {
+            jTextAreaPopMenu.show(e.getComponent(), e.getX(), e.getY());
+        }
+    }
+
+    public void removePeaksPosition(){
+
+            jTextPeakArea.setText("");
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         inFocus.removeAllMarkedPeakPosition();
         inFocus.getChartPanel().removeChartMouseListener(this);
@@ -390,33 +422,8 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         inFocus.setContentPane(layer);
 
         getPeakButt.setSelected(false);
-
-    }//GEN-LAST:event_removeAllButtActionPerformed
-
-    private void removeButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtActionPerformed
-
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-        inFocus.removeMarkedPeakPosition(x);
-        final String[] strings = convertDoubleToString(inFocus.getMarkedPeakPosition());
-        jTextPeakArea.setText("");
-
-        inFocus.getXYPlot().removeDomainMarker(domainRangeMarker.get(domainRangeMarker.size() - 1));
-
-        for (int i = 0; i < strings.length; i++) {
-            jTextPeakArea.append(strings[i] + "\n");
-        }
-
-
-    }//GEN-LAST:event_removeButtActionPerformed
-
-    private void jTextPeakAreaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextPeakAreaMouseReleased
-        showPopup(evt);
-    }//GEN-LAST:event_jTextPeakAreaMouseReleased
-    private void showPopup(MouseEvent e) {
-        if (e.isPopupTrigger()) {
-            jTextAreaPopMenu.show(e.getComponent(), e.getX(), e.getY());
-        }
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.JMenuItem copy;

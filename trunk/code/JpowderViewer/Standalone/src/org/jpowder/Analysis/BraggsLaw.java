@@ -13,7 +13,6 @@ package org.jpowder.Analysis;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -26,6 +25,7 @@ import org.jfree.data.xy.XYDataset;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 import org.jpowder.JpowderInternalframe;
+import org.jpowder.dataset.DataSet;
 import org.jpowder.jfreechart.FilesPlotter;
 
 /**
@@ -43,11 +43,14 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
     private String[][] dataSetAndWaveLength;
     private String columnsName[] = {"Plot(s)", "WaveLength"};
     private DefaultTableModel defaultTableModel;
+    private double newWaveLength;
 
     /** Creates new form BraggsLow */
     public BraggsLaw(ToolsIcon analysisIcon) {
         initComponents();
+      
         this.toolsIcon = analysisIcon;
+         
     }
 
     public void update() {
@@ -57,16 +60,30 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
             clearTable();
             return;
         }
+          
+
         defaultTableModel = new DefaultTableModel(getDataSetAndWaveLength(), columnsName);
         dataTable.setModel(defaultTableModel);
         setSizeOfColumn();
+
         defaultTableModel.addTableModelListener(new TableModelListener() {
 
             public void tableChanged(TableModelEvent e) {
-//             double data = Double.parseDouble(dataTable.getModel().getValueAt(dataTable.getSelectedRow(), 1).toString());
-//                System.out.println(""+data);
+                JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+                int size = inFocus.getXYPlot().getDatasetCount();
+                for (int i = 0; i < size; i++) {
+
+                    if (!dataTable.getModel().getValueAt(i, 1).equals("Value")) {
+
+                        newWaveLength = Double.parseDouble(dataTable.getModel().getValueAt(i, 1).toString());
+                        inFocus.getPowderDataSet().get(i).setWaveLength(newWaveLength);
+                    }
+                }
+
+
             }
         });
+
 
         dataTable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableCellRenderer() {
 
@@ -80,8 +97,10 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
             }
         });
 
+
         //printing the data in the tables
         printStringArray(getDataSetAndWaveLength());
+
         requestMessage();
 
 
@@ -101,7 +120,6 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         dataSetAndWaveLength = new String[size][2];
         for (int i = 0; i < size; i++) {
 
-
             String[] row = new String[2];
             row[0] = inFocus.getPowderDataSet().elementAt(i).getFileName();
             row[1] = "" + inFocus.getPowderDataSet().elementAt(i).getWaveLength();
@@ -110,6 +128,14 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
         }
         return dataSetAndWaveLength;
+    }
+
+    /**
+     * 
+     * @param dataSetAndWaveLength
+     */
+    public void setDataSetAndWaveLength(String[][] dataSetAndWaveLength) {
+        this.dataSetAndWaveLength = dataSetAndWaveLength;
     }
 
     /**
@@ -149,7 +175,10 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             if (!inFocus.getPowderDataSet().get(i).getFileName().endsWith(".cif")) {
-                defaultTableModel.setValueAt("Value", i, 1);
+
+                if (defaultTableModel.getValueAt(i, 1).equals("0.0")) {
+                    defaultTableModel.setValueAt("Value", i, 1);
+                }
 
             }
         }
@@ -211,15 +240,18 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
         setFocusCycleRoot(true);
 
-        jScrollPane3.setBorder(null);
-
-        dataTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        dataTable.setFont(new java.awt.Font("Tahoma", 0, 12));
         dataTable.setModel(new DefaultTableModel());
         dataTable.setToolTipText("Fill The Empty WaveLength Rows");
         jScrollPane3.setViewportView(dataTable);
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.PNG"))); // NOI18N
         backButton.setText("Back");
+        backButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        backButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        backButton.setIconTextGap(2);
+        backButton.setInheritsPopupMenu(true);
+        backButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
@@ -246,7 +278,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         unitComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "d", "2ө" }));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14));
-        jLabel3.setText("<<-->>");
+        jLabel3.setText("---->>");
 
         applyButton.setText("Apply");
         applyButton.addActionListener(new java.awt.event.ActionListener() {
@@ -274,7 +306,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                         .addComponent(unitComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(62, 62, 62)
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                         .addComponent(unitComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -326,10 +358,12 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
      */
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+         String x = "2\u03D1";//unicode 2thetha
         dataTable.clearSelection();
-        dataTable.getSelectedColumn();
         int seriescount = inFocus.getXYPlot().getDatasetCount();
+        if(inFocus.getXYPlot().getDomainAxis().getLabel().equals("d [Å]") && unitComboBox1.getSelectedItem().toString().equals("")){
 
+        }
         // testing if all wavelenghts have been set
         for (int i = 0; i < seriescount; i++) {
             try {
@@ -355,19 +389,21 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                 double waveLength = Double.parseDouble(dataTable.getValueAt(i, 1).toString());
                 double spacing = waveLength / (2 * Math.sin(Math.toRadians(X / 2)));
                 double theta = Math.toDegrees(Math.asin((waveLength / (2 * X)))) * 2;
+         
 
                 if (unitComboBox1.getSelectedItem().toString().equals("2ө") &&
                         unitComboBox2.getSelectedItem().toString().equals("d")) {
                     inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(spacing, j);
                     inFocus.getXYPlot().getDomainAxis().setLabel("d [Å]");
                     setDomainAxis();
+                  
                 }
 
 
                 if (unitComboBox1.getSelectedItem().toString().equals("d") &&
                         unitComboBox2.getSelectedItem().toString().equals("2ө")) {
                     inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(theta, j);
-                    String x = "2\u03D1";//unicode 2thetha
+                   
                     inFocus.getXYPlot().getDomainAxis().setLabel(x.toUpperCase());
                     setDomainAxis();
                 }

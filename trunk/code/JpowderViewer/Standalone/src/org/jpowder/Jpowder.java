@@ -102,7 +102,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         explorertab.add(tree, "1");
         toolstab.add(analysisIcon, "1");
         messageLabel.setLocation(chartPlotterPane.getWidth() / 3, chartPlotterPane.getHeight() / 2);
-
+        
         //to keep newly added JInternalFrame inside the JDesktopPane (KP)
         chartPlotterPane.addContainerListener(new FrameAddedSupervisor());
 
@@ -468,7 +468,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
         copyMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         copyMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/copy_16x16.png"))); // NOI18N
-        copyMenu.setText("Copy");
+        copyMenu.setText("Copy To ClipBoard");
         copyMenu.setToolTipText("Copy the selected frame");
         copyMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -714,11 +714,6 @@ public class Jpowder extends JFrame implements DropTargetListener {
             newJPowder.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }
 
-
-
-
-
-
     }//GEN-LAST:event_newMenuActionPerformed
 
     private void appletMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appletMenuActionPerformed
@@ -768,16 +763,16 @@ public class Jpowder extends JFrame implements DropTargetListener {
     }//GEN-LAST:event_propertiesMenuActionPerformed
 
     private void undoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoMenuActionPerformed
-
+         
         JpowderInternalframe frame = jPowderStackUndo.pop();
         if (frame != null) {
 
             internalFrameInFocus = frame;
             internalFrameInFocus.setVisible(true);
-            jPowderStackRedo.push(internalFrameInFocus);
-            Jpowder.getChartPlotter().add(internalFrameInFocus);
-        }
-
+            jPowderStackRedo.push(internalFrameInFocus);         
+       
+          chartPlotterPane.add(internalFrameInFocus);
+                  }
     }//GEN-LAST:event_undoMenuActionPerformed
 
     private void redoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoMenuActionPerformed
@@ -786,9 +781,8 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
         if (internalFrame != null) {
             internalFrame.setVisible(false);
-
-
             jPowderStackUndo.push(internalFrame);
+            chartPlotterPane.remove(internalFrame);
         }
     }//GEN-LAST:event_redoMenuActionPerformed
 

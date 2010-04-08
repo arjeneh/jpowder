@@ -179,6 +179,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
           
             return null;
         } catch (Exception ex) {
+                 javax.swing.JOptionPane.showMessageDialog(null, "Can't Read The File.");
         } finally {
             try {
 

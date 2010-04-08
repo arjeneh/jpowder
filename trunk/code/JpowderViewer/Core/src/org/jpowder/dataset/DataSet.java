@@ -55,13 +55,8 @@ public abstract class DataSet {
         return waveLength;
     }
 
-    public void setWaveLength(double waveLength) {
-        if(waveLength!=0){
-         this.waveLength=waveLength;
-        }else{
-            this.waveLength=1.0;
-        }
-       
+    public  void setWaveLength(double waveLength) {
+       this.waveLength=waveLength;
     }
 }
 

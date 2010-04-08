@@ -124,12 +124,11 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 
         setPreferredSize(new java.awt.Dimension(320, 400));
 
-        dataSetComboBox.setBackground(javax.swing.UIManager.getDefaults().getColor("ComboBox.selectionBackground"));
         dataSetComboBox.setEditable(true);
-        dataSetComboBox.setFont(new java.awt.Font("Tahoma", 1, 10));
+        dataSetComboBox.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         dataSetComboBox.setMaximumRowCount(20);
 
-        operationComboBox.setFont(new java.awt.Font("Tahoma", 1, 12));
+        operationComboBox.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         operationComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "+", "-", "x", "/" }));
 
         jLabel2.setText("Plot:");
@@ -149,6 +148,10 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.PNG"))); // NOI18N
         backButton.setText("Back");
+        backButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        backButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        backButton.setIconTextGap(2);
+        backButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
@@ -162,7 +165,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -170,7 +173,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rescaleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+                    .addComponent(rescaleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -178,7 +181,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dataSetComboBox, 0, 252, Short.MAX_VALUE)
+                            .addComponent(dataSetComboBox, 0, 244, Short.MAX_VALUE)
                             .addComponent(applyButton)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(constantField, javax.swing.GroupLayout.Alignment.LEADING)

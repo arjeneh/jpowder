@@ -25,9 +25,11 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -98,11 +100,15 @@ public class JpowderIcon {
      */
     protected ImageIcon createImageIcon(String path,
             String description) throws IOException {
-        try {
+    
 
 
 //      BufferedImage img = javax.imageio.ImageIO.read(new FileInputStream(getClass().getResource(url)));
-            BufferedImage img = javax.imageio.ImageIO.read(getClass().getResource(path));
+//            BufferedImage img = javax.imageio.ImageIO.read(getClass().getResource(path));
+            java.net.URL img = getClass().getResource(path);
+//            URL iconURL = JpowderIcon.class.getResource(path);
+//            Image img = ImageIO.read(iconURL);
+//            BufferedImage img = javax.imageio.ImageIO.read(getClass().getResource(path));
 
             if (img != null) {
                 return new ImageIcon(img, description);
@@ -110,9 +116,7 @@ public class JpowderIcon {
                 System.err.println("Couldn't find file: " + path);
 
             }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(JpowderIcon.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    
         return null;
     }
 
@@ -152,10 +156,7 @@ public class JpowderIcon {
                 if (icon != null) {
 
                     ImageIcon thumbnailIcon = new ImageIcon(getScaledImage(icon.getImage(), setHeight(78), setWidth(78)));
-
                     thumbAction = new Thumbnail(icon, thumbnailIcon, title[i]);
-
-                } else {
                 }
                 publish(thumbAction);
 
@@ -178,6 +179,10 @@ public class JpowderIcon {
                 buttons.get(i).setAction(thumnailist.get(i));
 
             }
+
+        }
+        @Override
+        protected void done(){
 
         }
     };
@@ -210,7 +215,6 @@ public class JpowderIcon {
         }
 
         public void actionPerformed(ActionEvent e) {
-       
         }
     }
 }
