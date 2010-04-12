@@ -102,7 +102,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         explorertab.add(tree, "1");
         toolstab.add(analysisIcon, "1");
         messageLabel.setLocation(chartPlotterPane.getWidth() / 3, chartPlotterPane.getHeight() / 2);
-        
+
         //to keep newly added JInternalFrame inside the JDesktopPane (KP)
         chartPlotterPane.addContainerListener(new FrameAddedSupervisor());
 
@@ -628,19 +628,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
      * @param evt
      */
     private void exitMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuActionPerformed
-        int res = JOptionPane.showConfirmDialog(null, "Do you want to exit?", "JPowderFinalGui",
-                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-        switch (res) {
-            case JOptionPane.YES_OPTION:
-                System.exit(0);
-                break;
-            case JOptionPane.NO_OPTION:
-                break;
-            case JOptionPane.CANCEL_OPTION:
-                break;
-            case JOptionPane.CLOSED_OPTION:
-                break;
-        }
+               System.exit(0);
     }//GEN-LAST:event_exitMenuActionPerformed
 
     private void oPenMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oPenMenuActionPerformed
@@ -747,7 +735,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
             internalFrameInFocus.getChartPanel().doCopy();
 
         } else {
-            javax.swing.JOptionPane.showMessageDialog(null, "There is nothing to COPY!");
+            return;
         }
 
     }//GEN-LAST:event_copyMenuActionPerformed
@@ -758,21 +746,21 @@ public class Jpowder extends JFrame implements DropTargetListener {
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
             internalFrameInFocus.getChartPanel().doEditChartProperties();
         } else {
-            javax.swing.JOptionPane.showMessageDialog(null, "There is Plotted data");
+            return;
         }
     }//GEN-LAST:event_propertiesMenuActionPerformed
 
     private void undoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoMenuActionPerformed
-         
+
         JpowderInternalframe frame = jPowderStackUndo.pop();
         if (frame != null) {
 
             internalFrameInFocus = frame;
             internalFrameInFocus.setVisible(true);
-            jPowderStackRedo.push(internalFrameInFocus);         
-       
-          chartPlotterPane.add(internalFrameInFocus);
-                  }
+            jPowderStackRedo.push(internalFrameInFocus);
+
+            chartPlotterPane.add(internalFrameInFocus);
+        }
     }//GEN-LAST:event_undoMenuActionPerformed
 
     private void redoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoMenuActionPerformed
@@ -790,57 +778,66 @@ public class Jpowder extends JFrame implements DropTargetListener {
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
             internalFrameInFocus.getChartPanel().createChartPrintJob();
         } else {
-            javax.swing.JOptionPane.showMessageDialog(null, "There is nothing to PRINT!");
+            return;
         }
     }//GEN-LAST:event_jPrintMenuActionPerformed
 
     private void jPrintPublishingMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrintPublishingMenuActionPerformed
 
 
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
+            internalFrameInFocus.getXYPlot().setBackgroundPaint(ChartColor.white);
+            internalFrameInFocus.getXYPlot().setOutlinePaint(ChartColor.white);
+            PrinterJob job = PrinterJob.getPrinterJob();
+            PageFormat pf = job.defaultPage();
+            PageFormat pf2 = job.pageDialog(pf);
+            if (pf2 != pf) {
 
-        internalFrameInFocus.getXYPlot().setBackgroundPaint(ChartColor.white);
-        internalFrameInFocus.getXYPlot().setOutlinePaint(ChartColor.white);
-        PrinterJob job = PrinterJob.getPrinterJob();
-        PageFormat pf = job.defaultPage();
-        PageFormat pf2 = job.pageDialog(pf);
-        if (pf2 != pf) {
-
-            job.setPrintable(internalFrameInFocus.getChartPanel(), pf2);
-            if (job.printDialog()) {
-                try {
-                    job.print();
-                } catch (PrinterException e) {
-                    JOptionPane.showMessageDialog(this, e);
+                job.setPrintable(internalFrameInFocus.getChartPanel(), pf2);
+                if (job.printDialog()) {
+                    try {
+                        job.print();
+                    } catch (PrinterException e) {
+                        JOptionPane.showMessageDialog(this, e);
+                    }
                 }
             }
+            internalFrameInFocus.getXYPlot().setBackgroundPaint(ChartColor.LIGHT_GRAY);
+            internalFrameInFocus.getXYPlot().setOutlinePaint(ChartColor.LIGHT_GRAY);
+        } else {
+            return;
         }
-        internalFrameInFocus.getXYPlot().setBackgroundPaint(ChartColor.LIGHT_GRAY);
-        internalFrameInFocus.getXYPlot().setOutlinePaint(ChartColor.LIGHT_GRAY);
     }//GEN-LAST:event_jPrintPublishingMenuActionPerformed
     /**
      * To close all the internal frames which are in the ChartPlotter(jDesktopPane).
      * @param evt
      */
     private void clossAllMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clossAllMenuActionPerformed
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() > 0) {
+            JInternalFrame jInternalFrames[] = chartPlotterPane.getAllFrames(); // get all open frames
+            for (int i = 0; i < jInternalFrames.length; i++) {
+                try {
+                    jInternalFrames[i].setClosed(true);
+                } catch (PropertyVetoException ex) {
+                    Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
-        JInternalFrame jInternalFrames[] = chartPlotterPane.getAllFrames(); // get all open frames
-        for (int i = 0; i < jInternalFrames.length; i++) {
-            try {
-                jInternalFrames[i].setClosed(true);
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+        } else {
+            return;
         }
     }//GEN-LAST:event_clossAllMenuActionPerformed
 
     private void closeFrameMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeFrameMenuActionPerformed
-        try {
-            internalFrameInFocus.setClosed(true);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
+            try {
+                internalFrameInFocus.setClosed(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            return;
         }
-
     }//GEN-LAST:event_closeFrameMenuActionPerformed
 
     private void defaultCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_defaultCheckBoxMenuItemActionPerformed
@@ -848,57 +845,68 @@ public class Jpowder extends JFrame implements DropTargetListener {
     }//GEN-LAST:event_defaultCheckBoxMenuItemActionPerformed
 
     private void tileCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tileCheckBoxMenuItemActionPerformed
-        JInternalFrame jInternalFrames[] = chartPlotterPane.getAllFrames(); // get all open frames
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() > 0) {
+            JInternalFrame jInternalFrames[] = chartPlotterPane.getAllFrames(); // get all open frames
+            chartPlotterPane.setLayout(new GridLayout(jInternalFrames.length, jInternalFrames.length, 20, 20));
+            chartPlotterPane.updateUI();
+        } else {
+            return;
+        }
 
-        chartPlotterPane.setLayout(new GridLayout(jInternalFrames.length, jInternalFrames.length, 20, 20));
-        chartPlotterPane.updateUI();
     }//GEN-LAST:event_tileCheckBoxMenuItemActionPerformed
 
     private void tileHorizontallyCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tileHorizontallyCheckBoxMenuItemActionPerformed
-        JInternalFrame jInternalFrames[] = chartPlotterPane.getAllFrames(); // get all open frames
-
-        chartPlotterPane.setLayout(new GridLayout(jInternalFrames.length, 1, 0, 0));
-        chartPlotterPane.updateUI();
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() > 0) {
+            JInternalFrame jInternalFrames[] = chartPlotterPane.getAllFrames(); // get all open frames
+            chartPlotterPane.setLayout(new GridLayout(jInternalFrames.length, 1, 0, 0));
+            chartPlotterPane.updateUI();
+        } else {
+            return;
+        }
     }//GEN-LAST:event_tileHorizontallyCheckBoxMenuItemActionPerformed
 
     private void tileVerticallyCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tileVerticallyCheckBoxMenuItemActionPerformed
-        JInternalFrame jInternalFrames[] = chartPlotterPane.getAllFrames(); // get all open frames
-        chartPlotterPane.setLayout(new GridLayout(1, jInternalFrames.length, 0, 0));
-        chartPlotterPane.updateUI();
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() > 0) {
+            JInternalFrame jInternalFrames[] = chartPlotterPane.getAllFrames(); // get all open frames
+            chartPlotterPane.setLayout(new GridLayout(1, jInternalFrames.length, 0, 0));
+            chartPlotterPane.updateUI();
+        } else {
+            return;
+        }
     }//GEN-LAST:event_tileVerticallyCheckBoxMenuItemActionPerformed
 
     private void cascadeCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cascadeCheckBoxMenuItemActionPerformed
-        chartPlotterPane.setLayout(null);
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() > 0) {
+            chartPlotterPane.setLayout(null);
+            SwingUtilities.invokeLater(new Runnable() {
 
-     SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    JInternalFrame jInternalFrames[] = chartPlotterPane.getAllFrames(); // get all open frames
+                    int top = 0;
+                    int left = 0;
+                    for (int i = 0; i < jInternalFrames.length; i++) {
 
-            public void run() {
-                JInternalFrame jInternalFrames[] = chartPlotterPane.getAllFrames(); // get all open frames
-                int top = 0;
-                int left = 0;
-                for (int i = 0; i < jInternalFrames.length; i++) {
+                        SwingUtilities.invokeLater(new Runnable() {
 
-     SwingUtilities.invokeLater(new Runnable() {
-
-            public void run() {
-                    try {
-                        internalFrameInFocus.setSelected(true);
-                        internalFrameInFocus.moveToBack();
-                    } catch (PropertyVetoException ex) {
-                        Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
+                            public void run() {
+                                try {
+                                    internalFrameInFocus.setSelected(true);
+                                    internalFrameInFocus.moveToBack();
+                                } catch (PropertyVetoException ex) {
+                                    Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        });
+                        jInternalFrames[i].setSize(chartPlotterPane.getWidth() / 2, 300);
+                        jInternalFrames[i].setLocation(top, left);
+                        top += 30;
+                        left += 30;
                     }
-            }       });
-                    jInternalFrames[i].setSize(chartPlotterPane.getWidth()/2,300);
-                    jInternalFrames[i].setLocation(top, left);
-                    top += 30;
-                    left += 30;
-//                    chartPlotterPane.updateUI();
-//                    internalFrameInFocus.updateUI();
-//                    chartPlotterPane.repaint();
-//                    internalFrameInFocus.repaint();
                 }
-            }
-        });
+            });
+        } else {
+            return;
+        }
     }//GEN-LAST:event_cascadeCheckBoxMenuItemActionPerformed
 
     public void dragEnter(DropTargetDragEvent dtde) {

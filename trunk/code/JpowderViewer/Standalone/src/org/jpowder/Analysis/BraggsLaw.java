@@ -19,13 +19,11 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.data.xy.XYDataset;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 import org.jpowder.JpowderInternalframe;
-import org.jpowder.dataset.DataSet;
 import org.jpowder.jfreechart.FilesPlotter;
 
 /**
@@ -48,19 +46,23 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
     /** Creates new form BraggsLow */
     public BraggsLaw(ToolsIcon analysisIcon) {
         initComponents();
-      
+
         this.toolsIcon = analysisIcon;
-         
+
     }
 
     public void update() {
 
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
-            clearTable();
+
+            if (defaultTableModel != null) {
+                defaultTableModel.getDataVector().removeAllElements();//remove all the rows from table
+            }
+            dataTable.updateUI();
             return;
         }
-          
+
 
         defaultTableModel = new DefaultTableModel(getDataSetAndWaveLength(), columnsName);
         dataTable.setModel(defaultTableModel);
@@ -73,10 +75,11 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                 int size = inFocus.getXYPlot().getDatasetCount();
                 for (int i = 0; i < size; i++) {
 
-                    if (!dataTable.getModel().getValueAt(i, 1).equals("Value")) {
+                    if (!defaultTableModel.getValueAt(i, 1).equals("Value")) {
 
                         newWaveLength = Double.parseDouble(dataTable.getModel().getValueAt(i, 1).toString());
                         inFocus.getPowderDataSet().get(i).setWaveLength(newWaveLength);
+
                     }
                 }
 
@@ -155,17 +158,6 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         }
 
 
-    }
-
-    /**
-     * it clears the all the rows in the table.
-     */
-    public void clearTable() {
-        TableModel model = dataTable.getModel();
-        int numrows = model.getRowCount();
-        for (int i = numrows - 1; i >= 0; i--) {
-            defaultTableModel.removeRow(i);
-        }
     }
 
     /**
@@ -357,12 +349,23 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
      * @param evt
      */
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            applyButton.setSelected(false);
+            return;
+        }
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-         String x = "2\u03D1";//unicode 2thetha
+        String x = "2\u03D1";//unicode 2thetha
         dataTable.clearSelection();
         int seriescount = inFocus.getXYPlot().getDatasetCount();
-        if(inFocus.getXYPlot().getDomainAxis().getLabel().equals("d [Å]") && unitComboBox1.getSelectedItem().toString().equals("")){
-
+        if (inFocus.getXYPlot().getDomainAxis().getLabel().equals("d [Å]") &&
+                unitComboBox1.getSelectedItem().toString().equals("2ө")) {
+            javax.swing.JOptionPane.showMessageDialog(null, "The Unit Is Already In  d [Å]! ");
+            return;
+        }
+        if (inFocus.getXYPlot().getDomainAxis().getLabel().equals(x.toUpperCase()) &&
+                unitComboBox1.getSelectedItem().toString().equals("d")) {
+            javax.swing.JOptionPane.showMessageDialog(null, "The Unit Is Already In 2ө! ");
+            return;
         }
         // testing if all wavelenghts have been set
         for (int i = 0; i < seriescount; i++) {
@@ -389,21 +392,21 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                 double waveLength = Double.parseDouble(dataTable.getValueAt(i, 1).toString());
                 double spacing = waveLength / (2 * Math.sin(Math.toRadians(X / 2)));
                 double theta = Math.toDegrees(Math.asin((waveLength / (2 * X)))) * 2;
-         
+
 
                 if (unitComboBox1.getSelectedItem().toString().equals("2ө") &&
                         unitComboBox2.getSelectedItem().toString().equals("d")) {
                     inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(spacing, j);
                     inFocus.getXYPlot().getDomainAxis().setLabel("d [Å]");
                     setDomainAxis();
-                  
+
                 }
 
 
                 if (unitComboBox1.getSelectedItem().toString().equals("d") &&
                         unitComboBox2.getSelectedItem().toString().equals("2ө")) {
                     inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(theta, j);
-                   
+
                     inFocus.getXYPlot().getDomainAxis().setLabel(x.toUpperCase());
                     setDomainAxis();
                 }

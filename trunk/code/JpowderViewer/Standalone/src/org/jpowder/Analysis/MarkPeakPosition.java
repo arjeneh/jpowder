@@ -68,8 +68,6 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         }
     }
 
-    
-
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -205,7 +203,12 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        removePeaksPosition();
+
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() > 0) {
+            removePeaksPosition();
+        }
+
+
         this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
 
@@ -215,11 +218,11 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
 
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-      
-        if (getPeakButt.isSelected() && inFocus == null) {
-            javax.swing.JOptionPane.showMessageDialog(null, "There Is No Plotted Data");
-        }
 
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            getPeakButt.setSelected(false);
+            return;
+        }
         if (getPeakButt.isSelected()) {
 
 
@@ -361,13 +364,20 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     public List<Marker> getPeakDomainMarker() {
         return domainRangeMarker;
     }
-    private void removeAllButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAllButtActionPerformed
 
+    private void removeAllButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAllButtActionPerformed
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            removeAllButt.setSelected(false);
+            return;
+        }
         removePeaksPosition();
     }//GEN-LAST:event_removeAllButtActionPerformed
 
     private void removeButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtActionPerformed
-
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            removeButt.setSelected(false);
+            return;
+        }
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         inFocus.removeMarkedPeakPosition(x);
         final String[] strings = convertDoubleToString(inFocus.getMarkedPeakPosition());
@@ -391,9 +401,9 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         }
     }
 
-    public void removePeaksPosition(){
+    public void removePeaksPosition() {
 
-            jTextPeakArea.setText("");
+        jTextPeakArea.setText("");
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         inFocus.removeAllMarkedPeakPosition();
         inFocus.getChartPanel().removeChartMouseListener(this);
@@ -423,7 +433,6 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
         getPeakButt.setSelected(false);
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.JMenuItem copy;

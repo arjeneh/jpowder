@@ -270,9 +270,9 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
      */
     public void update() {
 
-     JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         setMarkersBuidInEnableFalse();
- 
+
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
             dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(addDataSet()));
         }
@@ -283,7 +283,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         }
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer();
 
-   
+
         if (inFocus.getPowderDataSet().get(0) instanceof DataSetWithErrors) {
             XYErrorRenderer renderer1 = (XYErrorRenderer) inFocus.getXYPlot().getRenderer();
             errorBars.setSelected(renderer1.getDrawYError());
@@ -307,8 +307,8 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
 
             }
         }
-        if(renderer.getBaseShapesVisible()){
-             automaticRadioButton.setSelected(true);
+        if (renderer.getBaseShapesVisible()) {
+            automaticRadioButton.setSelected(true);
 //            if(automaticRadioButton.isSelected()){
 //           automaticRadioButton.setSelected(true);
 //
@@ -316,7 +316,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
 //            if(buitInRadioButton.isSelected()){
 //                buitInRadioButton.setSelected(true);
 //            }
-        }else if(!renderer.getBaseShapesVisible()){
+        } else if (!renderer.getBaseShapesVisible()) {
             noneRadioButton.setSelected(true);
         }
 
@@ -377,11 +377,22 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         dataSetComboBox.setEnabled(true);
     }
 
+    public void errorMesage() {
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            javax.swing.JOptionPane.showMessageDialog(null, "There Is No Chart.");
+            return;
+        }
+    }
+
     /**
      * this methods turns the the connecting lines in the plotted data on and off.
      * @param evt
      */
     private void conectingLinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conectingLinesActionPerformed
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            conectingLines.setSelected(true);
+            return;
+        }
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         for (int i = 0; i < inFocus.getPowderDataSet().size(); i++) {
             XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer(i);
@@ -394,6 +405,10 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
      * @param evt
      */
     private void errorBarsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_errorBarsActionPerformed
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            errorBars.setSelected(true);
+            return;
+        }
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         for (int i = 0; i < inFocus.getPowderDataSet().size(); i++) {
 
@@ -427,13 +442,11 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
      */
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-//        if (dataSetComboBox.getSelectedItem().toString().equals("ALL") && shapesComboBox.getSelectedItem().toString().equals("None")) {
-//            for (int i = 0; i < inFocus.getPowderDataSet().size(); i++) {
-//                XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer(i);
-//                renderer.setBaseShapesVisible(false);
-//
-//            }
-//        }
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            javax.swing.JOptionPane.showMessageDialog(null, "There Is No Chart.");
+            applyButton.setSelected(false);
+            return;
+        }
 
         int seriescount = inFocus.getXYPlot().getDatasetCount();
         for (int i = 0; i < seriescount; i++) {
@@ -511,6 +524,9 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
 }//GEN-LAST:event_applyButtonActionPerformed
 
     private void buitInRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buitInRadioButtonActionPerformed
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            return;
+        }
         if (!buitInRadioButton.isSelected()) {
 
             setMarkersBuidInEnableFalse();
@@ -524,6 +540,9 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_buitInRadioButtonActionPerformed
 
     private void noneRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noneRadioButtonActionPerformed
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            return;
+        }
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         for (int i = 0; i < inFocus.getPowderDataSet().size(); i++) {
             XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer(i);
@@ -536,7 +555,9 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_noneRadioButtonActionPerformed
 
     private void automaticRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_automaticRadioButtonActionPerformed
-
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            return;
+        }
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         for (int i = 0; i < inFocus.getPowderDataSet().size(); i++) {
             XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer(i);
@@ -547,6 +568,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         if (automaticRadioButton.isSelected()) {
             setMarkersBuidInEnableFalse();
         }
+
     }//GEN-LAST:event_automaticRadioButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton applyButton;
