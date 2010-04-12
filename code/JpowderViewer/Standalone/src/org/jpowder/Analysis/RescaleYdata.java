@@ -102,6 +102,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
         return string;
     }
 
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -222,6 +223,10 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 }//GEN-LAST:event_backButtonActionPerformed
 
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
+           if (JpowderInternalframe.getnumberOfJpowderInternalframe()==0) {
+            applyButton.setSelected(false);
+            return;
+        }
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
 
         int seriescount = inFocus.getXYPlot().getDatasetCount();
