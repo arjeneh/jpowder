@@ -176,10 +176,6 @@ public class JpowderIcon {
             }
 
         }
-        @Override
-        protected void done(){
-
-        }
     };
 
     private class Thumbnail extends AbstractAction {

@@ -227,7 +227,7 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+Alt+P"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Propeties"/>
+                <Property name="text" type="java.lang.String" value="Properties"/>
                 <Property name="toolTipText" type="java.lang.String" value="set propeties of the selected frame"/>
               </Properties>
               <Events>
@@ -388,7 +388,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="chartPlotterPane" pref="716" max="32767" attributes="0"/>
+              <Component id="chartPlotterPane" pref="699" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -432,11 +432,11 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-                      <Component id="dataVisibleInChartPanel" pref="300" max="32767" attributes="1"/>
+                      <Component id="dataVisibleInChartPanel" pref="317" max="32767" attributes="1"/>
                       <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="tabs" pref="310" max="32767" attributes="1"/>
+                      <Component id="tabs" pref="327" max="32767" attributes="1"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>

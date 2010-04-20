@@ -1,6 +1,9 @@
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
+import java.net.URL;
 import javax.swing.JApplet;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -31,12 +34,16 @@ public class JpowderApplet extends JApplet {
 
 //        if (returnVal == JFileChooser.APPROVE_OPTION) {
             try {
-                FileInputStream f = new FileInputStream("C:\\newFormate.ser");
-                ObjectInputStream charts = new ObjectInputStream(f);
+//                FileInputStream f = new FileInputStream("AppletTest1.ser");
+                     URL source = new URL(getCodeBase(), "AppletTest1.ser");
+//                       BufferedReader br =
+//                    new BufferedReader
+//                    (new InputStreamReader(source.openStream()));
+                ObjectInputStream charts = new ObjectInputStream(source.openStream());
                 serializedChart = (JFreeChart) charts.readObject();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.toString());
-                System.out.println(""+e);
+//                JOptionPane.showMessageDialog(this, e.toString());
+                e.printStackTrace();
             }
 //        } else {
 //            return null;
@@ -47,13 +54,11 @@ public class JpowderApplet extends JApplet {
     @Override
     public void init() {
 
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-        }
         JFreeChart chart = createChart();
         final ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setSize(300, 300);
         add(chartPanel);
+        setVisible(true);
 
     }
 }

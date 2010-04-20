@@ -18,6 +18,8 @@ public class JpowderXYErrorRender extends XYErrorRenderer {
     public JpowderXYErrorRender() {
         this.setBaseLinesVisible();
         this.setBaseShapesVisible();
+        this.setDrawXError();
+        this.setDrawYError();
     }
 
     /**
@@ -32,6 +34,20 @@ public class JpowderXYErrorRender extends XYErrorRenderer {
      */
     public void setBaseShapesVisible() {
         super.setBaseShapesVisible(false);
+    }
+
+    /**
+     * set Y Error bar off.
+     */
+    public void setDrawYError() {
+        super.setDrawYError(false);
+    }
+
+    /**
+     * set X Error bar off.
+     */
+    public void setDrawXError() {
+        super.setDrawXError(false);
     }
 }
 

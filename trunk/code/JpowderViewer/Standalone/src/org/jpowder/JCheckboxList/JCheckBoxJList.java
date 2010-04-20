@@ -1,12 +1,13 @@
-         /*
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package org.jpowder.JCheckboxList;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.*;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -36,6 +37,7 @@ public class JCheckBoxJList extends JList implements Serializable {
         setCellRenderer(new CheckFileListRenderer());
         setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
+
         this.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -53,25 +55,27 @@ public class JCheckBoxJList extends JList implements Serializable {
                 // turn off/on tick in tickbox
                 item.setSelected(!item.isSelected());
 
-       
+
                 //this neccessary for checking and unchecking the jcheckbox list
                 java.awt.Rectangle rect = list.getCellBounds(index, index);
                 list.repaint(rect);
+                
 
                 if (!item.isSelected()) {
-                    m_plot.getRenderer(index).setSeriesVisible(0, Boolean.FALSE);       
-                    
+                    m_plot.getRenderer(index).setSeriesVisible(0, Boolean.FALSE);
+
                 }
                 if (item.isSelected()) {
                     m_plot.getRenderer(index).setSeriesVisible(0, Boolean.TRUE);
-        
+
                 }
-        
+
 
             }
         });
 
         propertySupport = new PropertyChangeSupport(this);
+        this.repaint();
     }
 
     public XYPlot getm_plot() {

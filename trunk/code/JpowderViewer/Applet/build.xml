@@ -71,4 +71,17 @@
     nbproject/build-impl.xml file. 
 
     -->
+
+   <target name="-post-jar">
+        <jar jarfile="dist/JpowderApplet.jar">
+            <zipfileset src="${dist.jar}" excludes="META-INF/*" />
+            <zipfileset src="dist/lib/Core.jar" excludes="META-INF/*" />
+			<zipfileset src="dist/lib/jcommon-1.0.16.jar" excludes="META-INF/*" />
+			<zipfileset src="dist/lib/jfreechart-1.0.13.jar" excludes="META-INF/*" />
+            <manifest>
+                <attribute name="Main-Class" value="org.jpowder.Jpowder"/>
+            </manifest>
+        </jar>
+    </target>
+
 </project>
