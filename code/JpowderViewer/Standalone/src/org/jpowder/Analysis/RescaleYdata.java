@@ -21,6 +21,7 @@ import org.jfree.data.xy.XYDataset;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 import org.jpowder.JpowderInternalframe;
+import org.jpowder.chartTools.ComboBoxRenderer;
 import org.jpowder.jfreechart.FilesPlotter;
 
 /**
@@ -72,29 +73,8 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
             string[i] = inFocus.getPowderDataSet().elementAt(i).getFileName();
 
 
-//  dataSetComboBox.setForeground((Color) FilesPlotter.allseriescolors[i]);
-            dataSetComboBox.setRenderer(new ListCellRenderer() {
-
-                public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-
-                    JLabel j = new JLabel(value.toString());
-                    j.setOpaque(isSelected);
-                    if (index >= 0) {
-                        j.setForeground((Color) FilesPlotter.allSeriescolors[index]);
-//                        j.setBackground((Color) FilesPlotter.allseriescolors[index]);
-                    }
-
-                    if (isSelected) {
-                        j.setBorder(LineBorder.createBlackLineBorder());
-
-                    }
-
-
-                    return j;
-
-
-                }
-            });
+            ComboBoxRenderer boxRenderer= new ComboBoxRenderer();
+            dataSetComboBox.setRenderer(boxRenderer);
 
 //    dataSetComboBox.setBackground((Color) FilesPlotter.allseriescolors[i]);
 

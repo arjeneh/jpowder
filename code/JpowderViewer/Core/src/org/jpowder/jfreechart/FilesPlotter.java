@@ -23,7 +23,7 @@ import org.jfree.ui.RectangleInsets;
 public class FilesPlotter extends DatasetPlotter {
 
     private static Vector<DataSet> datasets;
-    public XYPlot plot;
+    public static XYPlot plot;
     private static boolean createLegend = false;
     private static JFreeChart chart;
     public static Paint[] allSeriescolors = {Color.BLUE, Color.RED, ChartColor.VERY_DARK_GREEN,
@@ -91,6 +91,10 @@ public class FilesPlotter extends DatasetPlotter {
 
     public static JFreeChart getchart() {
         return chart;
+    }
+
+    public static XYPlot getPlot() {
+        return plot;
     }
 
     /**

@@ -39,7 +39,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
     private ToolsIcon toolsIcon;
     private String[][] dataSetAndWaveLength;
-    private String columnsName[] = {"Plot(s)", "WaveLength"};
+    private String columnsName[] = {"Plot(s)", "Wavelength"};
     private DefaultTableModel defaultTableModel;
     private double newWaveLength;
 
@@ -75,7 +75,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                 int size = inFocus.getXYPlot().getDatasetCount();
                 for (int i = 0; i < size; i++) {
 
-                    if (!defaultTableModel.getValueAt(i, 1).equals("Value")) {
+                    if (!defaultTableModel.getValueAt(i, 1).equals("")) {
 
                         newWaveLength = Double.parseDouble(dataTable.getModel().getValueAt(i, 1).toString());
                         inFocus.getPowderDataSet().get(i).setWaveLength(newWaveLength);
@@ -91,9 +91,11 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         dataTable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableCellRenderer() {
 
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+               JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
                 JLabel fileName = new JLabel(value.toString());
 
-                fileName.setForeground((Color) FilesPlotter.getSeriesColors(row));
+
+                     fileName.setForeground((Color) inFocus.getXYPlot().getRenderer(row).getSeriesPaint(0));
                 return fileName;
 
 
@@ -169,7 +171,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
             if (!inFocus.getPowderDataSet().get(i).getFileName().endsWith(".cif")) {
 
                 if (defaultTableModel.getValueAt(i, 1).equals("0.0")) {
-                    defaultTableModel.setValueAt("Value", i, 1);
+                    defaultTableModel.setValueAt("", i, 1);
                 }
 
             }
@@ -220,13 +222,12 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         dataTable = new javax.swing.JTable();
         backButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         unitComboBox1 = new javax.swing.JComboBox();
         unitComboBox2 = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         applyButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -250,26 +251,13 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
             }
         });
 
-        jScrollPane1.setBorder(null);
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
-        jTextArea1.setBackground(new java.awt.Color(236, 233, 216));
-        jTextArea1.setColumns(20);
-        jTextArea1.setEditable(false);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("\nUse Bragg's Low 2dSinө=λ to change \nthe unit from 2ө to d and vice \nversa.");
-        jTextArea1.setWrapStyleWord(true);
-        jTextArea1.setBorder(null);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        unitComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14));
+        unitComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         unitComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2ө", "d" }));
 
-        unitComboBox2.setFont(new java.awt.Font("Tahoma", 0, 14));
+        unitComboBox2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         unitComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "d", "2ө" }));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("---->>");
 
         applyButton.setText("Apply");
@@ -279,39 +267,41 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ChangeXAxis_Large.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Transformxaxis_Large.png"))); // NOI18N
+
+        jLabel4.setText("Change x-axis from 2ө to d and vice-versa.");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                .addContainerGap())
             .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(unitComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
-                        .addComponent(unitComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(226, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(251, Short.MAX_VALUE)
-                .addComponent(applyButton)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addContainerGap(101, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(applyButton)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(unitComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(62, 62, 62)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                                .addComponent(unitComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(6, 6, 6)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -321,18 +311,18 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(unitComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(unitComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(unitComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(unitComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(applyButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGap(78, 78, 78)
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -427,10 +417,9 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JComboBox unitComboBox1;
     private javax.swing.JComboBox unitComboBox2;
     // End of variables declaration//GEN-END:variables

@@ -4,6 +4,7 @@
  */
 package org.jpowder;
 
+import org.jpowder.JCheckboxList.JCheckBoxJList;
 import org.jpowder.JCheckboxList.FileNameListModel;
 import java.awt.BorderLayout;
 import java.util.Vector;
@@ -12,7 +13,6 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import org.jfree.chart.plot.XYPlot;
 import org.jpowder.JCheckboxList.CheckableFileItem;
-import org.jpowder.JCheckboxList.JCheckBoxJList;
 import org.jpowder.dataset.DataSet;
 
 /**
@@ -42,6 +42,7 @@ public class DataVisibleInChart extends JPanel {
         file_sp.setPreferredSize(new java.awt.Dimension(SP_WIDTH, SP_HEIGHT));
         add(file_sp);
 
+
     }
 
     /**
@@ -64,7 +65,9 @@ public class DataVisibleInChart extends JPanel {
         for (int i = 0; i < dataSets.size(); i++) {
             CheckableFileItem checkableFileItem = new CheckableFileItem(dataSets.elementAt(i).getFileName());
             listModel.addCheckableFile(checkableFileItem);
+           
             checkableFileItem.setSelected(xyplot.getRenderer(i).isSeriesVisible(0));
+
         }
         checkboxList.setm_plot(xyplot);
 

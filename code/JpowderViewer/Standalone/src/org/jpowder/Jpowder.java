@@ -479,7 +479,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         editMenu.add(jSeparator6);
 
         propertiesMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        propertiesMenu.setText("Propeties");
+        propertiesMenu.setText("Properties");
         propertiesMenu.setToolTipText("set propeties of the selected frame");
         propertiesMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -582,7 +582,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(chartPlotterPane, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
+                .addComponent(chartPlotterPane, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(

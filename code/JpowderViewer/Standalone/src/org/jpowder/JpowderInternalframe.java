@@ -388,9 +388,9 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
     @Override
     public void internalFrameClosed(InternalFrameEvent e) {
         Jpowder.jPowderStackUndo.push(jpowderinternalframe);
-        System.out.println("n frame " + JpowderInternalframe.decrementnumberOfJpowderInternalframe());
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() > 1 || JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
             dataVisibleInChart.clear();
+
         }
 
         Jpowder.jpowderInternalFrameUpdate(jpowderinternalframe);
