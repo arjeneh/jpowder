@@ -54,8 +54,44 @@ public class XYandXYE_Reader {
             fileInputStream.close();
             bufferedReader.close();
 
-            // Determine how many columns there are
-            int countColumn = localData.firstElement().size();
+            // Determine if DASH xye format, which has an extra line at the
+            // top equal to the wavelength
+            int countColumn = 0;
+            boolean dashFormat = false;
+            if ( localData.firstElement().size() == 1)
+            {
+                int secondRowCount = localData.elementAt(1).size();
+                for (int i = 1; i < localData.size(); i++)
+                {
+
+                    if  (i <= 5)
+                    {
+                        if ( localData.elementAt(i).size() != secondRowCount )
+                        {
+                          javax.swing.JOptionPane.showMessageDialog(null, "Invalid file formate.");
+                          return null;
+                        }
+                    }
+                    else
+                    {
+                        countColumn = secondRowCount;
+                        dashFormat = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+              // Determine how many columns there are
+              countColumn = localData.firstElement().size();
+            }
+            
+            double wavelengthIfDASH = 0.0;
+            if (dashFormat)
+            {
+                wavelengthIfDASH = localData.firstElement().firstElement();
+                localData.remove(0);  
+            }
 
             DataSet retVal = null;
 
@@ -67,6 +103,9 @@ public class XYandXYE_Reader {
             } else {
                 javax.swing.JOptionPane.showMessageDialog(null, "File must contain either 2 or 3 columns");
             }
+
+            if (dashFormat)
+                retVal.setWaveLength(wavelengthIfDASH);
 
             return retVal;
 

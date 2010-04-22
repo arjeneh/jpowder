@@ -28,84 +28,88 @@ public class Cif_Reader {
             FileReader fileReader = new FileReader(aFile);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             while ((aLine = bufferedReader.readLine()) != null) {
-
-                if (aLine.contains("_diffrn_radiation_wavelength")) {
+                if ( !aLine.startsWith("#") ) {
+                    if (aLine.contains("_diffrn_radiation_wavelength")) {
 //                    aLine = aLine.replace("_diffrn_radiation_wavelength", "");
 //                    aLine = aLine.replaceAll(" ", "");
 
 
-                    String[]  splits = aLine.split(" ");
-                    if(splits==null||splits.length==0){
+                        String[] splits = aLine.split(" ");
+                        if (splits == null || splits.length == 0) {
 
-                     javax.swing.JOptionPane.showMessageDialog(null, "Can not find the Wavelength");
+                            javax.swing.JOptionPane.showMessageDialog(null, "Can not find the Wavelength");
 
-                    }else{
-                        try{
-                   waveLength = Double.parseDouble(splits[splits.length-1]);
-             
-
-                        }catch(NumberFormatException ex){
-
-                         javax.swing.JOptionPane.showMessageDialog(null, "Can not find the Wavelength");
-
-                  
-                        }
-                    }
-                }
-
-
-
-                if (aLine.contains("loop_")) // is cif case sensitive
-                {
-                    int countColumns = 0;
-                    int pd_proc_2theta_corrected_index = 0;
-                    int pd_proc_intensity_total_index = 0;
-                    while ((aLine = bufferedReader.readLine()) != null) {
-                        if (aLine.contains("_")) {
-                            countColumns++;
-                            if (aLine.contains("_pd_proc_2theta_corrected")||aLine.contains("_pd_meas_2theta_scan")) {
-                                pd_proc_2theta_corrected_index = countColumns;
-                            }
-                            if (aLine.contains("_pd_proc_intensity_total")) {
-                                pd_proc_intensity_total_index = countColumns;
-                            }
                         } else {
-                             
-                            break;
-                        }
-                    }
-                    if (pd_proc_2theta_corrected_index == 0) {
-                        break;
-                    }
-                    while ((aLine = bufferedReader.readLine()) != null) {
-                        Vector<Double> newRow = new Vector<Double>();
-                        StringTokenizer stringTokenizer = new StringTokenizer(aLine);
-                        int numToken = stringTokenizer.countTokens();
-                        if (numToken != countColumns) {
-                            break;
-                        }
-                        for (int i = 1; i <= numToken; i++) {
-                            String stringToken = stringTokenizer.nextToken();
-                            if (i == pd_proc_2theta_corrected_index) {
-                                newRow.addElement(Double.parseDouble(stringToken));
-                
-                            }
-                            if (i == pd_proc_intensity_total_index) {
-                                if (stringToken.contains("(")) {
-                                    newRow.addElement(Double.parseDouble(stringToken.substring(0, stringToken.indexOf("("))));
-                                   
-                                    newRow.addElement(Double.parseDouble(stringToken.substring(stringToken.indexOf("(") + 1, stringToken.indexOf(")"))));
-                                   
-                                } else {
-                                    newRow.addElement(Double.parseDouble(stringToken));
+                            try {
+                                waveLength = Double.parseDouble(splits[splits.length - 1]);
 
+
+                            } catch (NumberFormatException ex) {
+
+                                javax.swing.JOptionPane.showMessageDialog(null, "Can not find the Wavelength");
+
+
+                            }
+                        }
+                    }
+
+
+
+
+                    if (aLine.contains("loop_")) // is cif case sensitive
+                    {
+                        int countColumns = 0;
+                        int pd_proc_2theta_corrected_index = 0;
+                        int pd_proc_intensity_total_index = 0;
+                        while ((aLine = bufferedReader.readLine()) != null) {
+                            if (aLine.contains("_")) {
+                                countColumns++;
+                                if (aLine.contains("_pd_proc_2theta_corrected") || aLine.contains("_pd_meas_2theta_scan")) {
+                                    pd_proc_2theta_corrected_index = countColumns;
                                 }
-                                localData.addElement(newRow);
-                                //System.out.println(localData);
+                                if (aLine.contains("_pd_proc_intensity_total") || aLine.contains("_pd_proc_intensity_net")) {
+                                    pd_proc_intensity_total_index = countColumns;
+                                }
+                            } else {
+
+                                break;
                             }
                         }
-                    }
+                        if (pd_proc_2theta_corrected_index == 0) {
+                            break;
+                        }
+                        while ((aLine = bufferedReader.readLine()) != null) {
+                            if (!aLine.startsWith("#")) {
+                                Vector<Double> newRow = new Vector<Double>();
+                                StringTokenizer stringTokenizer = new StringTokenizer(aLine);
+                                int numToken = stringTokenizer.countTokens();
+                                if (numToken != countColumns) {
+                                    break;
+                                }
+                                for (int i = 1; i <= numToken; i++) {
+                                    String stringToken = stringTokenizer.nextToken();
+                                    if (i == pd_proc_2theta_corrected_index) {
+                                        newRow.addElement(Double.parseDouble(stringToken));
 
+                                    }
+                                    if (i == pd_proc_intensity_total_index) {
+                                        if (stringToken.contains("(")) {
+                                            newRow.addElement(Double.parseDouble(stringToken.substring(0, stringToken.indexOf("("))));
+
+                                            newRow.addElement(Double.parseDouble(stringToken.substring(stringToken.indexOf("(") + 1, stringToken.indexOf(")"))));
+
+                                        } else {
+                                            newRow.addElement(Double.parseDouble(stringToken));
+
+                                        }
+                                        localData.addElement(newRow);
+                                        //System.out.println(localData);
+                                    }
+                                }
+                            }
+                        }
+
+                    }
                 }
             }
             fileReader.close();
@@ -126,6 +130,7 @@ public class Cif_Reader {
             retVal.setWaveLength(waveLength);
 
             return retVal;
+
 
         } catch (MalformedURLException e) {
             javax.swing.JOptionPane.showMessageDialog(null, "Invalid file formate.");
