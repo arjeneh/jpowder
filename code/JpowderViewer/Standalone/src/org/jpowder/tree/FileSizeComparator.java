@@ -28,10 +28,6 @@ public class FileSizeComparator implements Comparator  {
                 Long.toString(b.length())
                 );
 
-        System.out.println("Result is: " + result
-                + " File a: " +  a.getName() + " size is: " + a.length()
-                + " File b: " +  b.getName() + " size is: " + b.length()
-                );
 
         if (result != 0) return result;
 

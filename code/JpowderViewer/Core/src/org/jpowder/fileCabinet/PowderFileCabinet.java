@@ -76,14 +76,14 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
     public void addFile(String fileName, DataSet ds) {
         data.put(fileName, ds);
         //dataSet.add(ds);
-        System.out.println("PowderFileCabinet.java has been added with: " + data.toString());
+
         //notifyObservers();
     }
 
     //@param fileName to be deleted from data HashMap.
     public void deleteFile(String fileName) {
         data.remove(fileName);
-        System.out.println("PowderFileCabinet.java has been deleted: " + data.toString());
+
         //notifyObservers();
     }
 
@@ -126,8 +126,6 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
                 oneDataset = null;
                 oneDataset = createDataSetFromPowderFile(selectedFiles[i]);
 
-                System.out.println("\nTime it took to load " + selectedFiles[i]);
-                System.out.println(lStopwatch.getElapsedTime());
                 lStopwatch.reset();
 
                 // is it really necessary to get the file extension here since
@@ -143,8 +141,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
             }//for
 
         }//if open approved
-        System.out.println("\nTotal time took to load and plot the all data:");
-        System.out.println(totalStopwatch.getElapsedTime());
+
         totalStopwatch.reset();
     }//loadFiles
 
@@ -179,7 +176,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
           
             return null;
         } catch (Exception ex) {
-                 javax.swing.JOptionPane.showMessageDialog(null, "Can't Read The File.");
+                 javax.swing.JOptionPane.showMessageDialog(null, "Can't read rhe file.");
         } finally {
             try {
 
@@ -198,7 +195,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
      * @param filenames
      **/
     public boolean checkAcceptedFileType(String filenames) {
-        System.out.println("\nFile Type = " + filenames);
+
         boolean result = true;
         for (int i = ACCEPTED_FILE_TYPE.length - 1; i >= 0; i--) {
             if (filenames.endsWith(ACCEPTED_FILE_TYPE[i])) {

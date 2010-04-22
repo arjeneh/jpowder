@@ -45,7 +45,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
     }
 
     public void update() {
-        System.out.println("updattttttt");
+
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
             dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(addDataSet()));
         }
@@ -106,13 +106,11 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
         setPreferredSize(new java.awt.Dimension(320, 400));
 
         dataSetComboBox.setEditable(true);
-        dataSetComboBox.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         dataSetComboBox.setMaximumRowCount(20);
 
-        operationComboBox.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         operationComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "+", "-", "x", "/" }));
 
-        jLabel2.setText("Plot:");
+        jLabel2.setText("Plot (s):");
 
         jLabel3.setText("Operation:");
 
@@ -129,7 +127,6 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.PNG"))); // NOI18N
         backButton.setText("Back");
-        backButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         backButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         backButton.setIconTextGap(2);
         backButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
@@ -159,7 +156,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(dataSetComboBox, 0, 244, Short.MAX_VALUE)
@@ -207,8 +204,14 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
             applyButton.setSelected(false);
             return;
         }
+           for(int i =0; i<4;i++){
+           String[] zero = {"0","0.0",".0","0."};
+           if(constantField.getText().equals(zero[i])){
+           JOptionPane.showMessageDialog(null, "Enter valid number");
+           return;
+           }
+           }
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-
         int seriescount = inFocus.getXYPlot().getDatasetCount();
         for (int i = 0; i < seriescount; i++) {
             if (inFocus.getPowderDataSet().elementAt(i).getFileName().equals(
@@ -236,7 +239,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
                             inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(y / newY, j);
                         }
                     } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(null, "Enter Valid Number.");
+                        JOptionPane.showMessageDialog(null, "Enter valid number.");
                     }
                 }
             }

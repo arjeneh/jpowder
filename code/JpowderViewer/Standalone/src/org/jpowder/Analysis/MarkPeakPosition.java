@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
@@ -29,7 +28,6 @@ import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.annotations.XYTextAnnotation;
 import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.ValueMarker;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.TextAnchor;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
@@ -58,10 +56,16 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     }
 
     public void update() {
-
+  
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            getPeakCheckBox.setEnabled(false);
+             jTextPeakArea.setText("");
+        } else {
+            getPeakCheckBox.setEnabled(true);
+        }
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-        jTextPeakArea.setText("");
-        getPeakButt.setSelected(false);
+        jTextPeakArea.setText(jTextPeakArea.getText());
+        getPeakCheckBox.setSelected(false);
 
         for (int i = 0; i < domainRangeMarker.size() && i < peakRangeMarker.size(); i++) {
             inFocus.getXYPlot().removeDomainMarker(domainRangeMarker.get(i));
@@ -81,12 +85,12 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         copy = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JSeparator();
         backButton = new javax.swing.JButton();
-        getPeakButt = new javax.swing.JToggleButton();
         peakLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPeakArea = new javax.swing.JTextArea();
         removeAllButt = new javax.swing.JButton();
         removeButt = new javax.swing.JButton();
+        getPeakCheckBox = new javax.swing.JCheckBox();
 
         copy.setText("Copy");
         copy.addActionListener(new java.awt.event.ActionListener() {
@@ -104,7 +108,6 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.PNG"))); // NOI18N
         backButton.setText("Back");
-        backButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         backButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         backButton.setIconTextGap(2);
         backButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
@@ -114,18 +117,11 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
             }
         });
 
-        getPeakButt.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.highlight"));
-        getPeakButt.setText("Get Peak ");
-        getPeakButt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                getPeakButtActionPerformed(evt);
-            }
-        });
-
         peakLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Peaks_Large.png"))); // NOI18N
 
         jTextPeakArea.setColumns(1);
-        jTextPeakArea.setFont(new java.awt.Font("Arial", 1, 14));
+        jTextPeakArea.setEditable(false);
+        jTextPeakArea.setFont(new java.awt.Font("Arial", 0, 12));
         jTextPeakArea.setLineWrap(true);
         jTextPeakArea.setTabSize(20);
         jTextPeakArea.setToolTipText("Value of 2θ at a peak");
@@ -136,7 +132,6 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         });
         jScrollPane1.setViewportView(jTextPeakArea);
 
-        removeAllButt.setFont(new java.awt.Font("Tahoma", 0, 10));
         removeAllButt.setText("Remove All");
         removeAllButt.setToolTipText("Clear The Text Area");
         removeAllButt.addActionListener(new java.awt.event.ActionListener() {
@@ -145,12 +140,18 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
             }
         });
 
-        removeButt.setFont(new java.awt.Font("Tahoma", 0, 10));
         removeButt.setText("Remove");
         removeButt.setToolTipText("Remove Selected Item");
         removeButt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeButtActionPerformed(evt);
+            }
+        });
+
+        getPeakCheckBox.setText("Get Peak.");
+        getPeakCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                getPeakCheckBoxActionPerformed(evt);
             }
         });
 
@@ -162,21 +163,21 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(226, Short.MAX_VALUE))
+                .addContainerGap(225, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(peakLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                    .addComponent(getPeakButt)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(removeAllButt)
                         .addGap(0, 0, 0)
                         .addComponent(removeButt))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(getPeakCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {removeAllButt, removeButt});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {backButton, removeAllButt, removeButt});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,20 +186,20 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
                 .addComponent(peakLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(getPeakButt)
+                .addGap(7, 7, 7)
+                .addComponent(getPeakCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(removeAllButt)
                     .addComponent(removeButt))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {removeAllButt, removeButt});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {backButton, removeAllButt, removeButt});
 
     }// </editor-fold>//GEN-END:initComponents
 
@@ -211,75 +212,6 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
         this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
-
-    private void getPeakButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getPeakButtActionPerformed
-
-//        FilesPlotter.createLegend=true;// test to see if the legend can be set again
-
-
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
-            getPeakButt.setSelected(false);
-            return;
-        }
-        if (getPeakButt.isSelected()) {
-
-
-
-            inFocus.getChartPanel().addChartMouseListener(this);
-            inFocus.getChartPanel().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            //Domain
-            inFocus.getXYPlot().setDomainCrosshairVisible(true);
-            inFocus.getXYPlot().setDomainCrosshairLockedOnData(true);
-            inFocus.getXYPlot().setDomainCrosshairStroke(new BasicStroke(1f));
-            inFocus.getXYPlot().setDomainCrosshairPaint(Color.ORANGE);
-            inFocus.getChartPanel().setHorizontalAxisTrace(true);
-            //Range
-            inFocus.getXYPlot().setRangeCrosshairVisible(true);
-            inFocus.getXYPlot().setRangeCrosshairLockedOnData(true);
-            inFocus.getXYPlot().setRangeCrosshairStroke(new BasicStroke(1f));
-            inFocus.getXYPlot().setRangeCrosshairPaint(Color.ORANGE);
-            inFocus.getChartPanel().setVerticalAxisTrace(true);
-
-
-
-            JXLayer layer = new JXLayer(inFocus.getChartPanel());
-            Magnifier magnifier = new Magnifier();
-            magnifier.setMagnifyingFactor(4);
-            magnifier.setRadius(20);
-            layer.setUI(magnifier);
-            inFocus.setContentPane(layer);
-
-        }
-        if (!getPeakButt.isSelected()) {
-            inFocus.getChartPanel().removeChartMouseListener(this);
-            inFocus.getChartPanel().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-
-            //Domain
-            inFocus.getXYPlot().setDomainCrosshairVisible(false);
-            inFocus.getChartPanel().setHorizontalAxisTrace(false);
-            inFocus.getXYPlot().setDomainCrosshairLockedOnData(false);
-
-            for (int i = 0; i < domainRangeMarker.size() && i < peakRangeMarker.size(); i++) {
-                inFocus.getXYPlot().removeRangeMarker(peakRangeMarker.get(i));
-                inFocus.getXYPlot().removeDomainMarker(domainRangeMarker.get(i));
-            }
-            //Range
-            inFocus.getXYPlot().setRangeCrosshairVisible(false);
-            inFocus.getChartPanel().setVerticalAxisTrace(false);
-            inFocus.getXYPlot().setRangeCrosshairLockedOnData(false);
-            //Anotation
-            inFocus.getXYPlot().clearAnnotations();
-            //magnifier
-            JXLayer layer = new JXLayer(inFocus.getChartPanel());
-            Magnifier magnifier = new Magnifier();
-            magnifier.setRadius(0);
-            layer.setUI(magnifier);
-            inFocus.setContentPane(layer);
-
-        }
-    }//GEN-LAST:event_getPeakButtActionPerformed
     /**
      * this method converts vectors of doubles to strings
      * @param peak
@@ -374,6 +306,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     }//GEN-LAST:event_removeAllButtActionPerformed
 
     private void removeButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtActionPerformed
+        System.out.println("");
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
             removeButt.setSelected(false);
             return;
@@ -395,6 +328,75 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     private void jTextPeakAreaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextPeakAreaMouseReleased
         showPopup(evt);
     }//GEN-LAST:event_jTextPeakAreaMouseReleased
+
+    private void getPeakCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getPeakCheckBoxActionPerformed
+
+//        FilesPlotter.createLegend=true;// test to see if the legend can be set again
+
+
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            getPeakCheckBox.setSelected(false);
+            return;
+        }
+        if (getPeakCheckBox.isSelected()) {
+
+
+
+            inFocus.getChartPanel().addChartMouseListener(this);
+            inFocus.getChartPanel().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            //Domain
+            inFocus.getXYPlot().setDomainCrosshairVisible(true);
+            inFocus.getXYPlot().setDomainCrosshairLockedOnData(true);
+            inFocus.getXYPlot().setDomainCrosshairStroke(new BasicStroke(1f));
+            inFocus.getXYPlot().setDomainCrosshairPaint(Color.ORANGE);
+            inFocus.getChartPanel().setHorizontalAxisTrace(true);
+            //Range
+            inFocus.getXYPlot().setRangeCrosshairVisible(true);
+            inFocus.getXYPlot().setRangeCrosshairLockedOnData(true);
+            inFocus.getXYPlot().setRangeCrosshairStroke(new BasicStroke(1f));
+            inFocus.getXYPlot().setRangeCrosshairPaint(Color.ORANGE);
+            inFocus.getChartPanel().setVerticalAxisTrace(true);
+
+
+
+            JXLayer layer = new JXLayer(inFocus.getChartPanel());
+            Magnifier magnifier = new Magnifier();
+            magnifier.setMagnifyingFactor(4);
+            magnifier.setRadius(20);
+            layer.setUI(magnifier);
+            inFocus.setContentPane(layer);
+
+        }
+        if (!getPeakCheckBox.isSelected()) {
+            inFocus.getChartPanel().removeChartMouseListener(this);
+            inFocus.getChartPanel().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+
+            //Domain
+            inFocus.getXYPlot().setDomainCrosshairVisible(false);
+            inFocus.getChartPanel().setHorizontalAxisTrace(false);
+            inFocus.getXYPlot().setDomainCrosshairLockedOnData(false);
+
+            for (int i = 0; i < domainRangeMarker.size() && i < peakRangeMarker.size(); i++) {
+                inFocus.getXYPlot().removeRangeMarker(peakRangeMarker.get(i));
+                inFocus.getXYPlot().removeDomainMarker(domainRangeMarker.get(i));
+            }
+            //Range
+            inFocus.getXYPlot().setRangeCrosshairVisible(false);
+            inFocus.getChartPanel().setVerticalAxisTrace(false);
+            inFocus.getXYPlot().setRangeCrosshairLockedOnData(false);
+            //Anotation
+            inFocus.getXYPlot().clearAnnotations();
+            //magnifier
+            JXLayer layer = new JXLayer(inFocus.getChartPanel());
+            Magnifier magnifier = new Magnifier();
+            magnifier.setRadius(0);
+            layer.setUI(magnifier);
+            inFocus.setContentPane(layer);
+
+        }
+    }//GEN-LAST:event_getPeakCheckBoxActionPerformed
     private void showPopup(MouseEvent e) {
         if (e.isPopupTrigger()) {
             jTextAreaPopMenu.show(e.getComponent(), e.getX(), e.getY());
@@ -431,12 +433,12 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         layer.setUI(magnifier);
         inFocus.setContentPane(layer);
 
-        getPeakButt.setSelected(false);
+        getPeakCheckBox.setSelected(false);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.JMenuItem copy;
-    private javax.swing.JToggleButton getPeakButt;
+    private javax.swing.JCheckBox getPeakCheckBox;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPopupMenu jTextAreaPopMenu;

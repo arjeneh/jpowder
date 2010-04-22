@@ -41,7 +41,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
     private Vector<DataSet> m_data;
     private java.awt.dnd.DropTarget dropTarget;  // to drop to this frame
     private XYPlot xYPlot;  // hold reference to plot created from dataset in constructor
-    private static int numberOfJpowderInternalframe = 0;
+    public static int numberOfJpowderInternalframe = 0;
     private DatasetPlotter plotMultiCol;
     private ChartPanel jfreeChartPanel;
     private JFreeChart chart;
@@ -61,7 +61,8 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
      */
     public JpowderInternalframe(DataVisibleInChart dataVisibleInChartPanel, Vector<DataSet> data) {
         super();
-
+//        System.out.println("Total: "+Runtime.getRuntime().totalMemory()+" Free: "+Runtime.getRuntime().freeMemory()+
+//                " MAx:"+Runtime.getRuntime().maxMemory());
         numberOfJpowderInternalframe++;
         dropTarget = new DropTarget(this, this);
         internalframeStackes.push(this);
@@ -79,7 +80,6 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         chart = FilesPlotter.getchart();
         xYPlot = jfreeChartPanels.getChart().getXYPlot();
         chartPanel.add(jfreeChartPanels);
-
 
         this.setTitle(getNames());
         this.setVisible(true);
@@ -307,7 +307,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
                         allfilesName.add(fileName);
 
                     }
-                    System.out.println("files added to Internalframe " + allfiles);
+
 
                 } catch (UnsupportedFlavorException ex) {
                     Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
@@ -325,14 +325,14 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
                     String[] array = fileName.split("\n");
                     int n = array.length;
                     for (int j = 0; j < n; j++) {
-                        System.out.println("\n" + array[j] + "\n");
+
                         File file = new File(array[j]);
                         String fileNames = file.getName().toLowerCase();
                         allfiles.add(file);
                         allfilesName.add(fileNames);
 
                     }
-                    System.out.println("files added to Internalframe \n" + allfiles);
+
                 } catch (Exception ex) {
                 }
             } else {
@@ -360,7 +360,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
             dataVisibleInChartPanel.newChartInFocus(xYPlot,
                     this.getPowderDataSet());
         }
-
+         Jpowder.jpowderInternalFrameUpdate(this);
     }
 }
 
@@ -387,15 +387,13 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
      */
     @Override
     public void internalFrameClosed(InternalFrameEvent e) {
-        Jpowder.jPowderStackUndo.push(jpowderinternalframe);
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() > 1 || JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
-            dataVisibleInChart.clear();
-
-        }
-
+        Jpowder.jPowderStackUndo.push(jpowderinternalframe);        
+        JpowderInternalframe.numberOfJpowderInternalframe --;
         Jpowder.jpowderInternalFrameUpdate(jpowderinternalframe);
-
         Jpowder.getChartPlotter().remove(jpowderinternalframe);
+         if (JpowderInternalframe.getnumberOfJpowderInternalframe()==0) {
+            dataVisibleInChart.clear();
+       }
     }
 
     /**

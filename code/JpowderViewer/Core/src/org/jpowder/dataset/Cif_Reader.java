@@ -32,7 +32,7 @@ public class Cif_Reader {
                 if (aLine.contains("_diffrn_radiation_wavelength")) {
 //                    aLine = aLine.replace("_diffrn_radiation_wavelength", "");
 //                    aLine = aLine.replaceAll(" ", "");
-//                    System.out.println(aLine);
+
 
                     String[]  splits = aLine.split(" ");
                     if(splits==null||splits.length==0){
@@ -42,13 +42,13 @@ public class Cif_Reader {
                     }else{
                         try{
                    waveLength = Double.parseDouble(splits[splits.length-1]);
-                            System.out.println(waveLength);
+             
 
                         }catch(NumberFormatException ex){
 
                          javax.swing.JOptionPane.showMessageDialog(null, "Can not find the Wavelength");
 
-                            System.out.println(ex.getMessage());
+                  
                         }
                     }
                 }
@@ -88,14 +88,14 @@ public class Cif_Reader {
                             String stringToken = stringTokenizer.nextToken();
                             if (i == pd_proc_2theta_corrected_index) {
                                 newRow.addElement(Double.parseDouble(stringToken));
-                                // System.out.println(stringToken);
+                
                             }
                             if (i == pd_proc_intensity_total_index) {
                                 if (stringToken.contains("(")) {
                                     newRow.addElement(Double.parseDouble(stringToken.substring(0, stringToken.indexOf("("))));
-                                    // System.out.println(stringToken.substring(0,stringToken.indexOf("(")));
+                                   
                                     newRow.addElement(Double.parseDouble(stringToken.substring(stringToken.indexOf("(") + 1, stringToken.indexOf(")"))));
-                                    // System.out.println(stringToken.substring(stringToken.indexOf(")")+1,stringToken.indexOf(")")));
+                                   
                                 } else {
                                     newRow.addElement(Double.parseDouble(stringToken));
 
@@ -128,16 +128,16 @@ public class Cif_Reader {
             return retVal;
 
         } catch (MalformedURLException e) {
-            javax.swing.JOptionPane.showMessageDialog(null, "Not sure.");
+            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file formate.");
             System.out.println("Malformed URL = " + e);
             return null;
         } catch (IOException io) {
-            javax.swing.JOptionPane.showMessageDialog(null, "Can't open file.");
+            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file formate.");
             System.out.println("IOException throws " + io);
             return null;
         } catch (java.lang.NumberFormatException nfe) {
 
-            javax.swing.JOptionPane.showMessageDialog(null, "The file contains a character, we cannot process this file.");
+            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file formate.");
             System.out.println("NumberFormatException throws " + nfe);
             return null;
         }

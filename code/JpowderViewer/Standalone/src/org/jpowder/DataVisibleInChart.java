@@ -43,6 +43,7 @@ public class DataVisibleInChart extends JPanel {
         add(file_sp);
 
 
+
     }
 
     /**
@@ -50,7 +51,9 @@ public class DataVisibleInChart extends JPanel {
      */
     public void clear() {
         listModel.clear();
+      
     }
+
 
     /**
      * To inform DataVisibleInChart that a new chart has been highlighted and

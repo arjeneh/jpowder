@@ -12,14 +12,10 @@ package org.jpowder.chartTools;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JColorChooser;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
-import javax.swing.border.LineBorder;
 import org.jfree.chart.renderer.xy.XYErrorRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.util.ShapeUtilities;
@@ -29,7 +25,6 @@ import org.jpowder.Jpowder;
 import org.jpowder.JpowderInternalframe;
 import org.jpowder.dataset.DataSetNoErrors;
 import org.jpowder.dataset.DataSetWithErrors;
-import org.jpowder.jfreechart.FilesPlotter;
 
 /**
  *
@@ -40,6 +35,10 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     private ToolsIcon toolsIcon;
     /*Array of string which contains the all the file names that have been plotted. */
     private String[] string;
+    /* Using Multi line jLabel.*/
+    private String labelText =
+      "<html><FONT COLOR=RED>Red</FONT> and " +
+      "<FONT COLOR=BLUE>Blue</FONT> Text</html>";
 
     /**
      *
@@ -96,8 +95,12 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         seriesColourComboBox = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
         colourPickerButton = new javax.swing.JToggleButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        labelText =
+        "<html> Select a plot from list and then  " +
+        "pick a series colour by clicking on the " +
+        "button."+
+        "<P>";
+        jLabel8 = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
 
@@ -152,7 +155,6 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         backButton.setAlignmentY(0.0F);
         backButton.setBorderPainted(false);
         backButton.setFocusable(false);
-        backButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         backButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         backButton.setIconTextGap(2);
         backButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
@@ -229,7 +231,6 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
                     .addComponent(buitInRadioButton)
                     .addComponent(noneRadioButton)
                     .addComponent(automaticRadioButton)
-                    .addComponent(markerComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(markersTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(applyButton)
                         .addGroup(markersTypePanelLayout.createSequentialGroup()
@@ -237,8 +238,9 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jLabel5)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(markerSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(markerSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(markerComboBox, 0, 163, Short.MAX_VALUE))
+                .addContainerGap())
         );
         markersTypePanelLayout.setVerticalGroup(
             markersTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,57 +292,45 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
 
         jLabel7.setText("Plot(s):");
 
-        colourPickerButton.setText("Pick Series Colours");
+        colourPickerButton.setText("Pick Series Colour");
         colourPickerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 colourPickerButtonActionPerformed(evt);
             }
         });
 
-        jScrollPane1.setBorder(null);
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
-        jTextArea1.setBackground(new java.awt.Color(236, 233, 216));
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Selec a plot from pull-downs And then \npick a series colour by clicking on the \nbutton.");
-        jTextArea1.setBorder(null);
-        jScrollPane1.setViewportView(jTextArea1);
+        jLabel8.setText(labelText);
 
         javax.swing.GroupLayout seriesColourPanelLayout = new javax.swing.GroupLayout(seriesColourPanel);
         seriesColourPanel.setLayout(seriesColourPanelLayout);
         seriesColourPanelLayout.setHorizontalGroup(
             seriesColourPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(seriesColourPanelLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, seriesColourPanelLayout.createSequentialGroup()
+                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(seriesColourPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(seriesColourPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(seriesColourPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(seriesColourPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(colourPickerButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
-                            .addComponent(seriesColourComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(25, 25, 25))))
+                    .addComponent(seriesColourComboBox, 0, 164, Short.MAX_VALUE)
+                    .addComponent(colourPickerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
+            .addGroup(seriesColourPanelLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                .addContainerGap())
         );
         seriesColourPanelLayout.setVerticalGroup(
             seriesColourPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, seriesColourPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(seriesColourPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(seriesColourComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(colourPickerButton)
-                .addGap(42, 42, 42))
+                .addGap(38, 38, 38))
         );
 
-        jTabbedPane1.addTab("Series Colour", seriesColourPanel);
+        jTabbedPane1.addTab("Plot Colour", seriesColourPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -391,6 +381,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
      * this is an update method which updates this info Panel.
      */
     public void update() {
+
 
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         setMarkersBuidInEnableFalse();
@@ -462,7 +453,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         for (int i = 0; i < size; i++) {
 
             string[i] = inFocus.getPowderDataSet().elementAt(i).getFileName();
-            ComboBoxRenderer boxRenderer= new ComboBoxRenderer();
+            ComboBoxRenderer boxRenderer = new ComboBoxRenderer();
             markerComboBox.setRenderer(boxRenderer);
             seriesColourComboBox.setRenderer(boxRenderer);
         }
@@ -508,7 +499,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
             XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer(i);
             boolean status = renderer.getBaseLinesVisible();
             renderer.setBaseLinesVisible(!status);
-            
+
         }
     }//GEN-LAST:event_conectingLinesActionPerformed
     /**
@@ -680,7 +671,6 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         for (int i = 0; i < inFocus.getPowderDataSet().size(); i++) {
             XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer(i);
             renderer.setBaseShapesVisible(true);
-
         }
 
         if (automaticRadioButton.isSelected()) {
@@ -698,21 +688,21 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_seriesColourComboBoxActionPerformed
 
     private void colourPickerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colourPickerButtonActionPerformed
-              JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
 //        Color initialBackground = button.getBackground();
         Color background = JColorChooser.showDialog(null,
-            "JColorChooser Sample",Color.BLUE);
-        for(int i=0;i<inFocus.getXYPlot().getDatasetCount();i++){
-              if (inFocus.getPowderDataSet().elementAt(i).getFileName().equals(
+                "JColorChooser Sample", Color.BLUE);
+        for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
+            if (inFocus.getPowderDataSet().elementAt(i).getFileName().equals(
                     seriesColourComboBox.getSelectedItem())) {
-                  
+
 //             FilesPlotter.getPlot().getRenderer(i).setSeriesPaint(0, background);
-                 inFocus.getXYPlot().getRenderer(i).setSeriesPaint(0, background);
-              }
+                inFocus.getXYPlot().getRenderer(i).setSeriesPaint(0, background);
+            }
         }
         colourPickerButton.setSelected(false);
+        Jpowder.jpowderInternalFrameUpdate(inFocus);
     }//GEN-LAST:event_colourPickerButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton applyButton;
     private javax.swing.JRadioButton automaticRadioButton;
@@ -731,11 +721,10 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JComboBox markerComboBox;
     private javax.swing.JTextField markerSizeField;
     private javax.swing.JPanel markersTypePanel;

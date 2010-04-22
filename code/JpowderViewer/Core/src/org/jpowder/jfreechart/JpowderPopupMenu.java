@@ -165,10 +165,10 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         menuItem.setActionCommand(ChartPanel.ZOOM_IN_BOTH_COMMAND);
         menuItem.addActionListener(this);
         zoomIn.addSeparator();
-        zoomIn.add(menuItem = new JMenuItem("Domain Axis"));
+        zoomIn.add(menuItem = new JMenuItem("X Axis"));
         menuItem.setActionCommand(ChartPanel.ZOOM_IN_DOMAIN_COMMAND);
         menuItem.addActionListener(this);
-        zoomIn.add(menuItem = new JMenuItem("Range Axis"));
+        zoomIn.add(menuItem = new JMenuItem("Y Axis"));
         menuItem.setActionCommand(ChartPanel.ZOOM_IN_RANGE_COMMAND);
         menuItem.addActionListener(this);
 
@@ -179,10 +179,10 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         menuItem.setActionCommand(ChartPanel.ZOOM_OUT_BOTH_COMMAND);
         menuItem.addActionListener(this);
         zoomOut.addSeparator();
-        zoomOut.add(menuItem = new JMenuItem("Domain Axis"));
+        zoomOut.add(menuItem = new JMenuItem("X Axis"));
         menuItem.setActionCommand(ChartPanel.ZOOM_OUT_DOMAIN_COMMAND);
         menuItem.addActionListener(this);
-        zoomOut.add(menuItem = new JMenuItem("Range Axis"));
+        zoomOut.add(menuItem = new JMenuItem("Y Axis"));
         menuItem.setActionCommand(ChartPanel.ZOOM_OUT_RANGE_COMMAND);
         menuItem.addActionListener(this);
 
@@ -192,10 +192,10 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         menuItem.setActionCommand(ChartPanel.ZOOM_RESET_BOTH_COMMAND);
         menuItem.addActionListener(this);
         autoRange.addSeparator();
-        autoRange.add(menuItem = new JMenuItem("Domain Axis"));
+        autoRange.add(menuItem = new JMenuItem("X Axis"));
         menuItem.setActionCommand(ChartPanel.ZOOM_RESET_DOMAIN_COMMAND);
         menuItem.addActionListener(this);
-        autoRange.add(menuItem = new JMenuItem("Range Axis"));
+        autoRange.add(menuItem = new JMenuItem("Y Axis"));
         menuItem.setActionCommand(ChartPanel.ZOOM_RESET_RANGE_COMMAND);
         menuItem.addActionListener(this);
     }
@@ -231,7 +231,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
     public static void saveAsJpowderApplet() {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "Save As Jpowder Applet ", ".ser");
+                "Jpowder Applet (*.ser)", ".ser");
         chooser.setFileFilter(filter);
         int returnVal = chooser.showSaveDialog(chooser);
         File fileName = chooser.getSelectedFile();
@@ -255,7 +255,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
     public static void pDF() {
         JFileChooser chooser = new JFileChooser();
         ExtensionFileFilter filter = new ExtensionFileFilter(
-                "Save As PDF ", ".pdf");
+                "PDF (*.pdf) ", ".pdf");
         chooser.addChoosableFileFilter(filter);
 
         int returnVal = chooser.showSaveDialog(chooser);
@@ -266,14 +266,14 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
 //            Logger.getLogger(JpowderPopupMenu.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 
-        System.out.println("" + fileName.getName());
+
         if (returnVal == JFileChooser.APPROVE_OPTION) {
 
             try {
 
                 chart.getXYPlot().getDomainAxis().setLabel("X");
                 saveChartAsPDF(fileName, chart, 800, 600, new DefaultFontMapper());
-                System.out.println(fileName.getPath());
+
 
 //                try //try statement
 //                {
@@ -281,7 +281,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
 //
 //                } catch (Exception e) //catch any exceptions here
 //                {
-//                    System.out.println("Error" + e);  //print the error
+
 //                }
             } catch (Exception e) {
                 System.out.println(e.getMessage());

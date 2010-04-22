@@ -17,7 +17,7 @@ public abstract class DatasetPlotter {
     }
 
     public DatasetPlotter(Vector<DataSet> d) {
-        System.out.println("");
+
     }
 
     public abstract String description();

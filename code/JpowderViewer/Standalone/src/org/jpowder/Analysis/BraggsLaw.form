@@ -53,7 +53,7 @@
                               <Component id="unitComboBox1" min="-2" pref="56" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="83" max="32767" attributes="0"/>
+                              <EmptySpace pref="93" max="32767" attributes="0"/>
                               <Component id="unitComboBox2" min="-2" pref="53" max="-2" attributes="1"/>
                           </Group>
                       </Group>
@@ -75,7 +75,7 @@
               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jScrollPane3" min="-2" pref="95" max="-2" attributes="0"/>
-              <EmptySpace pref="12" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="unitComboBox2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="unitComboBox1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -125,7 +125,6 @@
           <Image iconType="3" name="/images/Back.PNG"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Back"/>
-        <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="horizontalTextPosition" type="int" value="4"/>
         <Property name="iconTextGap" type="int" value="2"/>
         <Property name="inheritsPopupMenu" type="boolean" value="true"/>
@@ -168,7 +167,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="----&gt;&gt;"/>
+        <Property name="text" type="java.lang.String" value="----&gt;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="applyButton">

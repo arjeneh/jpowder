@@ -91,8 +91,8 @@ public class ToolsIcon extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13));
         jLabel1.setText("Peak Position");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13));
-        jLabel2.setText("Rescale Plots");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel2.setText("Rescale & Move");
         jLabel2.setToolTipText("");
 
         zoomButton.setBackground(javax.swing.UIManager.getDefaults().getColor("ComboBox.disabledBackground"));
@@ -130,7 +130,7 @@ public class ToolsIcon extends javax.swing.JPanel {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 13));
         jLabel5.setText("Transform x-axis");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -140,28 +140,29 @@ public class ToolsIcon extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(8, 8, 8)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(36, 36, 36)
-                            .addComponent(jLabel2, 0, 0, Short.MAX_VALUE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(appearanceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                            .addComponent(zoomButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(peakButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(26, 26, 26)
                             .addComponent(rescaleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(changeXAxisButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5))
+                        .addComponent(jLabel5)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(appearanceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(8, 8, 8)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(zoomButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addComponent(jLabel3)
                         .addGap(56, 56, 56)
                         .addComponent(jLabel4)))
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {appearanceButton, peakButton, rescaleButton, zoomButton});
@@ -175,8 +176,8 @@ public class ToolsIcon extends javax.swing.JPanel {
                     .addComponent(peakButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(appearanceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)

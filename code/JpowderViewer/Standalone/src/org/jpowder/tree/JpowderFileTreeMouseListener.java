@@ -64,7 +64,7 @@ public class JpowderFileTreeMouseListener extends MouseAdapter {
             if (e.getClickCount() == 1) {
                 //mySingleClick(selRow, selPath);
             } else if (e.getClickCount() == 2) {
-                System.out.println("I see double click.");
+
             }
 
         }
