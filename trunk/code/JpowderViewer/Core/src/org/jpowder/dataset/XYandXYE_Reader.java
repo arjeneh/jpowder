@@ -46,7 +46,7 @@ public class XYandXYE_Reader {
                     newRow.addElement(Double.parseDouble(stringToken));
                 } //for
                 localData.addElement(newRow);
-                // System.out.println(localData);
+         
             }//while readLine
 
             //System.out.print("Total LineNumber is: " + lineNum);
@@ -71,16 +71,16 @@ public class XYandXYE_Reader {
             return retVal;
 
         } catch (MalformedURLException e) {
-            javax.swing.JOptionPane.showMessageDialog(null, "Not sure.");
+            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file formate.");
             System.out.println("Malformed URL = " + e);
             return null;
         } catch (IOException io) {
-            javax.swing.JOptionPane.showMessageDialog(null, "Can't open file.");
+            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file formate.");
             System.out.println("IOException throws " + io);
             return null;
         } catch (java.lang.NumberFormatException nfe) {
 
-            javax.swing.JOptionPane.showMessageDialog(null, "The file contains a character, we cannot process this file.");
+            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file formate.");
             System.out.println("NumberFormatException throws " + nfe);
             return null;
         }

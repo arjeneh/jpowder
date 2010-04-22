@@ -25,9 +25,7 @@ public class FileNameComparator implements Comparator {
 
             int result = collator.compare(a.getName(), b.getName());
 
-            System.out.println("Result is: " + result
-                    + " File a: " +  a.getName()
-                    + " File b: " +  b.getName());
+
 
             if (result != 0) return result;
 

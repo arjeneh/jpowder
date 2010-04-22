@@ -24,7 +24,6 @@ import org.jfree.data.xy.XYDataset;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 import org.jpowder.JpowderInternalframe;
-import org.jpowder.jfreechart.FilesPlotter;
 
 /**
  * this class is for converting the values of x axis from 2ө to d using the
@@ -55,7 +54,6 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
-
             if (defaultTableModel != null) {
                 defaultTableModel.getDataVector().removeAllElements();//remove all the rows from table
             }
@@ -87,22 +85,21 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
             }
         });
 
-
         dataTable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableCellRenderer() {
 
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-               JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+                JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
                 JLabel fileName = new JLabel(value.toString());
 
 
-                     fileName.setForeground((Color) inFocus.getXYPlot().getRenderer(row).getSeriesPaint(0));
+                fileName.setForeground((Color) inFocus.getXYPlot().getRenderer(row).getSeriesPaint(0));
                 return fileName;
 
 
             }
         });
 
-
+        dataTable.setEditingColumn(1);
         //printing the data in the tables
         printStringArray(getDataSetAndWaveLength());
 
@@ -154,7 +151,6 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                 if (j == 0) {
                     System.out.print(printArray[i][j]);
                 } else {
-                    System.out.println(" wave = " + printArray[i][j]);
                 }
             }
         }
@@ -204,7 +200,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
     }
 
     public String[][] getRowData() {
-        System.out.println("");
+
         return dataSetAndWaveLength;
     }
 
@@ -240,7 +236,6 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.PNG"))); // NOI18N
         backButton.setText("Back");
-        backButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         backButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         backButton.setIconTextGap(2);
         backButton.setInheritsPopupMenu(true);
@@ -251,14 +246,14 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
             }
         });
 
-        unitComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        unitComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14));
         unitComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2ө", "d" }));
 
-        unitComboBox2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        unitComboBox2.setFont(new java.awt.Font("Tahoma", 0, 14));
         unitComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "d", "2ө" }));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("---->>");
+        jLabel3.setText("---->");
 
         applyButton.setText("Apply");
         applyButton.addActionListener(new java.awt.event.ActionListener() {
@@ -299,7 +294,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                                 .addComponent(unitComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(62, 62, 62)
                                 .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
                                 .addComponent(unitComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(6, 6, 6)))
                 .addContainerGap())
@@ -315,7 +310,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(unitComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(unitComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -346,15 +341,23 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         String x = "2\u03D1";//unicode 2thetha
         dataTable.clearSelection();
+        if (unitComboBox1.getSelectedItem().toString().equals("2ө") &&
+                unitComboBox2.getSelectedItem().toString().equals("2ө")) {
+            return;
+        }
+        if (unitComboBox1.getSelectedItem().toString().equals("d") &&
+                unitComboBox2.getSelectedItem().toString().equals("d")) {
+            return;
+        }
         int seriescount = inFocus.getXYPlot().getDatasetCount();
         if (inFocus.getXYPlot().getDomainAxis().getLabel().equals("d [Å]") &&
                 unitComboBox1.getSelectedItem().toString().equals("2ө")) {
-            javax.swing.JOptionPane.showMessageDialog(null, "The Unit Is Already In  d [Å]! ");
+            javax.swing.JOptionPane.showMessageDialog(null, "The unit is already in  d [Å]! ");
             return;
         }
         if (inFocus.getXYPlot().getDomainAxis().getLabel().equals(x.toUpperCase()) &&
                 unitComboBox1.getSelectedItem().toString().equals("d")) {
-            javax.swing.JOptionPane.showMessageDialog(null, "The Unit Is Already In 2ө! ");
+            javax.swing.JOptionPane.showMessageDialog(null, "The unit is already in 2ө! ");
             return;
         }
         // testing if all wavelenghts have been set
@@ -362,11 +365,11 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
             try {
                 double waveLength = Double.parseDouble(dataTable.getValueAt(i, 1).toString());
                 if (dataTable.getValueAt(i, 1).equals("Value")) {
-                    javax.swing.JOptionPane.showMessageDialog(null, "Please Enter Value For Wave Length.");
+                    javax.swing.JOptionPane.showMessageDialog(null, "Please enter value for Wavelength.");
                     return;
                 }
             } catch (NumberFormatException e) {
-                javax.swing.JOptionPane.showMessageDialog(null, "Please Enter Value For Wave Length.");
+                javax.swing.JOptionPane.showMessageDialog(null, "Please enter value for Wavelength.");
                 return;
             }
         }
@@ -402,9 +405,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                 }
 
             }
-//            } catch (NumberFormatException e) {
-//                JOptionPane.showMessageDialog(null, "Enter Valid Number.");
-//            }
+
         }
 
         inFocus.getChartPanel().restoreAutoBounds();

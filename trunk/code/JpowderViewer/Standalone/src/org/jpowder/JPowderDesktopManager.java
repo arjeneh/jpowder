@@ -25,7 +25,7 @@ public class JPowderDesktopManager extends DefaultDesktopManager {
     @Override
     public void closeFrame(JInternalFrame f) {
         f = jpowderInternalframe;
-        System.out.println("JPowderDesktopManager");
+
     }
 
     public boolean closing() {

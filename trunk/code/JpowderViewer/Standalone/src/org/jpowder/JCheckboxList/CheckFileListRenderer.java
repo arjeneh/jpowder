@@ -26,9 +26,11 @@ public class CheckFileListRenderer extends CheckFileRenderer implements ListCell
         label.setText(value.toString());
         check.setSelected(((CheckableFileItem) value).isSelected());
         label.setForeground((Color) inFocus.getXYPlot().getRenderer(index).getSeriesPaint(0));
-        System.out.println("Color::"+inFocus.getXYPlot().getRenderer(index).getSeriesPaint(0));
+
         label.setSelected(true);//hilighting the string
         label.setFocus(hasFocus);
+        //Jpowder.jpowderInternalFrameUpdate(inFocus);
+
         return this;
     }
 }

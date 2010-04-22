@@ -13,8 +13,6 @@ package org.jpowder.chartTools;
 import javax.swing.JLabel;
 import org.jpowder.Analysis.ToolsIcon;
 import org.jpowder.InfoPanel;
-import org.jpowder.Jpowder;
-import org.jpowder.JpowderInternalframe;
 
 /**
  *
@@ -24,7 +22,10 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
 
 
     private ToolsIcon toolsIcon;
-
+        /* Using Multi line jLabel.*/
+     private String labelText =
+      "<html><FONT COLOR=RED>Red</FONT> and " +
+      "<FONT COLOR=BLUE>Blue</FONT> Text</html>";
     /**
      *
      * @param chartToolsIcon
@@ -54,8 +55,7 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
         jSeparator1 = new javax.swing.JSeparator();
         backButton = new javax.swing.JButton();
         zoomLabel = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(320, 420));
 
@@ -64,7 +64,6 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
         backButton.setAlignmentY(0.0F);
         backButton.setBorderPainted(false);
         backButton.setFocusable(false);
-        backButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         backButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         backButton.setIconTextGap(2);
         backButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
@@ -77,18 +76,30 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
         zoomLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         zoomLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Zoom_Large.png"))); // NOI18N
 
-        jScrollPane1.setBorder(null);
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        labelText =
+        "<html> Zoom functionalities work throughout Jpowder."+
+        "<P>"+
+        "<P>"+
+        "<P>"+
+        "Zoom In: Hold left click and drag to right and down. " +
+        "<P>"+
+        "<P>"+
+        "<P>"+
+        "<P>"+
 
-        jTextArea1.setBackground(new java.awt.Color(236, 233, 216));
-        jTextArea1.setColumns(20);
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Zoom In: Hold left click and drag to right.\n\nZoom Out: Hold left click and drag to left.\n\nMove Plot: Hold Ctrl and left click and drag to left or right.");
-        jTextArea1.setWrapStyleWord(true);
-        jTextArea1.setOpaque(false);
-        jScrollPane1.setViewportView(jTextArea1);
+        "Reset To Original Size : Hold left click and drag to left."+
+        "<P>"+
+        "<P>"+
+        "<P>"+
+        "<P>"+
+
+        "Move Plot: Hold Ctrl and left click and drag to left or right or up and down."+
+        "<P>"+
+        "<P>"+
+        "<P>"+
+        "<P>";
+        jLabel1.setText(labelText);
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -101,11 +112,11 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
                 .addContainerGap(226, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addComponent(zoomLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(zoomLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,8 +125,8 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
                 .addComponent(zoomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -130,9 +141,8 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel zoomLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -114,7 +114,7 @@ public class VectorMiscUtil {
             vRow = (Vector) (ori.elementAt(i));
             for (int j = 0; j < vRow.size(); j++) {
                 Double s = (Double) vRow.elementAt(j);
-                System.out.println("Values are: " + s);
+     
             }
             output.add(vRow);
         }
@@ -142,7 +142,7 @@ public class VectorMiscUtil {
             break;
         }
 
-        System.out.println("This file has " + col + " columns.");
+
         return col;
 
     }

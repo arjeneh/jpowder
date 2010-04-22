@@ -28,7 +28,8 @@ public class JCheckBoxJList extends JList implements Serializable {
     private PropertyChangeSupport propertySupport;
     private DefaultListModel model;
     private XYPlot m_plot = null;
-    private CheckableFileItem checkableFileItem;
+
+
 
     public JCheckBoxJList(DefaultListModel model) {
         super(model);

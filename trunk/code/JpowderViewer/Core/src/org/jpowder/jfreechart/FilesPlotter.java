@@ -37,7 +37,7 @@ public class FilesPlotter extends DatasetPlotter {
     public FilesPlotter(Vector<DataSet> d) {
         super(d);
         FilesPlotter.datasets = d;
-        System.out.println("MultiFilesPlotter is called ");
+
     }
 
     /**
@@ -48,7 +48,7 @@ public class FilesPlotter extends DatasetPlotter {
         super(d);
         datasets = new Vector<DataSet>();
         FilesPlotter.datasets.addElement(d);
-        System.out.println("MultiFilesPlotter is called ");
+
     }
 
     public static Paint getSeriesColors(int i) {
@@ -130,7 +130,7 @@ public class FilesPlotter extends DatasetPlotter {
         plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
         plot.setDomainGridlinePaint(Color.white);
         plot.setRangeGridlinePaint(Color.white);
-        System.out.println("the series count" + plot.getSeriesCount());
+
         for (int i = 1; i < datasets.size(); i++) {
             JpowderXYLineAndShapeRender renderer3 = new JpowderXYLineAndShapeRender();
             renderer3.setSeriesPaint(0, getSeriesColors(i));
