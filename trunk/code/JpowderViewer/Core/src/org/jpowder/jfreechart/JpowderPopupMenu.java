@@ -43,7 +43,7 @@ import org.jfree.ui.ExtensionFileFilter;
 /**
  * This class created some new popupMenu and also amodifiies the default
  * popupMenu of jfreechart.
- * @author Arjeneh
+ * @author M Arjeneh
  */
 public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
 

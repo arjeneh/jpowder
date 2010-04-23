@@ -17,7 +17,7 @@ import org.jpowder.dataset.DataSet;
 
 /**
  * @author Kreecha Puphaiboon
- *
+ *    Co_Author M Arjeneh.
  */
 public class DataVisibleInChart extends JPanel {
 

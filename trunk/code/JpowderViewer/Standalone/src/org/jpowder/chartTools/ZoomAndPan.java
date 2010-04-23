@@ -16,7 +16,7 @@ import org.jpowder.InfoPanel;
 
 /**
  *
- * @author Arjeneh
+ * @author M Arjeneh
  */
 public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
 

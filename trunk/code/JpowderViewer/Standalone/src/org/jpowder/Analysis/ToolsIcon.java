@@ -19,8 +19,8 @@ import org.jpowder.chartTools.ChangePlotStyle;
 import org.jpowder.chartTools.ZoomAndPan;
 
 /**
- *
- * @author qyt21516
+ * this class contains all the Jpowder icons.
+ * @author M Arjeneh
  */
 public class ToolsIcon extends javax.swing.JPanel {
 

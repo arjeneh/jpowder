@@ -8,7 +8,7 @@ import org.jfree.chart.renderer.xy.XYErrorRenderer;
 
 /**
  *
- * @author qyt21516
+ * @author M Arjeneh
  */
 /**
  * A line and shape renderer that can also display x and/or y-error values.

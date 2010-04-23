@@ -33,7 +33,7 @@ import org.jfree.chart.plot.XYPlot;
 
 /**
  *
- * @author qyt21516
+ * @author M Arjeneh
  */
 public class JpowderInternalframe extends JInternalFrame implements DropTargetListener {
 

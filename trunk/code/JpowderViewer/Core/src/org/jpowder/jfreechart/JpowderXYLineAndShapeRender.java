@@ -8,7 +8,7 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 
 /**
  *
- * @author qyt21516
+ * @author M Arjeneh
  */
 /**
  * A renderer that connects data points with lines and/or draws shapes at each data point.

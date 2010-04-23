@@ -3,18 +3,14 @@
  * and open the template in the editor.
  */
 
-/*
- * About.java
- *
- * Created on 11-Aug-2009, 09:56:09
- */
+
 package org.jpowder;
 
 import javax.swing.JLabel;
 
 /**
- *
- * @author qyt21516
+ * About Class.
+ * @author M Arjeneh
  */
 public class About extends javax.swing.JFrame {
 

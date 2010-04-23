@@ -32,7 +32,7 @@ import org.jpowder.JpowderInternalframe;
  * atomic lattice, and θ is the angle between the incident ray and the scattering
  * planes.
  *
- * @author qyt21516
+ * @author M Arjeneh
  */
 public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
