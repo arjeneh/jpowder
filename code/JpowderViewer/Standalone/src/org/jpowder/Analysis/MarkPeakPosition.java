@@ -36,7 +36,7 @@ import org.jpowder.chartTools.Magnifier;
 
 /**
  *
- * @author
+ * @author M Arjeneh
  */
 public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, ChartMouseListener {
 

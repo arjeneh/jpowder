@@ -11,12 +11,8 @@
 package org.jpowder.Analysis;
 
 import java.awt.Color;
-import java.awt.Component;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.ListCellRenderer;
-import javax.swing.border.LineBorder;
 import org.jfree.data.xy.XYDataset;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
@@ -25,8 +21,8 @@ import org.jpowder.chartTools.ComboBoxRenderer;
 import org.jpowder.jfreechart.FilesPlotter;
 
 /**
- *
- * @author qyt21516
+ * Move and rescale a plot along the y axis .
+ * @author M Arjeneh
  */
 public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 

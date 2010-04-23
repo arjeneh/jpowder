@@ -24,6 +24,8 @@ import org.jpowder.dataset.DataSet;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.util.ScreenUtil;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
@@ -34,9 +36,14 @@ import java.util.Date;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import org.jfree.chart.ChartColor;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
+import org.jfree.util.ShapeUtilities;
+import org.jpowder.chartTools.CreateLegend;
 import org.jpowder.fileCabinet.AcceptFileFilter;
 import org.jpowder.jfreechart.JpowderPopupMenu;
 import org.jpowder.tree.JpowderFileSystemTreeModel;
@@ -63,8 +70,7 @@ import org.jpowder.tree.JpowderFileSystemTreeModel;
  * <p>
  * File change history is stored at: <a target="_blank" href=https://jpowder.org/svn/Jpowder>www.jpowder.org/svn/Jpowder</a>
  *
- * @author Kreecha Puphaiboon (KP)
- * @since 07
+ * @author 
  *
  *  * Changes
  * -------
@@ -812,14 +818,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
     private void jPrintMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrintMenuActionPerformed
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
-            internalFrameInFocus.getchart().setTitle("Setting Titles");
-            LegendTitle legend = new LegendTitle(internalFrameInFocus.getXYPlot());
-            legend.setMargin(new RectangleInsets(1.0, 1.0, 1.0, 1.0));
-            legend.setPosition(RectangleEdge.RIGHT);
-             internalFrameInFocus.getchart().addSubtitle(legend);
-            legend.addChangeListener(internalFrameInFocus.getchart());
+            CreateLegend createLegend = new CreateLegend();
+             createLegend.setLegend();
+
             internalFrameInFocus.getChartPanel().createChartPrintJob();
-            internalFrameInFocus.getchart().setTitle("");
             internalFrameInFocus.getchart().removeLegend();
         } else {
             return;

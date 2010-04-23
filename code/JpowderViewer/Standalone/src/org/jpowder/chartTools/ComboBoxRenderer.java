@@ -14,19 +14,18 @@ import org.jpowder.Jpowder;
 import org.jpowder.JpowderInternalframe;
 
 /**
- *
- * @author qyt21516
+ * Rendrer  for adding plots name to the ComboBoxes.
+ * @author M Arjeneh
  */
 public class ComboBoxRenderer implements ListCellRenderer {
 
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         JLabel label = new JLabel(value.toString());
         label.setOpaque(isSelected);
         if (index >= 0) {
-//                        j.setForeground((Color) FilesPlotter.allSeriescolors[index]);
-//            label.setForeground((Color) FilesPlotter.getPlot().getRenderer(index).getSeriesPaint(0));
-             label.setForeground((Color) inFocus.getXYPlot().getRenderer(index).getSeriesPaint(0));
+
+            label.setForeground((Color) inFocus.getXYPlot().getRenderer(index).getSeriesPaint(0));
         }
         if (isSelected) {
             label.setBorder(LineBorder.createBlackLineBorder());

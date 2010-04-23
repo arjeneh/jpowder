@@ -6,7 +6,8 @@ package org.jpowder.chartTools;
 
 /**
  *
- * @author Piet Blok, with amendments by David Gilbert.
+ * @ author Piet Blok, with amendments by David Gilbert
+ * M Arjeneh
  */
 
 

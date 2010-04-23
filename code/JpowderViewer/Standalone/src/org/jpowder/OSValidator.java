@@ -6,7 +6,7 @@ package org.jpowder;
 
 /**
  *
- * @author qyt21516
+ * @author M Arjeneh
  */
 public class OSValidator {
 

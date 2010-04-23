@@ -6,18 +6,10 @@ package org.jpowder;
 
 /**
  *
- * @author qyt21516
- */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * @author M Arjeneh
  */
 
-/*
- * JpowderIcon.java
- *
- * Created on 09-Dec-2009, 15:49:25
- */
+
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;

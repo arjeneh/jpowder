@@ -14,7 +14,7 @@ import java.util.Vector;
 
 /**
  *
- * @author milad
+ * @author M Arjeneh
  */
 public class Cif_Reader {
 
@@ -37,7 +37,7 @@ public class Cif_Reader {
                         String[] splits = aLine.split(" ");
                         if (splits == null || splits.length == 0) {
 
-                            javax.swing.JOptionPane.showMessageDialog(null, "Can not find the Wavelength");
+                            javax.swing.JOptionPane.showMessageDialog(null, "Cannot find Wavelength");
 
                         } else {
                             try {

@@ -1,24 +1,15 @@
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.net.URL;
 import javax.swing.JApplet;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 
 /**
  *
- * @author qyt21516
+ * @author M Arjeneh
  */
 public class JpowderApplet extends JApplet {
 
