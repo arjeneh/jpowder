@@ -47,8 +47,8 @@ public class ToolsIcon extends javax.swing.JPanel {
   
 
 
-        jpowderIcon = new JpowderIcon(buttons, imgdir, title);
-        jpowderIcon.set_imgdir(imgdir);
+//        jpowderIcon = new JpowderIcon(buttons, imgdir, title);
+//        jpowderIcon.set_imgdir(imgdir);
     }
 
     /** This method is called from within the constructor to
@@ -74,6 +74,7 @@ public class ToolsIcon extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(320, 420));
 
         peakButton.setBackground(javax.swing.UIManager.getDefaults().getColor("CheckBox.highlight"));
+        peakButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Peaks_Small.png"))); // NOI18N
         peakButton.setPreferredSize(new java.awt.Dimension(80, 80));
         peakButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,6 +82,7 @@ public class ToolsIcon extends javax.swing.JPanel {
             }
         });
 
+        rescaleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rescale_Small.png"))); // NOI18N
         rescaleButton.setPreferredSize(new java.awt.Dimension(80, 80));
         rescaleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,12 +93,13 @@ public class ToolsIcon extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13));
         jLabel1.setText("Peak Position");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13));
         jLabel2.setText("Rescale & Move");
         jLabel2.setToolTipText("");
 
         zoomButton.setBackground(javax.swing.UIManager.getDefaults().getColor("ComboBox.disabledBackground"));
         zoomButton.setForeground(new java.awt.Color(255, 255, 255));
+        zoomButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Zoom_Small.png"))); // NOI18N
         zoomButton.setOpaque(false);
         zoomButton.setPreferredSize(new java.awt.Dimension(80, 80));
         zoomButton.addActionListener(new java.awt.event.ActionListener() {
@@ -106,6 +109,7 @@ public class ToolsIcon extends javax.swing.JPanel {
         });
 
         appearanceButton.setBackground(javax.swing.UIManager.getDefaults().getColor("ComboBox.disabledBackground"));
+        appearanceButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Appearance_Small.png"))); // NOI18N
         appearanceButton.setOpaque(false);
         appearanceButton.setPreferredSize(new java.awt.Dimension(80, 80));
         appearanceButton.addActionListener(new java.awt.event.ActionListener() {
@@ -122,6 +126,7 @@ public class ToolsIcon extends javax.swing.JPanel {
 
         changeXAxisButton.setBackground(javax.swing.UIManager.getDefaults().getColor("ComboBox.disabledBackground"));
         changeXAxisButton.setForeground(new java.awt.Color(255, 255, 255));
+        changeXAxisButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ChangeXAxis_Small.png"))); // NOI18N
         changeXAxisButton.setOpaque(false);
         changeXAxisButton.setPreferredSize(new java.awt.Dimension(80, 80));
         changeXAxisButton.addActionListener(new java.awt.event.ActionListener() {

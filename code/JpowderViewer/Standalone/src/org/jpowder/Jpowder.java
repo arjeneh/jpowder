@@ -812,15 +812,15 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
     private void jPrintMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrintMenuActionPerformed
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
-//            internalFrameInFocus.getchart().setTitle("Setting Titles");
-//            LegendTitle legend = new LegendTitle(internalFrameInFocus.getXYPlot());
-//            legend.setMargin(new RectangleInsets(1.0, 1.0, 1.0, 1.0));
-//            legend.setPosition(RectangleEdge.RIGHT);
-//             internalFrameInFocus.getchart().addSubtitle(legend);
-//            legend.addChangeListener(internalFrameInFocus.getchart());
+            internalFrameInFocus.getchart().setTitle("Setting Titles");
+            LegendTitle legend = new LegendTitle(internalFrameInFocus.getXYPlot());
+            legend.setMargin(new RectangleInsets(1.0, 1.0, 1.0, 1.0));
+            legend.setPosition(RectangleEdge.RIGHT);
+             internalFrameInFocus.getchart().addSubtitle(legend);
+            legend.addChangeListener(internalFrameInFocus.getchart());
             internalFrameInFocus.getChartPanel().createChartPrintJob();
-//            internalFrameInFocus.getchart().setTitle("");
-//            internalFrameInFocus.getchart().removeLegend();
+            internalFrameInFocus.getchart().setTitle("");
+            internalFrameInFocus.getchart().removeLegend();
         } else {
             return;
         }
