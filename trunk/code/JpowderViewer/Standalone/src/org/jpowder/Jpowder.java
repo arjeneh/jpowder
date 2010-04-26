@@ -828,7 +828,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
                 internalFrameInFocus.getchart().removeLegend();
             }
             if (n == 1) {
-                return;
+                internalFrameInFocus.getChartPanel().createChartPrintJob();
             }
 
         } else {
