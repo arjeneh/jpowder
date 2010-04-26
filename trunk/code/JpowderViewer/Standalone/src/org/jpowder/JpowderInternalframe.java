@@ -30,6 +30,7 @@ import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
+import org.jpowder.jfreechart.CreateLegend;
 
 /**
  *
@@ -81,6 +82,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         xYPlot = jfreeChartPanels.getChart().getXYPlot();
         chartPanel.add(jfreeChartPanels);
 
+ 
         this.setTitle(getNames());
         this.setVisible(true);
         this.setClosable(true);

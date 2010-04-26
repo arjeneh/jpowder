@@ -61,12 +61,17 @@ public class FilesPlotter extends DatasetPlotter {
     }
 
     public boolean getLegend() {
+        System.out.println("");
+        if(!createLegend){
+            CreateLegend legend=new CreateLegend();
+            legend.setLegend();
+        }
         return createLegend;
     }
 
-    public static void setLegend(boolean displayLegend) {
-        createLegend = displayLegend;
-    }
+//    public static void setLegend(boolean displayLegend) {
+//        createLegend = displayLegend;
+//    }
 
     /**
      * creating the chart panel
@@ -95,6 +100,9 @@ public class FilesPlotter extends DatasetPlotter {
 
     public static XYPlot getPlot() {
         return plot;
+    }
+    public static Vector<DataSet> getDataSets(){
+        return datasets;
     }
 
     /**
@@ -151,7 +159,7 @@ public class FilesPlotter extends DatasetPlotter {
             }
         }
         plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
-        chart = new JFreeChart(null, null, plot, getLegend());// for getting the chart header
+        chart = new JFreeChart(null, null, plot, false);// for getting the chart header
         chart.setBackgroundPaint(Color.white);
         return chart;
     }
