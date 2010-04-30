@@ -203,7 +203,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
            for(int i =0; i<4;i++){
            String[] zero = {"0","0.0",".0","0."};
            if(constantField.getText().equals(zero[i])){
-           JOptionPane.showMessageDialog(null, "Enter valid number");
+           JOptionPane.showMessageDialog(null, "Enter valid number.");
            return;
            }
            }
@@ -236,6 +236,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
                         }
                     } catch (NumberFormatException e) {
                         JOptionPane.showMessageDialog(null, "Enter valid number.");
+                        return;
                     }
                 }
             }
@@ -243,7 +244,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
         }
 
         inFocus.getChartPanel().restoreAutoRangeBounds();
-        inFocus.getchart().setNotify(true);
+//        inFocus.getchart().setNotify(true);
 
     }//GEN-LAST:event_applyButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -15,6 +15,9 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.renderer.xy.XYErrorRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.util.ShapeUtilities;
@@ -56,7 +59,8 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     public JLabel getChangePlotStyleLabel() {
         return changePlotStyleLabel;
     }
-    public static JComboBox getSeriesColourComboBox(){
+
+    public static JComboBox getSeriesColourComboBox() {
         return seriesColourComboBox;
     }
 
@@ -81,8 +85,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        markersTypePanel = new javax.swing.JPanel();
+        markerPanel = new javax.swing.JPanel();
         markerComboBox = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
         markerSizeField = new javax.swing.JTextField();
@@ -103,6 +106,13 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         "button."+
         "<P>";
         jLabel8 = new javax.swing.JLabel();
+        tickSpacingPanel = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        xTickField = new javax.swing.JTextField();
+        yTickField = new javax.swing.JTextField();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        tickSpacingApplyButton = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
 
@@ -171,7 +181,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
 
         jLabel1.setText("Change appearance of plots in a chart.");
 
-        markersTypePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Marker Type"));
+        markerPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Marker Options"));
 
         markerComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,69 +230,55 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
             }
         });
 
-        javax.swing.GroupLayout markersTypePanelLayout = new javax.swing.GroupLayout(markersTypePanel);
-        markersTypePanel.setLayout(markersTypePanelLayout);
-        markersTypePanelLayout.setHorizontalGroup(
-            markersTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(markersTypePanelLayout.createSequentialGroup()
-                .addGroup(markersTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+        javax.swing.GroupLayout markerPanelLayout = new javax.swing.GroupLayout(markerPanel);
+        markerPanel.setLayout(markerPanelLayout);
+        markerPanelLayout.setHorizontalGroup(
+            markerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(markerPanelLayout.createSequentialGroup()
+                .addGroup(markerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(markersTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(markerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buitInRadioButton)
                     .addComponent(noneRadioButton)
                     .addComponent(automaticRadioButton)
-                    .addGroup(markersTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(markerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(applyButton)
-                        .addGroup(markersTypePanelLayout.createSequentialGroup()
+                        .addGroup(markerPanelLayout.createSequentialGroup()
                             .addComponent(shapesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jLabel5)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(markerSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(markerComboBox, 0, 163, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGap(28, 28, 28))
         );
-        markersTypePanelLayout.setVerticalGroup(
-            markersTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(markersTypePanelLayout.createSequentialGroup()
+        markerPanelLayout.setVerticalGroup(
+            markerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(markerPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(automaticRadioButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(noneRadioButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buitInRadioButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(markersTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(markerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(markerComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(markersTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(markerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(shapesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(markerSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(applyButton)
-                .addGap(53, 53, 53))
+                .addGap(33, 33, 33))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(markersTypePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(markersTypePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("Marker Type", jPanel1);
+        jTabbedPane1.addTab("Marker Type", markerPanel);
 
         seriesColourPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Series Colour"));
 
@@ -308,31 +304,88 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         seriesColourPanelLayout.setHorizontalGroup(
             seriesColourPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, seriesColourPanelLayout.createSequentialGroup()
-                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(seriesColourPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(seriesColourComboBox, 0, 166, Short.MAX_VALUE)
-                    .addComponent(colourPickerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
+                    .addComponent(seriesColourComboBox, 0, 171, Short.MAX_VALUE)
+                    .addComponent(colourPickerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
             .addGroup(seriesColourPanelLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
                 .addContainerGap())
         );
         seriesColourPanelLayout.setVerticalGroup(
             seriesColourPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, seriesColourPanelLayout.createSequentialGroup()
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(seriesColourPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(seriesColourComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(colourPickerButton)
-                .addGap(38, 38, 38))
+                .addGap(76, 76, 76))
         );
 
         jTabbedPane1.addTab("Plot Colour", seriesColourPanel);
+
+        tickSpacingPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Axis Options"));
+
+        jLabel9.setText("X Axis:");
+
+        jLabel10.setText("Y Axis:");
+
+        jCheckBox1.setText("tst");
+
+        tickSpacingApplyButton.setText("Apply");
+        tickSpacingApplyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tickSpacingApplyButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout tickSpacingPanelLayout = new javax.swing.GroupLayout(tickSpacingPanel);
+        tickSpacingPanel.setLayout(tickSpacingPanelLayout);
+        tickSpacingPanelLayout.setHorizontalGroup(
+            tickSpacingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tickSpacingPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(tickSpacingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(tickSpacingPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(xTickField))
+                    .addGroup(tickSpacingPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(tickSpacingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(yTickField, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tickSpacingApplyButton))))
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox1)
+                .addContainerGap(52, Short.MAX_VALUE))
+        );
+        tickSpacingPanelLayout.setVerticalGroup(
+            tickSpacingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tickSpacingPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(tickSpacingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(xTickField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(tickSpacingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(yTickField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(tickSpacingApplyButton)
+                .addContainerGap(93, Short.MAX_VALUE))
+        );
+
+        tickSpacingPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {xTickField, yTickField});
+
+        jTabbedPane1.addTab("Tick Spacing", tickSpacingPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -391,7 +444,9 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
             markerComboBox.setModel(new javax.swing.DefaultComboBoxModel(addDataSet()));
             seriesColourComboBox.setModel(new javax.swing.DefaultComboBoxModel(addDataSet()));
-             colourPickerButton.setEnabled(true);
+            colourPickerButton.setEnabled(true);
+            fillTheXTickField();
+            fillTheYTickField();
         }
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
             String labels[] = {"No Chart Added"};
@@ -399,6 +454,8 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
             seriesColourComboBox.setModel(new javax.swing.DefaultComboBoxModel(labels));
             colourPickerButton.setEnabled(false);
             colourPickerButton.setSelected(false);
+            xTickField.setText("");
+            yTickField.setText("");
 
             return;
         }
@@ -487,6 +544,18 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
             javax.swing.JOptionPane.showMessageDialog(null, "There Is No Chart.");
             return;
         }
+    }
+
+    public void fillTheXTickField() {
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        NumberAxis xAxis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
+        xTickField.setText(Double.toString(xAxis.getTickUnit().getSize()));
+    }
+
+    public void fillTheYTickField() {
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        NumberAxis yAxis = (NumberAxis) inFocus.getXYPlot().getRangeAxis();
+        yTickField.setText(Double.toString(yAxis.getTickUnit().getSize()));
     }
 
     /**
@@ -693,10 +762,36 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
 
     private void colourPickerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colourPickerButtonActionPerformed
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-        SeriesColourPicker colourPicker=new SeriesColourPicker();
+        SeriesColourPicker colourPicker = new SeriesColourPicker();
         colourPickerButton.setSelected(false);
         Jpowder.jpowderInternalFrameUpdate(inFocus);
     }//GEN-LAST:event_colourPickerButtonActionPerformed
+
+    private void tickSpacingApplyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tickSpacingApplyButtonActionPerformed
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            tickSpacingApplyButton.setSelected(false);
+            return;
+        }
+
+
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        try {
+            double newX = Double.parseDouble(xTickField.getText());
+            double newY = Double.parseDouble(yTickField.getText());
+            NumberAxis xAxis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
+            NumberAxis yAxis = (NumberAxis) inFocus.getXYPlot().getRangeAxis();
+            xAxis.setTickUnit(new NumberTickUnit(newX));
+            yAxis.setTickUnit(new NumberTickUnit(newY));
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Enter valid number.");
+            fillTheXTickField();
+            fillTheYTickField();
+            tickSpacingApplyButton.setSelected(false);
+            return;
+        }
+
+    }//GEN-LAST:event_tickSpacingApplyButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton applyButton;
     private javax.swing.JRadioButton automaticRadioButton;
@@ -708,7 +803,9 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     private javax.swing.JCheckBox conectingLines;
     private javax.swing.JComboBox dataSetComboBox1;
     private javax.swing.JCheckBox errorBars;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -716,16 +813,20 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JComboBox markerComboBox;
+    private javax.swing.JPanel markerPanel;
     private javax.swing.JTextField markerSizeField;
-    private javax.swing.JPanel markersTypePanel;
     private javax.swing.JRadioButton noneRadioButton;
     private static javax.swing.JComboBox seriesColourComboBox;
     private javax.swing.JPanel seriesColourPanel;
     private javax.swing.JPanel seriesPaintPanel;
     private javax.swing.JComboBox shapesComboBox;
+    private javax.swing.JButton tickSpacingApplyButton;
+    private javax.swing.JPanel tickSpacingPanel;
+    private javax.swing.JTextField xTickField;
+    private javax.swing.JTextField yTickField;
     // End of variables declaration//GEN-END:variables
 }
