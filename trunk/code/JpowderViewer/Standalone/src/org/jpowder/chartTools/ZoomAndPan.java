@@ -81,7 +81,7 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
         "<P>"+
         "<P>"+
         "<P>"+
-        "Zoom In: Hold left click and drag to right and down. " +
+        "Zoom In: Hold left click and drag to right and down."+
         "<P>"+
         "<P>"+
         "<P>"+

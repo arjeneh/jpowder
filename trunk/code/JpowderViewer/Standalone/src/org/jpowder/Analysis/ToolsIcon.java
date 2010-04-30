@@ -90,8 +90,8 @@ public class ToolsIcon extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13));
-        jLabel1.setText("Peak Position");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel1.setText("Peaks");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13));
         jLabel2.setText("Rescale & Move");
@@ -157,7 +157,7 @@ public class ToolsIcon extends javax.swing.JPanel {
                                 .addComponent(appearanceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGap(8, 8, 8)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel2)

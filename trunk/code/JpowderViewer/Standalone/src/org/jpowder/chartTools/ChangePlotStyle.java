@@ -391,12 +391,15 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
             markerComboBox.setModel(new javax.swing.DefaultComboBoxModel(addDataSet()));
             seriesColourComboBox.setModel(new javax.swing.DefaultComboBoxModel(addDataSet()));
+             colourPickerButton.setEnabled(true);
         }
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
             String labels[] = {"No Chart Added"};
             markerComboBox.setModel(new javax.swing.DefaultComboBoxModel(labels));
             seriesColourComboBox.setModel(new javax.swing.DefaultComboBoxModel(labels));
+            colourPickerButton.setEnabled(false);
             colourPickerButton.setSelected(false);
+
             return;
         }
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer();
