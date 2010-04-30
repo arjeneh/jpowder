@@ -1,7 +1,6 @@
 package org.jpowder;
 
 import java.beans.PropertyVetoException;
-import java.util.Arrays;
 import org.jpowder.tree.Tree;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -34,8 +33,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.*;
 import org.jfree.chart.ChartColor;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
+import org.jpowder.Analysis.CreateLegend;
 import org.jpowder.fileCabinet.AcceptFileFilter;
-import org.jpowder.jfreechart.CreateLegend;
 import org.jpowder.jfreechart.JpowderPopupMenu;
 import org.jpowder.tree.JpowderFileSystemTreeModel;
 
@@ -84,7 +85,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     public static JPowderStack jPowderStackUndo = new JPowderStack(3);
     public static JPowderStack jPowderStackRedo = new JPowderStack(3);
     private static double dropLocationX, dropLocationY;
-    private static int instanceOfJpowder;
+    private String buildDate;
 
     //  private stackInternalFrames;
     /**
@@ -94,7 +95,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
      */
     public Jpowder() {
         initComponents();
-        instanceOfJpowder++;
+
 
         mPowderFileCabinet = new PowderFileCabinet();
 
@@ -109,9 +110,18 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
         ScreenUtil.adjustBounds(this);
 
+        try {
+            File jarFile = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
+            DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
+            buildDate = new String(dateFormat.format(new Date(jarFile.lastModified())));
+            System.out.println(buildDate);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+        }
+
 
     }
-
 
     /**
      *
@@ -171,13 +181,14 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
         if (internalFrame != internalFrameInFocus) {
             internalFrameInFocus = internalFrame;
+//            chartInFocus = internalFrame.getchart();
         }
         if (infoPanelInfocus != null) {
             infoPanelInfocus.update();
 
         }
 
-        internalFrame.getDataVisibleInChartPanel().newChartInFocus(internalFrame.getXYPlot(),internalFrame.getPowderDataSet());
+        internalFrame.getDataVisibleInChartPanel().newChartInFocus(internalFrame.getXYPlot(), internalFrame.getPowderDataSet());
     }
 
     /**
@@ -191,10 +202,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
             chartPlotterPane.remove(messageLabel);
             chartPlotterPane.repaint();
         }
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
-            chartPlotterPane.add(messageLabel);
-            chartPlotterPane.repaint();
-        }
+//        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+//            chartPlotterPane.add(messageLabel);
+//            chartPlotterPane.repaint();
+//        }
 
     }
 
@@ -203,12 +214,12 @@ public class Jpowder extends JFrame implements DropTargetListener {
      * the About Class.
      */
     public void displayBuiltDate() {
-
 //       About.getdateLabel().setText(dateFormat.format(date));
         try {
             File jarFile = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
             DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
             About.getdateLabel().setText(dateFormat.format(new Date(jarFile.lastModified())));
+            System.out.println(dateFormat.format(new Date(jarFile.lastModified())));
         } catch (URISyntaxException e) {
             System.out.println(e);
         }
@@ -441,7 +452,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         undoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         undoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/undo_26x26.png"))); // NOI18N
         undoMenu.setText("Undo Closed Window");
-        undoMenu.setToolTipText("Undo closed frame");
+        undoMenu.setToolTipText("Undo closed window.");
         undoMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 undoMenuActionPerformed(evt);
@@ -452,7 +463,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         redoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
         redoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/redo_26x26.png"))); // NOI18N
         redoMenu.setText("Redo Closed Window");
-        redoMenu.setToolTipText("Redo closed frame");
+        redoMenu.setToolTipText("Redo closed window.");
         redoMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 redoMenuActionPerformed(evt);
@@ -464,7 +475,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         copyMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         copyMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/copy_16x16.png"))); // NOI18N
         copyMenu.setText("Copy To Clipboard");
-        copyMenu.setToolTipText("Copy the selected frame");
+        copyMenu.setToolTipText("Copy selected chart to clipboard.");
         copyMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 copyMenuActionPerformed(evt);
@@ -475,7 +486,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
         propertiesMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         propertiesMenu.setText("Properties");
-        propertiesMenu.setToolTipText("set propeties of the selected frame");
+        propertiesMenu.setToolTipText("set propeties of selected chart.\n");
         propertiesMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 propertiesMenuActionPerformed(evt);
@@ -577,7 +588,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(chartPlotterPane, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE)
+                .addComponent(chartPlotterPane, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -603,8 +614,8 @@ public class Jpowder extends JFrame implements DropTargetListener {
             Process p = Runtime.getRuntime().exec("RunDLL32.EXE shell32.dll,ShellExec_RunDLL " +
                     "http://www.jpowder.org/");
         } catch (IOException ex) {
-           JOptionPane.showMessageDialog(this, "No internet connection!",
-                   "error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No internet connection!",
+                    "error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_onlieDocsandSupportMenuActionPerformed
     /**
@@ -613,27 +624,19 @@ public class Jpowder extends JFrame implements DropTargetListener {
      */
     private void aboutMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuActionPerformed
         new About().setVisible(true);
-        displayBuiltDate();
+//        displayBuiltDate();
+        About.getdateLabel().setText(buildDate);
+
     }//GEN-LAST:event_aboutMenuActionPerformed
     /**
-     * exit the JPowder.
-     * @param evt
-     */    /**
-     * Create an instace of the JPowder.
-     * @param evt
-     */    /**
      *
-     * @param evt
-     */    /**
-     *
-     * @param evt
-     */    /**
-     *  Call method from Library to bring on the print panel up.
      * @param evt
      */
     private void copyMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuActionPerformed
 
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
+//        NumberAxis xAxis = (NumberAxis) internalFrameInFocus.getXYPlot().getDomainAxis();
+//        xAxis.setTickUnit(new NumberTickUnit(20));
             internalFrameInFocus.getChartPanel().doCopy();
 
         } else {
@@ -790,7 +793,6 @@ public class Jpowder extends JFrame implements DropTargetListener {
             PageFormat pf = job.defaultPage();
             PageFormat pf2 = job.pageDialog(pf);
             if (pf2 != pf) {
-
                 job.setPrintable(internalFrameInFocus.getChartPanel(), pf2);
                 if (job.printDialog()) {
                     try {
@@ -813,7 +815,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
             Object[] options = {"Yes",
                 "No"};
             int n = JOptionPane.showOptionDialog(this,
-                    "Would you like to set legend?",
+                    "Would you like to append legend(s) to printout?",
                     "Set legend",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE,
@@ -837,29 +839,31 @@ public class Jpowder extends JFrame implements DropTargetListener {
 }//GEN-LAST:event_jPrintMenuActionPerformed
 
     private void pDfMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pDfMenuActionPerformed
-        if(JpowderInternalframe.getnumberOfJpowderInternalframe()!=0){
-            JpowderPopupMenu.pDF();
-        }else{
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
+            JpowderPopupMenu jpowderPopupMenu = new JpowderPopupMenu(internalFrameInFocus.getChartPanel());
+            jpowderPopupMenu.pDF();
+        } else {
             return;
         }
     }//GEN-LAST:event_pDfMenuActionPerformed
 
     private void imageMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imageMenuActionPerformed
-        if(JpowderInternalframe.getnumberOfJpowderInternalframe()!=0){
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
             try {
                 internalFrameInFocus.getChartPanel().doSaveAs();
             } catch (IOException ex) {
                 Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else{
+        } else {
             return;
         }
 }//GEN-LAST:event_imageMenuActionPerformed
 
     private void appletMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appletMenuActionPerformed
-        if(JpowderInternalframe.getnumberOfJpowderInternalframe()!=0){
-            JpowderPopupMenu.saveAsJpowderApplet();
-        }else{
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
+            JpowderPopupMenu jpowderPopupMenu = new JpowderPopupMenu(internalFrameInFocus.getChartPanel());
+            jpowderPopupMenu.saveAsJpowderApplet();
+        } else {
             return;
         }
 }//GEN-LAST:event_appletMenuActionPerformed
@@ -1045,11 +1049,6 @@ public class Jpowder extends JFrame implements DropTargetListener {
         Jpowder jpowder = new Jpowder();
         jpowder.setLocationRelativeTo(null);
         jpowder.setVisible(true);
-        if (instanceOfJpowder == 1) {
-            jpowder.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        } else {
-            jpowder.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        }
 
 
     }

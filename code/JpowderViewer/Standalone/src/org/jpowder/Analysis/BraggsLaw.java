@@ -62,7 +62,21 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         }
 
 
-        defaultTableModel = new DefaultTableModel(getDataSetAndWaveLength(), columnsName);
+        defaultTableModel = new DefaultTableModel(getDataSetAndWaveLength(), columnsName){
+            @Override
+       public boolean isCellEditable(int row,int column) {
+           if(column==0){
+               return false;
+           }
+           else{
+               return true;
+           }
+       }
+        
+        };
+
+
+
         dataTable.setModel(defaultTableModel);
         setSizeOfColumn();
 
@@ -87,11 +101,13 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
         dataTable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableCellRenderer() {
 
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+
                 JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
                 JLabel fileName = new JLabel(value.toString());
-
-
+                
+                 
                 fileName.setForeground((Color) inFocus.getXYPlot().getRenderer(row).getSeriesPaint(0));
                 return fileName;
 
@@ -99,7 +115,8 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
             }
         });
 
-        dataTable.setEditingColumn(1);
+
+//        dataTable.setEditingColumn(1);
         //printing the data in the tables
         printStringArray(getDataSetAndWaveLength());
 
@@ -352,12 +369,12 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         int seriescount = inFocus.getXYPlot().getDatasetCount();
         if (inFocus.getXYPlot().getDomainAxis().getLabel().equals("d [Å]") &&
                 unitComboBox1.getSelectedItem().toString().equals("2ө")) {
-            javax.swing.JOptionPane.showMessageDialog(null, "The unit is already in  d [Å]! ");
+            javax.swing.JOptionPane.showMessageDialog(null, "The unit is already in  d [Å].");
             return;
         }
         if (inFocus.getXYPlot().getDomainAxis().getLabel().equals(x.toUpperCase()) &&
                 unitComboBox1.getSelectedItem().toString().equals("d")) {
-            javax.swing.JOptionPane.showMessageDialog(null, "The unit is already in 2ө! ");
+            javax.swing.JOptionPane.showMessageDialog(null, "The unit is already in 2ө.");
             return;
         }
         // testing if all wavelenghts have been set

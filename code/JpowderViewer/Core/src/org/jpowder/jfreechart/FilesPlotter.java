@@ -24,8 +24,7 @@ public class FilesPlotter extends DatasetPlotter {
 
     private static Vector<DataSet> datasets;
     public static XYPlot plot;
-    private static boolean createLegend = false;
-    private static JFreeChart chart;
+    private JFreeChart chart;
     public static Paint[] allSeriescolors = {Color.BLUE, Color.RED, ChartColor.VERY_DARK_GREEN,
         Color.ORANGE, Color.CYAN, Color.MAGENTA, ChartColor.DARK_YELLOW, Color.BLACK,
         Color.PINK, Color.LIGHT_GRAY, Color.GRAY, ChartColor.DARK_BLUE, ChartColor.DARK_RED, ChartColor.DARK_GREEN, Color.yellow, ChartColor.DARK_CYAN, ChartColor.DARK_GRAY, ChartColor.VERY_DARK_BLUE, ChartColor.VERY_DARK_RED, Color.GREEN, ChartColor.VERY_DARK_YELLOW, ChartColor.VERY_DARK_CYAN, ChartColor.VERY_DARK_MAGENTA, ChartColor.VERY_LIGHT_BLUE, ChartColor.VERY_LIGHT_RED, ChartColor.VERY_LIGHT_GREEN, ChartColor.VERY_LIGHT_YELLOW, ChartColor.VERY_LIGHT_CYAN, ChartColor.VERY_LIGHT_MAGENTA};
@@ -60,18 +59,6 @@ public class FilesPlotter extends DatasetPlotter {
         return "Multiple Files Plotter";
     }
 
-    public boolean getLegend() {
-        System.out.println("");
-        if(!createLegend){
-            CreateLegend legend=new CreateLegend();
-            legend.setLegend();
-        }
-        return createLegend;
-    }
-
-//    public static void setLegend(boolean displayLegend) {
-//        createLegend = displayLegend;
-//    }
 
     /**
      * creating the chart panel
@@ -83,8 +70,10 @@ public class FilesPlotter extends DatasetPlotter {
         chart = createChart();
         plot.setDomainPannable(true);
         plot.setRangePannable(true);
+
         // create panel from chart and set some panel attributes
         ChartPanel chartPanel = new ChartPanel(chart, true);
+
 //    chartPanel.setMaximumSize(new java.awt.Dimension(300, 300));
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
@@ -94,7 +83,7 @@ public class FilesPlotter extends DatasetPlotter {
         return chartPanel;
     }
 
-    public static JFreeChart getchart() {
+    public JFreeChart getchart() {
         return chart;
     }
 

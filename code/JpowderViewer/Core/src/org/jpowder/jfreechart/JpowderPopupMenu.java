@@ -33,7 +33,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import org.jfree.chart.ChartColor;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -47,7 +46,7 @@ import org.jfree.ui.ExtensionFileFilter;
  */
 public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
 
-    private static JFreeChart chart;
+    private JFreeChart chart;
     private JPopupMenu popupMenu;
     private ChartPanel chartPanel;
     private XYPlot plot;
@@ -57,16 +56,22 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
     public static final String PRINT_FOR_PUBLICATION_CAMAND = "PRINT_FOR_PUBLICATION";
     private JMenu saveAs, printAs, zoomIn, zoomOut, autoRange;
     private JMenuItem menuItem;
+    /** A flag that controls whether or not file extensions are enforced. */
+    private boolean enforceFileExtensions = true;
 
     public JpowderPopupMenu(final ChartPanel chartPanel) {
 
         popupMenu = new JPopupMenu();
         this.chartPanel = chartPanel;
-        JpowderPopupMenu.chart = this.chartPanel.getChart();
+        chart = this.chartPanel.getChart();
         chartPanel.setPopupMenu(popupMenu);
         initComponents();
-        this.plot = (XYPlot) JpowderPopupMenu.chart.getPlot();
+        this.plot = (XYPlot) chart.getPlot();
 
+    }
+
+    public boolean isEnforceFileExtensions() {
+        return this.enforceFileExtensions;
     }
 
     /**
@@ -112,7 +117,8 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         } else if (command.equals(JPOWDER_APPLET_CAMAND)) {
             saveAsJpowderApplet();
         } else if (command.equals(PDF_CAMAND)) {
-            pDF();
+
+            pDF();   //e.getSource()   
         }
 
     }
@@ -129,7 +135,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         popupMenu.addSeparator();
 
 
-        popupMenu.add(menuItem = new JMenuItem("Copy To ClipBoard"));
+        popupMenu.add(menuItem = new JMenuItem("Copy To Clipboard"));
         menuItem.setActionCommand(ChartPanel.COPY_COMMAND);
         menuItem.addActionListener(this);
 
@@ -228,17 +234,45 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
      * saving the file as serialazble so that can be saved and retrived into
      * to Applet for web.
      */
-    public static void saveAsJpowderApplet() {
+    public void saveAsJpowderApplet() {
         JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+        ExtensionFileFilter filter = new ExtensionFileFilter(
                 "Jpowder Applet (*.ser)", ".ser");
-        chooser.setFileFilter(filter);
-        int returnVal = chooser.showSaveDialog(chooser);
+        chooser.addChoosableFileFilter(filter);
+        int returnVal = chooser.showSaveDialog(this);
         File fileName = chooser.getSelectedFile();
 
+        if (fileName == null) {
+            return;
+        }
+        if (fileName.exists()) {
+
+            Object[] options = {"Yes",
+                "No"};
+            int n = JOptionPane.showOptionDialog(null,
+                    "Do you want to overwrite existing file?",
+                    "Confirm Save As",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null, //do not use a custom Icon
+                    options, //the titles of buttons
+                    options[1]); //default button title
+            if (n == 1) {
+                return;
+            }
+        }
         if (returnVal == JFileChooser.APPROVE_OPTION) {
+
+
             try {
-                FileOutputStream buffer = new FileOutputStream(fileName + ".ser");
+
+                String filename = chooser.getSelectedFile().getPath();
+                if (isEnforceFileExtensions()) {
+                    if (!filename.endsWith(".ser")) {
+                        filename = filename + ".ser";
+                    }
+                }
+                FileOutputStream buffer = new FileOutputStream(filename);
                 final ObjectOutput out = new ObjectOutputStream(buffer);
                 out.writeObject(chart);
             } catch (IOException e) {
@@ -252,26 +286,51 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
     /**
      * pdf file final saving.
      */
-    public static void pDF() {
+    public void pDF() {
+
         JFileChooser chooser = new JFileChooser();
         ExtensionFileFilter filter = new ExtensionFileFilter(
                 "PDF (*.pdf) ", ".pdf");
         chooser.addChoosableFileFilter(filter);
 
+
+
         int returnVal = chooser.showSaveDialog(chooser);
+
         File fileName = chooser.getSelectedFile();
+        if (fileName == null) {
+            return;
+        }
+        if (fileName.exists()) {
+            Object[] options = {"Yes",
+                "No"};
+            int n = JOptionPane.showOptionDialog(null,
+                    "Do you want to overwrite existing file?",
+                    "Confirm Save As",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null, //do not use a custom Icon
+                    options, //the titles of buttons
+                    options[1]); //default button title
+
+            if (n == 1) {
+                return;
+            }
+        }
+
 //        try {
 //            ChartUtilities.saveChartAsJPEG(fileName, chart, 500, 500);
 //        } catch (IOException ex) {
 //            Logger.getLogger(JpowderPopupMenu.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 
-
         if (returnVal == JFileChooser.APPROVE_OPTION) {
 
             try {
 
+
                 chart.getXYPlot().getDomainAxis().setLabel("X");
+
                 saveChartAsPDF(fileName, chart, 800, 600, new DefaultFontMapper());
 
 
@@ -298,12 +357,18 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
      * @param mapper
      * @throws IOException
      */
-    public static void saveChartAsPDF(File file,
+    public void saveChartAsPDF(File file,
             JFreeChart chart,
             int width,
             int height,
             FontMapper mapper) throws IOException {
-        OutputStream out = new BufferedOutputStream(new FileOutputStream(file + ".pdf"));
+        String filename = file.getPath();
+        if (isEnforceFileExtensions()) {
+            if (!filename.endsWith(".pdf")) {
+                filename = filename + ".pdf";
+            }
+        }
+        OutputStream out = new BufferedOutputStream(new FileOutputStream(filename));
         writeChartAsPDF(out, chart, 800, 600, mapper);
         out.close();
     }
@@ -318,7 +383,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
      * @param mapper
      * @throws IOException
      */
-    public static void writeChartAsPDF(OutputStream out,
+    public void writeChartAsPDF(OutputStream out,
             JFreeChart chart,
             int width,
             int height,

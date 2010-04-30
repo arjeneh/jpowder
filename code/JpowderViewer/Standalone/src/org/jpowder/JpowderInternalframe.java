@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.*;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -29,8 +30,10 @@ import org.jpowder.fileCabinet.PowderFileCabinet;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.Marker;
+import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.XYPlot;
-import org.jpowder.jfreechart.CreateLegend;
+
 
 /**
  *
@@ -54,6 +57,8 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
     private String name = new String();
     private DataSet oneDataset = null;
     public Stack<JInternalFrame> internalframeStackes = new Stack<JInternalFrame>();
+        private List<Marker> peakRangeMarker = new ArrayList<Marker>();
+    private List<Marker> peakDomainMarker = new ArrayList<Marker>();
 
     /**
      *
@@ -78,7 +83,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         chartPanel.setLayout(new BorderLayout());
         ChartPanel jfreeChartPanels = plotMultiCol.createPowderChart();
         this.jfreeChartPanel = jfreeChartPanels;
-        chart = FilesPlotter.getchart();
+        //chart = FilesPlotter.getchart();
         xYPlot = jfreeChartPanels.getChart().getXYPlot();
         chartPanel.add(jfreeChartPanels);
 
@@ -249,9 +254,6 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         return markedPeakPosition;
     }
 
-    public Vector<Double> removeMarkedPeakPosition() {
-        return markedPeakPosition;
-    }
 
     public void removeMarkedPeakPosition(double peaks) {
         markedPeakPosition.remove(peaks);
@@ -259,6 +261,22 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
 
     public void removeAllMarkedPeakPosition() {
         markedPeakPosition.clear();
+    }
+       /**
+     *
+     * @return
+     */
+    public List<Marker> getPeakRangeMarker() {
+
+        return peakRangeMarker;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public List<Marker> getPeakDomainMarker() {
+        return peakDomainMarker;
     }
 
     /**
@@ -352,7 +370,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
                 numGoodFilenames = numGoodFilenames + 1;
                 toPass.add(oneDataset);
             } else {
-                javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
+//                javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
                 break;
             }
         }

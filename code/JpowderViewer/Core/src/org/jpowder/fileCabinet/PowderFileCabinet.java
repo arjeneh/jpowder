@@ -176,7 +176,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
           
             return null;
         } catch (Exception ex) {
-                 javax.swing.JOptionPane.showMessageDialog(null, "Can't read rhe file.");
+                 javax.swing.JOptionPane.showMessageDialog(null, "Can't process selected file or directory.");
         } finally {
             try {
 
