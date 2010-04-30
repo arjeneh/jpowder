@@ -15,13 +15,9 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
@@ -31,7 +27,6 @@ import org.jdesktop.jxlayer.JXLayer;
 import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.annotations.XYTextAnnotation;
-import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.ui.TextAnchor;
 import org.jpowder.InfoPanel;
@@ -446,8 +441,6 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
             inFocus.getPeakDomainMarker().get(i).setStroke(new BasicStroke(1.4f));
         }
         int s = peakList.getSelectedIndex();
-        System.out.println("list index::" + peakList.getSelectedIndex());
-        System.out.println("marker size::" + inFocus.getPeakDomainMarker().size());
 
         inFocus.getPeakDomainMarker().get(s).setPaint(Color.RED);
         inFocus.getPeakDomainMarker().get(s).setStroke(new BasicStroke(1.8f));

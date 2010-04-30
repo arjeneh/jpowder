@@ -369,7 +369,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
             }
         }
         OutputStream out = new BufferedOutputStream(new FileOutputStream(filename));
-        writeChartAsPDF(out, chart, 800, 600, mapper);
+        writeChartAsPDF(out, chart, chartPanel.getWidth(), chartPanel.getHeight(), mapper);
         out.close();
     }
 

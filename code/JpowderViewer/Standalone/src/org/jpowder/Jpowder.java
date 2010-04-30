@@ -33,8 +33,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.*;
 import org.jfree.chart.ChartColor;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
 import org.jpowder.Analysis.CreateLegend;
 import org.jpowder.fileCabinet.AcceptFileFilter;
 import org.jpowder.jfreechart.JpowderPopupMenu;
@@ -114,7 +112,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
             File jarFile = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
             DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
             buildDate = new String(dateFormat.format(new Date(jarFile.lastModified())));
-            System.out.println(buildDate);
+//            System.out.println(buildDate);
         } catch (URISyntaxException ex) {
             Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex);
@@ -635,8 +633,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private void copyMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuActionPerformed
 
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
-//        NumberAxis xAxis = (NumberAxis) internalFrameInFocus.getXYPlot().getDomainAxis();
-//        xAxis.setTickUnit(new NumberTickUnit(20));
+
             internalFrameInFocus.getChartPanel().doCopy();
 
         } else {

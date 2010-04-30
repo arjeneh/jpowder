@@ -419,11 +419,11 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-                      <Component id="dataVisibleInChartPanel" pref="317" max="32767" attributes="1"/>
+                      <Component id="dataVisibleInChartPanel" pref="300" max="32767" attributes="1"/>
                       <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="tabs" pref="327" max="32767" attributes="1"/>
+                      <Component id="tabs" pref="310" max="32767" attributes="1"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
