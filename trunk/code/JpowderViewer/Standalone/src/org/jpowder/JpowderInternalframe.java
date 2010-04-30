@@ -31,7 +31,6 @@ import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.Marker;
-import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.XYPlot;
 
 
@@ -45,7 +44,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
     private Vector<DataSet> m_data;
     private java.awt.dnd.DropTarget dropTarget;  // to drop to this frame
     private XYPlot xYPlot;  // hold reference to plot created from dataset in constructor
-    public static int numberOfJpowderInternalframe = 0;
+    //public static int numberOfJpowderInternalframe = 0;
     private DatasetPlotter plotMultiCol;
     private ChartPanel jfreeChartPanel;
     private JFreeChart chart;
@@ -69,7 +68,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         super();
 //        System.out.println("Total: "+Runtime.getRuntime().totalMemory()+" Free: "+Runtime.getRuntime().freeMemory()+
 //                " MAx:"+Runtime.getRuntime().maxMemory());
-        numberOfJpowderInternalframe++;
+        //numberOfJpowderInternalframe++;
         dropTarget = new DropTarget(this, this);
         internalframeStackes.push(this);
         javax.swing.JPanel chartPanel = new javax.swing.JPanel();
@@ -194,15 +193,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
      * @return
      */
     public static int getnumberOfJpowderInternalframe() {
-        return numberOfJpowderInternalframe;
-    }
-
-    /**
-     *
-     */
-    public static int decrementnumberOfJpowderInternalframe() {
-        numberOfJpowderInternalframe--;
-        return numberOfJpowderInternalframe;
+        return Jpowder.getChartPlotter().getAllFrames().length;
     }
 
     /**
@@ -408,7 +399,7 @@ class InternalFrameIconifyListener extends InternalFrameAdapter {
     @Override
     public void internalFrameClosed(InternalFrameEvent e) {
         Jpowder.jPowderStackUndo.push(jpowderinternalframe);        
-        JpowderInternalframe.numberOfJpowderInternalframe --;
+        //JpowderInternalframe.numberOfJpowderInternalframe --;
         Jpowder.jpowderInternalFrameUpdate(jpowderinternalframe);
         Jpowder.getChartPlotter().remove(jpowderinternalframe);
          if (JpowderInternalframe.getnumberOfJpowderInternalframe()==0) {
