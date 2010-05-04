@@ -27,15 +27,17 @@ import java.awt.*;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.*;
 import org.jfree.chart.ChartColor;
-import org.jpowder.Analysis.CreateLegend;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
+import org.jpowder.chartTools.CreateLegend;
 import org.jpowder.fileCabinet.AcceptFileFilter;
-import org.jpowder.jfreechart.JpowderPopupMenu;
 import org.jpowder.tree.JpowderFileSystemTreeModel;
 
 /**
@@ -609,11 +611,14 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private void onlieDocsandSupportMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onlieDocsandSupportMenuActionPerformed
         try {
 
-            Process p = Runtime.getRuntime().exec("RunDLL32.EXE shell32.dll,ShellExec_RunDLL " +
-                    "http://www.jpowder.org/");
+    java.net.URI uri = new URI("http://www.jpowder.org");
+      java.awt.Desktop.getDesktop().browse(uri);
+        } catch (URISyntaxException ex) {
+            JOptionPane.showMessageDialog(null,
+            "Error attempting to launch web browser\n" + ex.toString());
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "No internet connection!",
-                    "error", JOptionPane.ERROR_MESSAGE);
+           JOptionPane.showMessageDialog(null,
+            "Error attempting to launch web browser\n" + ex.toString());
         }
     }//GEN-LAST:event_onlieDocsandSupportMenuActionPerformed
     /**
@@ -784,6 +789,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
 
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
+            NumberAxis xAxis = (NumberAxis) internalFrameInFocus.getXYPlot().getDomainAxis();
+            NumberAxis yAxis = (NumberAxis) internalFrameInFocus.getXYPlot().getRangeAxis();
+            xAxis.setTickUnit(new NumberTickUnit(internalFrameInFocus.getXAxis()));
+            yAxis.setTickUnit(new NumberTickUnit(internalFrameInFocus.getYAxis()));
             internalFrameInFocus.getXYPlot().setBackgroundPaint(ChartColor.white);
             internalFrameInFocus.getXYPlot().setOutlinePaint(ChartColor.white);
             PrinterJob job = PrinterJob.getPrinterJob();
@@ -799,6 +808,8 @@ public class Jpowder extends JFrame implements DropTargetListener {
                     }
                 }
             }
+//            xAxis.setAutoTickUnitSelection(true);
+//            yAxis.setAutoTickUnitSelection(true);
             internalFrameInFocus.getXYPlot().setBackgroundPaint(ChartColor.LIGHT_GRAY);
             internalFrameInFocus.getXYPlot().setOutlinePaint(ChartColor.LIGHT_GRAY);
         } else {
@@ -809,6 +820,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private void jPrintMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrintMenuActionPerformed
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
 
+              NumberAxis xAxis = (NumberAxis) internalFrameInFocus.getXYPlot().getDomainAxis();
+            NumberAxis yAxis = (NumberAxis) internalFrameInFocus.getXYPlot().getRangeAxis();
+            xAxis.setTickUnit(new NumberTickUnit(internalFrameInFocus.getXAxis()));
+            yAxis.setTickUnit(new NumberTickUnit(internalFrameInFocus.getYAxis()));
             Object[] options = {"Yes",
                 "No"};
             int n = JOptionPane.showOptionDialog(this,

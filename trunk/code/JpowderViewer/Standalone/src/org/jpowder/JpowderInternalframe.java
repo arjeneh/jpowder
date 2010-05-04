@@ -30,6 +30,7 @@ import org.jpowder.fileCabinet.PowderFileCabinet;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.XYPlot;
 
@@ -58,6 +59,8 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
     public Stack<JInternalFrame> internalframeStackes = new Stack<JInternalFrame>();
         private List<Marker> peakRangeMarker = new ArrayList<Marker>();
     private List<Marker> peakDomainMarker = new ArrayList<Marker>();
+      private NumberAxis xAxis ;
+            private NumberAxis yAxis ;
 
     /**
      *
@@ -81,6 +84,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         plotMultiCol = DatasetPlotter.createDatasetPlotter(data);
         chartPanel.setLayout(new BorderLayout());
         ChartPanel jfreeChartPanels = plotMultiCol.createPowderChart();
+        jfreeChartPanels.add(new JpowderPopupMenu(jfreeChartPanels));
         this.jfreeChartPanel = jfreeChartPanels;
         //chart = FilesPlotter.getchart();
         xYPlot = jfreeChartPanels.getChart().getXYPlot();
@@ -276,6 +280,15 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
      */
     public JFreeChart getchart() {
         return chart;
+    }
+
+    public double  getXAxis(){
+        xAxis= (NumberAxis) getXYPlot().getDomainAxis();
+        return xAxis.getTickUnit().getSize();
+    }
+    public double  getYAxis(){
+        yAxis= (NumberAxis) getXYPlot().getRangeAxis();
+        return yAxis.getTickUnit().getSize();
     }
 
     public void dragEnter(DropTargetDragEvent dtde) {

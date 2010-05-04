@@ -77,7 +77,7 @@ public class FilesPlotter extends DatasetPlotter {
 //    chartPanel.setMaximumSize(new java.awt.Dimension(300, 300));
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
-        chartPanel.add(new JpowderPopupMenu(chartPanel));
+//        chartPanel.add(new JpowderPopupMenu(chartPanel));
         //User click and it brings up a new Frame for editing the chart.
         chartPanel.addChartMouseListener(new PowderChartMouseObserver(chartPanel));
         return chartPanel;
@@ -103,6 +103,7 @@ public class FilesPlotter extends DatasetPlotter {
         String x = "2\u03D1";//unicode 2thetha
         NumberAxis xAxis = new NumberAxis(x.toUpperCase());
         NumberAxis yAxis = new NumberAxis("Intensity");
+        
         // get a reference to the plot for further customisation...
         JpowderXYLineAndShapeRender renderer1 = new JpowderXYLineAndShapeRender();
         renderer1.setSeriesPaint(0, getSeriesColors(0));

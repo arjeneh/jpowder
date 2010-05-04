@@ -111,7 +111,6 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         jLabel10 = new javax.swing.JLabel();
         xTickField = new javax.swing.JTextField();
         yTickField = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
         tickSpacingApplyButton = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
@@ -304,21 +303,21 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         seriesColourPanelLayout.setHorizontalGroup(
             seriesColourPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, seriesColourPanelLayout.createSequentialGroup()
-                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(seriesColourPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(seriesColourComboBox, 0, 171, Short.MAX_VALUE)
-                    .addComponent(colourPickerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
+                    .addComponent(seriesColourComboBox, 0, 166, Short.MAX_VALUE)
+                    .addComponent(colourPickerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
             .addGroup(seriesColourPanelLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
                 .addContainerGap())
         );
         seriesColourPanelLayout.setVerticalGroup(
             seriesColourPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, seriesColourPanelLayout.createSequentialGroup()
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 8, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(seriesColourPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -335,8 +334,6 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         jLabel9.setText("X Axis:");
 
         jLabel10.setText("Y Axis:");
-
-        jCheckBox1.setText("tst");
 
         tickSpacingApplyButton.setText("Apply");
         tickSpacingApplyButton.addActionListener(new java.awt.event.ActionListener() {
@@ -362,9 +359,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
                         .addGroup(tickSpacingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(yTickField, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tickSpacingApplyButton))))
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox1)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
         tickSpacingPanelLayout.setVerticalGroup(
             tickSpacingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -372,15 +367,14 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
                 .addContainerGap()
                 .addGroup(tickSpacingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(xTickField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox1))
+                    .addComponent(xTickField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tickSpacingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(yTickField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(tickSpacingApplyButton)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         tickSpacingPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {xTickField, yTickField});
@@ -780,6 +774,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
             double newY = Double.parseDouble(yTickField.getText());
             NumberAxis xAxis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
             NumberAxis yAxis = (NumberAxis) inFocus.getXYPlot().getRangeAxis();
+
             xAxis.setTickUnit(new NumberTickUnit(newX));
             yAxis.setTickUnit(new NumberTickUnit(newY));
 
@@ -803,7 +798,6 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     private javax.swing.JCheckBox conectingLines;
     private javax.swing.JComboBox dataSetComboBox1;
     private javax.swing.JCheckBox errorBars;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
