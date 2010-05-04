@@ -86,7 +86,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         ChartPanel jfreeChartPanels = plotMultiCol.createPowderChart();
         jfreeChartPanels.add(new JpowderPopupMenu(jfreeChartPanels));
         this.jfreeChartPanel = jfreeChartPanels;
-        //chart = FilesPlotter.getchart();
+        chart = FilesPlotter.getChart();
         xYPlot = jfreeChartPanels.getChart().getXYPlot();
         chartPanel.add(jfreeChartPanels);
 

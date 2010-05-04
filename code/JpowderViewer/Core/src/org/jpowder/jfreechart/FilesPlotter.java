@@ -24,7 +24,7 @@ public class FilesPlotter extends DatasetPlotter {
 
     private static Vector<DataSet> datasets;
     public static XYPlot plot;
-    private JFreeChart chart;
+    private static JFreeChart chart;
     public static Paint[] allSeriescolors = {Color.BLUE, Color.RED, ChartColor.VERY_DARK_GREEN,
         Color.ORANGE, Color.CYAN, Color.MAGENTA, ChartColor.DARK_YELLOW, Color.BLACK,
         Color.PINK, Color.LIGHT_GRAY, Color.GRAY, ChartColor.DARK_BLUE, ChartColor.DARK_RED, ChartColor.DARK_GREEN, Color.yellow, ChartColor.DARK_CYAN, ChartColor.DARK_GRAY, ChartColor.VERY_DARK_BLUE, ChartColor.VERY_DARK_RED, Color.GREEN, ChartColor.VERY_DARK_YELLOW, ChartColor.VERY_DARK_CYAN, ChartColor.VERY_DARK_MAGENTA, ChartColor.VERY_LIGHT_BLUE, ChartColor.VERY_LIGHT_RED, ChartColor.VERY_LIGHT_GREEN, ChartColor.VERY_LIGHT_YELLOW, ChartColor.VERY_LIGHT_CYAN, ChartColor.VERY_LIGHT_MAGENTA};
@@ -83,16 +83,16 @@ public class FilesPlotter extends DatasetPlotter {
         return chartPanel;
     }
 
-    public JFreeChart getchart() {
-        return chart;
-    }
-
     public static XYPlot getPlot() {
         return plot;
     }
+    
     public static Vector<DataSet> getDataSets(){
         return datasets;
     }
+   public  static JFreeChart getChart(){
+       return  chart;
+   }
 
     /**
      * Creates the chart containing data from one or more powder diffraction files
