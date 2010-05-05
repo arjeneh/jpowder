@@ -6,7 +6,7 @@
 
 package org.jpowder;
 
-import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 /**
  * About Class.
@@ -19,8 +19,8 @@ public class About extends javax.swing.JFrame {
         initComponents();
 
     }
-    public static JLabel getdateLabel() {
-        return dateLabel;
+    public static JTextField getDateTextField() {
+        return buidDateTextField;
     }
 
     /** This method is called from within the constructor to
@@ -40,8 +40,8 @@ public class About extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        dateLabel = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        buidDateTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("About");
@@ -70,7 +70,7 @@ public class About extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 14));
@@ -81,7 +81,7 @@ public class About extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setEditable(false);
-        jTextArea1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        jTextArea1.setFont(new java.awt.Font("Arial", 0, 13));
         jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
         jTextArea1.setText("Jpowder is free software. You can redistribute it and/or modify it under\nthe terms of the GNU General Public License as published by the Free\nSoftware Foundation; either version 3 of the License, or ( at your \noption) any later version.");
@@ -95,13 +95,17 @@ public class About extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Product Version: Jpowder 1.0 (Build:");
 
-        dateLabel.setFont(new java.awt.Font("Tahoma", 1, 12));
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText(").");
+
+        buidDateTextField.setBackground(new java.awt.Color(255, 255, 255));
+        buidDateTextField.setEditable(false);
+        buidDateTextField.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        buidDateTextField.setBorder(null);
+        buidDateTextField.setMargin(new java.awt.Insets(2, 0, 0, 2));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -113,9 +117,9 @@ public class About extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buidDateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4))
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(181, 181, 181)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -138,10 +142,10 @@ public class About extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel4))
+                        .addComponent(jLabel4)
+                        .addComponent(buidDateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -180,7 +184,7 @@ public class About extends javax.swing.JFrame {
 //        });
 //    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private static javax.swing.JLabel dateLabel;
+    private static javax.swing.JTextField buidDateTextField;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

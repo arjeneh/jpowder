@@ -1,6 +1,7 @@
 package org.jpowder;
 
 import java.beans.PropertyVetoException;
+import java.io.FileNotFoundException;
 import org.jpowder.tree.Tree;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -27,6 +28,10 @@ import java.awt.*;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
@@ -34,13 +39,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.*;
 import org.jfree.chart.ChartColor;
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.title.LegendTitle;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
 import org.jpowder.chartTools.CreateLegend;
 import org.jpowder.fileCabinet.AcceptFileFilter;
 import org.jpowder.tree.JpowderFileSystemTreeModel;
@@ -90,7 +90,6 @@ public class Jpowder extends JFrame implements DropTargetListener {
     public static JPowderStack jPowderStackUndo = new JPowderStack(3);
     public static JPowderStack jPowderStackRedo = new JPowderStack(3);
     private static double dropLocationX, dropLocationY;
-    private String buildDate;
 
     //  private stackInternalFrames;
     /**
@@ -115,15 +114,8 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
         ScreenUtil.adjustBounds(this);
 
-        try {
-            File jarFile = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
-            DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
-            buildDate = new String(dateFormat.format(new Date(jarFile.lastModified())));
-//            System.out.println(buildDate);
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex);
-        }
+ 
+
 
 
     }
@@ -212,23 +204,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 //            chartPlotterPane.repaint();
 //        }
 
-    }
-
-    /**
-     * reads the exact buid date from the jar file and adds it to a Jlabel in
-     * the About Class.
-     */
-    public void displayBuiltDate() {
-//       About.getdateLabel().setText(dateFormat.format(date));
-        try {
-            File jarFile = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
-            DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
-            About.getdateLabel().setText(dateFormat.format(new Date(jarFile.lastModified())));
-            System.out.println(dateFormat.format(new Date(jarFile.lastModified())));
-        } catch (URISyntaxException e) {
-            System.out.println(e);
-        }
-    }
+    }  
 
     /** This method is called from within the constructor to
      * initialise the form.
@@ -631,10 +607,12 @@ public class Jpowder extends JFrame implements DropTargetListener {
      * @param evt
      */
     private void aboutMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuActionPerformed
-        new About().setVisible(true);
-//        displayBuiltDate();
-        About.getdateLabel().setText(buildDate);
-
+        //this bit of the code search for the files
+      
+            new About().setVisible(true);
+            BuidDate buidDate = new BuidDate();
+            About.getDateTextField().setText(buidDate.getVersion());
+     
     }//GEN-LAST:event_aboutMenuActionPerformed
     /**
      *
