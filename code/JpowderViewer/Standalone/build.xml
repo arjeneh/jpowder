@@ -84,6 +84,16 @@
             </manifest>
         </jar>
     </target>
-	
+
+
+    <target name="-pre-compile">
+        <propertyfile
+           file="${src.dir}/org/jpowder/Jpowderversion.properties"
+           comment="Do not edit, this file generated at complie time.
+           For generating build date for about information panel.">
+            <entry  key="version.date" type="date" value="now" pattern="yyyyMMddHHmm"/>
+        </propertyfile>
+    </target>
+
 	
 </project>
