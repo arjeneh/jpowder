@@ -1,33 +1,45 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * AnalysisIcon.java
+/* ===========================================================
+ * This file is part of Jpowder, see <http://www.jpowder.org/>
+ * ===========================================================
  *
- * Created on 11-Dec-2009, 11:31:51
+ * Jpowder is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jpowder is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ---------
+ * Axis.java
+ * ---------
+ * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
+ * Kasem Bundit University.
+ *
+ * Original Author:M Arjeneh
+ *                 
+ *
+ * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
+ *
  */
 package org.jpowder.Analysis;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JButton;
 import org.jpowder.Jpowder;
-import org.jpowder.JpowderIcon;
 import org.jpowder.chartTools.ChangePlotStyle;
 import org.jpowder.chartTools.ZoomAndPan;
 
 /**
  * this class contains all the Jpowder icons.
- * @author M Arjeneh
+ * 
  */
 public class ToolsIcon extends javax.swing.JPanel {
 
-    private JpowderIcon jpowderIcon;
-    private List<JButton> buttons = new ArrayList<JButton>();
-    private String[] title = {"Selecting Peaks", "Rescale and Moving Plots","Changing Plot's Appearance", "Zooming Information","Apply Bragg's Law To Change The XAxis"};
-    private String[] imgdir = {"Peaks_Small.png", "Rescale_Small.png","Appearance_Small.png", "Zoom_Small.png","ChangeXAxis_Small.png"};
+
     private MarkPeakPosition markPeakPosition = new MarkPeakPosition(this);
     private RescaleYdata rescaleYdata = new RescaleYdata(this);
     private ChangePlotStyle changePlotStyle = new ChangePlotStyle(this);
@@ -39,16 +51,8 @@ public class ToolsIcon extends javax.swing.JPanel {
     public ToolsIcon(Jpowder jpowder) {
         initComponents();
         this.jpowder = jpowder;
-        buttons.add(peakButton);
-        buttons.add(rescaleButton);
-        buttons.add(appearanceButton);
-        buttons.add(zoomButton);
-        buttons.add(changeXAxisButton);
+
   
-
-
-//        jpowderIcon = new JpowderIcon(buttons, imgdir, title);
-//        jpowderIcon.set_imgdir(imgdir);
     }
 
     /** This method is called from within the constructor to

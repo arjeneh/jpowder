@@ -1,7 +1,36 @@
+/* ===========================================================
+ * This file is part of Jpowder, see <http://www.jpowder.org/>
+ * ===========================================================
+ *
+ * Jpowder is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jpowder is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ---------
+ * Axis.java
+ * ---------
+ * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
+ * Kasem Bundit University.
+ *
+ * Original Author:  M Arjeneh
+ * Contributor(s):   Anders Marvardsen
+ *                   Kreecha Puphaiboon;
+ *
+ * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
+ *
+ */
 package org.jpowder;
 
 import java.beans.PropertyVetoException;
-import java.io.FileNotFoundException;
 import org.jpowder.tree.Tree;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -28,15 +57,8 @@ import java.awt.*;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.*;
 import org.jfree.chart.ChartColor;
 import org.jfree.chart.axis.NumberAxis;
@@ -44,35 +66,8 @@ import org.jfree.chart.axis.NumberTickUnit;
 import org.jpowder.chartTools.CreateLegend;
 import org.jpowder.fileCabinet.AcceptFileFilter;
 import org.jpowder.tree.JpowderFileSystemTreeModel;
-
 /**
- * Jpowder is the starting class for the Jpowder project {@link www.jpowder.org}.
- * It setups the main GUI for this application, which draws charts of powder
- * diffraction data.
- * <P>
- * This file is part of Jpowder.
- *
- * Jpowder is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * Jpowder is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <a target="_blank" href=http://www.gnu.org/licenses/>here</a>.
- * <p>
- * File change history is stored at: <a target="_blank" href=https://jpowder.org/svn/Jpowder>www.jpowder.org/svn/Jpowder</a>
- *
- * @author 
- *
- *  * Changes
- * -------
- * 22-August-2007: Version 1 (KP);
- * 04-March-2010 : Add JTree and its model (KP).
+ * mainly for putting toghther all the GUIs.
  *
  */
 public class Jpowder extends JFrame implements DropTargetListener {
