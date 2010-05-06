@@ -21,8 +21,8 @@
  * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
  * Kasem Bundit University.
  *
- * Original Author:  M Arjeneh.
- * Contributor(s):  Anders Marvardsen;
+ * Author(s):  M Arjeneh, ISIS, Rutherford Appleton Laboratory
+ *             Anders Marvardsen, ISIS, Rutherford Appleton Laboratory
  *
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *

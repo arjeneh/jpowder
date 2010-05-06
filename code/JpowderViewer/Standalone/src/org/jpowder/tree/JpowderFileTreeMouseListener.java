@@ -21,7 +21,7 @@
  * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
  * Kasem Bundit University.
  *
- * Original Author:Kreecha Puphaiboon
+ * Author(s):  Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
  *
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
