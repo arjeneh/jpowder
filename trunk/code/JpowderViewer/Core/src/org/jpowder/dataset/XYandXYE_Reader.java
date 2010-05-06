@@ -1,6 +1,32 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/* ===========================================================
+ * This file is part of Jpowder, see <http://www.jpowder.org/>
+ * ===========================================================
+ *
+ * Jpowder is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jpowder is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ---------
+ * Axis.java
+ * ---------
+ * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
+ * Kasem Bundit University.
+ *
+ * Original Author:  Kreecha Puphaiboon
+ * Contributor(s):   M Arjeneh;
+ *                   Anders Marvardsen;
+ *
+ * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
+ *
  */
 package org.jpowder.dataset;
 
@@ -13,17 +39,14 @@ import java.net.MalformedURLException;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-/**
- *
- * @author ajm64
- */
-public class XYandXYE_Reader {
-
-    /**
+   /**
      *  Read a powder diffraction dataset from a powder diffraction file
      *
      * @param aFile Name of the powder diffraction file to be read
      */
+public class XYandXYE_Reader {
+
+   
     public static DataSet read(File aFile) {
         String aLine;
         Vector<Vector<Double>> localData = new Vector<Vector<Double>>();

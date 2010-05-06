@@ -5,8 +5,7 @@ package org.jpowder.fileCabinet;
  * that can be updated on demand.
  *
  * @author Kreecha Puphaiboon
- * @author Milad Arjeneh
- * @author Anders Markvardsen
+
  */
 public interface Subject {
 

@@ -1,7 +1,32 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/* ===========================================================
+ * This file is part of Jpowder, see <http://www.jpowder.org/>
+ * ===========================================================
+ *
+ * Jpowder is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jpowder is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ---------
+ * Axis.java
+ * ---------
+ * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
+ * Kasem Bundit University.
+ *
+ * Original Author:  Kreecha Puphaiboon
+ *  @date 20-Sep-2007, 13:38:48
+ * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
+ *
  */
+
 
 package org.jpowder.JCheckboxList;
 
@@ -15,8 +40,7 @@ import javax.swing.ListSelectionModel;
 import org.jfree.chart.plot.XYPlot;
 
 /**
- * @author Author: Kreecha Puphaiboon
- * @date 20-Sep-2007, 13:38:48
+ *
  * Used in the FileChooserPanel to display a tickbox of JList (JList by itself does not support tickbox).
  * It also allow user to select multiple files.
  *

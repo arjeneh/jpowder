@@ -26,7 +26,7 @@ public class JpowderApplet extends JApplet {
 //        if (returnVal == JFileChooser.APPROVE_OPTION) {
             try {
 //                FileInputStream f = new FileInputStream("AppletTest1.ser");
-                     URL source = new URL(getCodeBase(), "AppletTest1.ser");
+                     URL source = new URL(getCodeBase(), "ZoomTest.ser");
 //                       BufferedReader br =
 //                    new BufferedReader
 //                    (new InputStreamReader(source.openStream()));
