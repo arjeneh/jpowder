@@ -16,7 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * ---------
+<<<<<<< .mine
+ * JCheckboxList.java
+=======
  * JCheckBoxJList.java
+>>>>>>> .r284
  * ---------
  * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
  * Kasem Bundit University.
