@@ -16,13 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * ---------
- * Axis.java
+ * JpowderXYDataset.java
  * ---------
  * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
  * Kasem Bundit University.
  *
- * Original Author: Anders Marvardsen
- * Contributor(s):   M Arjeneh;
+ * Author(s):  Anders Marvardsen, ISIS, Rutherford Appleton Laboratory
+ *             M Arjeneh, ISIS, Rutherford Appleton Laboratory
  *                   
  *
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
@@ -36,7 +36,7 @@ import org.jpowder.dataset.DataSet;
 
 /**
  *
- * @author ajm64
+ * 
  */
 public class JpowderXYDataset extends AbstractXYDataset {
 

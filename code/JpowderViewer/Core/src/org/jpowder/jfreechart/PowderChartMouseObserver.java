@@ -16,13 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * ---------
- * Axis.java
+ * PowderChartMouseObserver.java
  * ---------
  * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
  * Kasem Bundit University.
  *
- * Original Author:  Kreecha Puphaiboon
- * Contributor(s):   
+ * Author(s):  Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
  *
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
