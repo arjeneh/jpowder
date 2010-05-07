@@ -89,7 +89,6 @@ public class FilesPlotter extends DatasetPlotter {
         return "Multiple Files Plotter";
     }
 
-
     /**
      * creating the chart panel
      * @return chartPanel
@@ -100,6 +99,7 @@ public class FilesPlotter extends DatasetPlotter {
         chart = createChart();
         plot.setDomainPannable(true);
         plot.setRangePannable(true);
+
 
         // create panel from chart and set some panel attributes
         ChartPanel chartPanel = new ChartPanel(chart, true);
@@ -116,13 +116,14 @@ public class FilesPlotter extends DatasetPlotter {
     public static XYPlot getPlot() {
         return plot;
     }
-    
-    public static Vector<DataSet> getDataSets(){
+
+    public static Vector<DataSet> getDataSets() {
         return datasets;
     }
-   public  static JFreeChart getChart(){
-       return  chart;
-   }
+
+    public static JFreeChart getChart() {
+        return chart;
+    }
 
     /**
      * Creates the chart containing data from one or more powder diffraction files
@@ -133,7 +134,11 @@ public class FilesPlotter extends DatasetPlotter {
         String x = "2\u03D1";//unicode 2thetha
         NumberAxis xAxis = new NumberAxis(x.toUpperCase());
         NumberAxis yAxis = new NumberAxis("Intensity");
-        
+        yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+
+//         xAxis.setAxisLineVisible(false);
+//        yAxis.setAxisLineVisible(false);
+
         // get a reference to the plot for further customisation...
         JpowderXYLineAndShapeRender renderer1 = new JpowderXYLineAndShapeRender();
         renderer1.setSeriesPaint(0, getSeriesColors(0));
@@ -164,8 +169,10 @@ public class FilesPlotter extends DatasetPlotter {
             renderer3.setSeriesPaint(0, getSeriesColors(i));
             JpowderXYErrorRender renderer4 = new JpowderXYErrorRender();
             renderer4.setSeriesPaint(0, getSeriesColors(i));
-            NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-            rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+
+//            NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+//            rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+
 
             if (datasets.elementAt(i) instanceof DataSetNoErrors) {
 
@@ -179,6 +186,7 @@ public class FilesPlotter extends DatasetPlotter {
             }
         }
         plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
+                plot.setAxisOffset(RectangleInsets.ZERO_INSETS);
         chart = new JFreeChart(null, null, plot, false);// for getting the chart header
         chart.setBackgroundPaint(Color.white);
         return chart;

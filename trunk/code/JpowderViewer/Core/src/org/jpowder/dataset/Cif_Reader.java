@@ -62,7 +62,7 @@ public class Cif_Reader {
                         String[] splits = aLine.split(" ");
                         if (splits == null || splits.length == 0) {
 
-                            javax.swing.JOptionPane.showMessageDialog(null, "Cannot find Wavelength");
+                            javax.swing.JOptionPane.showMessageDialog(null, "Can't find wavelength");
 
                         } else {
                             try {
@@ -71,7 +71,7 @@ public class Cif_Reader {
 
                             } catch (NumberFormatException ex) {
 
-                                javax.swing.JOptionPane.showMessageDialog(null, "Can not find the Wavelength");
+                                javax.swing.JOptionPane.showMessageDialog(null, "Can't find  wavelength");
 
 
                             }

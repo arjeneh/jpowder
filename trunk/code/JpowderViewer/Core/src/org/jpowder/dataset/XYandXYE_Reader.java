@@ -39,14 +39,13 @@ import java.net.MalformedURLException;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-   /**
-     *  Read a powder diffraction dataset from a powder diffraction file
-     *
-     * @param aFile Name of the powder diffraction file to be read
-     */
+/**
+ *  Read a powder diffraction dataset from a powder diffraction file
+ *
+ * @param aFile Name of the powder diffraction file to be read
+ */
 public class XYandXYE_Reader {
 
-   
     public static DataSet read(File aFile) {
         String aLine;
         Vector<Vector<Double>> localData = new Vector<Vector<Double>>();
@@ -57,19 +56,25 @@ public class XYandXYE_Reader {
             int lineNum = 0;
 
             while ((aLine = bufferedReader.readLine()) != null) {
-                lineNum++;
-                // create a vector to hold the field values
-                Vector<Double> newRow = new Vector<Double>();
-                StringTokenizer stringTokenizer = new StringTokenizer(aLine);
-                //
-                int numToken = stringTokenizer.countTokens();
-                for (int i = 0; i < numToken; i++) {
-                    //ignore the last STD by minusing 1.
-                    String stringToken = stringTokenizer.nextToken();
-                    newRow.addElement(Double.parseDouble(stringToken));
-                } //for
-                localData.addElement(newRow);
-         
+                if (!aLine.isEmpty()) {
+                    lineNum++;
+                    // create a vector to hold the field values
+                    Vector<Double> newRow = new Vector<Double>();
+                    StringTokenizer stringTokenizer = new StringTokenizer(aLine);
+                    //
+                    int numToken = stringTokenizer.countTokens();
+                    for (int i = 0; i < numToken; i++) {
+                        //ignore the last STD by minusing 1.
+                        String stringToken = stringTokenizer.nextToken();
+                        newRow.addElement(Double.parseDouble(stringToken));
+                    } //for
+                    if (numToken != 0) {
+                        localData.addElement(newRow);
+                    } else {
+                        break;
+                    }
+
+                }
             }//while readLine
 
             //System.out.print("Total LineNumber is: " + lineNum);
@@ -81,39 +86,30 @@ public class XYandXYE_Reader {
             // top equal to the wavelength
             int countColumn = 0;
             boolean dashFormat = false;
-            if ( localData.firstElement().size() == 1)
-            {
+            if (localData.firstElement().size() == 1) {
                 int secondRowCount = localData.elementAt(1).size();
-                for (int i = 1; i < localData.size(); i++)
-                {
+                for (int i = 1; i < localData.size(); i++) {
 
-                    if  (i <= 5)
-                    {
-                        if ( localData.elementAt(i).size() != secondRowCount )
-                        {
-                          javax.swing.JOptionPane.showMessageDialog(null, "Invalid file formate.");
-                          return null;
+                    if (i <= 5) {
+                        if (localData.elementAt(i).size() != secondRowCount) {
+                            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file formate.");
+                            return null;
                         }
-                    }
-                    else
-                    {
+                    } else {
                         countColumn = secondRowCount;
                         dashFormat = true;
                         break;
                     }
                 }
+            } else {
+                // Determine how many columns there are
+                countColumn = localData.firstElement().size();
             }
-            else
-            {
-              // Determine how many columns there are
-              countColumn = localData.firstElement().size();
-            }
-            
+
             double wavelengthIfDASH = 0.0;
-            if (dashFormat)
-            {
+            if (dashFormat) {
                 wavelengthIfDASH = localData.firstElement().firstElement();
-                localData.remove(0);  
+                localData.remove(0);
             }
 
             DataSet retVal = null;
@@ -127,8 +123,9 @@ public class XYandXYE_Reader {
                 javax.swing.JOptionPane.showMessageDialog(null, "File must contain either 2 or 3 columns");
             }
 
-            if (dashFormat)
+            if (dashFormat) {
                 retVal.setWaveLength(wavelengthIfDASH);
+            }
 
             return retVal;
 
