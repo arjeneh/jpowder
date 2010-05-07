@@ -66,6 +66,7 @@ import org.jfree.chart.axis.NumberTickUnit;
 import org.jpowder.chartTools.CreateLegend;
 import org.jpowder.fileCabinet.AcceptFileFilter;
 import org.jpowder.tree.JpowderFileSystemTreeModel;
+
 /**
  * mainly for putting toghther all the GUIs.
  *
@@ -109,7 +110,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
         ScreenUtil.adjustBounds(this);
 
- 
+
 
 
 
@@ -199,7 +200,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 //            chartPlotterPane.repaint();
 //        }
 
-    }  
+    }
 
     /** This method is called from within the constructor to
      * initialise the form.
@@ -587,14 +588,14 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private void onlieDocsandSupportMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onlieDocsandSupportMenuActionPerformed
         try {
 
-    java.net.URI uri = new URI("http://www.jpowder.org");
-      java.awt.Desktop.getDesktop().browse(uri);
+            java.net.URI uri = new URI("http://www.jpowder.org");
+            java.awt.Desktop.getDesktop().browse(uri);
         } catch (URISyntaxException ex) {
             JOptionPane.showMessageDialog(null,
-            "Error attempting to launch web browser\n" + ex.toString());
+                    "Error attempting to launch web browser\n" + ex.toString());
         } catch (IOException ex) {
-           JOptionPane.showMessageDialog(null,
-            "Error attempting to launch web browser\n" + ex.toString());
+            JOptionPane.showMessageDialog(null,
+                    "Error attempting to launch web browser\n" + ex.toString());
         }
     }//GEN-LAST:event_onlieDocsandSupportMenuActionPerformed
     /**
@@ -603,11 +604,11 @@ public class Jpowder extends JFrame implements DropTargetListener {
      */
     private void aboutMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuActionPerformed
         //this bit of the code search for the files
-      
-            new About().setVisible(true);
-            BuidDate buidDate = new BuidDate();
-            About.getDateTextField().setText(buidDate.getVersion());
-     
+
+        new About().setVisible(true);
+        BuidDate buidDate = new BuidDate();
+        About.getDateTextField().setText(buidDate.getVersion());
+
     }//GEN-LAST:event_aboutMenuActionPerformed
     /**
      *
@@ -786,8 +787,8 @@ public class Jpowder extends JFrame implements DropTargetListener {
                     }
                 }
             }
-//            xAxis.setAutoTickUnitSelection(true);
-//            yAxis.setAutoTickUnitSelection(true);
+            xAxis.getDefaultAutoRange();
+            yAxis.getDefaultAutoRange();
             internalFrameInFocus.getXYPlot().setBackgroundPaint(ChartColor.LIGHT_GRAY);
             internalFrameInFocus.getXYPlot().setOutlinePaint(ChartColor.LIGHT_GRAY);
         } else {
@@ -798,10 +799,11 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private void jPrintMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrintMenuActionPerformed
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
 
-              NumberAxis xAxis = (NumberAxis) internalFrameInFocus.getXYPlot().getDomainAxis();
+            NumberAxis xAxis = (NumberAxis) internalFrameInFocus.getXYPlot().getDomainAxis();
             NumberAxis yAxis = (NumberAxis) internalFrameInFocus.getXYPlot().getRangeAxis();
             xAxis.setTickUnit(new NumberTickUnit(internalFrameInFocus.getXAxis()));
             yAxis.setTickUnit(new NumberTickUnit(internalFrameInFocus.getYAxis()));
+
             Object[] options = {"Yes",
                 "No"};
             int n = JOptionPane.showOptionDialog(this,
@@ -818,9 +820,13 @@ public class Jpowder extends JFrame implements DropTargetListener {
                 createLegend.setLegend();
                 internalFrameInFocus.getChartPanel().createChartPrintJob();
                 internalFrameInFocus.getchart().removeLegend();
+                xAxis.getDefaultAutoRange();
+                yAxis.getDefaultAutoRange();
             }
             if (n == 1) {
                 internalFrameInFocus.getChartPanel().createChartPrintJob();
+                xAxis.getDefaultAutoRange();
+                yAxis.getDefaultAutoRange();
             }
 
         } else {
