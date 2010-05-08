@@ -1,0 +1,9 @@
+#labels Phase-Implementation
+=Development Introduction=
+  * [DirectoryStructure Code Directory Structure]
+
+=General Documents=
+  * [CodingStandards Coding Standards]
+  * [NamingConventions Naming Conventions]
+  * [UnitTestGoodPractice Unit testing good practices]
+  * [LoggingGoodPractice J-logging or whatever it is called]

@@ -1,0 +1,33 @@
+Cutdown version of [http://www.netbeans.org/community/guidelines/code-conventions.html NetBeans's (Sun's) code conventions].
+
+== Formatting ==
+
+    * Files longer than 2000 lines are cumbersome and should be avoided.
+    * Avoid lines longer than 80 characters; long lines often force users to scroll horizontally when they are concentrating on something else (debugging, for example).
+    * Each top-level class should be kept in a separate file. (It is fine to use nested classes, though generally discouraged when visible in an API.)
+    * When wrapping code lines, break after a comma or before an operator.
+    * Two or four spaces should be used as the unit of indentation. Tabs should be avoided.
+    * A blank space should appear after commas in argument lists.
+    * All binary operators except . (dot) should be separated from their operands by spaces. Blank spaces should never separate unary operators from their operands. 
+
+== Programming Practices ==
+
+    * Public classes and interfaces as well as public or protected methods and fields must have documentation comments. See
+
+          "How to Write Doc Comments for Javadoc"
+          http://java.sun.com/j2se/javadoc/writingdoccomments/index.html 
+
+      for details on writing good doc comments. However if a method simply overrides a superclass method, and does not add any contractually significant behavior to it beyond what is obvious from the class Javadoc, then the documentation comment should be omitted - since JDK 1.3, the javadoc tool will automatically copy the documentation from the superclass, which is more maintainable.
+    * All class and instance variables should be private except for constants that are declared as static final.
+    * Throwing an unchecked exception without mentioning it in the Javadoc is forbidden. IllegalStateException or JDK 1.4 assertions may be used when the code is in an inconsistent state that it should be impossible to enter.
+    * If a method accepts null as an argument value, say so in the method Javadocl otherwise callers must not pass null to method calls.
+    * If a method returns null, document its meaning in the Javadoc; otherwise it is safe for callers to assume the return value is not null.
+    * Unless otherwise specified, all arrays passed into or out of methods or constructors are assumed to be immutable, i.e. the contents of the array must be fixed when it is constructed and never changed by any party afterwards. Similarly, all collections (List, etc.) are assumed to be immutable unless otherwise specified in the Javadoc comments. To be sure, Javadoc ought to explicitly qualify descriptions of array and collection parameters and return values as "mutable" or "immutable". When they are mutable, some indication should be given of who is permitted to mutate the array or collection (e.g. creator of object only, receiver only, any party), and when (e.g. required thread, lock, or mutex). 
+    * If an exception is caught and ignored, there must be comments saying why; if in doubt, notify with ErrorManager at INFORMATIONAL  level.
+    * Catch Exception only when a checked exception might be thrown; if only unchecked exceptions are possible, catch RuntimeException.
+    * If a Throwable is caught the handling code must check whether it is an instance of ThreadDeath and in this case rethrow it, unless it is expected that the thread might be stopped (e.g. an executed subprocess). Generally catching Error or Throwable should be considered carefully, as conditions such as OutOfMemoryError are not usually recoverable. Code loading or deserializing foreign classes may catch LinkageError in addition to Exception to handle problematic code.
+    * Never throw a subclass of Error (unless rethrowing). In case your method is called from an inappropriate place, or internal data structures are in an inconsistent state and further processing would only compound the problem, throw IllegalStateException; use ErrorManager to annotate localized messages or other throwables as needed.
+    * String literals which are not intended to be localized should be marked by putting a comment containing NOI18N in the same line. See Internationalization, Localization, and Branding of NetBeans for details.
+    * Careful with string.toUpperCase() and string.toLowerCase(). In Turkish locale, I and i are not case variants, they are different letters. Unless you know what you are doing, use string.toUpperCase(Locale.US) or string.toLowerCase(Locale.US).
+    * Be friendly to CVS: do not reformat code without semantic/syntactic changes, even in case existing code breaks formatting conventions.
+    * Prefer explicit imports to wildcards for clarity; if using NetBeans to edit code, the Fix Imports command makes it easy to maintain them. Keep imports sorted. 

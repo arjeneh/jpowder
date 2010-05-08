@@ -1,0 +1,13 @@
+The Jpowder Code directory is structured as follows:
+
+
+|| *Top directory* || *Sub-directory* || *Description* ||
+|| !JpowderViewer || || Root !JpowderViewer directory ||
+|| ||  Applet || Code specific to !JpowderViewer-Applet || 
+|| ||  Core || Any code common to !JpowderViewer-Applet and !JpowderViewer-Standalone || 
+|| ||  Libraries || External libraries, e.g. JFreeChart || 
+|| ||  Standalone || Code specific to !JpowderViewer-Standalone || 
+
+Note as of this writing the Applet project is empty. Also, it may turn
+out that !JpowderViewer-Applet sub-application will be merged in with
+the !JpowderViewer-Standalone application.
