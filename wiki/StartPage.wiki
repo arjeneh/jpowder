@@ -5,5 +5,3 @@
  * [DirectoryStructure Code Directory Structure]
  * [CodingStandards Coding Standards]
  * [NamingConventions Naming Conventions]
- * [UnitTestGoodPractice Unit testing good practices]
- * [LoggingGoodPractice J-logging or whatever it is called]
