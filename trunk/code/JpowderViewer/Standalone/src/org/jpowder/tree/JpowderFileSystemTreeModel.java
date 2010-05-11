@@ -142,12 +142,14 @@ public class JpowderFileSystemTreeModel extends PowderFileSystemModel {
                 sortedChildren.put(file, new ArrayList<File>(sorted));
             }
 
-            // Notify treeListeners, if changes
-            if (isChanged) {
-                TreeModelEvent event = new TreeModelEvent(
-                        this, getTreePath(file));
-                fireTreeStructureChanged(event);
-            }
+            // Notify treeListeners,
+            //Commented out by Milad since it causes crash when I tried to save
+            //as pdf,applet and image.
+//            if (isChanged) {
+//                TreeModelEvent event = new TreeModelEvent(
+//                        this, getTreePath(file));
+//                fireTreeStructureChanged(event);
+//            }
 
             return nChildren;
         }

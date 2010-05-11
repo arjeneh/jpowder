@@ -250,7 +250,14 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() > 0) {
-            removePeaksPosition();
+                JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+//            removePeaksPosition();
+                        //magnifier
+            JXLayer layer = new JXLayer(inFocus.getChartPanel());
+            Magnifier magnifier = new Magnifier();
+            magnifier.setRadius(0);
+            layer.setUI(magnifier);
+            inFocus.setContentPane(layer);
         }
 
 
@@ -429,10 +436,10 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
             inFocus.getChartPanel().setHorizontalAxisTrace(false);
 
 
-            for (int i = 0; i < inFocus.getPeakDomainMarker().size(); i++) {
-//                inFocus.getXYPlot().removeRangeMarker(peakRangeMarker.get(i));
-                inFocus.getXYPlot().removeDomainMarker(inFocus.getPeakDomainMarker().get(i));
-            }
+//            for (int i = 0; i < inFocus.getPeakDomainMarker().size(); i++) {
+////                inFocus.getXYPlot().removeRangeMarker(peakRangeMarker.get(i));
+//                inFocus.getXYPlot().removeDomainMarker(inFocus.getPeakDomainMarker().get(i));
+//            }
             //Range
 
             inFocus.getChartPanel().setVerticalAxisTrace(false);

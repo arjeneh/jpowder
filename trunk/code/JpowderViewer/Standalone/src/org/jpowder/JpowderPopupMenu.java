@@ -40,9 +40,6 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
-import java.awt.print.PageFormat;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -57,14 +54,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
-import org.jfree.chart.ChartColor;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.ui.ExtensionFileFilter;
-import org.jpowder.chartTools.CreateLegend;
+
 
 /**
  * This class created some new popupMenu and also amodifiies the default
@@ -85,6 +79,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
     private JMenuItem menuItem;
     /** A flag that controls whether or not file extensions are enforced. */
     private boolean enforceFileExtensions = true;
+    private JpowderPrint jpowderPrint = new JpowderPrint();
 
     public JpowderPopupMenu(final ChartPanel chartPanel) {
 
@@ -120,38 +115,8 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
                 Logger.getLogger(JpowderPopupMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (command.equals(ChartPanel.PRINT_COMMAND)) {
-            
-               if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
-                      NumberAxis xAxis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
-            NumberAxis yAxis = (NumberAxis) inFocus.getXYPlot().getRangeAxis();
-            xAxis.setTickUnit(new NumberTickUnit(inFocus.getXAxis()));
-            yAxis.setTickUnit(new NumberTickUnit(inFocus.getYAxis()));
-
-            Object[] options = {"Yes",
-                "No"};
-            int n = JOptionPane.showOptionDialog(this,
-                    "Would you like to append legend(s) to printout?",
-                    "Set legend",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null, //do not use a custom Icon
-                    options, //the titles of buttons
-                    options[0]); //default button title
-            if (n == 0) {
-
-                CreateLegend createLegend = new CreateLegend();
-                createLegend.setLegend();
-                chartPanel.createChartPrintJob();
-                chart.removeLegend();
-            }
-            if (n == 1) {
-                chartPanel.createChartPrintJob();
-            }
-
-        } else {
-            return;
-        }
-
+            jpowderPrint.basicPrint();
+             
 
         } else if (command.equals(ChartPanel.ZOOM_IN_BOTH_COMMAND)) {
             chartPanel.zoomInBoth(X, X);
@@ -172,7 +137,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         } else if (command.equals(ChartPanel.ZOOM_RESET_RANGE_COMMAND)) {
             chartPanel.restoreAutoRangeBounds();
         } else if (command.equals(PRINT_FOR_PUBLICATION_CAMAND)) {
-            printForPublication();
+            jpowderPrint.printForPublication();
         } else if (command.equals(JPOWDER_APPLET_CAMAND)) {
             saveAsJpowderApplet();
         } else if (command.equals(PDF_CAMAND)) {
@@ -265,39 +230,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         menuItem.addActionListener(this);
     }
 
-    /**
-     * Printing the chart with plain and white background for publication porpuses.
-     */
-    public void printForPublication() {
-
-
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
-             JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-            NumberAxis xAxis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
-            NumberAxis yAxis = (NumberAxis) inFocus.getXYPlot().getRangeAxis();
-            xAxis.setTickUnit(new NumberTickUnit(inFocus.getXAxis()));
-            yAxis.setTickUnit(new NumberTickUnit(inFocus.getYAxis()));
-           inFocus.getXYPlot().setBackgroundPaint(ChartColor.white);
-           inFocus.getXYPlot().setOutlinePaint(ChartColor.white);
-            PrinterJob job = PrinterJob.getPrinterJob();
-            PageFormat pf = job.defaultPage();
-            PageFormat pf2 = job.pageDialog(pf);
-            if (pf2 != pf) {
-                job.setPrintable(inFocus.getChartPanel(), pf2);
-                if (job.printDialog()) {
-                    try {
-                        job.print();
-                    } catch (PrinterException e) {
-                        JOptionPane.showMessageDialog(this, e);
-                    }
-                }
-            }
-           inFocus.getXYPlot().setBackgroundPaint(ChartColor.LIGHT_GRAY);
-            inFocus.getXYPlot().setOutlinePaint(ChartColor.LIGHT_GRAY);
-        } else {
-            return;
-        }
-    }
+ 
 
     /**
      * saving the file as serialazble so that can be saved and retrived into
