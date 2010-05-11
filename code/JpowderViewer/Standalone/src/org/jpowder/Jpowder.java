@@ -54,16 +54,9 @@ import org.jpowder.dataset.DataSet;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.util.ScreenUtil;
 import java.awt.*;
-import java.awt.print.PageFormat;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import java.net.URI;
 import java.net.URISyntaxException;
 import javax.swing.*;
-import org.jfree.chart.ChartColor;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
-import org.jpowder.chartTools.CreateLegend;
 import org.jpowder.fileCabinet.AcceptFileFilter;
 import org.jpowder.tree.JpowderFileSystemTreeModel;
 
@@ -86,6 +79,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     public static JPowderStack jPowderStackUndo = new JPowderStack(3);
     public static JPowderStack jPowderStackRedo = new JPowderStack(3);
     private static double dropLocationX, dropLocationY;
+    private JpowderPrint jpowderPrint = new JpowderPrint();
 
     //  private stackInternalFrames;
     /**
@@ -230,8 +224,8 @@ public class Jpowder extends JFrame implements DropTargetListener {
         pDfMenu = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JSeparator();
         printMenu = new javax.swing.JMenu();
-        jPrintMenu = new javax.swing.JMenuItem();
-        jPrintPublishingMenu = new javax.swing.JMenuItem();
+        basicPrintMenu = new javax.swing.JMenuItem();
+        printPublishingMenu = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JSeparator();
         closeFrameMenu = new javax.swing.JMenuItem();
         clossAllMenu = new javax.swing.JMenuItem();
@@ -289,10 +283,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homePanelLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
             .addGroup(homePanelLayout.createSequentialGroup()
-                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
                 .addContainerGap())
         );
         homePanelLayout.setVerticalGroup(
@@ -370,25 +364,25 @@ public class Jpowder extends JFrame implements DropTargetListener {
         printMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Print.png"))); // NOI18N
         printMenu.setText("Print As");
 
-        jPrintMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
-        jPrintMenu.setText("Print");
-        jPrintMenu.setToolTipText("Print ");
-        jPrintMenu.addActionListener(new java.awt.event.ActionListener() {
+        basicPrintMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        basicPrintMenu.setText("Print");
+        basicPrintMenu.setToolTipText("Print ");
+        basicPrintMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPrintMenuActionPerformed(evt);
+                basicPrintMenuActionPerformed(evt);
             }
         });
-        printMenu.add(jPrintMenu);
+        printMenu.add(basicPrintMenu);
 
-        jPrintPublishingMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jPrintPublishingMenu.setText("Print For Publication");
-        jPrintPublishingMenu.setToolTipText("Print with white background");
-        jPrintPublishingMenu.addActionListener(new java.awt.event.ActionListener() {
+        printPublishingMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        printPublishingMenu.setText("Print For Publication");
+        printPublishingMenu.setToolTipText("Print with white background");
+        printPublishingMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPrintPublishingMenuActionPerformed(evt);
+                printPublishingMenuActionPerformed(evt);
             }
         });
-        printMenu.add(jPrintPublishingMenu);
+        printMenu.add(printPublishingMenu);
 
         fileMenu.add(printMenu);
         fileMenu.add(jSeparator1);
@@ -764,75 +758,13 @@ public class Jpowder extends JFrame implements DropTargetListener {
         }
 }//GEN-LAST:event_closeFrameMenuActionPerformed
 
-    private void jPrintPublishingMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrintPublishingMenuActionPerformed
+    private void printPublishingMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printPublishingMenuActionPerformed
+           jpowderPrint.printForPublication();
+}//GEN-LAST:event_printPublishingMenuActionPerformed
 
-
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
-            NumberAxis xAxis = (NumberAxis) internalFrameInFocus.getXYPlot().getDomainAxis();
-            NumberAxis yAxis = (NumberAxis) internalFrameInFocus.getXYPlot().getRangeAxis();
-            xAxis.setTickUnit(new NumberTickUnit(internalFrameInFocus.getXAxis()));
-            yAxis.setTickUnit(new NumberTickUnit(internalFrameInFocus.getYAxis()));
-            internalFrameInFocus.getXYPlot().setBackgroundPaint(ChartColor.white);
-            internalFrameInFocus.getXYPlot().setOutlinePaint(ChartColor.white);
-            PrinterJob job = PrinterJob.getPrinterJob();
-            PageFormat pf = job.defaultPage();
-            PageFormat pf2 = job.pageDialog(pf);
-            if (pf2 != pf) {
-                job.setPrintable(internalFrameInFocus.getChartPanel(), pf2);
-                if (job.printDialog()) {
-                    try {
-                        job.print();
-                    } catch (PrinterException e) {
-                        JOptionPane.showMessageDialog(this, e);
-                    }
-                }
-            }
-            xAxis.getDefaultAutoRange();
-            yAxis.getDefaultAutoRange();
-            internalFrameInFocus.getXYPlot().setBackgroundPaint(ChartColor.LIGHT_GRAY);
-            internalFrameInFocus.getXYPlot().setOutlinePaint(ChartColor.LIGHT_GRAY);
-        } else {
-            return;
-        }
-}//GEN-LAST:event_jPrintPublishingMenuActionPerformed
-
-    private void jPrintMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrintMenuActionPerformed
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
-
-            NumberAxis xAxis = (NumberAxis) internalFrameInFocus.getXYPlot().getDomainAxis();
-            NumberAxis yAxis = (NumberAxis) internalFrameInFocus.getXYPlot().getRangeAxis();
-            xAxis.setTickUnit(new NumberTickUnit(internalFrameInFocus.getXAxis()));
-            yAxis.setTickUnit(new NumberTickUnit(internalFrameInFocus.getYAxis()));
-
-            Object[] options = {"Yes",
-                "No"};
-            int n = JOptionPane.showOptionDialog(this,
-                    "Would you like to append legend(s) to printout?",
-                    "Set legend",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null, //do not use a custom Icon
-                    options, //the titles of buttons
-                    options[0]); //default button title
-            if (n == 0) {
-
-                CreateLegend createLegend = new CreateLegend();
-                createLegend.setLegend();
-                internalFrameInFocus.getChartPanel().createChartPrintJob();
-                internalFrameInFocus.getchart().removeLegend();
-                xAxis.getDefaultAutoRange();
-                yAxis.getDefaultAutoRange();
-            }
-            if (n == 1) {
-                internalFrameInFocus.getChartPanel().createChartPrintJob();
-                xAxis.getDefaultAutoRange();
-                yAxis.getDefaultAutoRange();
-            }
-
-        } else {
-            return;
-        }
-}//GEN-LAST:event_jPrintMenuActionPerformed
+    private void basicPrintMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_basicPrintMenuActionPerformed
+        jpowderPrint.basicPrint();
+}//GEN-LAST:event_basicPrintMenuActionPerformed
 
     private void pDfMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pDfMenuActionPerformed
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
@@ -1051,6 +983,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenu;
     private javax.swing.JMenuItem appletMenu;
+    private javax.swing.JMenuItem basicPrintMenu;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBoxMenuItem cascadeCheckBoxMenuItem;
     private static javax.swing.JDesktopPane chartPlotterPane;
@@ -1067,8 +1000,6 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private javax.swing.JPanel homePanel;
     private javax.swing.JMenuItem imageMenu;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jPrintMenu;
-    private javax.swing.JMenuItem jPrintPublishingMenu;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -1080,6 +1011,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private javax.swing.JMenuItem onlieDocsandSupportMenu;
     private javax.swing.JMenuItem pDfMenu;
     private javax.swing.JMenu printMenu;
+    private javax.swing.JMenuItem printPublishingMenu;
     private javax.swing.JMenuItem propertiesMenu;
     private javax.swing.JMenuItem redoMenu;
     private javax.swing.JMenu saveAsMenu;

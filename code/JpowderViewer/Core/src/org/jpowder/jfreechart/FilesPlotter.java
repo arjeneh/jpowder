@@ -186,7 +186,6 @@ public class FilesPlotter extends DatasetPlotter {
             }
         }
         plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
-                plot.setAxisOffset(RectangleInsets.ZERO_INSETS);
         chart = new JFreeChart(null, null, plot, false);// for getting the chart header
         chart.setBackgroundPaint(Color.white);
         return chart;
