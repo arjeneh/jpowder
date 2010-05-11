@@ -92,7 +92,7 @@ public class XYandXYE_Reader {
 
                     if (i <= 5) {
                         if (localData.elementAt(i).size() != secondRowCount) {
-                            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file formate.");
+                            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file format.");
                             return null;
                         }
                     } else {
@@ -130,16 +130,16 @@ public class XYandXYE_Reader {
             return retVal;
 
         } catch (MalformedURLException e) {
-            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file formate.");
+            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file format.");
             System.out.println("Malformed URL = " + e);
             return null;
         } catch (IOException io) {
-            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file formate.");
+            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file format.");
             System.out.println("IOException throws " + io);
             return null;
         } catch (java.lang.NumberFormatException nfe) {
 
-            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file formate.");
+            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file format.");
             System.out.println("NumberFormatException throws " + nfe);
             return null;
         }
