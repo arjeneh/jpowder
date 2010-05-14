@@ -249,7 +249,8 @@ public class Jpowder extends JFrame implements DropTargetListener {
         aboutMenu = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("JPowder Crystallography Demo");
+        setTitle("Jpowder");
+        setIconImage(new ImageIcon(getClass().getResource("/images/JpowderLogo.png")).getImage());
         setLocationByPlatform(true);
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(236, 233, 216))); // NOI18N
@@ -283,10 +284,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homePanelLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
             .addGroup(homePanelLayout.createSequentialGroup()
-                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
                 .addContainerGap())
         );
         homePanelLayout.setVerticalGroup(
@@ -559,7 +560,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(chartPlotterPane, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
+                .addComponent(chartPlotterPane, javax.swing.GroupLayout.DEFAULT_SIZE, 779, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(

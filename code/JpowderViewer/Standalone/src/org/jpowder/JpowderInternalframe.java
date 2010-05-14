@@ -130,6 +130,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
                 select();
             }
         });
+        
     }
 
     /**

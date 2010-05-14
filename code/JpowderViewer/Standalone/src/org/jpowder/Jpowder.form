@@ -349,7 +349,10 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="JPowder Crystallography Demo"/>
+    <Property name="title" type="java.lang.String" value="Jpowder"/>
+    <Property name="iconImage" type="java.awt.Image" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+      <Connection code="new ImageIcon(getClass().getResource(&quot;/images/JpowderLogo.png&quot;)).getImage()" type="code"/>
+    </Property>
     <Property name="locationByPlatform" type="boolean" value="true"/>
   </Properties>
   <SyntheticProperties>
@@ -375,7 +378,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="chartPlotterPane" pref="648" max="32767" attributes="0"/>
+              <Component id="chartPlotterPane" pref="779" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -419,11 +422,11 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-                      <Component id="dataVisibleInChartPanel" pref="300" max="32767" attributes="1"/>
+                      <Component id="dataVisibleInChartPanel" pref="317" max="32767" attributes="1"/>
                       <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="tabs" pref="310" max="32767" attributes="1"/>
+                      <Component id="tabs" pref="327" max="32767" attributes="1"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
