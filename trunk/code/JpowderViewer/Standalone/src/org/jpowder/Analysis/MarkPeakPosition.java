@@ -84,8 +84,9 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
             model.clear();
             return;
 
-        } else {
+        }else {
             getPeakCheckBox.setEnabled(true);
+
 
 
         }
@@ -366,7 +367,10 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
             removeAllButt.setSelected(false);
             return;
+        }else if(peakList.getModel().getSize()==0){
+            return;
         }
+
         removePeaksPosition();
     }//GEN-LAST:event_removeAllButtActionPerformed
 
@@ -374,6 +378,9 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
             removeButt.setSelected(false);
+            return;
+        }
+        else if(peakList.getModel().getSize()==0){
             return;
         }
 
@@ -508,6 +515,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
             inFocus.getXYPlot().removeDomainMarker(inFocus.getPeakDomainMarker().get(i));
         }
         //Range
+        inFocus.getPeakDomainMarker().clear();
 
         inFocus.getChartPanel().setVerticalAxisTrace(false);
 
