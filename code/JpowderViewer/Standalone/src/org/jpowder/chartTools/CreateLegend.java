@@ -112,7 +112,7 @@ public class CreateLegend {
                     inFocus.getXYPlot().setFixedLegendItems(legendItemCollection);
 
                      legend = new LegendTitle(inFocus.getXYPlot());
-
+                    
                     legend.setMargin(new RectangleInsets(1.0, 1.0, 1.0, 1.0));
                     legend.setPosition(RectangleEdge.BOTTOM);
                     inFocus.getchart().addSubtitle(legend);
