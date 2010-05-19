@@ -107,6 +107,7 @@ public class FilesPlotter extends DatasetPlotter {
 //    chartPanel.setMaximumSize(new java.awt.Dimension(300, 300));
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
+
 //        chartPanel.add(new JpowderPopupMenu(chartPanel));
         //User click and it brings up a new Frame for editing the chart.
         chartPanel.addChartMouseListener(new PowderChartMouseObserver(chartPanel));
@@ -144,9 +145,12 @@ public class FilesPlotter extends DatasetPlotter {
         renderer1.setSeriesPaint(0, getSeriesColors(0));
         JpowderXYErrorRender renderer2 = new JpowderXYErrorRender();
         renderer2.setSeriesPaint(0, getSeriesColors(0));
+
         //Displaying the X&Y in Tooltip
         XYToolTipGenerator tooltip = new StandardXYToolTipGenerator(
                 "{1},{2}", new DecimalFormat("0.000"), new DecimalFormat("0.000"));
+        renderer2.setToolTipGenerator(tooltip);
+        renderer1.setToolTipGenerator(tooltip);
         if (datasets.elementAt(0) instanceof DataSetNoErrors) {
 
             plot = new XYPlot(
@@ -157,12 +161,9 @@ public class FilesPlotter extends DatasetPlotter {
             plot = new XYPlot(new JpowderInternvalXYDataset((DataSetWithErrors) datasets.elementAt(0)),
                     xAxis, yAxis, renderer2);
 
-            renderer2.setToolTipGenerator(tooltip);
+
+
         }
-        plot.setBackgroundPaint(ChartColor.lightGray);
-        plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
-        plot.setDomainGridlinePaint(Color.white);
-        plot.setRangeGridlinePaint(Color.white);
 
         for (int i = 1; i < datasets.size(); i++) {
             JpowderXYLineAndShapeRender renderer3 = new JpowderXYLineAndShapeRender();
@@ -185,7 +186,20 @@ public class FilesPlotter extends DatasetPlotter {
                 plot.setRenderer(i, renderer4);
             }
         }
+        plot.setBackgroundPaint(ChartColor.lightGray);
+        plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
+//        plot.setAxisOffset(RectangleInsets.ZERO_INSETS);
+        xAxis.setAxisLinePaint(Color.BLACK);
+        yAxis.setAxisLinePaint(Color.BLACK);
+//        plot.setDomainGridlinesVisible(false);
+//        plot.setRangeGridlinesVisible(false);
+        plot.setOutlineVisible(false);
+        xAxis.setTickMarkPaint(Color.BLACK);
+        yAxis.setTickMarkPaint(Color.BLACK);
+        plot.setDomainGridlinePaint(Color.white);
+        plot.setRangeGridlinePaint(Color.white);
         plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
+        plot.getRenderer().setToolTipGenerator(tooltip);
         chart = new JFreeChart(null, null, plot, false);// for getting the chart header
         chart.setBackgroundPaint(Color.white);
         return chart;
