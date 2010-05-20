@@ -123,8 +123,7 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(true);
 
-        //Vector<Vector<Double>> localData = null;
-        DataSet oneDataset = null;
+        Vector<DataSet> datasets = null;
 
         // Set the accepted powder diffraction file extensions
         // and open a file chooser window for the user to select powder
@@ -149,21 +148,25 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
 
                 lStopwatch.start();
 
-                oneDataset = null;
-                oneDataset = createDataSetFromPowderFile(selectedFiles[i]);
+                datasets = null;
+                datasets = createDataSetFromPowderFile(selectedFiles[i]);
 
                 lStopwatch.reset();
 
-                // is it really necessary to get the file extension here since
-                // you should not have been allowed to a file with one of the
-                // extensions as defined in ACCEPTED_FILE_TYPE in the first place
-                if (checkAcceptedFileType(this.getLastUpdateFileName())) {
-                    if (oneDataset != null) {
-                        this.addFile(this.getLastUpdateFileName(), oneDataset);
-                    }
-                } else {
-                    javax.swing.JOptionPane.showMessageDialog(null, "File extension not recognised.");
-                }//acceptable end if extension matched
+                for (int iDataset = 0; iDataset < datasets.size(); iDataset++)
+                {
+                    DataSet oneDataset = datasets.elementAt(iDataset);
+                  // is it really necessary to get the file extension here since
+                  // you should not have been allowed to a file with one of the
+                  // extensions as defined in ACCEPTED_FILE_TYPE in the first place
+                  if (checkAcceptedFileType(this.getLastUpdateFileName())) {
+                      if (oneDataset != null) {
+                          this.addFile(this.getLastUpdateFileName(), oneDataset);
+                      }
+                  } else {
+                      javax.swing.JOptionPane.showMessageDialog(null, "File extension not recognised.");
+                  }//acceptable end if extension matched
+                }
             }//for
 
         }//if open approved
@@ -176,33 +179,35 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
      *
      * @param aFile Name of the powder diffraction file to be read
      */
-    public static DataSet createDataSetFromPowderFile(String filename) {
+    public static Vector<DataSet> createDataSetFromPowderFile(String filename) {
         return PowderFileCabinet.createDataSetFromPowderFile(new File(filename));
     }
 
-    public static DataSet createDataSetFromPowderFile(File aFile) {
+    public static Vector<DataSet> createDataSetFromPowderFile(File aFile) {
         FileInputStream fis = null;
+        Vector<DataSet> retval = new Vector<DataSet>();
         try {
             fis = new FileInputStream(aFile);
             //BufferedReader br = new BufferedReader(new InputStreamReader(fis));
             //int lineNum = 0;
             if (aFile.getName().endsWith("xye") || aFile.getName().endsWith("xy") || aFile.getName().endsWith("txt")) {
-                return XYandXYE_Reader.read(aFile);
+                retval.addElement(XYandXYE_Reader.read(aFile));
             }
             if (aFile.getName().endsWith("cif")) {
-                return Cif_Reader.read(aFile);
+                retval.addElement(Cif_Reader.read(aFile));
             }
              if (aFile.getName().endsWith("gss")) {
-                return GSAS_Reader.read(aFile);
+                retval.addElement(GSAS_Reader.read(aFile));
+                 //return GSAS_Reader.read(aFile);
             }
                if (aFile.getName().endsWith("")) {
-                return XYandXYE_Reader.read(aFile);
+                retval.addElement(XYandXYE_Reader.read(aFile));
             }
             if (aFile.getName().endsWith("")) {
-                return Cif_Reader.read(aFile);
+                retval.addElement(Cif_Reader.read(aFile));
             }
                if (aFile.getName().endsWith("")) {
-                return GSAS_Reader.read(aFile);
+                retval.addElement(GSAS_Reader.read(aFile));
             }
 
           
