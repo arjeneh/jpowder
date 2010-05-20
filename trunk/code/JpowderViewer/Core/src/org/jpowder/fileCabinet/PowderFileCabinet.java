@@ -43,11 +43,11 @@ import java.util.Vector;
 import javax.swing.JFileChooser;
 import org.jpowder.dataset.Cif_Reader;
 import org.jpowder.dataset.DataSet;
+import org.jpowder.dataset.GSAS_Reader;
 import org.jpowder.dataset.XYandXYE_Reader;
 import org.jpowder.util.Stopwatch;
 
 /**
- * File: PowderFileCabinet.java
  *
  * @description
  * THIS CLASS KEEPS ALL POWDER FILES IN A HASHMAP. IT LOADS AND
@@ -58,9 +58,8 @@ import org.jpowder.util.Stopwatch;
  * 
  * ALL LISTENER HAS TO IMPLEMENT POWDERFILEOBSERVER* 
  * 
- * @author kreecha_pu@yahoo.com Kreecha Pupahiboon
  * 
- * This code is copyright (c) 2008 Rutherford Appleton and Kasem Bundit University
+ * 
  */
 public class PowderFileCabinet extends javax.swing.JComponent implements Subject, Serializable {
 
@@ -193,11 +192,17 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
             if (aFile.getName().endsWith("cif")) {
                 return Cif_Reader.read(aFile);
             }
+             if (aFile.getName().endsWith("gss")) {
+                return GSAS_Reader.read(aFile);
+            }
                if (aFile.getName().endsWith("")) {
                 return XYandXYE_Reader.read(aFile);
             }
             if (aFile.getName().endsWith("")) {
                 return Cif_Reader.read(aFile);
+            }
+               if (aFile.getName().endsWith("")) {
+                return GSAS_Reader.read(aFile);
             }
 
           
