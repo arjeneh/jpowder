@@ -166,7 +166,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
 
 
         popupMenu.add(saveAs = new JMenu("Save As..."));
-        saveAs.add(menuItem = new JMenuItem("Jpowder Applet"));
+        saveAs.add(menuItem = new JMenuItem("Jpowder-Applet Format"));
         menuItem.setActionCommand(JPOWDER_APPLET_CAMAND);
         menuItem.addActionListener(this);
         saveAs.add(menuItem = new JMenuItem("Image"));
@@ -239,7 +239,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
     public void saveAsJpowderApplet() {
         JFileChooser chooser = new JFileChooser();
         ExtensionFileFilter filter = new ExtensionFileFilter(
-                "Jpowder Applet (*.ser)", ".ser");
+                "Jpowder-Applet Format (*.ser)", ".ser");
         chooser.addChoosableFileFilter(filter);
         int returnVal = chooser.showSaveDialog(this);
         File fileName = chooser.getSelectedFile();
