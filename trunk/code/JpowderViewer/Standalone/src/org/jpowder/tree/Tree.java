@@ -46,7 +46,15 @@ package org.jpowder.tree;
  *                  move FileSystemView to the JpowderFileSystemTreeModel.java
  */
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.beans.XMLEncoder;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.tree.TreeModel;
@@ -55,12 +63,12 @@ import javax.swing.tree.TreePath;
 /**
  *
  */
-public class Tree extends JPanel {
+public class Tree extends JPanel implements Serializable {
 
     private JpowderFileSystemTreeModel model = new JpowderFileSystemTreeModel();
     private JpowderFileTreeRenderer renderer = new JpowderFileTreeRenderer();
     private java.awt.dnd.DropTarget dt;
-    private JTree tree;
+    private  JTree tree;
 
     /**
      * Creates the file tree panel.
@@ -106,6 +114,7 @@ public class Tree extends JPanel {
         final JScrollPane jsp = new JScrollPane(this.tree);
         jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
         this.add(jsp, BorderLayout.CENTER);
+     
     }
 
     /**
@@ -166,7 +175,7 @@ public class Tree extends JPanel {
      *
      * @return The value of the JTree.
      */
-    public JTree getTree() {
+    public  JTree getTree() {
         return tree;
     }
 
@@ -177,15 +186,40 @@ public class Tree extends JPanel {
                 JFrame frame = new JFrame("File tree");
                 frame.setSize(200, 400);
                 frame.setLocationRelativeTo(null);
-
-                JpowderFileSystemTreeModel treeModel = new JpowderFileSystemTreeModel();
+                final JpowderFileSystemTreeModel treeModel = new JpowderFileSystemTreeModel();
                 frame.add(new Tree(treeModel));
 
+                frame.addWindowListener(new WindowAdapter() {
 
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    @Override
+                    public void windowClosing(WindowEvent event) {
+                        try {
+//
+//                            FileOutputStream buffer = new FileOutputStream("C://Jtree.obj");
+//                            final ObjectOutput out = new ObjectOutputStream(buffer);
+//                            out.writeObject(new Tree(treeModel));
+//                            out.flush();
+//                            out.close();
+
+//                            XMLEncoder e = new XMLEncoder(
+//                                    new BufferedOutputStream(
+//                                    new FileOutputStream("C://Test.xml")));
+//
+//                            e.writeObject(new Tree(treeModel));
+//                            e.close();
+//
+                        } catch (Exception exception) {
+                            System.err.println(exception);
+                        }
+                    }
+                });
+
+               frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setVisible(true);
+
             }
         });
     }
+
 }
 

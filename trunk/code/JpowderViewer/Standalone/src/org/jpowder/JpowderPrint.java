@@ -31,6 +31,7 @@ package org.jpowder;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.Serializable;
 import javax.swing.JOptionPane;
 import org.jfree.chart.ChartColor;
 import org.jfree.chart.axis.NumberAxis;
@@ -41,7 +42,7 @@ import org.jpowder.chartTools.CreateLegend;
  *This class prints the chart
  *
  */
-public class JpowderPrint {
+public class JpowderPrint implements Serializable{
 
     /**
      * this method invokes on print out which enable users to add legend to the
