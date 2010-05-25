@@ -192,22 +192,28 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
             //int lineNum = 0;
             if (aFile.getName().endsWith("xye") || aFile.getName().endsWith("xy") || aFile.getName().endsWith("txt")) {
                 retval.addElement(XYandXYE_Reader.read(aFile));
+                return retval;
             }
             if (aFile.getName().endsWith("cif")) {
                 retval.addElement(Cif_Reader.read(aFile));
+                return retval;
             }
              if (aFile.getName().endsWith("gss")) {
                 retval.addElement(GSAS_Reader.read(aFile));
+                return retval;
                  //return GSAS_Reader.read(aFile);
             }
                if (aFile.getName().endsWith("")) {
                 retval.addElement(XYandXYE_Reader.read(aFile));
+                return retval;
             }
             if (aFile.getName().endsWith("")) {
                 retval.addElement(Cif_Reader.read(aFile));
+                return retval;
             }
                if (aFile.getName().endsWith("")) {
                 retval.addElement(GSAS_Reader.read(aFile));
+                return retval;
             }
 
           

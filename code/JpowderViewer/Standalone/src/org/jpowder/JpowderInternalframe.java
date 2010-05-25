@@ -392,15 +392,17 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         Vector<DataSet> toPass = new Vector<DataSet>();
         for (int i = 0; i < allfiles.size(); i++) {
 
-            oneDataset = null;
-            oneDataset = PowderFileCabinet.createDataSetFromPowderFile(allfiles.get(i));
-            if (oneDataset != null) {
-                m_data.add(oneDataset);
+            Vector<DataSet> allDatasets = PowderFileCabinet.createDataSetFromPowderFile(allfiles.get(i));
+            for (int iSet = 0; iSet < allDatasets.size(); iSet++)
+            {
+              if (allDatasets.elementAt(iSet) != null) {
+                m_data.add(allDatasets.elementAt(iSet));
                 numGoodFilenames = numGoodFilenames + 1;
-                toPass.add(oneDataset);
-            } else {
+                toPass.add(allDatasets.elementAt(iSet));
+              } else {
 //                javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
                 break;
+              }
             }
         }
         if (numGoodFilenames > 0) {

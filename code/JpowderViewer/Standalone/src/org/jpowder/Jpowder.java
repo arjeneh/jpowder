@@ -806,7 +806,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(true);
 
-        DataSet oneDataset = null;
+        //DataSet oneDataset = null;
 
         // Set the accepted powder diffraction file extensions
         // and open a file chooser window for the user to select powder
@@ -830,10 +830,14 @@ public class Jpowder extends JFrame implements DropTargetListener {
                 file = entry.getValue();
                 if (mPowderFileCabinet.checkAcceptedFileType(fileName)) {
 
-                    oneDataset = PowderFileCabinet.createDataSetFromPowderFile(file);
 
-                    if (oneDataset != null) {
+                    Vector<DataSet> allDatasets = PowderFileCabinet.createDataSetFromPowderFile(file);
+                    for (int iSet = 0; iSet < allDatasets.size(); iSet++)
+                    {
+                      DataSet oneDataset = allDatasets.elementAt(iSet);
+                      if (oneDataset != null) {
                         datasets.add(oneDataset);
+                      }
                     }
                 } else {
                     javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
@@ -930,11 +934,14 @@ public class Jpowder extends JFrame implements DropTargetListener {
             File file = entry.getValue();
             if (mPowderFileCabinet.checkAcceptedFileType(fileName)) {
 
-                oneDataset = PowderFileCabinet.createDataSetFromPowderFile(file);
-                if (oneDataset != null) {
-                    datasets.add(oneDataset);
-                } else {
+                Vector<DataSet> allDatasets = PowderFileCabinet.createDataSetFromPowderFile(file);
+                for (int iSet = 0; iSet < allDatasets.size(); iSet++)
+                {                    
+                  if (allDatasets.elementAt(iSet) != null) {
+                    datasets.add(allDatasets.elementAt(iSet));
+                  } else {
                     return;
+                  }
                 }
             } else {
                 //return so no chart object is created and Expception is not thrown.
