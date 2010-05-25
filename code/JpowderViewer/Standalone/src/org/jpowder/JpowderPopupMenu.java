@@ -40,6 +40,7 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
+import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -75,7 +76,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
     public static final String PDF_CAMAND = "PDF";
     public static final String JPOWDER_APPLET_CAMAND = "JPOWDER_APPLET";
     public static final String PRINT_FOR_PUBLICATION_CAMAND = "PRINT_FOR_PUBLICATION";
-    private JMenu saveAs, printAs, zoomIn, zoomOut, autoRange;
+    private JMenu saveAs, printAs, zoomIn, zoomOut;
     private JMenuItem menuItem;
     /** A flag that controls whether or not file extensions are enforced. */
     private boolean enforceFileExtensions = true;
@@ -204,7 +205,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
 
 
         popupMenu.add(zoomOut = new JMenu("Zoom Out"));
-        popupMenu.addSeparator();
+//        popupMenu.addSeparator();
         zoomOut.add(menuItem = new JMenuItem("Both Axes"));
         menuItem.setActionCommand(ChartPanel.ZOOM_OUT_BOTH_COMMAND);
         menuItem.addActionListener(this);
@@ -217,17 +218,17 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         menuItem.addActionListener(this);
 
 
-        popupMenu.add(autoRange = new JMenu("Auto Range"));
-        autoRange.add(menuItem = new JMenuItem("Both Axes"));
-        menuItem.setActionCommand(ChartPanel.ZOOM_RESET_BOTH_COMMAND);
-        menuItem.addActionListener(this);
-        autoRange.addSeparator();
-        autoRange.add(menuItem = new JMenuItem("X Axis"));
-        menuItem.setActionCommand(ChartPanel.ZOOM_RESET_DOMAIN_COMMAND);
-        menuItem.addActionListener(this);
-        autoRange.add(menuItem = new JMenuItem("Y Axis"));
-        menuItem.setActionCommand(ChartPanel.ZOOM_RESET_RANGE_COMMAND);
-        menuItem.addActionListener(this);
+//        popupMenu.add(autoRange = new JMenu("Auto Range"));
+//        autoRange.add(menuItem = new JMenuItem("Both Axes"));
+//        menuItem.setActionCommand(ChartPanel.ZOOM_RESET_BOTH_COMMAND);
+//        menuItem.addActionListener(this);
+//        autoRange.addSeparator();
+//        autoRange.add(menuItem = new JMenuItem("X Axis"));
+//        menuItem.setActionCommand(ChartPanel.ZOOM_RESET_DOMAIN_COMMAND);
+//        menuItem.addActionListener(this);
+//        autoRange.add(menuItem = new JMenuItem("Y Axis"));
+//        menuItem.setActionCommand(ChartPanel.ZOOM_RESET_RANGE_COMMAND);
+//        menuItem.addActionListener(this);
     }
 
  
@@ -276,12 +277,17 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
                 }
                 FileOutputStream buffer = new FileOutputStream(filename);
                 final ObjectOutput out = new ObjectOutputStream(buffer);
+                
                 out.writeObject(chart);
+
+                out.flush();
+                out.close();
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(null, "Invalid file!",
                         "error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
+           
         }
     }
 
