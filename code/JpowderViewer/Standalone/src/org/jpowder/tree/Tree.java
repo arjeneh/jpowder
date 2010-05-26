@@ -48,12 +48,7 @@ package org.jpowder.tree;
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.beans.XMLEncoder;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -81,7 +76,6 @@ public class Tree extends JPanel implements Serializable {
         FileTreeNode rootTreeNode = new FileTreeNode(roots);
         this.tree = new JTree(rootTreeNode);
         this.tree.setDragEnabled(true);
-        this.tree.expandRow(1);
         this.tree.setRootVisible(true);
 
         final JScrollPane jsp = new JScrollPane(this.tree);
@@ -105,7 +99,8 @@ public class Tree extends JPanel implements Serializable {
         this.tree.setRootVisible(false);
         this.tree.setShowsRootHandles(true);
         this.tree.setDragEnabled(true);
-
+//        this.tree.expandRow(0);
+//        this.tree.expandRow(1);
         //TODO: when user double-click, it plot the graph.
         //JpowderFileTreeMouseListener ml = new JpowderFileTreeMouseListener();
         //this.tree.addMouseListener(ml);
@@ -194,7 +189,7 @@ public class Tree extends JPanel implements Serializable {
                     @Override
                     public void windowClosing(WindowEvent event) {
                         try {
-//
+
 //                            FileOutputStream buffer = new FileOutputStream("C://Jtree.obj");
 //                            final ObjectOutput out = new ObjectOutputStream(buffer);
 //                            out.writeObject(new Tree(treeModel));

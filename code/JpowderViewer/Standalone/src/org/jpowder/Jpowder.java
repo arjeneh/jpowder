@@ -54,6 +54,7 @@ import org.jpowder.dataset.DataSet;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.util.ScreenUtil;
 import java.awt.*;
+import java.lang.management.MemoryUsage;
 import java.net.URI;
 import java.net.URISyntaxException;
 import javax.swing.*;
@@ -194,6 +195,32 @@ public class Jpowder extends JFrame implements DropTargetListener {
 //            chartPlotterPane.repaint();
 //        }
 
+    }
+
+    public void moemoryChecker() {
+
+        double oneByte = (1024*1024);//M bytes
+
+        long totalM = (long) (Runtime.getRuntime().totalMemory() / oneByte);
+        long freeM = (long) (Runtime.getRuntime().freeMemory() / oneByte);
+        long MaxM = (long) (Runtime.getRuntime().maxMemory() / oneByte);
+        if ((totalM - freeM) > 120) {
+//            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//            this.setExtendedState(JFrame.ICONIFIED);
+//            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            // create a double internal frame and add to Plot Area
+            // and then delete to trick JWM
+            // print out new memory size
+            JInternalFrame frame = new JInternalFrame("Memory release");
+            chartPlotterPane.add(frame);
+
+//            this.setSize(500, 500);
+        }
+            System.out.println("total M : " + totalM);
+            System.out.println("free M : " + freeM);
+            System.out.println("Max M : " + MaxM);
+            System.out.println("total- free M: " + (totalM - freeM));
+        
     }
 
     /** This method is called from within the constructor to
@@ -760,7 +787,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 }//GEN-LAST:event_closeFrameMenuActionPerformed
 
     private void printPublishingMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printPublishingMenuActionPerformed
-           jpowderPrint.printForPublication();
+        jpowderPrint.printForPublication();
 }//GEN-LAST:event_printPublishingMenuActionPerformed
 
     private void basicPrintMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_basicPrintMenuActionPerformed
@@ -832,12 +859,14 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
 
                     Vector<DataSet> allDatasets = PowderFileCabinet.createDataSetFromPowderFile(file);
-                    for (int iSet = 0; iSet < allDatasets.size(); iSet++)
-                    {
-                      DataSet oneDataset = allDatasets.elementAt(iSet);
-                      if (oneDataset != null) {
-                        datasets.add(oneDataset);
-                      }
+                    if (allDatasets == null) {
+                        return;
+                    }
+                    for (int iSet = 0; iSet < allDatasets.size(); iSet++) {
+                        DataSet oneDataset = allDatasets.elementAt(iSet);
+                        if (oneDataset != null) {
+                            datasets.add(oneDataset);
+                        }
                     }
                 } else {
                     javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
@@ -881,6 +910,8 @@ public class Jpowder extends JFrame implements DropTargetListener {
         double y = dtde.getLocation().getY();
         dropLocationX = x;
         dropLocationY = y;
+
+        
 
         DataSet oneDataset = null;
         Vector<DataSet> datasets = new Vector<DataSet>();
@@ -934,14 +965,17 @@ public class Jpowder extends JFrame implements DropTargetListener {
             File file = entry.getValue();
             if (mPowderFileCabinet.checkAcceptedFileType(fileName)) {
 
+
                 Vector<DataSet> allDatasets = PowderFileCabinet.createDataSetFromPowderFile(file);
-                for (int iSet = 0; iSet < allDatasets.size(); iSet++)
-                {                    
-                  if (allDatasets.elementAt(iSet) != null) {
-                    datasets.add(allDatasets.elementAt(iSet));
-                  } else {
+                if (allDatasets == null) {
                     return;
-                  }
+                }
+                for (int iSet = 0; iSet < allDatasets.size(); iSet++) {
+                    if (allDatasets.elementAt(iSet) != null) {
+                        datasets.add(allDatasets.elementAt(iSet));
+                    } else {
+                        return;
+                    }
                 }
             } else {
                 //return so no chart object is created and Expception is not thrown.
@@ -960,6 +994,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         chartPlotterPane.add(internalframe);
         setVisible(true);
         displayingMessageLabel();
+        moemoryChecker();
     }
 
     /**
