@@ -40,6 +40,7 @@ import org.jpowder.util.VectorMiscUtil;
 public abstract class DataSet {
 
     private Vector<Double> x;
+    private String xUnit = "2θ"; // other units "TOF" etc
     private Vector<Double> y;
     private String fileName;
     private double waveLength;
@@ -87,5 +88,13 @@ public abstract class DataSet {
     public  void setWaveLength(double waveLength) {
        this.waveLength=waveLength;
     }
+    public String getXUnit() {
+        return xUnit;
+    }
+
+    public  void setXUnit(String xunit) {
+       this.xUnit=xunit;
+    }
+
 }
 

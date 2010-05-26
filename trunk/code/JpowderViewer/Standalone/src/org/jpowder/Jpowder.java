@@ -213,13 +213,16 @@ public class Jpowder extends JFrame implements DropTargetListener {
             // print out new memory size
             JInternalFrame frame = new JInternalFrame("Memory release");
             chartPlotterPane.add(frame);
+            chartPlotterPane.remove(frame);
 
 //            this.setSize(500, 500);
         }
-            System.out.println("total M : " + totalM);
-            System.out.println("free M : " + freeM);
-            System.out.println("Max M : " + MaxM);
-            System.out.println("total- free M: " + (totalM - freeM));
+
+            System.out.println("total M new : " + totalM);
+            System.out.println("free M new : " + freeM);
+            System.out.println("Max M new : " + MaxM);
+            System.out.println("total- free M new: " + (totalM - freeM));
+
         
     }
 
