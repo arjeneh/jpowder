@@ -393,6 +393,9 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         for (int i = 0; i < allfiles.size(); i++) {
 
             Vector<DataSet> allDatasets = PowderFileCabinet.createDataSetFromPowderFile(allfiles.get(i));
+              if(allDatasets==null){
+                  return;
+                  }
             for (int iSet = 0; iSet < allDatasets.size(); iSet++)
             {
               if (allDatasets.elementAt(iSet) != null) {

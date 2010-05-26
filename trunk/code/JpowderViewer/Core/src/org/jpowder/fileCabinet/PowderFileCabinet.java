@@ -199,9 +199,9 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
                 return retval;
             }
              if (aFile.getName().endsWith("gss")) {
-                retval.addElement(GSAS_Reader.read(aFile));
-                return retval;
-                 //return GSAS_Reader.read(aFile);
+                //retval.addElement(GSAS_Reader.read(aFile));
+                //return retval;
+                 return GSAS_Reader.read(aFile);
             }
                if (aFile.getName().endsWith("")) {
                 retval.addElement(XYandXYE_Reader.read(aFile));
@@ -211,14 +211,12 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
                 retval.addElement(Cif_Reader.read(aFile));
                 return retval;
             }
-               if (aFile.getName().endsWith("")) {
-                retval.addElement(GSAS_Reader.read(aFile));
-                return retval;
-            }
+             
 
           
             return null;
         } catch (Exception ex) {
+            System.out.println(ex);
                  javax.swing.JOptionPane.showMessageDialog(null, "Can't process selected file or directory.");
         } finally {
             try {
