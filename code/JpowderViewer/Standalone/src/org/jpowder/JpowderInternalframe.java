@@ -59,6 +59,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.XYPlot;
+import org.jpowder.Analysis.ToolsIcon;
 
 
 /**
@@ -99,11 +100,8 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         dropTarget = new DropTarget(this, this);
         internalframeStackes.push(this);
         javax.swing.JPanel chartPanel = new javax.swing.JPanel();
-
         this.dataVisibleInChartPanel = dataVisibleInChartPanel;
-
         this.add(chartPanel);
-
         m_data = data;
         plotMultiCol = DatasetPlotter.createDatasetPlotter(data);
         chartPanel.setLayout(new BorderLayout());
@@ -121,6 +119,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
         this.setMaximizable(true);
         this.setResizable(true);
         this.setIconifiable(true);
+        this.setFrameIcon(new ImageIcon(getClass().getResource("/images/JpowderLogo.png")));
         this.setSize(Jpowder.getChartPlotter().getWidth() / 2, INTERNALFRAME_HEIGHT);
 
         this.setLocation((int) Jpowder.getDropLocationX(), (int) Jpowder.getDropLocationY());
@@ -415,6 +414,7 @@ public class JpowderInternalframe extends JInternalFrame implements DropTargetLi
                     this.getPowderDataSet());
         }
          Jpowder.jpowderInternalFrameUpdate(this);
+         Jpowder.moemoryChecker();
     }
 }
 

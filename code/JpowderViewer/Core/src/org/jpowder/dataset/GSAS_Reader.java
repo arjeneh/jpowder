@@ -46,11 +46,10 @@ import java.util.logging.Logger;
 public class GSAS_Reader {
 
     private static String aLine;
-    private static Vector<Vector<Double>> localData = new Vector<Vector<Double>>();
 
     public static Vector<DataSet> read(File aFile) {
 
-
+        Vector<Vector<Double>> localData = new Vector<Vector<Double>>();
 
         Vector<DataSet> retVal = new Vector<DataSet>();
         try {
@@ -70,13 +69,11 @@ public class GSAS_Reader {
                     } else {
                         javax.swing.JOptionPane.showMessageDialog(null, "File must contain either 2 or 3 columns");
                     }
-
                 } // finished reading in bank
             }
             fileReader.close();
             bufferedReader.close();
             return retVal;
-
 
         } catch (MalformedURLException e) {
             javax.swing.JOptionPane.showMessageDialog(null, "Invalid file format.");
@@ -96,6 +93,7 @@ public class GSAS_Reader {
 
     // read in powder data file until row does not consist of numbers
     public static Vector<Vector<Double>> readBank(BufferedReader br) {
+        Vector<Vector<Double>> localData = new Vector<Vector<Double>>();
         try {
             while ((aLine = br.readLine()) != null) {
                 //                        System.out.println(aLine);
@@ -138,10 +136,10 @@ public class GSAS_Reader {
 //            System.out.println("binwidth" + binwidth);
             for (int i = 0; i < localData.size(); i++) {
                 // divide all y-data by binwidth*step_number
-               // localData.get(i).setElementAt(localData.get(i).get(1) / ((i + 1) * binwidth), 1);
+                // localData.get(i).setElementAt(localData.get(i).get(1) / ((i + 1) * binwidth), 1);
                 localData.get(i).setElementAt(localData.get(i).get(2) / ((i + 1) * binwidth), 2);
 
-                localData.get(i).setElementAt(localData.get(i).get(1) *x0/ (localData.get(i).get(0) * binwidth), 1);
+                localData.get(i).setElementAt(localData.get(i).get(1) * x0 / (localData.get(i).get(0) * binwidth), 1);
 
 
 //                  // divide all error-data by binwidth*step_number

@@ -31,6 +31,11 @@
 
 package org.jpowder;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
+import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 
 /**
@@ -42,8 +47,10 @@ public class About extends javax.swing.JFrame {
     /** Creates new form About */
     public About() {
         initComponents();
-
+    
     }
+  
+    
     public static JTextField getDateTextField() {
         return buidDateTextField;
     }
@@ -71,6 +78,7 @@ public class About extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("About");
+        setIconImage(new ImageIcon(getClass().getResource("/images/JpowderLogo.png")).getImage());
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -119,8 +127,9 @@ public class About extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabel4.setText(").");
 
+        buidDateTextField.setBackground(new java.awt.Color(255, 255, 255));
         buidDateTextField.setEditable(false);
-        buidDateTextField.setFont(new java.awt.Font("Tahoma", 1, 12));
+        buidDateTextField.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         buidDateTextField.setBorder(null);
         buidDateTextField.setMargin(new java.awt.Insets(2, 0, 0, 2));
 
