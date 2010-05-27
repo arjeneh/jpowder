@@ -29,6 +29,7 @@
  */
 package org.jpowder.Analysis;
 
+import javax.swing.JButton;
 import org.jpowder.Jpowder;
 import org.jpowder.chartTools.ChangePlotStyle;
 import org.jpowder.chartTools.ZoomAndPan;
@@ -51,8 +52,6 @@ public class ToolsIcon extends javax.swing.JPanel {
     public ToolsIcon(Jpowder jpowder) {
         initComponents();
         this.jpowder = jpowder;
-
-  
     }
 
     /** This method is called from within the constructor to

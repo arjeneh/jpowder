@@ -35,6 +35,7 @@ import java.awt.Color;
 import java.awt.Paint;
 import java.text.DecimalFormat;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import org.jfree.chart.ChartColor;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -100,7 +101,17 @@ public class FilesPlotter extends DatasetPlotter {
         plot.setDomainPannable(true);
         plot.setRangePannable(true);
 
-
+      for (int i = 0; i < plot.getDatasetCount(); i++) {
+            if (datasets.get(i).getFileName().endsWith("gss")) {
+                plot.getDomainAxis().setLabel("TOF");
+            }
+//            if(datasets.get(i).getFileName().endsWith("gss")&&datasets.get(i).getFileName().endsWith("")){
+//            JOptionPane.showMessageDialog(null,
+//            "Really u r dump.",
+//            "warning",
+//             JOptionPane.WARNING_MESSAGE);
+//            }
+        }
         // create panel from chart and set some panel attributes
         ChartPanel chartPanel = new ChartPanel(chart, true);
 
@@ -132,10 +143,14 @@ public class FilesPlotter extends DatasetPlotter {
      */
     @SuppressWarnings("static-access")
     public JFreeChart createChart() {
+
+
         String x = "2\u03D1";//unicode 2thetha
         NumberAxis xAxis = new NumberAxis(x.toUpperCase());
         NumberAxis yAxis = new NumberAxis("Intensity");
         yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+
+  
 
 //         xAxis.setAxisLineVisible(false);
 //        yAxis.setAxisLineVisible(false);
@@ -234,4 +249,5 @@ public class FilesPlotter extends DatasetPlotter {
         plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
 
     }
+
 }

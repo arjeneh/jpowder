@@ -21,9 +21,9 @@
  * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
  * Kasem Bundit University.
  *
- * Author(s):  Kirill Grouchnikov
- *             Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
+ * Author(s):  Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
  *             M Arjeneh, ISIS, Rutherford Appleton Laboratory
+ *             
  * 
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
@@ -52,6 +52,8 @@ import java.io.File;
 import java.io.Serializable;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.TreeExpansionEvent;
+import javax.swing.event.TreeExpansionListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
@@ -65,23 +67,6 @@ public class Tree extends JPanel implements Serializable {
     private java.awt.dnd.DropTarget dt;
     private  JTree tree;
 
-    /**
-     * Creates the file tree panel.
-     * Milad created.
-     */
-    public Tree() {
-
-        this.setLayout(new BorderLayout());
-        File[] roots = File.listRoots();
-        FileTreeNode rootTreeNode = new FileTreeNode(roots);
-        this.tree = new JTree(rootTreeNode);
-        this.tree.setDragEnabled(true);
-        this.tree.setRootVisible(true);
-
-        final JScrollPane jsp = new JScrollPane(this.tree);
-        jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
-        this.add(jsp, BorderLayout.CENTER);
-    }
 
     /**
      *
@@ -99,7 +84,19 @@ public class Tree extends JPanel implements Serializable {
         this.tree.setRootVisible(false);
         this.tree.setShowsRootHandles(true);
         this.tree.setDragEnabled(true);
-//        this.tree.expandRow(0);
+        this.tree.expandRow(0);
+        TreePath treePath = new TreePath(new File("C:\\Documents and Settings\\qyt21516\\Desktop\\My Dropbox"));
+        tree.expandPath(treePath);
+        int row = tree.getRowForPath(new TreePath(new File("C:\\Documents and Settings\\qyt21516\\Desktop\\My Dropbox")));
+        tree.expandRow(row);
+        System.out.println(row);
+        System.out.println(treePath.getPath().toString());
+
+//        tree.setSelectionPath(treePath);
+        
+        
+
+
 //        this.tree.expandRow(1);
         //TODO: when user double-click, it plot the graph.
         //JpowderFileTreeMouseListener ml = new JpowderFileTreeMouseListener();
@@ -109,7 +106,24 @@ public class Tree extends JPanel implements Serializable {
         final JScrollPane jsp = new JScrollPane(this.tree);
         jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
         this.add(jsp, BorderLayout.CENTER);
-     
+
+
+                TreeExpansionListener treeExpandListener = new TreeExpansionListener() {
+
+            public void treeExpanded(TreeExpansionEvent event) {
+                TreePath path = event.getPath();
+                System.out.println(tree.getRowForPath(path));
+                System.out.println("Expanded: "+event.getPath());
+
+               
+            }
+
+            public void treeCollapsed(TreeExpansionEvent event) {
+                TreePath path = event.getPath();
+                System.out.println("Collapsed: " );
+            }
+        };
+             tree.addTreeExpansionListener(treeExpandListener);
     }
 
     /**

@@ -72,6 +72,7 @@ public class JpowderFileSystemTreeModel extends PowderFileSystemModel {
     public JpowderFileSystemTreeModel(FileSystemView fsv, File[] roots) {
         this.fsv = fsv;
         this.roots = roots;
+
         treeListeners = new FileSystemTreeModelSupport();
         sortedChildren = new HashMap<File, List<File>>();
         lastModifiedTimes = new HashMap<File, Long>();

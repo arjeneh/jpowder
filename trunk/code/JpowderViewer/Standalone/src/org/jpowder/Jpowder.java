@@ -197,7 +197,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
     }
 
-    public void moemoryChecker() {
+    public static void moemoryChecker() {
 
         double oneByte = (1024*1024);//M bytes
 
@@ -205,12 +205,18 @@ public class Jpowder extends JFrame implements DropTargetListener {
         long freeM = (long) (Runtime.getRuntime().freeMemory() / oneByte);
         long MaxM = (long) (Runtime.getRuntime().maxMemory() / oneByte);
         if ((totalM - freeM) > 120) {
-//            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//            this.setExtendedState(JFrame.ICONIFIED);
-//            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
             // create a double internal frame and add to Plot Area
             // and then delete to trick JWM
             // print out new memory size
+            JOptionPane.showMessageDialog(null,
+                    "Close some of charts " +
+                    "you are about to run out of memory.",
+                    "Memory warning",
+                    JOptionPane.WARNING_MESSAGE);
+
+//            this.setExtendedState(JFrame.ICONIFIED);
+//            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//            this.setSize(1154, 888);
             JInternalFrame frame = new JInternalFrame("Memory release");
             chartPlotterPane.add(frame);
             chartPlotterPane.remove(frame);
@@ -218,10 +224,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
 //            this.setSize(500, 500);
         }
 
-            System.out.println("total M new : " + totalM);
-            System.out.println("free M new : " + freeM);
-            System.out.println("Max M new : " + MaxM);
-            System.out.println("total- free M new: " + (totalM - freeM));
+            System.out.println("total M : " + totalM);
+            System.out.println("free M  : " + freeM);
+            System.out.println("Max M  : " + MaxM);
+            System.out.println("total- free M : " + (totalM - freeM));
 
         
     }
@@ -885,6 +891,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
             internalframe.addInternalFrameListener(internalFrameListener);
             chartPlotterPane.add(internalframe);
             setVisible(true);
+            moemoryChecker();
 
         }//if open approved
 
