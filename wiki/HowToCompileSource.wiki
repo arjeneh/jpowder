@@ -10,4 +10,4 @@ and from the ‘Build Type’ dropdown menu select ‘release’.
 
 The next step is to download the source from by clicking the 'Source' tab or following the link http://code.google.com/p/jpowder/source/checkout.
 
-And finally from Netbeans select 
+And finally from Netbeans select File->Open Project... and from your downloaded SVN go to the directory code/JpowderViewer and select from this directory the Netbeans folders Applet, Core and Standalone.
