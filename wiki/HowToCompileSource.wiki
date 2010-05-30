@@ -7,3 +7,7 @@ The source code contains the project files for Netbeans version 6.7, which is co
 
 On this web site select ‘!NetBeans version’ from the drop down menu 
 and from the ‘Build Type’ dropdown menu select ‘release’.
+
+The next step is to download the source from by clicking the 'Source' tab or following the link http://code.google.com/p/jpowder/source/checkout.
+
+And finally from Netbeans select 
