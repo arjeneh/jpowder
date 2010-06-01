@@ -40,7 +40,6 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
-import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -55,11 +54,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import org.jfree.chart.ChartColor;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.ui.ExtensionFileFilter;
-
 
 /**
  * This class created some new popupMenu and also amodifiies the default
@@ -74,6 +73,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
     private XYPlot plot;
     private double X = -1;
     public static final String PDF_CAMAND = "PDF";
+    public static final String PDFForPublicatio_CAMAND = "PDFForPublication";
     public static final String JPOWDER_APPLET_CAMAND = "JPOWDER_APPLET";
     public static final String PRINT_FOR_PUBLICATION_CAMAND = "PRINT_FOR_PUBLICATION";
     private JMenu saveAs, printAs, zoomIn, zoomOut;
@@ -102,7 +102,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
      * @param e
      */
     public void actionPerformed(ActionEvent e) {
- JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         String command = e.getActionCommand();
         if (command.equals(ChartPanel.PROPERTIES_COMMAND)) {
             chartPanel.doEditChartProperties();
@@ -117,7 +117,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
             }
         } else if (command.equals(ChartPanel.PRINT_COMMAND)) {
             jpowderPrint.basicPrint();
-             
+
 
         } else if (command.equals(ChartPanel.ZOOM_IN_BOTH_COMMAND)) {
             chartPanel.zoomInBoth(X, X);
@@ -142,8 +142,13 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         } else if (command.equals(JPOWDER_APPLET_CAMAND)) {
             saveAsJpowderApplet();
         } else if (command.equals(PDF_CAMAND)) {
-
             pDF();   //e.getSource()   
+        } else if (command.equals(PDFForPublicatio_CAMAND)) {
+            inFocus.getXYPlot().setBackgroundPaint(ChartColor.white);
+            inFocus.getXYPlot().setOutlinePaint(ChartColor.white);
+            pDF();
+            inFocus.getXYPlot().setBackgroundPaint(ChartColor.LIGHT_GRAY);
+            inFocus.getXYPlot().setOutlinePaint(ChartColor.LIGHT_GRAY);
         }
 
     }
@@ -175,6 +180,9 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         menuItem.addActionListener(this);
         saveAs.add(menuItem = new JMenuItem("PDF"));
         menuItem.setActionCommand(PDF_CAMAND);
+        menuItem.addActionListener(this);
+        saveAs.add(menuItem = new JMenuItem("PDF For Publication"));
+        menuItem.setActionCommand(PDFForPublicatio_CAMAND);
         menuItem.addActionListener(this);
 
 
@@ -231,8 +239,6 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
 //        menuItem.addActionListener(this);
     }
 
- 
-
     /**
      * saving the file as serialazble so that can be saved and retrived into
      * to Applet for web.
@@ -277,7 +283,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
                 }
                 FileOutputStream buffer = new FileOutputStream(filename);
                 final ObjectOutput out = new ObjectOutputStream(buffer);
-                
+
                 out.writeObject(chart);
 
                 out.flush();
@@ -287,7 +293,6 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
                         "error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-           
         }
     }
 
