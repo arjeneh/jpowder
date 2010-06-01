@@ -50,10 +50,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.Serializable;
+import java.util.prefs.Preferences;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
@@ -65,8 +68,10 @@ public class Tree extends JPanel implements Serializable {
     private JpowderFileSystemTreeModel model = new JpowderFileSystemTreeModel();
     private JpowderFileTreeRenderer renderer = new JpowderFileTreeRenderer();
     private java.awt.dnd.DropTarget dt;
-    private  JTree tree;
-
+    private JTree tree;
+    private Preferences prefsRoot = Preferences.userRoot();
+    private Preferences myPrefs = prefsRoot.node("JpowderTree");
+    private int key;
 
     /**
      *
@@ -85,45 +90,48 @@ public class Tree extends JPanel implements Serializable {
         this.tree.setShowsRootHandles(true);
         this.tree.setDragEnabled(true);
         this.tree.expandRow(0);
-        TreePath treePath = new TreePath(new File("C:\\Documents and Settings\\qyt21516\\Desktop\\My Dropbox"));
-        tree.expandPath(treePath);
-        int row = tree.getRowForPath(new TreePath(new File("C:\\Documents and Settings\\qyt21516\\Desktop\\My Dropbox")));
+
+
+        tree.expandPath(new TreePath(new File("C:")));
+        int row = tree.getRowForPath(new TreePath(new File("C:\\Documents and Settings\\" +
+                "qyt21516\\Desktop\\My Dropbox")));
         tree.expandRow(row);
-        System.out.println(row);
-        System.out.println(treePath.getPath().toString());
-
-//        tree.setSelectionPath(treePath);
-        
-        
+//        System.out.println("Row"+row);
 
 
-//        this.tree.expandRow(1);
-        //TODO: when user double-click, it plot the graph.
-        //JpowderFileTreeMouseListener ml = new JpowderFileTreeMouseListener();
-        //this.tree.addMouseListener(ml);
+        //make jtree exapandable with single click.
+        tree.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
 
+            public void valueChanged(TreeSelectionEvent e) {
+                if (!tree.isExpanded(tree.getSelectionModel().getLeadSelectionRow())) {
+                    tree.expandPath(e.getNewLeadSelectionPath());
+
+                }
+            }
+        });
 
         final JScrollPane jsp = new JScrollPane(this.tree);
         jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
         this.add(jsp, BorderLayout.CENTER);
 
 
-                TreeExpansionListener treeExpandListener = new TreeExpansionListener() {
+        TreeExpansionListener treeExpandListener = new TreeExpansionListener() {
 
             public void treeExpanded(TreeExpansionEvent event) {
                 TreePath path = event.getPath();
-                System.out.println(tree.getRowForPath(path));
-                System.out.println("Expanded: "+event.getPath());
+                System.out.println(tree.getRowForPath(path));//int
+                System.out.println(tree.getPathForRow(tree.getRowForPath(path)));//Paths
+//                System.out.println("Expanded: "+event.getPath());
 
-               
+
             }
 
             public void treeCollapsed(TreeExpansionEvent event) {
                 TreePath path = event.getPath();
-                System.out.println("Collapsed: " );
+                System.out.println("Collapsed: ");
             }
         };
-             tree.addTreeExpansionListener(treeExpandListener);
+        tree.addTreeExpansionListener(treeExpandListener);
     }
 
     /**
@@ -184,7 +192,7 @@ public class Tree extends JPanel implements Serializable {
      *
      * @return The value of the JTree.
      */
-    public  JTree getTree() {
+    public JTree getTree() {
         return tree;
     }
 
@@ -203,32 +211,17 @@ public class Tree extends JPanel implements Serializable {
                     @Override
                     public void windowClosing(WindowEvent event) {
                         try {
-
-//                            FileOutputStream buffer = new FileOutputStream("C://Jtree.obj");
-//                            final ObjectOutput out = new ObjectOutputStream(buffer);
-//                            out.writeObject(new Tree(treeModel));
-//                            out.flush();
-//                            out.close();
-
-//                            XMLEncoder e = new XMLEncoder(
-//                                    new BufferedOutputStream(
-//                                    new FileOutputStream("C://Test.xml")));
-//
-//                            e.writeObject(new Tree(treeModel));
-//                            e.close();
-//
                         } catch (Exception exception) {
                             System.err.println(exception);
                         }
                     }
                 });
 
-               frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setVisible(true);
 
             }
         });
     }
-
 }
 

@@ -143,6 +143,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.PNG"))); // NOI18N
         backButton.setText("Back");
+        backButton.setAlignmentY(0.0F);
         backButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         backButton.setIconTextGap(2);
         backButton.setMargin(new java.awt.Insets(2, 0, 2, 0));

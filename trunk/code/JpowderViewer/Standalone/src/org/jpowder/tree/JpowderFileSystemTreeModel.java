@@ -99,6 +99,7 @@ public class JpowderFileSystemTreeModel extends PowderFileSystemModel {
         return falseRoot;
     }
 
+
     public Object getChild(Object parent, int index) {
         if (parent == falseRoot) {
             return roots[index];
@@ -141,6 +142,7 @@ public class JpowderFileSystemTreeModel extends PowderFileSystemModel {
                 }
 
                 sortedChildren.put(file, new ArrayList<File>(sorted));
+               
             }
 
             // Notify treeListeners,

@@ -121,11 +121,11 @@ public class ToolsIcon extends javax.swing.JPanel {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 13));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel3.setText("Appearance");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 13));
-        jLabel4.setText("Zoom ");
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel4.setText("Zoom & Pan ");
 
         changeXAxisButton.setBackground(javax.swing.UIManager.getDefaults().getColor("ComboBox.disabledBackground"));
         changeXAxisButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -161,16 +161,15 @@ public class ToolsIcon extends javax.swing.JPanel {
                                 .addGroup(layout.createSequentialGroup()
                                     .addGap(8, 8, 8)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel2)
-                                .addComponent(zoomButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(zoomButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(jLabel3)
-                        .addGap(56, 56, 56)
-                        .addComponent(jLabel4)))
-                .addContainerGap(65, Short.MAX_VALUE))
+                        .addComponent(jLabel3)))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {appearanceButton, peakButton, rescaleButton, zoomButton});

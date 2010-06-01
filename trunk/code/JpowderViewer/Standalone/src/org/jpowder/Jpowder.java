@@ -54,10 +54,10 @@ import org.jpowder.dataset.DataSet;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.util.ScreenUtil;
 import java.awt.*;
-import java.lang.management.MemoryUsage;
 import java.net.URI;
 import java.net.URISyntaxException;
 import javax.swing.*;
+import org.jfree.chart.ChartColor;
 import org.jpowder.fileCabinet.AcceptFileFilter;
 import org.jpowder.tree.JpowderFileSystemTreeModel;
 
@@ -199,7 +199,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
     public static void moemoryChecker() {
 
-        double oneByte = (1024*1024);//M bytes
+        double oneByte = (1024 * 1024);//M bytes
 
         long totalM = (long) (Runtime.getRuntime().totalMemory() / oneByte);
         long freeM = (long) (Runtime.getRuntime().freeMemory() / oneByte);
@@ -224,12 +224,12 @@ public class Jpowder extends JFrame implements DropTargetListener {
 //            this.setSize(500, 500);
         }
 
-            System.out.println("total M : " + totalM);
-            System.out.println("free M  : " + freeM);
-            System.out.println("Max M  : " + MaxM);
-            System.out.println("total- free M : " + (totalM - freeM));
+//        System.out.println("total M : " + totalM);
+//        System.out.println("free M  : " + freeM);
+//        System.out.println("Max M  : " + MaxM);
+//        System.out.println("total- free M : " + (totalM - freeM));
 
-        
+
     }
 
     /** This method is called from within the constructor to
@@ -258,6 +258,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         appletMenu = new javax.swing.JMenuItem();
         imageMenu = new javax.swing.JMenuItem();
         pDfMenu = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JSeparator();
         printMenu = new javax.swing.JMenu();
         basicPrintMenu = new javax.swing.JMenuItem();
@@ -310,7 +311,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
         tabs.addTab(" Tools ", toolstab);
 
-        dataVisibleInChartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Visible In Chart"));
+        dataVisibleInChartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Plot(s) Visible In Chart"));
         dataVisibleInChartPanel.setPreferredSize(new java.awt.Dimension(270, 260));
         dataVisibleInChartPanel.setLayout(new java.awt.BorderLayout());
 
@@ -320,16 +321,16 @@ public class Jpowder extends JFrame implements DropTargetListener {
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homePanelLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
             .addGroup(homePanelLayout.createSequentialGroup()
-                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
                 .addContainerGap())
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
-                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -366,7 +367,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         fileMenu.add(oPenMenu);
 
         saveAsMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/saveas_16x16.png"))); // NOI18N
-        saveAsMenu.setText("Save As");
+        saveAsMenu.setText("Save Chart As");
 
         appletMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exportto_16x16.png"))); // NOI18N
         appletMenu.setText("Jpowder-Applet Format");
@@ -395,11 +396,19 @@ public class Jpowder extends JFrame implements DropTargetListener {
         });
         saveAsMenu.add(pDfMenu);
 
+        jMenuItem1.setText("PDF For Publication");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        saveAsMenu.add(jMenuItem1);
+
         fileMenu.add(saveAsMenu);
         fileMenu.add(jSeparator2);
 
         printMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Print.png"))); // NOI18N
-        printMenu.setText("Print As");
+        printMenu.setText("Print Chart As");
 
         basicPrintMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         basicPrintMenu.setText("Print");
@@ -425,7 +434,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         fileMenu.add(jSeparator1);
 
         closeFrameMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Close.png"))); // NOI18N
-        closeFrameMenu.setText("Close Window");
+        closeFrameMenu.setText("Close Plot-Window");
         closeFrameMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeFrameMenuActionPerformed(evt);
@@ -492,7 +501,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         editMenu.add(copyMenu);
         editMenu.add(jSeparator6);
 
-        propertiesMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        propertiesMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
         propertiesMenu.setText("Properties");
         propertiesMenu.setToolTipText("set propeties of selected chart.\n");
         propertiesMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -519,6 +528,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
         buttonGroup1.add(tileCheckBoxMenuItem);
         tileCheckBoxMenuItem.setText("Tile");
+        tileCheckBoxMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Tile.png"))); // NOI18N
         tileCheckBoxMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tileCheckBoxMenuItemActionPerformed(evt);
@@ -596,7 +606,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(chartPlotterPane, javax.swing.GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
+                .addComponent(chartPlotterPane, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -604,8 +614,8 @@ public class Jpowder extends JFrame implements DropTargetListener {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chartPlotterPane, javax.swing.GroupLayout.DEFAULT_SIZE, 843, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 843, Short.MAX_VALUE))
+                    .addComponent(chartPlotterPane, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -897,6 +907,21 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
     }//GEN-LAST:event_oPenMenuActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
+            JpowderPopupMenu jpowderPopupMenu = new JpowderPopupMenu(internalFrameInFocus.getChartPanel());
+
+            internalFrameInFocus.getXYPlot().setBackgroundPaint(ChartColor.white);
+            internalFrameInFocus.getXYPlot().setOutlinePaint(ChartColor.white);
+            jpowderPopupMenu.pDF();
+            internalFrameInFocus.getXYPlot().setBackgroundPaint(ChartColor.LIGHT_GRAY);
+            internalFrameInFocus.getXYPlot().setOutlinePaint(ChartColor.LIGHT_GRAY);
+        } else {
+            return;
+        }
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     public void dragEnter(DropTargetDragEvent dtde) {
     }
 
@@ -921,7 +946,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         dropLocationX = x;
         dropLocationY = y;
 
-        
+
 
         DataSet oneDataset = null;
         Vector<DataSet> datasets = new Vector<DataSet>();
@@ -1053,6 +1078,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private javax.swing.JPanel homePanel;
     private javax.swing.JMenuItem imageMenu;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;

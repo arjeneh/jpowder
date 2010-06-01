@@ -80,8 +80,6 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.PNG"))); // NOI18N
         backButton.setText("Back");
         backButton.setAlignmentY(0.0F);
-        backButton.setBorderPainted(false);
-        backButton.setFocusable(false);
         backButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         backButton.setIconTextGap(2);
         backButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
@@ -117,7 +115,7 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
         "<P>"+
         "<P>";
         jLabel1.setText(labelText);
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
