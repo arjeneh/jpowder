@@ -478,7 +478,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         inFocus.getPeakDomainMarker().get(s).setPaint(Color.RED);
         inFocus.getPeakDomainMarker().get(s).setStroke(new BasicStroke(1.8f));
 
-        if (SwingUtilities.isRightMouseButton(evt) && !peakList.isSelectionEmpty() && peakList.locationToIndex(evt.getPoint()) == peakList.getSelectedIndex()) {
+        if (SwingUtilities.isRightMouseButton(evt)) {
             peakListPopMenu.show(peakList, evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_peakListMouseClicked
