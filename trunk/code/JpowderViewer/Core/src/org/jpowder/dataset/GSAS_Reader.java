@@ -46,6 +46,7 @@ import java.util.logging.Logger;
 public class GSAS_Reader {
 
     private static String aLine;
+    private static double deltaT;
 
     public static Vector<DataSet> read(File aFile) {
 
@@ -59,6 +60,21 @@ public class GSAS_Reader {
 
                 if (aLine.contains("BANK")) //
                 {
+                    System.out.println("");
+                    String[] splits = aLine.split(" ");
+
+                    if (splits == null || splits.length == 0) {
+                        javax.swing.JOptionPane.showMessageDialog(null, "Can't compute binwidth");
+                    } else {
+                        try {
+                            deltaT = Double.parseDouble(splits[splits.length - 2]);
+                        } catch (NumberFormatException ex) {
+
+                            javax.swing.JOptionPane.showMessageDialog(null, "Can't compute binwidth");
+
+                        }
+                    }
+
                     localData = readBank(bufferedReader);
                     calculateData(localData);
                     int countColumn = localData.firstElement().size();
@@ -91,7 +107,13 @@ public class GSAS_Reader {
         }
     }
 
-    // read in powder data file until row does not consist of numbers
+
+    /**
+     * read in powder data file until row does not consist of numbers then return
+     * a data set when ever reaches a new bank.
+     * @param br
+     * @return
+     */
     public static Vector<Vector<Double>> readBank(BufferedReader br) {
         Vector<Vector<Double>> localData = new Vector<Vector<Double>>();
         try {
@@ -128,23 +150,21 @@ public class GSAS_Reader {
         return localData;
     }
 
+    /**
+     * This method calculate binwidth and get data and then gets y and error
+     * bar column and divided by binwidth.
+     * @param localData
+     */
     public static void calculateData(Vector<Vector<Double>> localData) {
 
         if (localData.size() > 1) {
-            double binwidth = localData.get(1).get(0) - localData.get(0).get(0);
-            double x0 = localData.get(0).get(0);
-//            System.out.println("binwidth" + binwidth);
+
             for (int i = 0; i < localData.size(); i++) {
-                // divide all y-data by binwidth*step_number
-                // localData.get(i).setElementAt(localData.get(i).get(1) / ((i + 1) * binwidth), 1);
-                localData.get(i).setElementAt(localData.get(i).get(2) / ((i + 1) * binwidth), 2);
+                double binwidth = localData.get(i).get(0) * deltaT;
 
-                localData.get(i).setElementAt(localData.get(i).get(1) * x0 / (localData.get(i).get(0) * binwidth), 1);
-
-
-//                  // divide all error-data by binwidth*step_number
-//                  localData.get(i).get(2) = localData.get(i).get(2)/((i+1)*binwidth);
-                }
+                localData.get(i).setElementAt(localData.get(i).get(1) / (binwidth), 1);
+                localData.get(i).setElementAt(localData.get(i).get(2) / (binwidth), 2);
+            }
         }
 
     }

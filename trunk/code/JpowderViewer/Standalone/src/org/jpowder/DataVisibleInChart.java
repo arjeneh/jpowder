@@ -60,16 +60,12 @@ public class DataVisibleInChart extends JPanel {
 
         checkboxList = new JCheckBoxJList(listModel);
         checkboxList.setLayout(new BorderLayout());
-        checkboxList.setFont(new java.awt.Font("Tahoma", 0, 12));
-
 
         file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 //        file_sp.setPreferredSize(new java.awt.Dimension(SP_WIDTH, SP_HEIGHT));
         this.setLayout(new BorderLayout());
         add(file_sp);
-
-
 
     }
 

@@ -46,6 +46,8 @@ import java.util.Vector;
  */
 public class XYandXYE_Reader {
 
+    private final static String[] digits = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+
     public static DataSet read(File aFile) {
         String aLine;
         Vector<Vector<Double>> localData = new Vector<Vector<Double>>();
@@ -57,27 +59,45 @@ public class XYandXYE_Reader {
 
             while ((aLine = bufferedReader.readLine()) != null) {
                 if (!aLine.isEmpty()) {
-                    lineNum++;
-                    // create a vector to hold the field values
-                    Vector<Double> newRow = new Vector<Double>();
-                    StringTokenizer stringTokenizer = new StringTokenizer(aLine);
-                    //
-                    int numToken = stringTokenizer.countTokens();
-                    for (int i = 0; i < numToken; i++) {
-                        //ignore the last STD by minusing 1.
-                        String stringToken = stringTokenizer.nextToken();
-                        newRow.addElement(Double.parseDouble(stringToken));
-                    } //for
-                    if (numToken != 0) {
-                        localData.addElement(newRow);
-                    } else {
-                        break;
+
+                    aLine = aLine.trim();
+
+                    boolean validLine = false;
+
+                    for (int i = 0; i < digits.length && !validLine; i++) {
+
+                        if (aLine.startsWith(digits[i])) {
+                            validLine = true;
+                        }
+
                     }
 
-                }
-            }//while readLine
+                    if (validLine) {
 
-            //System.out.print("Total LineNumber is: " + lineNum);
+                        lineNum++;
+//                    if (aLine.contains("# Time-of-flight ")) {
+//                          while ((aLine = bufferedReader.readLine()) != null) {
+
+                        Vector<Double> newRow = new Vector<Double>();
+                        StringTokenizer stringTokenizer = new StringTokenizer(aLine);
+                        //
+                        int numToken = stringTokenizer.countTokens();
+                        for (int i = 0; i < numToken; i++) {
+                            String stringToken = stringTokenizer.nextToken();
+                            newRow.addElement(Double.parseDouble(stringToken));
+
+                        } //for
+                        if (numToken != 0) {
+                            localData.addElement(newRow);
+                        } else {
+                            break;
+                        }
+//                          }//while
+//                    }//if
+                    }//if
+
+                }//if
+            }//while
 
             fileInputStream.close();
             bufferedReader.close();
