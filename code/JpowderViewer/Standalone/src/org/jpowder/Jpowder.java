@@ -31,6 +31,7 @@
 package org.jpowder;
 
 import java.beans.PropertyVetoException;
+import javax.swing.event.TreeExpansionEvent;
 import org.jpowder.tree.Tree;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -56,7 +57,10 @@ import org.jpowder.util.ScreenUtil;
 import java.awt.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.prefs.Preferences;
 import javax.swing.*;
+import javax.swing.event.TreeExpansionListener;
+import javax.swing.tree.TreePath;
 import org.jfree.chart.ChartColor;
 import org.jpowder.fileCabinet.AcceptFileFilter;
 import org.jpowder.tree.JpowderFileSystemTreeModel;
@@ -82,6 +86,11 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private static double dropLocationX, dropLocationY;
     private JpowderPrint jpowderPrint = new JpowderPrint();
 
+    private Preferences prefsRoot = Preferences.userRoot();
+    private Preferences myPrefs = prefsRoot.node("JpowderTree");
+    private static final String key="treeKeys";
+
+
     //  private stackInternalFrames;
     /**
      * JVM starting point
@@ -102,13 +111,8 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
         //to keep newly added JInternalFrame inside the JDesktopPane (KP)
         chartPlotterPane.addContainerListener(new FrameAddedSupervisor());
-
         ScreenUtil.adjustBounds(this);
-
-
-
-
-
+  
     }
 
     /**

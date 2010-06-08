@@ -1,3 +1,5 @@
+package Applet;
+
 /* ===========================================================
  * This file is part of Jpowder, see <http://www.jpowder.org/>
  * ===========================================================
@@ -42,29 +44,19 @@ public class JpowderApplet extends JApplet {
     private JFreeChart createChart() {
 
         JFreeChart serializedChart = null;
-//        JFileChooser chooser = new JFileChooser();
-//        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-//                ".Ser ", "Ser");
-//        chooser.setFileFilter(filter);
-//        int returnVal = chooser.showSaveDialog(this);
-//        File fileName = chooser.getSelectedFile();
 
-//        if (returnVal == JFileChooser.APPROVE_OPTION) {
         try {
-//                FileInputStream f = new FileInputStream("AppletTest1.ser");
-            URL source = new URL(getCodeBase(), "ZoomTest.ser");
-//                       BufferedReader br =
-//                    new BufferedReader
-//                    (new InputStreamReader(source.openStream()));
+
+            String fileName = this.getParameter("PATH");
+            URL source = new URL(getCodeBase(), fileName);
+
             ObjectInputStream charts = new ObjectInputStream(source.openStream());
             serializedChart = (JFreeChart) charts.readObject();
         } catch (Exception e) {
-//                JOptionPane.showMessageDialog(this, e.toString());
+
             e.printStackTrace();
         }
-//        } else {
-//            return null;
-//        }
+
         return serializedChart;
     }
 
