@@ -48,8 +48,10 @@ public class XYandXYE_Reader {
 
     private final static String[] digits = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
+
     public static DataSet read(File aFile) {
         String aLine;
+        boolean TOF=false;
         Vector<Vector<Double>> localData = new Vector<Vector<Double>>();
 
         try {
@@ -59,6 +61,10 @@ public class XYandXYE_Reader {
 
             while ((aLine = bufferedReader.readLine()) != null) {
                 if (!aLine.isEmpty()) {
+
+                    if(aLine.contains("Time-of-flight")){
+                       TOF=true;
+                    }
 
                     aLine = aLine.trim();
 
@@ -145,6 +151,11 @@ public class XYandXYE_Reader {
 
             if (dashFormat) {
                 retVal.setWaveLength(wavelengthIfDASH);
+            }
+            if(TOF){
+                retVal.setXUnit("TOF");
+            }if(!TOF){
+                retVal.setXUnit("2θ");
             }
 
             return retVal;

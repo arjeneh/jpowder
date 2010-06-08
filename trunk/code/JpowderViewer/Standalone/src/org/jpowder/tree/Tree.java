@@ -21,8 +21,9 @@
  * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
  * Kasem Bundit University.
  *
- * Author(s):  Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
- *             M Arjeneh, ISIS, Rutherford Appleton Laboratory
+ * Author(s):  M Arjeneh, ISIS, Rutherford Appleton Laboratory
+ *              Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
+ *             
  *             
  * 
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
@@ -31,12 +32,6 @@
 package org.jpowder.tree;
 
 /**
- *
- * 
- * Original Author:  
- * 
- *
- * $Id: Tree.java,v 1.2 2010/03/03 13:58:03 Kreecha Exp $
  *
  * Changes
  * -------
@@ -50,7 +45,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.Serializable;
-import java.util.prefs.Preferences;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.TreeExpansionEvent;
@@ -68,10 +64,7 @@ public class Tree extends JPanel implements Serializable {
     private JpowderFileSystemTreeModel model = new JpowderFileSystemTreeModel();
     private JpowderFileTreeRenderer renderer = new JpowderFileTreeRenderer();
     private java.awt.dnd.DropTarget dt;
-    private JTree tree;
-    private Preferences prefsRoot = Preferences.userRoot();
-    private Preferences myPrefs = prefsRoot.node("JpowderTree");
-    private int key;
+    private static JTree tree;
 
     /**
      *
@@ -83,21 +76,12 @@ public class Tree extends JPanel implements Serializable {
         this.model = model;
 
         this.setLayout(new BorderLayout());
-
         this.tree = new JTree(this.model);
         this.tree.setCellRenderer(this.renderer);
         this.tree.setRootVisible(false);
         this.tree.setShowsRootHandles(true);
         this.tree.setDragEnabled(true);
         this.tree.expandRow(0);
-
-
-        tree.expandPath(new TreePath(new File("C:")));
-        int row = tree.getRowForPath(new TreePath(new File("C:\\Documents and Settings\\" +
-                "qyt21516\\Desktop\\My Dropbox")));
-        tree.expandRow(row);
-//        System.out.println("Row"+row);
-
 
         //make jtree exapandable with single click.
         tree.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
@@ -114,37 +98,25 @@ public class Tree extends JPanel implements Serializable {
         jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
         this.add(jsp, BorderLayout.CENTER);
 
+//        TreeExpansionListener treeExpandListener = new TreeExpansionListener() {
+//
+//            public void treeExpanded(TreeExpansionEvent event) {
+//                TreePath path = event.getPath();
+//                System.out.println(tree.getRowForPath(path));//int
+//                System.out.println(tree.getPathForRow(tree.getRowForPath(path)));//Paths
+//
+////                System.out.println("Expanded: "+event.getPath());
+//
+//            }
+//
+//            public void treeCollapsed(TreeExpansionEvent event) {
+//                TreePath path = event.getPath();
+//                System.out.println("Collapsed: ");
+//            }
+//        };
+//        tree.addTreeExpansionListener(treeExpandListener);
 
-        TreeExpansionListener treeExpandListener = new TreeExpansionListener() {
 
-            public void treeExpanded(TreeExpansionEvent event) {
-                TreePath path = event.getPath();
-                System.out.println(tree.getRowForPath(path));//int
-                System.out.println(tree.getPathForRow(tree.getRowForPath(path)));//Paths
-//                System.out.println("Expanded: "+event.getPath());
-
-
-            }
-
-            public void treeCollapsed(TreeExpansionEvent event) {
-                TreePath path = event.getPath();
-                System.out.println("Collapsed: ");
-            }
-        };
-        tree.addTreeExpansionListener(treeExpandListener);
-    }
-
-    /**
-     * Collapse the tree
-     *
-     * @param tree  the JTree
-     */
-    public void collapseAll(JTree tree) {
-        int row = tree.getRowCount() - 1;
-        while (row >= 0) {
-            tree.collapseRow(row);
-            row--;
-        }
     }
 
     /**
@@ -173,26 +145,13 @@ public class Tree extends JPanel implements Serializable {
     }
 
     /**
-     * View all nodes of the tree
-     *
-     * @param tree  the JTree
-     */
-    public void expandAll(JTree tree) {
-        int row = 0;
-        while (row < tree.getRowCount()) {
-            tree.expandRow(row);
-            row++;
-        }
-    }
-
-    /**
      * Returns the JTree.
      *
      * @param
      *
      * @return The value of the JTree.
      */
-    public JTree getTree() {
+    public static JTree getTree() {
         return tree;
     }
 
@@ -210,10 +169,9 @@ public class Tree extends JPanel implements Serializable {
 
                     @Override
                     public void windowClosing(WindowEvent event) {
-                        try {
-                        } catch (Exception exception) {
-                            System.err.println(exception);
-                        }
+                       
+
+                             
                     }
                 });
 

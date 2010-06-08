@@ -35,7 +35,6 @@ import java.awt.Color;
 import java.awt.Paint;
 import java.text.DecimalFormat;
 import java.util.Vector;
-import javax.swing.JOptionPane;
 import org.jfree.chart.ChartColor;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -105,6 +104,7 @@ public class FilesPlotter extends DatasetPlotter {
             if (datasets.get(i).getFileName().endsWith("gss")) {
                 plot.getDomainAxis().setLabel("TOF");
             }
+
 //            if(datasets.get(i).getFileName().endsWith("gss")&&datasets.get(i).getFileName().endsWith("")){
 //            JOptionPane.showMessageDialog(null,
 //            "Really u r dump.",
@@ -146,7 +146,7 @@ public class FilesPlotter extends DatasetPlotter {
 
 
         String x = "2\u03D1";//unicode 2thetha
-        NumberAxis xAxis = new NumberAxis(x.toUpperCase());
+        NumberAxis xAxis = new NumberAxis(datasets.get(0).getXUnit());
         NumberAxis yAxis = new NumberAxis("Intensity");
         yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
