@@ -1,4 +1,4 @@
-package Applet;
+
 
 /* ===========================================================
  * This file is part of Jpowder, see <http://www.jpowder.org/>
@@ -41,6 +41,8 @@ import org.jfree.chart.JFreeChart;
  */
 public class JpowderApplet extends JApplet {
 
+    private String defaultPath = "ZoomTest.ser";
+
     private JFreeChart createChart() {
 
         JFreeChart serializedChart = null;
@@ -48,6 +50,9 @@ public class JpowderApplet extends JApplet {
         try {
 
             String fileName = this.getParameter("PATH");
+            if(fileName==null){
+                fileName=defaultPath;
+            }
             URL source = new URL(getCodeBase(), fileName);
 
             ObjectInputStream charts = new ObjectInputStream(source.openStream());
@@ -64,7 +69,7 @@ public class JpowderApplet extends JApplet {
     public void init() {
         try {
             UIManager.setLookAndFeel(
-            UIManager.getSystemLookAndFeelClassName());
+                    UIManager.getSystemLookAndFeelClassName());
 
         } catch (Exception j) {
             j.printStackTrace();
