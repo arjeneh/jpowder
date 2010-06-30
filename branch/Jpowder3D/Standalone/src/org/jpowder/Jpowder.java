@@ -200,6 +200,9 @@ public class Jpowder extends JFrame implements DropTargetListener {
 //        }
 
     }
+    public static JLabel getMessageLabel(){
+        return messageLabel;
+    }
 
     public static void moemoryChecker() {
 
@@ -278,6 +281,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         copyMenu = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JSeparator();
         propertiesMenu = new javax.swing.JMenuItem();
+        ImportTable3D = new javax.swing.JMenuItem();
         windowMenu = new javax.swing.JMenu();
         defaultCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         tileCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
@@ -324,14 +328,14 @@ public class Jpowder extends JFrame implements DropTargetListener {
                 .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(homePanelLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE))
-                    .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE))
+                        .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE))
+                    .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE))
                 .addContainerGap())
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
-                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -343,7 +347,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         chartPlotterPane.setDesktopManager(jPowderDesktopManager);
         chartPlotterPane.setOpaque(false);
 
-        messageLabel.setFont(new java.awt.Font("Arial", 0, 36));
+        messageLabel.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
         messageLabel.setForeground(new java.awt.Color(153, 153, 153));
         messageLabel.setText("Drag & Drop Files Here.");
         messageLabel.setEnabled(false);
@@ -509,6 +513,14 @@ public class Jpowder extends JFrame implements DropTargetListener {
             }
         });
         editMenu.add(propertiesMenu);
+
+        ImportTable3D.setText("3D Import Table");
+        ImportTable3D.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ImportTable3DActionPerformed(evt);
+            }
+        });
+        editMenu.add(ImportTable3D);
 
         jMenuBar1.add(editMenu);
 
@@ -921,6 +933,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void ImportTable3DActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportTable3DActionPerformed
+       new FilesTable().setVisible(true);
+    }//GEN-LAST:event_ImportTable3DActionPerformed
+
     public void dragEnter(DropTargetDragEvent dtde) {
     }
 
@@ -1058,6 +1074,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ImportTable3D;
     private javax.swing.JMenuItem aboutMenu;
     private javax.swing.JMenuItem appletMenu;
     private javax.swing.JMenuItem basicPrintMenu;
@@ -1083,7 +1100,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JLabel messageLabel;
+    private static javax.swing.JLabel messageLabel;
     private javax.swing.JMenuItem oPenMenu;
     private javax.swing.JMenuItem onlieDocsandSupportMenu;
     private javax.swing.JMenuItem pDfMenu;

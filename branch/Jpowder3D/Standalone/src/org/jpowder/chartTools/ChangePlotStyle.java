@@ -35,6 +35,7 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.renderer.xy.XYErrorRenderer;
@@ -81,6 +82,9 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
 
     public static JComboBox getSeriesColourComboBox() {
         return seriesColourComboBox;
+    }
+    public static  JTextField getMarkerSizeTextField(){
+        return markerSizeField;
     }
 
     /** This method is called from within the constructor to
@@ -829,7 +833,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JComboBox markerComboBox;
     private javax.swing.JPanel markerPanel;
-    private javax.swing.JTextField markerSizeField;
+    private static javax.swing.JTextField markerSizeField;
     private javax.swing.JRadioButton noneRadioButton;
     private static javax.swing.JComboBox seriesColourComboBox;
     private javax.swing.JPanel seriesColourPanel;

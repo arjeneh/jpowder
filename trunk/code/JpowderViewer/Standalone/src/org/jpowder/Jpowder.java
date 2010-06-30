@@ -31,7 +31,6 @@
 package org.jpowder;
 
 import java.beans.PropertyVetoException;
-import javax.swing.event.TreeExpansionEvent;
 import org.jpowder.tree.Tree;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -59,10 +58,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.prefs.Preferences;
 import javax.swing.*;
-import javax.swing.event.TreeExpansionListener;
-import javax.swing.tree.TreePath;
+import javax.swing.filechooser.FileFilter;
 import org.jfree.chart.ChartColor;
-import org.jpowder.fileCabinet.AcceptFileFilter;
+import org.jfree.ui.ExtensionFileFilter;
 import org.jpowder.tree.JpowderFileSystemTreeModel;
 
 /**
@@ -85,11 +83,9 @@ public class Jpowder extends JFrame implements DropTargetListener {
     public static JPowderStack jPowderStackRedo = new JPowderStack(3);
     private static double dropLocationX, dropLocationY;
     private JpowderPrint jpowderPrint = new JpowderPrint();
-
     private Preferences prefsRoot = Preferences.userRoot();
     private Preferences myPrefs = prefsRoot.node("JpowderTree");
-    private static final String key="treeKeys";
-
+    private static final String key = "treeKeys";
 
     //  private stackInternalFrames;
     /**
@@ -112,7 +108,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         //to keep newly added JInternalFrame inside the JDesktopPane (KP)
         chartPlotterPane.addContainerListener(new FrameAddedSupervisor());
         ScreenUtil.adjustBounds(this);
-  
+
     }
 
     /**
@@ -850,14 +846,45 @@ public class Jpowder extends JFrame implements DropTargetListener {
         File file;
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(true);
+        FileFilter filter = new FileFilter() {
 
+            @Override
+            public boolean accept(File f) {
+                String fileName = f.getName();
+                if (fileName.endsWith(".xye")) {
+                    return true;
+                }
+                if (fileName.endsWith(".xy")) {
+                    return true;
+                }
+                if (fileName.endsWith(".cif")) {
+                    return true;
+                }
+                if (fileName.endsWith(".txt")) {
+                    return true;
+                }
+                if (fileName.endsWith(".gss")) {
+                    return true;
+                }
+
+                return false;
+
+            }
+
+            @Override
+            public String getDescription() {
+                return "File (*.xy, *.xye, *.txt,*.cif,*.gss)";
+            }
+        };
+
+        fileChooser.addChoosableFileFilter(filter);
         //DataSet oneDataset = null;
 
         // Set the accepted powder diffraction file extensions
         // and open a file chooser window for the user to select powder
         // diffraction file
-        fileChooser.addChoosableFileFilter(new AcceptFileFilter(PowderFileCabinet.ACCEPTED_FILE_TYPE, "File (*.xy, *.xye, *.txt,*.cif,*.gss)"));
-        fileChooser.setAcceptAllFileFilterUsed(false);
+//        fileChooser.addChoosableFileFilter(new AcceptFileFilter(PowderFileCabinet.ACCEPTED_FILE_TYPE, "File (*.xy, *.xye, *.txt,*.cif,*.gss)"));
+//        fileChooser.setAcceptAllFileFilterUsed(true);
         int returnVal = fileChooser.showOpenDialog(null);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
