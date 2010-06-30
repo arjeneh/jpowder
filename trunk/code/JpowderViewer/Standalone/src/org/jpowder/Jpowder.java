@@ -856,7 +856,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         // Set the accepted powder diffraction file extensions
         // and open a file chooser window for the user to select powder
         // diffraction file
-        fileChooser.addChoosableFileFilter(new AcceptFileFilter(PowderFileCabinet.ACCEPTED_FILE_TYPE, "File (*.xy, *.xye, *.txt,*cif)"));
+        fileChooser.addChoosableFileFilter(new AcceptFileFilter(PowderFileCabinet.ACCEPTED_FILE_TYPE, "File (*.xy, *.xye, *.txt,*.cif,*.gss)"));
         fileChooser.setAcceptAllFileFilterUsed(false);
         int returnVal = fileChooser.showOpenDialog(null);
 
