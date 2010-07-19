@@ -1,4 +1,4 @@
-package Applet;
+
 
 /* ===========================================================
  * This file is part of Jpowder, see <http://www.jpowder.org/>

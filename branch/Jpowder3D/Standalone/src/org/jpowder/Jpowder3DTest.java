@@ -4,7 +4,6 @@
  */
 package org.jpowder;
 
-import com.sun.awt.AWTUtilities;
 import java.awt.Color;
 import java.awt.Paint;
 import java.util.Collections;
@@ -15,9 +14,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.plot.RainbowPalette;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.GrayPaintScale;
 import org.jfree.chart.renderer.LookupPaintScale;
 import org.jfree.chart.renderer.PaintScale;
 import org.jfree.chart.renderer.xy.XYBlockRenderer;

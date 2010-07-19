@@ -10,11 +10,16 @@
  */
 package org.jpowder.chartTools;
 
+import org.jpowder.chartTools.Markers.*;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.io.File;
+import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.annotations.XYTitleAnnotation;
 import org.jfree.chart.axis.NumberAxis;
@@ -41,27 +46,27 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     private String columnsName[] = {"Plot(s)"};
     private String[][] fileName;
     private String newLegend;
-           MarkerArray array= new MarkerArray();
-        MarkesIcons[] carray=array.createCountriesArray();
+    MarkerArray array = new MarkerArray();
+    MarkesIcons[] carray = array.createCountriesArray();
 
     /** Creates new form ExtraFeatures */
     public ExtraFeatures(ToolsIcon analysisIcon) {
-
-
 
         initComponents();
         this.toolsIcon = analysisIcon;
         legendTable.setVisible(false);
 
-        imageComboBoxTest.setRenderer(new MarkerComboBoxRenderer(imageComboBoxTest));
+
+
     }
 
     public void update() {
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-
+        imageComboBoxTest.setRenderer(new MarkerComboBoxRenderer(null));
         if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
             if (defaultTableModel != null) {
                 defaultTableModel.getDataVector().removeAllElements();//remove all the rows from table
+
             }
             legendTable.updateUI();
             return;
@@ -192,6 +197,13 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
         jPanel5 = new javax.swing.JPanel();
         jSpinner2 = new javax.swing.JSpinner();
         imageComboBoxTest = new javax.swing.JComboBox(carray);
+        jPanel6 = new javax.swing.JPanel();
+        chartBGImage = new javax.swing.JButton();
+        plotBGImage = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jSpinner3 = new javax.swing.JSpinner();
+        jSpinner4 = new javax.swing.JSpinner();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -273,7 +285,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                         .addComponent(gridlineWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(majorY)
                     .addComponent(jButton1))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,7 +301,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                 .addComponent(minorX)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(minorY)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(19, 19, 19))
         );
@@ -323,7 +335,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                         .addGap(55, 55, 55)
                         .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton2))
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,7 +346,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                     .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addContainerGap(163, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Axis", jPanel2);
@@ -376,7 +388,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(xScientific)
                         .addComponent(yScientific)))
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addContainerGap(186, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -389,7 +401,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                 .addComponent(xScientific)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(yScientific)
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Number Format", jPanel3);
@@ -465,7 +477,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                     .addComponent(legendPositionLeft)
                     .addComponent(legendPositionTop)
                     .addComponent(legendPositionButtom)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -491,7 +503,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                         .addComponent(legendPositionRight)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(legendPositionTopRight)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Legend", jPanel4);
@@ -518,7 +530,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(233, Short.MAX_VALUE))
+                .addContainerGap(250, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -527,10 +539,85 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                 .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addComponent(imageComboBoxTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Series", jPanel5);
+
+        chartBGImage.setText("Set Chart BackGround Image");
+        chartBGImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chartBGImageActionPerformed(evt);
+            }
+        });
+
+        plotBGImage.setText("Set Plot BackGround Image");
+        plotBGImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                plotBGImageActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Brightness:");
+
+        jLabel7.setText("Brightness:");
+
+        jSpinner3.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.5f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
+        jSpinner3.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinner3StateChanged(evt);
+            }
+        });
+
+        jSpinner4.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.5f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
+        jSpinner4.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinner4StateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(plotBGImage, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chartBGImage, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+
+        jPanel6Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {chartBGImage, plotBGImage});
+
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(chartBGImage)
+                    .addComponent(jLabel6)
+                    .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(plotBGImage)
+                    .addComponent(jLabel7)
+                    .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(157, Short.MAX_VALUE))
+        );
+
+        jPanel6Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {chartBGImage, plotBGImage});
+
+        jTabbedPane1.addTab("Back Ground Image", jPanel6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -540,14 +627,14 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(19, 19, 19)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -754,15 +841,85 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
 //                RectangleAnchor.BOTTOM_RIGHT);
 //          ta.setMaxWidth(0.48);
 //         inFocus.getXYPlot().addAnnotation(ta);
-            
+
             LegendTitle legend = inFocus.getchart().getLegend();
             legend.setPosition(RectangleEdge.RIGHT); // cause items to wrap
             ((XYPlot) inFocus.getchart().getPlot()).addAnnotation(new XYTitleAnnotation(0.98, 0.78, legend, RectangleAnchor.CENTER));
         }
     }//GEN-LAST:event_legendPositionTopRightActionPerformed
+
+    private void chartBGImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chartBGImageActionPerformed
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JFileChooser fileChooser = new JFileChooser();
+        int returnVal = fileChooser.showOpenDialog(null);
+        FileFilter filter = new FileFilter() {
+
+            @Override
+            public boolean accept(File f) {
+                String fileName = f.getName();
+                if (fileName.endsWith(".png")) {
+                    return true;
+                }
+                if (fileName.endsWith(".gif")) {
+                    return true;
+                }
+                if (fileName.endsWith(".xy")) {
+                    return true;
+                }
+                if (fileName.endsWith(".gss")) {
+                    return true;
+                }
+
+                return false;
+
+            }
+
+            @Override
+            public String getDescription() {
+                return "File (*.xy, *.xye,*.cif,*.gss)";
+            }
+        };
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            // get the selected files
+            File selectedFiles = fileChooser.getSelectedFile();
+
+            inFocus.getchart().setBackgroundImage(new ImageIcon(selectedFiles.getAbsolutePath()).getImage());
+
+        }
+    }//GEN-LAST:event_chartBGImageActionPerformed
+
+    private void plotBGImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotBGImageActionPerformed
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JFileChooser fileChooser = new JFileChooser();
+        int returnVal = fileChooser.showOpenDialog(null);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            // get the selected files
+            File selectedFiles = fileChooser.getSelectedFile();
+
+            inFocus.getXYPlot().setBackgroundImage(new ImageIcon(selectedFiles.getAbsolutePath()).getImage());
+
+        }
+    }//GEN-LAST:event_plotBGImageActionPerformed
+
+    private void jSpinner3StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner3StateChanged
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+
+        float f = Float.parseFloat(jSpinner3.getValue().toString());
+        inFocus.getchart().setBackgroundImageAlpha(f);
+    }//GEN-LAST:event_jSpinner3StateChanged
+
+    private void jSpinner4StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner4StateChanged
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+
+        float f = Float.parseFloat(jSpinner4.getValue().toString());
+        inFocus.getXYPlot().setBackgroundImageAlpha(f);
+    }//GEN-LAST:event_jSpinner4StateChanged
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton chartBGImage;
     private static javax.swing.JSpinner decimalPlacesSpinner;
     private javax.swing.JSpinner gridlineWidth;
     private javax.swing.JComboBox imageComboBoxTest;
@@ -774,16 +931,21 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner2;
+    private javax.swing.JSpinner jSpinner3;
+    private javax.swing.JSpinner jSpinner4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JCheckBox legendCheckBox;
     private javax.swing.JRadioButton legendPositionButtom;
@@ -796,6 +958,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     private javax.swing.JCheckBox majorY;
     private javax.swing.JCheckBox minorX;
     private javax.swing.JCheckBox minorY;
+    private javax.swing.JButton plotBGImage;
     private javax.swing.JCheckBox xScientific;
     private javax.swing.JCheckBox yScientific;
     // End of variables declaration//GEN-END:variables

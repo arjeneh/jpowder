@@ -168,6 +168,13 @@ public class GSAS_Reader {
         }
 
     }
+
+    // check if GSAS instrument file exist. For now assume that the instrument
+    // file has the same as the data file but with extension .instrument
+
+    // aFile 
+
+
 }
 
 

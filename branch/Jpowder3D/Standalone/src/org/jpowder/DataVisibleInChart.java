@@ -65,6 +65,7 @@ public class DataVisibleInChart extends JPanel {
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 //        file_sp.setPreferredSize(new java.awt.Dimension(SP_WIDTH, SP_HEIGHT));
         this.setLayout(new BorderLayout());
+
         add(file_sp);
 
     }

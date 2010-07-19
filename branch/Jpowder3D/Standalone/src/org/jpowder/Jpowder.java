@@ -31,7 +31,6 @@
 package org.jpowder;
 
 import java.beans.PropertyVetoException;
-import javax.swing.event.TreeExpansionEvent;
 import org.jpowder.tree.Tree;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -55,14 +54,15 @@ import org.jpowder.dataset.DataSet;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.util.ScreenUtil;
 import java.awt.*;
+import java.io.FileOutputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.prefs.Preferences;
 import javax.swing.*;
-import javax.swing.event.TreeExpansionListener;
-import javax.swing.tree.TreePath;
+import javax.swing.filechooser.FileFilter;
 import org.jfree.chart.ChartColor;
-import org.jpowder.fileCabinet.AcceptFileFilter;
+import org.jfree.ui.ExtensionFileFilter;
 import org.jpowder.tree.JpowderFileSystemTreeModel;
 
 /**
@@ -85,11 +85,8 @@ public class Jpowder extends JFrame implements DropTargetListener {
     public static JPowderStack jPowderStackRedo = new JPowderStack(3);
     private static double dropLocationX, dropLocationY;
     private JpowderPrint jpowderPrint = new JpowderPrint();
-
-    private Preferences prefsRoot = Preferences.userRoot();
-    private Preferences myPrefs = prefsRoot.node("JpowderTree");
-    private static final String key="treeKeys";
-
+    /** A flag that controls whether or not file extensions are enforced. */
+    private boolean enforceFileExtensions = true;
 
     //  private stackInternalFrames;
     /**
@@ -99,7 +96,6 @@ public class Jpowder extends JFrame implements DropTargetListener {
      */
     public Jpowder() {
         initComponents();
-
 
         mPowderFileCabinet = new PowderFileCabinet();
 
@@ -112,9 +108,21 @@ public class Jpowder extends JFrame implements DropTargetListener {
         //to keep newly added JInternalFrame inside the JDesktopPane (KP)
         chartPlotterPane.addContainerListener(new FrameAddedSupervisor());
         ScreenUtil.adjustBounds(this);
-  
+      
     }
-
+//    @Override
+//    public void paint(Graphics g) {
+//            Graphics2D g2 = (Graphics2D) g;
+//                  Rectangle bounds = getBounds();
+//
+//      // Set Paint for filling Shape
+//       GradientPaint gradientPaint = new GradientPaint(75, 75, Color.BLACK, 95, 95,
+//        Color.gray, true);
+//      g2.setPaint(gradientPaint);
+//      g2.fillRect(0, 0, bounds.width, bounds.height);
+////       g2.fill(e);
+//
+//    }
     /**
      *
      * @return chartPlotter
@@ -194,13 +202,11 @@ public class Jpowder extends JFrame implements DropTargetListener {
             chartPlotterPane.remove(messageLabel);
             chartPlotterPane.repaint();
         }
-//        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
-//            chartPlotterPane.add(messageLabel);
-//            chartPlotterPane.repaint();
-//        }
+
 
     }
-    public static JLabel getMessageLabel(){
+
+    public static JLabel getMessageLabel() {
         return messageLabel;
     }
 
@@ -211,6 +217,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         long totalM = (long) (Runtime.getRuntime().totalMemory() / oneByte);
         long freeM = (long) (Runtime.getRuntime().freeMemory() / oneByte);
         long MaxM = (long) (Runtime.getRuntime().maxMemory() / oneByte);
+
         if ((totalM - freeM) > 120) {
             // create a double internal frame and add to Plot Area
             // and then delete to trick JWM
@@ -239,6 +246,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
     }
 
+    public boolean isEnforceFileExtensions() {
+        return this.enforceFileExtensions;
+    }
+
     /** This method is called from within the constructor to
      * initialise the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -249,6 +260,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        homePanelScrollPane = new javax.swing.JScrollPane();
         homePanel = new javax.swing.JPanel();
         tabs = new javax.swing.JTabbedPane();
         explorertab = new javax.swing.JPanel();
@@ -260,6 +272,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         oPenMenu = new javax.swing.JMenuItem();
+        saveWorksPaceMenu = new javax.swing.JMenuItem();
         saveAsMenu = new javax.swing.JMenu();
         appletMenu = new javax.swing.JMenuItem();
         imageMenu = new javax.swing.JMenuItem();
@@ -296,6 +309,17 @@ public class Jpowder extends JFrame implements DropTargetListener {
         setTitle("Jpowder");
         setIconImage(new ImageIcon(getClass().getResource("/images/JpowderLogo.png")).getImage());
         setLocationByPlatform(true);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                formComponentResized(evt);
+            }
+        });
+
+        homePanelScrollPane.setBackground(new java.awt.Color(153, 153, 255));
+        homePanelScrollPane.setBorder(null);
+        homePanelScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        homePanelScrollPane.setMinimumSize(new java.awt.Dimension(10, 5));
+        homePanelScrollPane.getHorizontalScrollBar().setSize(0,0);
 
         homePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         homePanel.setPreferredSize(new java.awt.Dimension(320, 727));
@@ -324,30 +348,39 @@ public class Jpowder extends JFrame implements DropTargetListener {
         homePanel.setLayout(homePanelLayout);
         homePanelLayout.setHorizontalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
-                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(homePanelLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE))
-                    .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+            .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
-                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
+        homePanelScrollPane.setViewportView(homePanel);
+
         chartPlotterPane.setBackground(new java.awt.Color(236, 233, 216));
-        chartPlotterPane.setBorder(javax.swing.BorderFactory.createTitledBorder("Plot Area"));
+        chartPlotterPane.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Plot Area", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 204))); // NOI18N
         chartPlotterPane.setForeground(new java.awt.Color(102, 102, 102));
         chartPlotterPane.setDesktopManager(jPowderDesktopManager);
-        chartPlotterPane.setOpaque(false);
+        chartPlotterPane.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                chartPlotterPaneComponentResized(evt);
+            }
+        });
+        chartPlotterPane.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                chartPlotterPaneComponentAdded(evt);
+            }
+            public void componentRemoved(java.awt.event.ContainerEvent evt) {
+                chartPlotterPaneComponentRemoved(evt);
+            }
+        });
 
-        messageLabel.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
+        messageLabel.setFont(new java.awt.Font("Arial", 0, 36));
         messageLabel.setForeground(new java.awt.Color(153, 153, 153));
         messageLabel.setText("Drag & Drop Files Here.");
         messageLabel.setEnabled(false);
@@ -368,6 +401,14 @@ public class Jpowder extends JFrame implements DropTargetListener {
             }
         });
         fileMenu.add(oPenMenu);
+
+        saveWorksPaceMenu.setText("Save WorkSpace");
+        saveWorksPaceMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveWorksPaceMenuActionPerformed(evt);
+            }
+        });
+        fileMenu.add(saveWorksPaceMenu);
 
         saveAsMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/saveas_16x16.png"))); // NOI18N
         saveAsMenu.setText("Save Chart As");
@@ -615,9 +656,9 @@ public class Jpowder extends JFrame implements DropTargetListener {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chartPlotterPane, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
+                .addComponent(homePanelScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(chartPlotterPane, javax.swing.GroupLayout.DEFAULT_SIZE, 833, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -625,8 +666,8 @@ public class Jpowder extends JFrame implements DropTargetListener {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(homePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
-                    .addComponent(chartPlotterPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE))
+                    .addComponent(chartPlotterPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)
+                    .addComponent(homePanelScrollPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -760,7 +801,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
                     int top = 0;
                     int left = 0;
                     for (int i = 0; i < jInternalFrames.length; i++) {
-
+ 
                         SwingUtilities.invokeLater(new Runnable() {
 
                             public void run() {
@@ -863,13 +904,119 @@ public class Jpowder extends JFrame implements DropTargetListener {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(true);
 
+        FileFilter filter2 = new FileFilter() {
+
+            @Override
+            public boolean accept(File f) {
+                String fileName = f.getName();
+                if (fileName.endsWith(".cif")) {
+                    return true;
+                }
+
+                return false;
+
+            }
+
+            @Override
+            public String getDescription() {
+                return "File (*.cif)";
+            }
+        };
+        FileFilter filter3 = new FileFilter() {
+
+            @Override
+            public boolean accept(File f) {
+                String fileName = f.getName();
+                if (fileName.endsWith(".xye")) {
+                    return true;
+                }
+
+                return false;
+
+            }
+
+            @Override
+            public String getDescription() {
+                return "File (*.xye)";
+            }
+        };
+        FileFilter filter4 = new FileFilter() {
+
+            @Override
+            public boolean accept(File f) {
+                String fileName = f.getName();
+                if (fileName.endsWith(".xy")) {
+                    return true;
+                }
+
+                return false;
+
+            }
+
+            @Override
+            public String getDescription() {
+                return "File (*.xy)";
+            }
+        };
+        FileFilter filter5 = new FileFilter() {
+
+            @Override
+            public boolean accept(File f) {
+                String fileName = f.getName();
+                if (fileName.endsWith(".gss")) {
+                    return true;
+                }
+
+                return false;
+
+            }
+
+            @Override
+            public String getDescription() {
+                return "File (*.gss)";
+            }
+        };
+        FileFilter filter = new FileFilter() {
+
+            @Override
+            public boolean accept(File f) {
+                String fileName = f.getName();
+                if (fileName.endsWith(".cif")) {
+                    return true;
+                }
+                if (fileName.endsWith(".xye")) {
+                    return true;
+                }
+                if (fileName.endsWith(".xy")) {
+                    return true;
+                }
+                if (fileName.endsWith(".gss")) {
+                    return true;
+                }
+
+                return false;
+
+            }
+
+            @Override
+            public String getDescription() {
+                return "File (*.xy, *.xye,*.cif,*.gss)";
+            }
+        };
+
+        fileChooser.addChoosableFileFilter(filter2);
+        fileChooser.addChoosableFileFilter(filter3);
+        fileChooser.addChoosableFileFilter(filter4);
+        fileChooser.addChoosableFileFilter(filter5);
+        fileChooser.addChoosableFileFilter(filter);
+
+
         //DataSet oneDataset = null;
 
         // Set the accepted powder diffraction file extensions
         // and open a file chooser window for the user to select powder
         // diffraction file
-        fileChooser.addChoosableFileFilter(new AcceptFileFilter(PowderFileCabinet.ACCEPTED_FILE_TYPE, "File (*.xy, *.xye, *.txt,*cif)"));
-        fileChooser.setAcceptAllFileFilterUsed(false);
+
         int returnVal = fileChooser.showOpenDialog(null);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -913,6 +1060,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
             chartPlotterPane.add(internalframe);
             setVisible(true);
             moemoryChecker();
+            displayingMessageLabel();
 
         }//if open approved
 
@@ -934,8 +1082,59 @@ public class Jpowder extends JFrame implements DropTargetListener {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void ImportTable3DActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportTable3DActionPerformed
-       new FilesTable().setVisible(true);
+        new FilesTable().setVisible(true);
     }//GEN-LAST:event_ImportTable3DActionPerformed
+
+    private void saveWorksPaceMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveWorksPaceMenuActionPerformed
+    JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JInternalFrame jInternalFrames[] = chartPlotterPane.getAllFrames(); // get all open frames
+        JFileChooser chooser = new JFileChooser();
+        int returnVal = chooser.showSaveDialog(this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+
+
+            try {
+                
+                String filename = chooser.getSelectedFile().getPath();
+                FileOutputStream buffer = new FileOutputStream(filename);
+                ObjectOutput out = new ObjectOutputStream(buffer);
+                out.writeObject(jInternalFrames[0]);
+
+            } catch (IOException e) {
+                System.out.println(e);
+            }
+        }
+
+
+
+    }//GEN-LAST:event_saveWorksPaceMenuActionPerformed
+
+    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+
+        int w = (int) evt.getComponent().getSize().getWidth();
+        messageLabel.setFont(new java.awt.Font("Arial", 0, (w / 36)));
+    }//GEN-LAST:event_formComponentResized
+
+    private void chartPlotterPaneComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_chartPlotterPaneComponentResized
+        int w = (int) evt.getComponent().getSize().getWidth();
+        int h = (int) evt.getComponent().getSize().getHeight();
+        messageLabel.setLocation(w / 4, h / 2);
+
+    }//GEN-LAST:event_chartPlotterPaneComponentResized
+
+    private void chartPlotterPaneComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_chartPlotterPaneComponentAdded
+    }//GEN-LAST:event_chartPlotterPaneComponentAdded
+
+    private void chartPlotterPaneComponentRemoved(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_chartPlotterPaneComponentRemoved
+
+        if (chartPlotterPane.getAllFrames().length == 0) {
+
+            chartPlotterPane.add(messageLabel);
+            chartPlotterPane.repaint();
+
+        }
+    }//GEN-LAST:event_chartPlotterPaneComponentRemoved
 
     public void dragEnter(DropTargetDragEvent dtde) {
     }
@@ -1092,6 +1291,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JPanel homePanel;
+    private javax.swing.JScrollPane homePanelScrollPane;
     private javax.swing.JMenuItem imageMenu;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -1109,6 +1309,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private javax.swing.JMenuItem propertiesMenu;
     private javax.swing.JMenuItem redoMenu;
     private javax.swing.JMenu saveAsMenu;
+    private javax.swing.JMenuItem saveWorksPaceMenu;
     private javax.swing.JTabbedPane tabs;
     private javax.swing.JCheckBoxMenuItem tileCheckBoxMenuItem;
     private javax.swing.JCheckBoxMenuItem tileHorizontallyCheckBoxMenuItem;

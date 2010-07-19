@@ -32,7 +32,8 @@ package org.jpowder.jfreechart;
 
 import org.jpowder.dataset.*;
 import java.awt.Color;
-import java.awt.Paint;
+import java.awt.GradientPaint;
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.Vector;
 import org.jfree.chart.ChartColor;
@@ -50,14 +51,11 @@ import org.jfree.ui.RectangleInsets;
  * one or more powder diffraction files.
  *
  */
-public class FilesPlotter extends DatasetPlotter {
+public class FilesPlotter extends DatasetPlotter implements Serializable{
 
     private static Vector<DataSet> datasets;
     public static XYPlot plot;
     private static JFreeChart chart;
-    public static Paint[] allSeriescolors = {Color.BLUE, Color.RED, ChartColor.VERY_DARK_GREEN,
-        Color.ORANGE, Color.CYAN, Color.MAGENTA, ChartColor.DARK_YELLOW, Color.BLACK,
-        Color.PINK, Color.LIGHT_GRAY, Color.GRAY, ChartColor.DARK_BLUE, ChartColor.DARK_RED, ChartColor.DARK_GREEN, Color.yellow, ChartColor.DARK_CYAN, ChartColor.DARK_GRAY, ChartColor.VERY_DARK_BLUE, ChartColor.VERY_DARK_RED, Color.GREEN, ChartColor.VERY_DARK_YELLOW, ChartColor.VERY_DARK_CYAN, ChartColor.VERY_DARK_MAGENTA, ChartColor.VERY_LIGHT_BLUE, ChartColor.VERY_LIGHT_RED, ChartColor.VERY_LIGHT_GREEN, ChartColor.VERY_LIGHT_YELLOW, ChartColor.VERY_LIGHT_CYAN, ChartColor.VERY_LIGHT_MAGENTA};
 
     /**
      *
@@ -80,11 +78,6 @@ public class FilesPlotter extends DatasetPlotter {
 
     }
 
-    public static Paint getSeriesColors(int i) {
-
-        return allSeriescolors[i % allSeriescolors.length];
-    }
-
     public String description() {
         return "Multiple Files Plotter";
     }
@@ -100,7 +93,7 @@ public class FilesPlotter extends DatasetPlotter {
         plot.setDomainPannable(true);
         plot.setRangePannable(true);
 
-      for (int i = 0; i < plot.getDatasetCount(); i++) {
+        for (int i = 0; i < plot.getDatasetCount(); i++) {
             if (datasets.get(i).getFileName().endsWith("gss")) {
                 plot.getDomainAxis().setLabel("TOF");
             }
@@ -150,16 +143,16 @@ public class FilesPlotter extends DatasetPlotter {
         NumberAxis yAxis = new NumberAxis("Intensity");
         yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
-  
+
 
 //         xAxis.setAxisLineVisible(false);
 //        yAxis.setAxisLineVisible(false);
 
         // get a reference to the plot for further customisation...
         JpowderXYLineAndShapeRender renderer1 = new JpowderXYLineAndShapeRender();
-        renderer1.setSeriesPaint(0, getSeriesColors(0));
+        renderer1.setSeriesPaint(0, DefaultSeriesColours.getSeriesColors(0));
         JpowderXYErrorRender renderer2 = new JpowderXYErrorRender();
-        renderer2.setSeriesPaint(0, getSeriesColors(0));
+        renderer2.setSeriesPaint(0, DefaultSeriesColours.getSeriesColors(0));
 
         //Displaying the X&Y in Tooltip
         XYToolTipGenerator tooltip = new StandardXYToolTipGenerator(
@@ -182,9 +175,9 @@ public class FilesPlotter extends DatasetPlotter {
 
         for (int i = 1; i < datasets.size(); i++) {
             JpowderXYLineAndShapeRender renderer3 = new JpowderXYLineAndShapeRender();
-            renderer3.setSeriesPaint(0, getSeriesColors(i));
+            renderer3.setSeriesPaint(0, DefaultSeriesColours.getSeriesColors(i));
             JpowderXYErrorRender renderer4 = new JpowderXYErrorRender();
-            renderer4.setSeriesPaint(0, getSeriesColors(i));
+            renderer4.setSeriesPaint(0, DefaultSeriesColours.getSeriesColors(i));
 
 //            NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
 //            rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
@@ -217,6 +210,8 @@ public class FilesPlotter extends DatasetPlotter {
         plot.getRenderer().setToolTipGenerator(tooltip);
         chart = new JFreeChart(null, null, plot, false);// for getting the chart header
         chart.setBackgroundPaint(Color.white);
+         chart.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000,Color.BLACK,true));
+
         return chart;
     }
 
@@ -231,8 +226,8 @@ public class FilesPlotter extends DatasetPlotter {
             int newPlotIndex = plot.getDatasetCount();
             JpowderXYLineAndShapeRender renderer3 = new JpowderXYLineAndShapeRender();
             JpowderXYErrorRender renderer4 = new JpowderXYErrorRender();
-            renderer3.setSeriesPaint(0, getSeriesColors(plot.getDatasetCount()));
-            renderer4.setSeriesPaint(0, getSeriesColors(plot.getDatasetCount()));
+            renderer3.setSeriesPaint(0, DefaultSeriesColours.getSeriesColors(plot.getDatasetCount()));
+            renderer4.setSeriesPaint(0, DefaultSeriesColours.getSeriesColors(plot.getDatasetCount()));
             // change the auto tick unit selection to integer units only...
             NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
             rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
@@ -249,5 +244,4 @@ public class FilesPlotter extends DatasetPlotter {
         plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
 
     }
-
 }

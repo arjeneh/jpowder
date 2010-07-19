@@ -30,13 +30,14 @@
  */
 package org.jpowder.dataset;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 /**
  * Hold a powder diffraction dataset that contains no errors, i.e. a powder
  * diffraction dataset with the xy format
  */
-public class DataSetNoErrors extends DataSet {
+public class DataSetNoErrors extends DataSet implements Serializable{
 
     public DataSetNoErrors(Vector data, String fileName) {
         super(data, fileName);

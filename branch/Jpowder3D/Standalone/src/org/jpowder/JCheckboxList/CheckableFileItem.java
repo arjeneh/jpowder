@@ -29,12 +29,13 @@
 
 package org.jpowder.JCheckboxList;
 
+import java.io.Serializable;
 import javax.swing.Icon;
 
 /**
  *
  */
-public class CheckableFileItem {
+public class CheckableFileItem implements Serializable{
 
     private String str;
     private boolean isSelected;

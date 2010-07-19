@@ -28,14 +28,10 @@
  */
 package org.jpowder.Analysis;
 
-import java.awt.Color;
-import java.awt.Component;
-import javax.swing.JLabel;
+
+import java.util.Collections;
 import javax.swing.JTable;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.data.xy.XYDataset;
@@ -58,12 +54,15 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
     private String columnsName[] = {"Plot(s)", "Wavelength"};
     private DefaultTableModel defaultTableModel;
     private double newWaveLength;
+    private GSASTable gSASTable = new GSASTable();
 
     /** Creates new form BraggsLow */
     public BraggsLaw(ToolsIcon analysisIcon) {
         initComponents();
 
         this.toolsIcon = analysisIcon;
+
+
 
     }
 
@@ -78,61 +77,75 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
             dataTable.updateUI();
             return;
         }
-  
+
+        for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
+            if (!inFocus.getPowderDataSet().get(i).getFileName().endsWith("gss")) {
+
+                // clear the table
+                // get all dataset in plot
+                // loop over dataset
+                // if GSAS_Instrument = null then add no numbers
+                // otherwise add numbers
+
+                bragsPanel.setVisible(true);
+                tablePanel.add(bragsPanel);
+                gSASTable.setVisible(false);
+
+            }
+
+        }
+        for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
+            if (inFocus.getPowderDataSet().get(i).getFileName().endsWith("gss")) {
+                gSASTable.setVisible(true);
+                tablePanel.add(gSASTable);
+                bragsPanel.setVisible(false);
+            }
+
+        }
 
 
-        defaultTableModel = new DefaultTableModel(getDataSetAndWaveLength(), columnsName){
+
+        defaultTableModel = new DefaultTableModel(getDataSetAndWaveLength(), columnsName) {
+
             @Override
-       public boolean isCellEditable(int row,int column) {
-           if(column==0){
-               return false;
-           }
-           else{
-               return true;
-           }
-       }
-        
+            public boolean isCellEditable(int row, int column) {
+                if (column == 0) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
         };
+
+
 
 
 
         dataTable.setModel(defaultTableModel);
         setSizeOfColumn();
 
-        defaultTableModel.addTableModelListener(new TableModelListener() {
+        defaultTableModel.addTableModelListener(new TableListener(newWaveLength));
 
-            public void tableChanged(TableModelEvent e) {
-                JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-                int size = inFocus.getXYPlot().getDatasetCount();
-                for (int i = 0; i < size; i++) {
+//        defaultTableModel.addTableModelListener(new TableModelListener() {
+//
+//            public void tableChanged(TableModelEvent e) {
+//                JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+//                int size = inFocus.getXYPlot().getDatasetCount();
+//                for (int i = 0; i < size; i++) {
+//
+//                    if (!defaultTableModel.getValueAt(i, 1).equals("")) {
+//
+//                        newWaveLength = Double.parseDouble(dataTable.getModel().getValueAt(i, 1).toString());
+//                        inFocus.getPowderDataSet().get(i).setWaveLength(newWaveLength);
+//
+//                    }
+//                }
+//
+//
+//            }
+//        });
 
-                    if (!defaultTableModel.getValueAt(i, 1).equals("")) {
-
-                        newWaveLength = Double.parseDouble(dataTable.getModel().getValueAt(i, 1).toString());
-                        inFocus.getPowderDataSet().get(i).setWaveLength(newWaveLength);
-
-                    }
-                }
-
-
-            }
-        });
-
-        dataTable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableCellRenderer() {
-
-            public Component getTableCellRendererComponent(JTable table, Object value,
-                    boolean isSelected, boolean hasFocus, int row, int column) {
-
-                JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-                JLabel fileName = new JLabel(value.toString());
-                
-                 
-                fileName.setForeground((Color) inFocus.getXYPlot().getRenderer(row).getSeriesPaint(0));
-                return fileName;
-
-
-            }
-        });
+        dataTable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableRenderer());
 
 
 //        dataTable.setEditingColumn(1);
@@ -206,7 +219,6 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         }
     }
 
-
     /**
      * sets the size of the first column of the table which it holds the
      * file names.
@@ -216,12 +228,27 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         TableColumn column = dataTable.getColumnModel().getColumn(0);
         int width = 220;
         column.setPreferredWidth(width);
+
     }
 
     public void setDomainAxis() {
         JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
         NumberAxis numberAxis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
         numberAxis.setRange(0, 1);
+    }
+
+    public void resetXaxis() {
+        double maxX = 0;
+        double minX = 0;
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+                for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
+          maxX = (Double) Collections.max(inFocus.getPowderDataSet().elementAt(i).getX());
+          minX = (Double) Collections.min(inFocus.getPowderDataSet().elementAt(i).getX());
+//            System.out.println("max y" + maxY);
+        }
+        NumberAxis axis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
+        axis.setLowerBound(minX);
+        axis.setUpperBound(maxX);
     }
 
     public void setColumn(String[] columns) {
@@ -236,6 +263,9 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
         return dataSetAndWaveLength;
     }
+    public static JTable getBragstable(){
+        return dataTable;
+    }
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -246,10 +276,12 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
+        bragsPanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         dataTable = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        tablePanel = new javax.swing.JPanel();
+        jSeparator1 = new javax.swing.JSeparator();
         backButton = new javax.swing.JButton();
         unitComboBox1 = new javax.swing.JComboBox();
         unitComboBox2 = new javax.swing.JComboBox();
@@ -257,15 +289,39 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         applyButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-
-        jLabel1.setText("jLabel1");
-
-        setFocusCycleRoot(true);
+        jButton2 = new javax.swing.JButton();
 
         dataTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         dataTable.setModel(new DefaultTableModel());
         dataTable.setToolTipText("Fill The Empty WaveLength Rows");
         jScrollPane3.setViewportView(dataTable);
+
+        javax.swing.GroupLayout bragsPanelLayout = new javax.swing.GroupLayout(bragsPanel);
+        bragsPanel.setLayout(bragsPanelLayout);
+        bragsPanelLayout.setHorizontalGroup(
+            bragsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(bragsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(bragsPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        bragsPanelLayout.setVerticalGroup(
+            bragsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(bragsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(bragsPanelLayout.createSequentialGroup()
+                    .addGap(2, 2, 2)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                    .addGap(3, 3, 3)))
+        );
+
+        jButton1.setText("jButton1");
+
+        setFocusCycleRoot(true);
+
+        tablePanel.setLayout(new java.awt.BorderLayout());
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.PNG"))); // NOI18N
         backButton.setText("Back");
@@ -279,11 +335,11 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
             }
         });
 
-        unitComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        unitComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2Ө", "d" }));
+        unitComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14));
+        unitComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2Ө", "d", "TOF" }));
 
-        unitComboBox2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        unitComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "d", "2Ө" }));
+        unitComboBox2.setFont(new java.awt.Font("Tahoma", 0, 14));
+        unitComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "d", "2Ө", "TOF" }));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14));
         jLabel3.setText("---->");
@@ -299,39 +355,49 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
         jLabel4.setText("Change x-axis from 2ө to d and vice-versa.");
 
+        jButton2.setText("resc");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(226, Short.MAX_VALUE))
+                .addContainerGap(230, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(unitComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                        .addComponent(unitComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
+                        .addComponent(applyButton)))
+                .addGap(16, 16, 16))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(applyButton)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(unitComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(62, 62, 62)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                                .addComponent(unitComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(16, 16, 16))))
+                .addComponent(tablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -342,15 +408,17 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(unitComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(unitComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(applyButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(applyButton)
+                    .addComponent(jButton2))
                 .addGap(78, 78, 78)
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -368,102 +436,147 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
      * @param evt
      */
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
-              JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
-            applyButton.setSelected(false);
-            return;
-        }
-        for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
-            if (inFocus.getPowderDataSet().get(i).getFileName().endsWith("gss")) {
-                javax.swing.JOptionPane.showMessageDialog(null, "Can not transform TOF to 2Ө.");
-            return;
+        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+
+
+        if (bragsPanel.isVisible()) {
+            if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+                applyButton.setSelected(false);
+                return;
             }
+//        for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
+//            if (inFocus.getPowderDataSet().get(i).getFileName().endsWith("gss")) {
+//                javax.swing.JOptionPane.showMessageDialog(null, "Can not transform TOF to 2Ө.");
+//                return;
+//            }
+//
+//        }
 
-        }
+            String x = "2\u03D1";//unicode 2thetha
+            dataTable.clearSelection();
+            if (unitComboBox1.getSelectedItem().toString().equals("2Ө") &&
+                    unitComboBox2.getSelectedItem().toString().equals("2Ө")) {
+                return;
+            }
+            if (unitComboBox1.getSelectedItem().toString().equals("d") &&
+                    unitComboBox2.getSelectedItem().toString().equals("d")) {
+                return;
+            }
+            int seriescount = inFocus.getXYPlot().getDatasetCount();
+            if (inFocus.getXYPlot().getDomainAxis().getLabel().equals("d [Å]") &&
+                    unitComboBox1.getSelectedItem().toString().equals("2Ө")) {
+                javax.swing.JOptionPane.showMessageDialog(null, "The unit is already in  d [Å].");
+                return;
+            }
+            if (inFocus.getXYPlot().getDomainAxis().getLabel().equals(x.toUpperCase()) &&
+                    unitComboBox1.getSelectedItem().toString().equals("d")) {
+                javax.swing.JOptionPane.showMessageDialog(null, "The unit is already in 2Ө.");
+                return;
+            }
+            // testing if all wavelenghts have been set
 
-        String x = "2\u03D1";//unicode 2thetha
-        dataTable.clearSelection();
-        if (unitComboBox1.getSelectedItem().toString().equals("2Ө") &&
-                unitComboBox2.getSelectedItem().toString().equals("2Ө")) {
-            return;
-        }
-        if (unitComboBox1.getSelectedItem().toString().equals("d") &&
-                unitComboBox2.getSelectedItem().toString().equals("d")) {
-            return;
-        }
-        int seriescount = inFocus.getXYPlot().getDatasetCount();
-        if (inFocus.getXYPlot().getDomainAxis().getLabel().equals("d [Å]") &&
-                unitComboBox1.getSelectedItem().toString().equals("2Ө")) {
-            javax.swing.JOptionPane.showMessageDialog(null, "The unit is already in  d [Å].");
-            return;
-        }
-        if (inFocus.getXYPlot().getDomainAxis().getLabel().equals(x.toUpperCase()) &&
-                unitComboBox1.getSelectedItem().toString().equals("d")) {
-            javax.swing.JOptionPane.showMessageDialog(null, "The unit is already in 2Ө.");
-            return;
-        }
-        // testing if all wavelenghts have been set
-        for (int i = 0; i < seriescount; i++) {
-            try {
-                double waveLength = Double.parseDouble(dataTable.getValueAt(i, 1).toString());
-                if (dataTable.getValueAt(i, 1).equals("Value")) {
+
+
+
+            for (int i = 0; i < seriescount; i++) {
+                try {
+                    double waveLength = Double.parseDouble(dataTable.getValueAt(i, 1).toString());
+                    if (dataTable.getValueAt(i, 1).equals("Value")) {
+                        javax.swing.JOptionPane.showMessageDialog(null, "Please enter value for Wavelength.");
+                        return;
+                    }
+                } catch (NumberFormatException e) {
                     javax.swing.JOptionPane.showMessageDialog(null, "Please enter value for Wavelength.");
                     return;
                 }
-            } catch (NumberFormatException e) {
-                javax.swing.JOptionPane.showMessageDialog(null, "Please enter value for Wavelength.");
-                return;
             }
-        }
 
-        for (int i = 0; i < seriescount; i++) {
+
+            for (int i = 0; i < seriescount; i++) {
 //            try {
-            inFocus.getPowderDataSet().elementAt(i).getX();
-            XYDataset ds = inFocus.getXYPlot().getDataset(i);
+                inFocus.getPowderDataSet().elementAt(i).getX();
+                XYDataset ds = inFocus.getXYPlot().getDataset(i);
 
-            for (int j = 0; j < ds.getItemCount(i); j++) {
+                for (int j = 0; j < ds.getItemCount(i); j++) {
 
-                Double X = (Double) inFocus.getPowderDataSet().elementAt(i).getX().get(j);
-                double waveLength = Double.parseDouble(dataTable.getValueAt(i, 1).toString());
-                double spacing = waveLength / (2 * Math.sin(Math.toRadians(X / 2)));
-                double theta = Math.toDegrees(Math.asin((waveLength / (2 * X)))) * 2;
-
-
-                if (unitComboBox1.getSelectedItem().toString().equals("2Ө") &&
-                        unitComboBox2.getSelectedItem().toString().equals("d")) {
-                    inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(spacing, j);
-                    inFocus.getXYPlot().getDomainAxis().setLabel("d [Å]");
-                    setDomainAxis();
-
-                }
+                    Double X = (Double) inFocus.getPowderDataSet().elementAt(i).getX().get(j);
+                    double waveLength = Double.parseDouble(dataTable.getValueAt(i, 1).toString());
+                    double spacing = waveLength / (2 * Math.sin(Math.toRadians(X / 2)));
+                    double theta = Math.toDegrees(Math.asin((waveLength / (2 * X)))) * 2;
 
 
-                if (unitComboBox1.getSelectedItem().toString().equals("d") &&
-                        unitComboBox2.getSelectedItem().toString().equals("2Ө")) {
-                    inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(theta, j);
+                    if (unitComboBox1.getSelectedItem().toString().equals("2Ө") &&
+                            unitComboBox2.getSelectedItem().toString().equals("d")) {
+                        inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(spacing, j);
+                        inFocus.getXYPlot().getDomainAxis().setLabel("d [Å]");
+                        setDomainAxis();
 
-                    inFocus.getXYPlot().getDomainAxis().setLabel(x.toUpperCase());
-                    setDomainAxis();
+                    }
+
+
+                    if (unitComboBox1.getSelectedItem().toString().equals("d") &&
+                            unitComboBox2.getSelectedItem().toString().equals("2Ө")) {
+                        inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(theta, j);
+
+                        inFocus.getXYPlot().getDomainAxis().setLabel(x.toUpperCase());
+                        setDomainAxis();
+                    }
+
+
+
                 }
 
             }
-
         }
 
+
+        if (gSASTable.isVisible()) {
+            for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
+
+                inFocus.getPowderDataSet().elementAt(i).getX();
+                XYDataset ds = inFocus.getXYPlot().getDataset(i);
+
+                for (int j = 0; j < ds.getItemCount(i); j++) {
+
+                    Double X = (Double) inFocus.getPowderDataSet().elementAt(i).getX().get(j);
+                    double newX = inFocus.getPowderDataSet().get(i).getGSAS_Instrument().toDspacing(X);
+                    if (unitComboBox1.getSelectedItem().toString().equals("TOF") &&
+                            unitComboBox2.getSelectedItem().toString().equals("d")) {
+                        inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(newX, j);
+
+
+
+
+//            System.out.println("max y" + maxY);
+
+
+                    }
+                }
+
+            }
+        }
         inFocus.getChartPanel().restoreAutoBounds();
         inFocus.getchart().setNotify(true);
+
     }//GEN-LAST:event_applyButtonActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+      resetXaxis();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton applyButton;
     private javax.swing.JButton backButton;
-    private javax.swing.JTable dataTable;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel bragsPanel;
+    public static javax.swing.JTable dataTable;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
+    static javax.swing.JPanel tablePanel;
     private javax.swing.JComboBox unitComboBox1;
     private javax.swing.JComboBox unitComboBox2;
     // End of variables declaration//GEN-END:variables

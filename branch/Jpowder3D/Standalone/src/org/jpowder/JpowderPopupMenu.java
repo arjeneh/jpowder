@@ -47,6 +47,7 @@ import java.io.IOException;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -72,6 +73,10 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
     private ChartPanel chartPanel;
     private XYPlot plot;
     private double X = -1;
+        /** The resourceBundle for the localization. */
+    protected static ResourceBundle localizationResources =
+            ResourceBundle.getBundle("org/jpowder/JpowderPopUpMenu");
+    
     public static final String PDF_CAMAND = "PDF";
     public static final String PDFForPublicatio_CAMAND = "PDFForPublication";
     public static final String JPOWDER_APPLET_CAMAND = "JPOWDER_APPLET";
@@ -159,39 +164,39 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
     public void initComponents() {
 
 
-        popupMenu.add(menuItem = new JMenuItem("Properties"));
+        popupMenu.add(menuItem = new JMenuItem(localizationResources.getString("Properties...")));
         menuItem.setActionCommand(ChartPanel.PROPERTIES_COMMAND);
         menuItem.addActionListener(this);
         popupMenu.addSeparator();
 
 
-        popupMenu.add(menuItem = new JMenuItem("Copy To Clipboard"));
+        popupMenu.add(menuItem = new JMenuItem(localizationResources.getString("Copy")));
         menuItem.setActionCommand(ChartPanel.COPY_COMMAND);
         menuItem.addActionListener(this);
 
 
 
-        popupMenu.add(saveAs = new JMenu("Save As..."));
-        saveAs.add(menuItem = new JMenuItem("Jpowder-Applet Format"));
+        popupMenu.add(saveAs = new JMenu(localizationResources.getString("Save_as...")));
+        saveAs.add(menuItem = new JMenuItem(localizationResources.getString("Applet_Files")));
         menuItem.setActionCommand(JPOWDER_APPLET_CAMAND);
         menuItem.addActionListener(this);
-        saveAs.add(menuItem = new JMenuItem("Image"));
+        saveAs.add(menuItem = new JMenuItem(localizationResources.getString("PNG_Image_Files")));
         menuItem.setActionCommand(ChartPanel.SAVE_COMMAND);
         menuItem.addActionListener(this);
-        saveAs.add(menuItem = new JMenuItem("PDF"));
+        saveAs.add(menuItem = new JMenuItem(localizationResources.getString("PDF_Files")));
         menuItem.setActionCommand(PDF_CAMAND);
         menuItem.addActionListener(this);
-        saveAs.add(menuItem = new JMenuItem("PDF For Publication"));
+        saveAs.add(menuItem = new JMenuItem(localizationResources.getString("PDF_FilesForPublication")));
         menuItem.setActionCommand(PDFForPublicatio_CAMAND);
         menuItem.addActionListener(this);
 
 
         popupMenu.addSeparator();
-        popupMenu.add(printAs = new JMenu("Print As..."));
-        printAs.add(menuItem = new JMenuItem("Print"));
+        popupMenu.add(printAs = new JMenu(localizationResources.getString("Print_as...")));
+        printAs.add(menuItem = new JMenuItem(localizationResources.getString("Print_Normal")));
         menuItem.setActionCommand(ChartPanel.PRINT_COMMAND);
         menuItem.addActionListener(this);
-        printAs.add(menuItem = new JMenuItem("Print For Publication"));
+        printAs.add(menuItem = new JMenuItem(localizationResources.getString("Print_Publication")));
         menuItem.setActionCommand(PRINT_FOR_PUBLICATION_CAMAND);
         menuItem.addActionListener(this);
 
@@ -199,29 +204,29 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
 
 
         popupMenu.addSeparator();
-        popupMenu.add(zoomIn = new JMenu("Zoom In"));
-        zoomIn.add(menuItem = new JMenuItem("Both Axes"));
+        popupMenu.add(zoomIn = new JMenu(localizationResources.getString("Zoom_In")));
+        zoomIn.add(menuItem = new JMenuItem(localizationResources.getString("All_Axes")));
         menuItem.setActionCommand(ChartPanel.ZOOM_IN_BOTH_COMMAND);
         menuItem.addActionListener(this);
         zoomIn.addSeparator();
-        zoomIn.add(menuItem = new JMenuItem("X Axis"));
+        zoomIn.add(menuItem = new JMenuItem(localizationResources.getString("Domain_Axis")));
         menuItem.setActionCommand(ChartPanel.ZOOM_IN_DOMAIN_COMMAND);
         menuItem.addActionListener(this);
-        zoomIn.add(menuItem = new JMenuItem("Y Axis"));
+        zoomIn.add(menuItem = new JMenuItem(localizationResources.getString("Range_Axis")));
         menuItem.setActionCommand(ChartPanel.ZOOM_IN_RANGE_COMMAND);
         menuItem.addActionListener(this);
 
 
-        popupMenu.add(zoomOut = new JMenu("Zoom Out"));
+        popupMenu.add(zoomOut = new JMenu(localizationResources.getString("Zoom_Out")));
 //        popupMenu.addSeparator();
-        zoomOut.add(menuItem = new JMenuItem("Both Axes"));
+        zoomOut.add(menuItem = new JMenuItem(localizationResources.getString("All_Axes")));
         menuItem.setActionCommand(ChartPanel.ZOOM_OUT_BOTH_COMMAND);
         menuItem.addActionListener(this);
         zoomOut.addSeparator();
-        zoomOut.add(menuItem = new JMenuItem("X Axis"));
+        zoomOut.add(menuItem = new JMenuItem(localizationResources.getString("Domain_Axis")));
         menuItem.setActionCommand(ChartPanel.ZOOM_OUT_DOMAIN_COMMAND);
         menuItem.addActionListener(this);
-        zoomOut.add(menuItem = new JMenuItem("Y Axis"));
+        zoomOut.add(menuItem = new JMenuItem(localizationResources.getString("Range_Axis")));
         menuItem.setActionCommand(ChartPanel.ZOOM_OUT_RANGE_COMMAND);
         menuItem.addActionListener(this);
 

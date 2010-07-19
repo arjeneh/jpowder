@@ -28,6 +28,7 @@
  */
 package org.jpowder.dataset;
 
+import java.io.Serializable;
 import java.util.Vector;
 import org.jpowder.util.VectorMiscUtil;
 
@@ -35,7 +36,7 @@ import org.jpowder.util.VectorMiscUtil;
  * Hold a powder diffraction dataset that contains errors, i.e. a powder
  * diffraction dataset with the xye format
  */
-public class DataSetWithErrors extends DataSet {
+public class DataSetWithErrors extends DataSet implements Serializable {
 
     private Vector<Double> e;
     private Vector<Double> yLower;

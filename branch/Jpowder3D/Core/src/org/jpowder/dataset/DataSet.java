@@ -44,6 +44,8 @@ public abstract class DataSet {
     private Vector<Double> y;
     private String fileName;
     private double waveLength;
+    private GSAS_Instrument gsasInst = null;
+    private boolean isTOF = false;
 
     //@param data: data from a powder diffraction file
     //@param fileName: filename of powder diffraction file.
@@ -81,20 +83,29 @@ public abstract class DataSet {
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
+
     public double getWaveLength() {
         return waveLength;
     }
 
-    public  void setWaveLength(double waveLength) {
-       this.waveLength=waveLength;
+    public void setWaveLength(double waveLength) {
+        this.waveLength = waveLength;
     }
+
     public String getXUnit() {
         return xUnit;
     }
 
-    public  void setXUnit(String xunit) {
-       this.xUnit=xunit;
+    public GSAS_Instrument getGSAS_Instrument() {
+        return gsasInst;
     }
 
+    public void setGSAS_Instrument(GSAS_Instrument inst) {
+        gsasInst = inst;
+    }
+
+    public void setXUnit(String xunit) {
+        this.xUnit = xunit;
+    }
 }
 
