@@ -60,13 +60,13 @@ import java.util.prefs.Preferences;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import org.jfree.chart.ChartColor;
-import org.jfree.ui.ExtensionFileFilter;
 import org.jpowder.tree.JpowderFileSystemTreeModel;
 
 /**
  * mainly for putting toghther all the GUIs.
  *
  */
+
 public class Jpowder extends JFrame implements DropTargetListener {
 
     private JpowderFileSystemTreeModel treeModel = new JpowderFileSystemTreeModel();
@@ -108,6 +108,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         //to keep newly added JInternalFrame inside the JDesktopPane (KP)
         chartPlotterPane.addContainerListener(new FrameAddedSupervisor());
         ScreenUtil.adjustBounds(this);
+
 
     }
 
@@ -846,7 +847,26 @@ public class Jpowder extends JFrame implements DropTargetListener {
         File file;
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(true);
-        FileFilter filter = new FileFilter() {
+       
+        FileFilter filter2 = new FileFilter() {
+
+            @Override
+            public boolean accept(File f) {
+                String fileName = f.getName();
+                if (fileName.endsWith(".cif")) {
+                    return true;
+                }
+
+                return false;
+
+            }
+
+            @Override
+            public String getDescription() {
+                return "File (*.cif)";
+            }
+        };
+                FileFilter filter3 = new FileFilter() {
 
             @Override
             public boolean accept(File f) {
@@ -854,13 +874,64 @@ public class Jpowder extends JFrame implements DropTargetListener {
                 if (fileName.endsWith(".xye")) {
                     return true;
                 }
+
+                return false;
+
+            }
+
+            @Override
+            public String getDescription() {
+                return "File (*.xye)";
+            }
+        };
+                FileFilter filter4 = new FileFilter() {
+
+            @Override
+            public boolean accept(File f) {
+                String fileName = f.getName();
                 if (fileName.endsWith(".xy")) {
                     return true;
                 }
+
+                return false;
+
+            }
+
+            @Override
+            public String getDescription() {
+                return "File (*.xy)";
+            }
+        };
+                FileFilter filter5 = new FileFilter() {
+
+            @Override
+            public boolean accept(File f) {
+                String fileName = f.getName();
+                if (fileName.endsWith(".gss")) {
+                    return true;
+                }
+
+                return false;
+
+            }
+
+            @Override
+            public String getDescription() {
+                return "File (*.gss)";
+            }
+        };
+         FileFilter filter = new FileFilter() {
+
+            @Override
+            public boolean accept(File f) {
+                String fileName = f.getName();
                 if (fileName.endsWith(".cif")) {
                     return true;
                 }
-                if (fileName.endsWith(".txt")) {
+                if (fileName.endsWith(".xye")) {
+                    return true;
+                }
+                if (fileName.endsWith(".xy")) {
                     return true;
                 }
                 if (fileName.endsWith(".gss")) {
@@ -873,11 +944,15 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
             @Override
             public String getDescription() {
-                return "File (*.xy, *.xye, *.txt,*.cif,*.gss)";
+                return "File (*.xy, *.xye,*.cif,*.gss)";
             }
         };
-
+        fileChooser.addChoosableFileFilter(filter2);
+        fileChooser.addChoosableFileFilter(filter3);
+        fileChooser.addChoosableFileFilter(filter4);
+        fileChooser.addChoosableFileFilter(filter5);
         fileChooser.addChoosableFileFilter(filter);
+
         //DataSet oneDataset = null;
 
         // Set the accepted powder diffraction file extensions
