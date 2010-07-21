@@ -65,7 +65,7 @@ public class JpowderApplet extends JApplet {
         return serializedChart;
     }
 
-    @Override
+  
     public void init() {
         try {
             UIManager.setLookAndFeel(
