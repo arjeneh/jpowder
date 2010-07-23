@@ -40,7 +40,7 @@ public class JPowderStack {
 
     private int maxSize;
     private int numberOfFrames = 0;
-    private Stack<JpowderInternalframe> stack = new Stack<JpowderInternalframe>();
+    private Stack<JpowderInternalframe2D> stack = new Stack<JpowderInternalframe2D>();
 
     /**
      *
@@ -58,11 +58,11 @@ public class JPowderStack {
      * is fulll remove the bottom element from the stack.
      * @param frame
      */
-    public void push(JpowderInternalframe frame) {
+    public void push(JpowderInternalframe2D frame) {
 
         if (numberOfFrames == maxSize) {
 
-            JpowderInternalframe[] stackFrames = stack.toArray(new JpowderInternalframe[stack.size()]);
+            JpowderInternalframe2D[] stackFrames = stack.toArray(new JpowderInternalframe2D[stack.size()]);
             stack.clear();
 
             //i = 1 - ignore the first element
@@ -83,7 +83,7 @@ public class JPowderStack {
      *
      * @return stack.pop()
      */
-    public JpowderInternalframe pop() {
+    public JpowderInternalframe2D pop() {
 
         if (empty()) {
 

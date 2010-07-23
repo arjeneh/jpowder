@@ -142,7 +142,7 @@ public class FilesPlotter extends DatasetPlotter implements Serializable{
         NumberAxis xAxis = new NumberAxis(datasets.get(0).getXUnit());
         NumberAxis yAxis = new NumberAxis("Intensity");
         yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-
+        
 
 
 //         xAxis.setAxisLineVisible(false);

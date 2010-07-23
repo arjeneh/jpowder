@@ -1,14 +1,11 @@
 package org.jpowder;
 
 import java.awt.Color;
-import java.awt.geom.Rectangle2D;
 import java.util.Collections;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.labels.StandardXYItemLabelGenerator;
 import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYBlockRenderer;
@@ -22,7 +19,6 @@ import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
-import org.jpowder.Analysis.Jpowder_Reader;
 
 /**
  *
@@ -64,7 +60,7 @@ public class Jpowder3DSecondTest extends ApplicationFrame {
         XYBlockRenderer renderer = new XYBlockRenderer();
         double maxY = 0;
         double minY = 0;
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             maxY = (Double) Collections.max(inFocus.getPowderDataSet().elementAt(i).getY());
             minY = (Double) Collections.min(inFocus.getPowderDataSet().elementAt(i).getY());
@@ -108,7 +104,7 @@ public class Jpowder3DSecondTest extends ApplicationFrame {
 
     public static XYZDataset createDataset() {
 
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
 
         DefaultXYZDataset dataset = new DefaultXYZDataset();
 
@@ -128,6 +124,7 @@ public class Jpowder3DSecondTest extends ApplicationFrame {
             dataset.addSeries("Serie " + i, data);
 
         }
+       
 
         return dataset;
     }

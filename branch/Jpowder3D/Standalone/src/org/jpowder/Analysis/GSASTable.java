@@ -17,9 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import org.jfree.data.xy.XYDataset;
 import org.jpowder.Jpowder;
-import org.jpowder.JpowderInternalframe;
+import org.jpowder.JpowderInternalframe2D;
 import org.jpowder.dataset.GSASInstrument_Reader;
 
 /**
@@ -98,21 +97,26 @@ public class GSASTable extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JFileChooser chooser = new JFileChooser();
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         chooser.setMultiSelectionEnabled(false);
         int returnVal = chooser.showOpenDialog(null);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile();
             GSASInstrument_Reader.read(inFocus.getPowderDataSet(), file);
+            removeAllrows();
+            populateTable();
         }
-        populateTable();
+        else{
+            return;
+        }
+     
 
-         gSASTabel.getColumn(gSASTabel.getColumnName(0)).setCellRenderer(new TableRenderer());
+   
 
     }//GEN-LAST:event_jButton1ActionPerformed
     public void populateTable() {
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             row = new Vector<String>();
             row.add(inFocus.getPowderDataSet().get(i).getFileName());
@@ -121,10 +125,11 @@ public class GSASTable extends javax.swing.JPanel {
             row.add(String.valueOf(inFocus.getPowderDataSet().get(i).getGSAS_Instrument().getZero()));
             defaultTableModel.addRow(row);
         }
+        addRenderer();
     }
 
     public void populateTable2() {
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         if (inFocus != null) {
             for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
                 row = new Vector<String>();
@@ -135,10 +140,26 @@ public class GSASTable extends javax.swing.JPanel {
                 defaultTableModel.addRow(row);
             }
         }
+        addRenderer();
+    }
+
+    public void removeAllrows() {
+        defaultTableModel.getDataVector().removeAllElements();
+    }
+    public void addRenderer(){
+             gSASTabel.getColumn(gSASTabel.getColumnName(0)).setCellRenderer(new TableRenderer());
     }
 
     public static JTable getGSASTable() {
         return gSASTabel;
+    }
+
+    public DefaultTableModel getGSASDefaultTableModel() {
+        return defaultTableModel;
+
+    }
+    public void addTableListener(){
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JTable gSASTabel;
@@ -148,7 +169,6 @@ public class GSASTable extends javax.swing.JPanel {
 
     public static void main(String[] args) {
         JFrame frm = new JFrame();
-
         frm.add(new GSASTable());
         frm.setVisible(true);
         frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

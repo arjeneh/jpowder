@@ -38,7 +38,7 @@ import org.jfree.chart.title.LegendTitle;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 import org.jpowder.Jpowder;
-import org.jpowder.JpowderInternalframe;
+import org.jpowder.JpowderInternalframe2D;
 
   /**
      * label - the label (null not permitted).
@@ -63,7 +63,7 @@ public class CreateLegend {
 
     private Shape shape = new Rectangle(10, 10);
     private LegendTitle legend;
-    private  JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+    private  JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
 
 
 

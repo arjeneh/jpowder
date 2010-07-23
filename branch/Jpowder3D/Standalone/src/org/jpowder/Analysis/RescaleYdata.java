@@ -37,7 +37,7 @@ import javax.swing.JOptionPane;
 import org.jfree.data.xy.XYDataset;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
-import org.jpowder.JpowderInternalframe;
+import org.jpowder.JpowderInternalframe2D;
 import org.jpowder.chartTools.ComboBoxRenderer;
 
 /**
@@ -60,10 +60,10 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 
     public void update() {
 
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
             dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(addDataSet()));
         }
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             String labels[] = {"No Chart Added"};
             dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(labels));
         }
@@ -80,15 +80,13 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
     }
 
     public String[] addDataSet() {
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         int size = inFocus.getXYPlot().getDatasetCount();
         string = new String[size];
         for (int i = 0; i < size; i++) {
             string[i] = inFocus.getPowderDataSet().elementAt(i).getFileName();
 
-
-            ComboBoxRenderer boxRenderer = new ComboBoxRenderer();
-            dataSetComboBox.setRenderer(boxRenderer);
+            dataSetComboBox.setRenderer(new ComboBoxRenderer());
 
 //    dataSetComboBox.setBackground((Color) FilesPlotter.allseriescolors[i]);
 
@@ -97,7 +95,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
     }
 
     public void applyRescaling() {
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
 //            applyButton.setSelected(false);
             return;
         }
@@ -108,7 +106,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
                 return;
             }
         }
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         int seriescount = inFocus.getXYPlot().getDatasetCount();
         for (int i = 0; i < seriescount; i++) {
             if (inFocus.getPowderDataSet().elementAt(i).getFileName().equals(
@@ -295,7 +293,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_constantFieldActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         double maxY, minY, resultant;
         Vector<Double> peaks = new Vector<Double>();
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {

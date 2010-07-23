@@ -7,7 +7,7 @@ package org.jpowder.Analysis;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import org.jpowder.Jpowder;
-import org.jpowder.JpowderInternalframe;
+import org.jpowder.JpowderInternalframe2D;
 
 /**
  *
@@ -34,13 +34,13 @@ public class TableListener implements TableModelListener {
     }
 
     public void tableChanged(TableModelEvent e) {
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         int size = inFocus.getXYPlot().getDatasetCount();
         for (int i = 0; i < size; i++) {
 
 
          
-                System.out.println("BRAGSTABLE");
+    
                 if (!BraggsLaw.getBragstable().getValueAt(i, 1).equals("")) {
                     newWaveLength = Double.parseDouble(BraggsLaw.getBragstable().getModel().
                             getValueAt(i, 1).toString());

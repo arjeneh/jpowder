@@ -49,8 +49,8 @@ public class JpowderPrint implements Serializable{
      * chart.
      */
     public void basicPrint() {
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
             NumberAxis xAxis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
             NumberAxis yAxis = (NumberAxis) inFocus.getXYPlot().getRangeAxis();
             xAxis.setTickUnit(new NumberTickUnit(inFocus.getXAxis()));
@@ -90,8 +90,8 @@ public class JpowderPrint implements Serializable{
      * be printed in whiite background.
      */
     public void printForPublication() {
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
             NumberAxis xAxis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
             NumberAxis yAxis = (NumberAxis) inFocus.getXYPlot().getRangeAxis();
             xAxis.setTickUnit(new NumberTickUnit(inFocus.getXAxis()));

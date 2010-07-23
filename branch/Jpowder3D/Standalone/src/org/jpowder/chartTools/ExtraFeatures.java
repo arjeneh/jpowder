@@ -17,10 +17,13 @@ import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
 import org.jfree.chart.annotations.XYTitleAnnotation;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
@@ -31,7 +34,9 @@ import org.jfree.ui.RectangleInsets;
 import org.jpowder.Analysis.ToolsIcon;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
-import org.jpowder.JpowderInternalframe;
+import org.jpowder.JpowderInternalframe2D;
+import org.jpowder.jfreechart.JpowderXYDataset;
+import org.jpowder.jfreechart.JpowderXYLineAndShapeRender;
 
 /**
  *
@@ -61,9 +66,9 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }
 
     public void update() {
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         imageComboBoxTest.setRenderer(new MarkerComboBoxRenderer(null));
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             if (defaultTableModel != null) {
                 defaultTableModel.getDataVector().removeAllElements();//remove all the rows from table
 
@@ -84,7 +89,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
         defaultTableModel.addTableModelListener(new TableModelListener() {
 
             public void tableChanged(TableModelEvent e) {
-                JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+                JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
                 int size = inFocus.getXYPlot().getDatasetCount();
                 for (int i = 0; i < size; i++) {
 
@@ -105,7 +110,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
 
     public String[][] getFileName() {
 
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         int size = inFocus.getXYPlot().getDatasetCount();
         fileName = new String[size][2];
         for (int i = 0; i < size; i++) {
@@ -127,7 +132,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }
 
     public void xAxisScientificNotation() {
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
 
         if (xScientific.isSelected()) {
             inFocus.getXYPlot().getDomainAxis().setStandardTickUnits(jpowderTickUnitSource);
@@ -139,7 +144,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }
 
     public void yAxisScientificNotation() {
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         if (yScientific.isSelected()) {
             inFocus.getXYPlot().getRangeAxis().setStandardTickUnits(jpowderTickUnitSource);
 
@@ -174,10 +179,13 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
         gridlineWidth = new javax.swing.JSpinner();
         minorX = new javax.swing.JCheckBox();
         minorY = new javax.swing.JCheckBox();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jSpinner1 = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         xScientific = new javax.swing.JCheckBox();
         yScientific = new javax.swing.JCheckBox();
@@ -222,6 +230,8 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
         });
 
         jLabel1.setText("Jpowder Second Version Extera Features.");
+
+        jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 
         majorX.setSelected(true);
         majorX.setText("Set Major X Grids");
@@ -268,6 +278,20 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
             }
         });
 
+        jButton4.setText("test 2d");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("test 3d");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -275,17 +299,25 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(minorY)
                     .addComponent(minorX)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(majorX, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(gridlineWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(majorY)
-                    .addComponent(jButton1))
-                .addContainerGap(93, Short.MAX_VALUE))
+                    .addComponent(jButton1)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(majorX, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(gridlineWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(minorY)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                .addContainerGap(56, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,8 +332,12 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(minorX)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(minorY)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(minorY)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(19, 19, 19))
         );
@@ -323,19 +359,31 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
             }
         });
 
+        jButton3.setText("Color Panel Test");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(55, 55, 55)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton2))
-                .addContainerGap(130, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(55, 55, 55)
+                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton2)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(104, 104, 104)
+                        .addComponent(jButton3)))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -346,7 +394,9 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                     .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addContainerGap(150, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Axis", jPanel2);
@@ -388,7 +438,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(xScientific)
                         .addComponent(yScientific)))
-                .addContainerGap(186, Short.MAX_VALUE))
+                .addContainerGap(165, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -401,7 +451,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                 .addComponent(xScientific)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(yScientific)
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addContainerGap(166, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Number Format", jPanel3);
@@ -477,7 +527,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                     .addComponent(legendPositionLeft)
                     .addComponent(legendPositionTop)
                     .addComponent(legendPositionButtom)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -503,7 +553,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                         .addComponent(legendPositionRight)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(legendPositionTopRight)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Legend", jPanel4);
@@ -530,7 +580,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(250, Short.MAX_VALUE))
+                .addContainerGap(229, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -539,7 +589,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                 .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addComponent(imageComboBoxTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(163, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Series", jPanel5);
@@ -594,7 +644,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel6Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {chartBGImage, plotBGImage});
@@ -612,7 +662,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                     .addComponent(plotBGImage)
                     .addComponent(jLabel7)
                     .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
 
         jPanel6Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {chartBGImage, plotBGImage});
@@ -628,13 +678,13 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(jLabel1))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)))
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -661,20 +711,20 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
 
     private void majorXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_majorXActionPerformed
 
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         boolean check = inFocus.getXYPlot().isDomainGridlinesVisible();
         inFocus.getXYPlot().setDomainGridlinesVisible(!check);
 
     }//GEN-LAST:event_majorXActionPerformed
 
     private void majorYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_majorYActionPerformed
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         boolean check = inFocus.getXYPlot().isRangeGridlinesVisible();
         inFocus.getXYPlot().setRangeGridlinesVisible(!check);
     }//GEN-LAST:event_majorYActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
 //        JColorChooser colorChooser = new JColorChooser(Color.WHITE);
 //        JDialog dialog = JColorChooser.createDialog(this, "Gridline Colour", true, colorChooser, null, null);
 
@@ -697,7 +747,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
 
 
         double offset = Double.parseDouble(jSpinner1.getValue().toString());
@@ -707,19 +757,19 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_jSpinner1StateChanged
 
     private void minorXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minorXActionPerformed
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         boolean check = inFocus.getXYPlot().isDomainMinorGridlinesVisible();
         inFocus.getXYPlot().setDomainMinorGridlinesVisible(!check);
     }//GEN-LAST:event_minorXActionPerformed
 
     private void minorYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minorYActionPerformed
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         boolean check = inFocus.getXYPlot().isRangeMinorGridlinesVisible();
         inFocus.getXYPlot().setRangeMinorGridlinesVisible(!check);
     }//GEN-LAST:event_minorYActionPerformed
 
     private void gridlineWidthStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_gridlineWidthStateChanged
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         float gridwidth = (float) Double.parseDouble(gridlineWidth.getValue().toString());
         if (majorX.isSelected()) {
             inFocus.getXYPlot().setDomainGridlineStroke(new BasicStroke(gridwidth));
@@ -760,7 +810,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_decimalPlacesSpinnerStateChanged
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         Color c = JColorChooser.showDialog(
                 this, "Gridline Colour", Color.white);
         if (c == null) {
@@ -773,7 +823,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jSpinner2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner2StateChanged
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         float seriesWidth = (float) Double.parseDouble(jSpinner2.getValue().toString());
 
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
@@ -782,7 +832,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_jSpinner2StateChanged
 
     private void legendCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_legendCheckBoxActionPerformed
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         if (legendCheckBox.isSelected()) {
             CreateLegend createLegend = new CreateLegend();
             createLegend.setLegend();
@@ -799,7 +849,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
 
     private void legendPositionButtomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_legendPositionButtomActionPerformed
 
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         if (legendPositionButtom.isSelected()) {
 
             inFocus.getchart().getLegend().setPosition(RectangleEdge.BOTTOM);
@@ -809,7 +859,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_legendPositionButtomActionPerformed
 
     private void legendPositionTopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_legendPositionTopActionPerformed
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         if (legendPositionTop.isSelected()) {
             inFocus.getchart().getLegend().setPosition(RectangleEdge.TOP);
 
@@ -817,14 +867,14 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_legendPositionTopActionPerformed
 
     private void legendPositionLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_legendPositionLeftActionPerformed
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         if (legendPositionLeft.isSelected()) {
             inFocus.getchart().getLegend().setPosition(RectangleEdge.LEFT);
         }
     }//GEN-LAST:event_legendPositionLeftActionPerformed
 
     private void legendPositionRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_legendPositionRightActionPerformed
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
 
         if (legendPositionRight.isSelected()) {
             inFocus.getchart().getLegend().setPosition(RectangleEdge.RIGHT);
@@ -833,7 +883,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_legendPositionRightActionPerformed
 
     private void legendPositionTopRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_legendPositionTopRightActionPerformed
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
 
         if (legendPositionTopRight.isSelected()) {
 //            inFocus.getchart().getLegend().setPosition(RectangleEdge.RIGHT);
@@ -849,7 +899,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_legendPositionTopRightActionPerformed
 
     private void chartBGImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chartBGImageActionPerformed
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         JFileChooser fileChooser = new JFileChooser();
         int returnVal = fileChooser.showOpenDialog(null);
         FileFilter filter = new FileFilter() {
@@ -890,7 +940,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_chartBGImageActionPerformed
 
     private void plotBGImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotBGImageActionPerformed
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         JFileChooser fileChooser = new JFileChooser();
         int returnVal = fileChooser.showOpenDialog(null);
 
@@ -904,18 +954,48 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_plotBGImageActionPerformed
 
     private void jSpinner3StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner3StateChanged
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
 
         float f = Float.parseFloat(jSpinner3.getValue().toString());
         inFocus.getchart().setBackgroundImageAlpha(f);
     }//GEN-LAST:event_jSpinner3StateChanged
 
     private void jSpinner4StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner4StateChanged
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
 
         float f = Float.parseFloat(jSpinner4.getValue().toString());
         inFocus.getXYPlot().setBackgroundImageAlpha(f);
     }//GEN-LAST:event_jSpinner4StateChanged
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+    ColorTable colorTable = new ColorTable();
+    colorTable.setLocationRelativeTo(jButton3);
+    }//GEN-LAST:event_jButton3MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+            JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+            NumberAxis xAxis = new NumberAxis("");
+            NumberAxis yAxis = new NumberAxis("");
+            JpowderXYLineAndShapeRender r = new JpowderXYLineAndShapeRender();
+            XYPlot plot = new XYPlot(
+                    new JpowderXYDataset(inFocus.getPowderDataSet().elementAt(0)),
+                    xAxis, yAxis, r);
+
+            JFreeChart chart = new JFreeChart(null, null, plot, false);// for getting the chart header
+            ChartPanel cp= new ChartPanel(chart);
+            JFrame frame = new JFrame();
+            frame.add(cp);
+            frame.setVisible(true);
+            frame.setSize(500,500);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -925,6 +1005,9 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     private javax.swing.JComboBox imageComboBoxTest;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

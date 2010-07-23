@@ -153,6 +153,7 @@ public class Cif_Reader {
                 javax.swing.JOptionPane.showMessageDialog(null, "File must contain either 2 or 3 columns");
             }
             retVal.setWaveLength(waveLength);
+            retVal.setXUnit("2θ");
 
             return retVal;
 

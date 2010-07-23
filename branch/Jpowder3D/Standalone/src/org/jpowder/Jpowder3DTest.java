@@ -54,7 +54,7 @@ public class Jpowder3DTest extends ApplicationFrame {
         yAxis.setTickUnit(new NumberTickUnit(1.0));
         XYBlockRenderer r = new XYBlockRenderer();
         double maxY = 0;
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             maxY = (Double) Collections.max(inFocus.getPowderDataSet().elementAt(0).getY());
 //            System.out.println("max y" + maxY);
@@ -88,7 +88,7 @@ public class Jpowder3DTest extends ApplicationFrame {
 
     private static XYZDataset createDataset() {
 
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         DefaultXYZDataset dataset = new DefaultXYZDataset();
 
 

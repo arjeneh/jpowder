@@ -43,6 +43,7 @@ public class JpowderXYDataset extends AbstractXYDataset {
     private Vector<Double> x;
     private Vector<Double> y;
 
+
     public JpowderXYDataset(Vector<Double> x, Vector<Double> y) {
         this.x = x;
         this.y = y;

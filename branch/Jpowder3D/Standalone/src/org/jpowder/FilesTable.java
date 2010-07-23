@@ -11,6 +11,12 @@
 package org.jpowder;
 
 import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,9 +27,11 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
-import javax.swing.JRadioButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameListener;
@@ -52,6 +60,7 @@ public class FilesTable extends javax.swing.JFrame {
         if (defaultTableModel != null) {
             defaultTableModel.getDataVector().removeAllElements();//remove all the rows from table
             }
+        columnNames.add("RN");
         columnNames.add("Name");
         columnNames.add("Size");
         columnNames.add("Type");
@@ -72,26 +81,101 @@ public class FilesTable extends javax.swing.JFrame {
 
         initComponents();
 
+        importData3DTable.getTableHeader().addMouseListener(new TablePopUpListener(columnHeaderPopMenu));
+
+
+        plotAsComboBox.setModel(new DefaultComboBoxModel(columnNames));
+        importData3DTable.getTableHeader().setReorderingAllowed(false);
+        importData3DTable.addMouseListener(new TablePopUpListener(rowHeaderPopMenu));
+
+        firstColumn();
+
+        addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent event) {
+
+                while (defaultTableModel.getRowCount() > 0) {
+                    defaultTableModel.removeRow(0);
+                }
+
+            }
+        });
+     
+
+    }
+
+    public void firstColumn() {
+
+        importData3DTable.getColumnModel().getColumn(0).setCellRenderer(
+                importData3DTable.getTableHeader().getDefaultRenderer());
+        importData3DTable.getColumnModel().getColumn(0).setPreferredWidth(10);
+        importData3DTable.getColumnModel().getColumn(0).setResizable(false);
+        importData3DTable.setPreferredScrollableViewportSize(getPreferredSize());
+
     }
 
     public static File getAFile() {
         return afile;
     }
 
-    public static JRadioButton getfileNum() {
-        return fNumbRadioButton;
-    }
-
-    public static JRadioButton getTemp() {
-        return tRadioButton;
-    }
-
-    public static JRadioButton getPressure() {
-        return pRadioButton;
-    }
-
     public static DefaultTableModel getDefaultTableModel() {
         return defaultTableModel;
+    }
+
+    public void addColumn() {
+
+        JTextField textField = new JTextField();
+        Object[] options = {"Yes",
+            "No"};
+        int n = JOptionPane.showOptionDialog(null,
+                textField,
+                "Set Column Name",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.DEFAULT_OPTION,
+                null, //do not use a custom Icon
+                options, //the titles of buttons
+                options[0]); //default button title
+        if (n == 0) {
+            defaultTableModel.addColumn(textField.getText());
+        } else {
+            return;
+        }
+         firstColumn();
+    }
+
+    public void addFilesToTable(File[] file) {
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
+        for (int i = 0; i < file.length; i++) {
+            row = new Vector<String>();
+
+            row.add(String.valueOf(i));
+            row.add(file[i].getName());
+            row.add(String.valueOf(file[i].length() / 1024) + " KB");
+            row.add(chooser.getTypeDescription(file[i]));
+            row.add(dateFormat.format(new Date(file[i].lastModified())));
+            row.add(file[i].toString());
+
+            defaultTableModel.addRow(row);
+        }
+    }
+
+    public void addaFileToTable(File afile) {
+        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
+
+        row = new Vector<String>();
+
+        row.add(String.valueOf(defaultTableModel.getRowCount()));
+
+        row.add(afile.getName());
+        row.add(String.valueOf(afile.length() / 1024) + " KB");
+        row.add(chooser.getTypeDescription(afile));
+        row.add(dateFormat.format(new Date(afile.lastModified())));
+        row.add(afile.toString());
+
+        defaultTableModel.addRow(row);
+
     }
 
     /** This method is called from within the constructor to
@@ -104,92 +188,80 @@ public class FilesTable extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        XAxisUnitPanel = new javax.swing.JPanel();
-        fNumbRadioButton = new javax.swing.JRadioButton();
-        pRadioButton = new javax.swing.JRadioButton();
-        tRadioButton = new javax.swing.JRadioButton();
+        columnHeaderPopMenu = new javax.swing.JPopupMenu();
+        addColumn = new javax.swing.JMenuItem();
+        removeColumn = new javax.swing.JMenuItem();
+        rowHeaderPopMenu = new javax.swing.JPopupMenu();
+        addRow = new javax.swing.JMenuItem();
+        removeRow = new javax.swing.JMenuItem();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        importData3DTable = new javax.swing.JTable();
         potButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         fileChooserButton = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        plotAsComboBox = new javax.swing.JComboBox();
+        jButton6 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        XAxisUnitPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 204))); // NOI18N
-
-        buttonGroup1.add(fNumbRadioButton);
-        fNumbRadioButton.setSelected(true);
-        fNumbRadioButton.setText("jRadioButton1");
-
-        buttonGroup1.add(pRadioButton);
-        pRadioButton.setText("jRadioButton2");
-        pRadioButton.addActionListener(new java.awt.event.ActionListener() {
+        addColumn.setText("Add Column");
+        addColumn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pRadioButtonActionPerformed(evt);
+                addColumnActionPerformed(evt);
             }
         });
+        columnHeaderPopMenu.add(addColumn);
 
-        buttonGroup1.add(tRadioButton);
-        tRadioButton.setText("jRadioButton3");
+        removeColumn.setText("Remove Column");
+        removeColumn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeColumnActionPerformed(evt);
+            }
+        });
+        columnHeaderPopMenu.add(removeColumn);
 
-        javax.swing.GroupLayout XAxisUnitPanelLayout = new javax.swing.GroupLayout(XAxisUnitPanel);
-        XAxisUnitPanel.setLayout(XAxisUnitPanelLayout);
-        XAxisUnitPanelLayout.setHorizontalGroup(
-            XAxisUnitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(XAxisUnitPanelLayout.createSequentialGroup()
-                .addComponent(fNumbRadioButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pRadioButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tRadioButton)
-                .addContainerGap(125, Short.MAX_VALUE))
-        );
-        XAxisUnitPanelLayout.setVerticalGroup(
-            XAxisUnitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(XAxisUnitPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(XAxisUnitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fNumbRadioButton)
-                    .addComponent(pRadioButton)
-                    .addComponent(tRadioButton))
-                .addContainerGap(19, Short.MAX_VALUE))
-        );
+        addRow.setText("Add Row");
+        rowHeaderPopMenu.add(addRow);
 
-        jTable1.setAutoCreateRowSorter(true);
-        jTable1.setModel(defaultTableModel);
-        jTable1.getColumnModel().removeColumn(jTable1.getColumn("File"));
-        jTable1.setDragEnabled(true);
-        jTable1.setDropMode(javax.swing.DropMode.INSERT);
-        jTable1.setGridColor(new java.awt.Color(255, 255, 255));
-        jTable1.setSelectionBackground(new java.awt.Color(90, 145, 233));
-        jTable1.setShowHorizontalLines(false);
-        jTable1.setShowVerticalLines(false);
-        jScrollPane1.setViewportView(jTable1);
+        removeRow.setText("Remove Row");
+        rowHeaderPopMenu.add(removeRow);
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        importData3DTable.setAutoCreateRowSorter(true);
+        importData3DTable.setModel(defaultTableModel);
+        //jTable1.getColumnModel().removeColumn(importData3DTable.getColumn("File"));
+        importData3DTable.setGridColor(new java.awt.Color(255, 255, 255));
+        importData3DTable.setSelectionBackground(new java.awt.Color(90, 145, 233));
+        importData3DTable.setShowHorizontalLines(false);
+        importData3DTable.setShowVerticalLines(false);
+        jScrollPane1.setViewportView(importData3DTable);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
         );
 
-        potButton.setText("Get Plot");
+        potButton.setText("Plot");
         potButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 potButtonActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Remove Selected Row");
+        jButton1.setText("Remove ");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -210,66 +282,125 @@ public class FilesTable extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setText("Load Meta File");
+
+        jButton4.setText("Save Meta File");
+
+        jButton5.setText("Add Column");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("As");
+
+        plotAsComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                plotAsComboBoxMouseEntered(evt);
+            }
+        });
+
+        jButton6.setFont(new java.awt.Font("Tahoma", 1, 12));
+        jButton6.setText("?");
+        jButton6.setFocusPainted(false);
+        jButton6.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton6MouseEntered(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(170, 170, 170)
-                .addComponent(potButton))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(XAxisUnitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileChooserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 186, Short.MAX_VALUE)
+                        .addComponent(potButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(plotAsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(fileChooserButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(49, 49, 49)
+                                .addComponent(jButton3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 253, Short.MAX_VALUE)
+                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton5))))
                 .addContainerGap())
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileChooserButton, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
-                    .addComponent(XAxisUnitPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3)
+                            .addComponent(jButton4)
+                            .addComponent(jButton6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton5))
+                    .addComponent(fileChooserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(potButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(potButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(plotAsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)))
+                    .addComponent(jButton2))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void fileChooserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooserButtonActionPerformed
-        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
+
         chooser.setMultiSelectionEnabled(true);
 
         chooser.showOpenDialog(chooser);
 
-        for (int i = 0; i < chooser.getSelectedFiles().length; i++) {
-            row = new Vector<String>();
-
-            row.add(chooser.getSelectedFiles()[i].getName());
-            row.add(String.valueOf(chooser.getSelectedFiles()[i].length() / 1024) + " KB");
-            row.add(chooser.getTypeDescription(chooser.getSelectedFiles()[i]));
-            row.add(dateFormat.format(new Date(chooser.getSelectedFiles()[i].lastModified())));
-            row.add(chooser.getSelectedFiles()[i].toString());
-
-            defaultTableModel.addRow(row);
-        }
+        addFilesToTable(chooser.getSelectedFiles());
+//        for (int i = 0; i < chooser.getSelectedFiles().length; i++) {
+//            row = new Vector<String>();
+//
+//            row.add(String.valueOf(i));
+//            row.add(chooser.getSelectedFiles()[i].getName());
+//            row.add(String.valueOf(chooser.getSelectedFiles()[i].length() / 1024) + " KB");
+//            row.add(chooser.getTypeDescription(chooser.getSelectedFiles()[i]));
+//            row.add(dateFormat.format(new Date(chooser.getSelectedFiles()[i].lastModified())));
+//            row.add(chooser.getSelectedFiles()[i].toString());
+//
+//            defaultTableModel.addRow(row);
+//        }
 
 
     }//GEN-LAST:event_fileChooserButtonActionPerformed
 
     private void potButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_potButtonActionPerformed
 
-        Jpowder.getChartPlotter().remove(Jpowder.getMessageLabel());
+
+//        Jpowder.getChartPlotter().remove(Jpowder.getMessageLabel());
         Vector<DataSet> datasets = new Vector<DataSet>();
         HashMap<String, File> hashMap = new LinkedHashMap<String, File>();
         PowderFileCabinet mPowderFileCabinet = new PowderFileCabinet();
@@ -281,7 +412,7 @@ public class FilesTable extends javax.swing.JFrame {
         // loop over the selected file
 
         for (int i = 0, n = defaultTableModel.getRowCount(); i < n; i++) {
-            afile = new File(String.valueOf(defaultTableModel.getValueAt(i, 4)));
+            afile = new File(String.valueOf(defaultTableModel.getValueAt(i, 5)));
             fileName = afile.getName();
             if (fileName.endsWith(".jpowder")) {
                 Jpowder_Reader.read(afile);
@@ -291,12 +422,6 @@ public class FilesTable extends javax.swing.JFrame {
 //                for (int h = 0; h < size; h++) {
 //                    System.out.println(Jpowder_Reader.getLocalData().get(h).get(1));
 //                }
-
-
-                fNumbRadioButton.setText(Jpowder_Reader.getLabel().elementAt(0));
-                pRadioButton.setText(Jpowder_Reader.getLabel().elementAt(1));
-                tRadioButton.setText(Jpowder_Reader.getLabel().elementAt(2));
-
 
 
             }
@@ -334,12 +459,12 @@ public class FilesTable extends javax.swing.JFrame {
         }
 
         // finally plot the data
-        JpowderInternalframe internalframe = new JpowderInternalframe(dataVisibleInChart, datasets);
+        JpowderInternalframe2D internalframe = new JpowderInternalframe2D(dataVisibleInChart, datasets);
         Jpowder.jpowderInternalFrameUpdate(internalframe);
 
         InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
         internalframe.addInternalFrameListener(internalFrameListener);
-        Jpowder.getChartPlotter().add(internalframe);
+        Jpowder.getChartPlotter2D().add(internalframe);
         setVisible(true);
 //
 //                for(int i=0;i<defaultTableModel.getRowCount();i++){
@@ -360,7 +485,7 @@ public class FilesTable extends javax.swing.JFrame {
         frame.setIconifiable(true);
         frame.setVisible(true);
 
-        Jpowder.getChartPlotter().add(frame);
+        Jpowder.getChartPlotter3D().add(frame);
 
         setVisible(true);
     }//GEN-LAST:event_potButtonActionPerformed
@@ -368,9 +493,9 @@ public class FilesTable extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         if (defaultTableModel.getColumnCount() - 1 != 0) {
-            defaultTableModel.removeRow(jTable1.getSelectedRow());
+            defaultTableModel.removeRow(importData3DTable.getSelectedRow());
             System.out.println(defaultTableModel.getRowCount() - 1);
-            jTable1.setRowSelectionInterval(defaultTableModel.getRowCount() - 1, defaultTableModel.getRowCount() - 1);
+            importData3DTable.setRowSelectionInterval(defaultTableModel.getRowCount() - 1, defaultTableModel.getRowCount() - 1);
         } else {
             return;
         }
@@ -378,12 +503,49 @@ public class FilesTable extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        while (defaultTableModel.getRowCount() > 0) {
+            defaultTableModel.removeRow(0);
+        }
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void pRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pRadioButtonActionPerformed
-        System.out.println(Jpowder_Reader.getLocalData().get(1));
+    private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
+        jButton6.setRolloverEnabled(true);
 
-    }//GEN-LAST:event_pRadioButtonActionPerformed
+        Graphics g = jButton6.getGraphics();
+        Graphics2D g2 = (Graphics2D) g.create();
+        g.setColor(Color.BLACK);
+        if (jButton6.getModel().isRollover()) {
+            g2.setColor(Color.RED);
+        }
+        jButton6.paint(g2);
+
+    }//GEN-LAST:event_jButton6MouseEntered
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        addColumn();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void plotAsComboBoxMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plotAsComboBoxMouseEntered
+        plotAsComboBox.setModel(new DefaultComboBoxModel(columnNames));
+    }//GEN-LAST:event_plotAsComboBoxMouseEntered
+
+    private void addColumnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addColumnActionPerformed
+        addColumn();
+    }//GEN-LAST:event_addColumnActionPerformed
+
+    private void removeColumnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeColumnActionPerformed
+//        importData3DTable.removeColumn(importData3DTable.getColumnModel().getColumn(importData3DTable.getSelectedColumn()));
+        System.out.println(importData3DTable.getSelectedColumn());
+    }//GEN-LAST:event_removeColumnActionPerformed
+    private void showPopup(MouseEvent e) {
+        if (e.isPopupTrigger()) {
+            columnHeaderPopMenu.show(e.getComponent(), e.getX(),
+                    e.getY());
+
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -403,17 +565,25 @@ public class FilesTable extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel XAxisUnitPanel;
+    private javax.swing.JMenuItem addColumn;
+    private javax.swing.JMenuItem addRow;
     private javax.swing.ButtonGroup buttonGroup1;
-    private static javax.swing.JRadioButton fNumbRadioButton;
+    private javax.swing.JPopupMenu columnHeaderPopMenu;
     private javax.swing.JButton fileChooserButton;
+    private javax.swing.JTable importData3DTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private static javax.swing.JRadioButton pRadioButton;
+    private javax.swing.JComboBox plotAsComboBox;
     private javax.swing.JButton potButton;
-    private static javax.swing.JRadioButton tRadioButton;
+    private javax.swing.JMenuItem removeColumn;
+    private javax.swing.JMenuItem removeRow;
+    private javax.swing.JPopupMenu rowHeaderPopMenu;
     // End of variables declaration//GEN-END:variables
 }

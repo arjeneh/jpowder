@@ -34,7 +34,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import org.jpowder.Jpowder;
-import org.jpowder.JpowderInternalframe;
+import org.jpowder.JpowderInternalframe2D;
 
 /**
  * This Class allow user to select a colour for a plot.
@@ -50,7 +50,7 @@ public class SeriesColourPicker {
 
             public void actionPerformed(ActionEvent evt) {
 
-                JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+                JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
                 Color newColor = chooser.getColor();
                 for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
                     if (inFocus.getPowderDataSet().elementAt(i).getFileName().equals(

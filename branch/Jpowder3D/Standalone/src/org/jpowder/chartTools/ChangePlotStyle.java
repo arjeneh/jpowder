@@ -41,7 +41,7 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jpowder.Analysis.ToolsIcon;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
-import org.jpowder.JpowderInternalframe;
+import org.jpowder.JpowderInternalframe2D;
 import org.jpowder.chartTools.Markers.MarkerArray;
 import org.jpowder.chartTools.Markers.MarkerComboBoxRenderer;
 import org.jpowder.chartTools.Markers.MarkerShapes;
@@ -481,17 +481,17 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     public void update() {
 
 
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         setMarkersBuidInEnableFalse();
 
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() != 0) {
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
             fileNameComboBox.setModel(new javax.swing.DefaultComboBoxModel(addDataSet()));
             seriesColourComboBox.setModel(new javax.swing.DefaultComboBoxModel(addDataSet()));
             colourPickerButton.setEnabled(true);
             fillTheXTickField();
             fillTheYTickField();
         }
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             String labels[] = {"No Chart Added"};
             fileNameComboBox.setModel(new javax.swing.DefaultComboBoxModel(labels));
             seriesColourComboBox.setModel(new javax.swing.DefaultComboBoxModel(labels));
@@ -513,7 +513,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
         }
         conectingLines.setSelected(renderer.getBaseLinesVisible());
 
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             errorBars.setSelected(false);
             conectingLines.setSelected(false);
 
@@ -567,7 +567,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
      * @return array of strings which contains all the files which has been plotted.
      */
     public String[] addDataSet() {
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         int size = inFocus.getXYPlot().getDatasetCount();
         string = new String[size];
 //        string[0] = "Every";
@@ -601,27 +601,27 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     }
 
     public void errorMesage() {
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             javax.swing.JOptionPane.showMessageDialog(null, "There Is No Chart.");
             return;
         }
     }
 
     public void fillTheXTickField() {
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         NumberAxis xAxis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
         xTickField.setText(Double.toString(xAxis.getTickUnit().getSize()));
     }
 
     public void fillTheYTickField() {
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         NumberAxis yAxis = (NumberAxis) inFocus.getXYPlot().getRangeAxis();
         yTickField.setText(Double.toString(yAxis.getTickUnit().getSize()));
     }
 
     public void applyMarkerShape() {
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             javax.swing.JOptionPane.showMessageDialog(null, "There Is No Chart.");
 
             return;
@@ -712,13 +712,13 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     }
 
     public void applyTickSpacing() {
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             tickSpacingApplyButton.setSelected(false);
             return;
         }
 
 
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         try {
             double newX = Double.parseDouble(xTickField.getText());
             double newY = Double.parseDouble(yTickField.getText());
@@ -742,11 +742,11 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
      * @param evt
      */
     private void conectingLinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conectingLinesActionPerformed
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             conectingLines.setSelected(true);
             return;
         }
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         for (int i = 0; i < inFocus.getPowderDataSet().size(); i++) {
             XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer(i);
             boolean status = renderer.getBaseLinesVisible();
@@ -759,11 +759,11 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
      * @param evt
      */
     private void errorBarsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_errorBarsActionPerformed
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             errorBars.setSelected(true);
             return;
         }
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         for (int i = 0; i < inFocus.getPowderDataSet().size(); i++) {
 
             if (inFocus.getPowderDataSet().get(i) instanceof DataSetWithErrors) {
@@ -797,7 +797,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
      * @param evt
      */
     private void buitInRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buitInRadioButtonActionPerformed
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             return;
         }
         if (!buitInRadioButton.isSelected()) {
@@ -813,10 +813,10 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_buitInRadioButtonActionPerformed
 
     private void noneRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noneRadioButtonActionPerformed
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             return;
         }
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         for (int i = 0; i < inFocus.getPowderDataSet().size(); i++) {
             XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer(i);
             renderer.setBaseShapesVisible(false);
@@ -828,10 +828,10 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_noneRadioButtonActionPerformed
 
     private void automaticRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_automaticRadioButtonActionPerformed
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             return;
         }
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         for (int i = 0; i < inFocus.getPowderDataSet().size(); i++) {
             XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer(i);
             renderer.setBaseShapesVisible(true);
@@ -852,7 +852,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_seriesColourComboBoxActionPerformed
 
     private void colourPickerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colourPickerButtonActionPerformed
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         SeriesColourPicker colourPicker = new SeriesColourPicker();
         colourPickerButton.setSelected(false);
         Jpowder.jpowderInternalFrameUpdate(inFocus);

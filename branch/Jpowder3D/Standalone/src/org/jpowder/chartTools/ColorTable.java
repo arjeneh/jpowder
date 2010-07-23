@@ -163,11 +163,15 @@ public class ColorTable extends javax.swing.JFrame {
         mainColourPanel = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 255));
         setForeground(java.awt.Color.darkGray);
         setResizable(false);
         setUndecorated(true);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         colorPaneLlist.setLayout(new java.awt.GridLayout(4, 8, 5, 5));
 
@@ -180,7 +184,7 @@ public class ColorTable extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14));
         jLabel1.setText("           Main Colours");
 
         mainColourPanel.setLayout(new java.awt.GridLayout(1, 8, 5, 5));
@@ -220,6 +224,11 @@ public class ColorTable extends javax.swing.JFrame {
         Color c = JColorChooser.showDialog(rootPane, null, Color.yellow);
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+    this.setVisible(false);
+        System.out.println("CLICKEDDDDDDDDDDDDDDDDDDD");
+    }//GEN-LAST:event_formMouseClicked
 
     /**
      * @param args the command line arguments

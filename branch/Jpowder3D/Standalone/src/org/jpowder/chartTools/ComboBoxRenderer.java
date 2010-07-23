@@ -35,7 +35,7 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.LineBorder;
 import org.jpowder.Jpowder;
-import org.jpowder.JpowderInternalframe;
+import org.jpowder.JpowderInternalframe2D;
 
 /**
  * Rendrer  for adding plots name to the ComboBoxes.
@@ -44,7 +44,7 @@ import org.jpowder.JpowderInternalframe;
 public class ComboBoxRenderer implements ListCellRenderer {
 
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         JLabel label = new JLabel(value.toString());
         label.setOpaque(isSelected);
         if (index >= 0) {

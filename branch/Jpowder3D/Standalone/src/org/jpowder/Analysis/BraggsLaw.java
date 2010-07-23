@@ -28,16 +28,16 @@
  */
 package org.jpowder.Analysis;
 
-
 import java.util.Collections;
 import javax.swing.JTable;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.data.xy.XYDataset;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
-import org.jpowder.JpowderInternalframe;
+import org.jpowder.JpowderInternalframe2D;
 
 /**
  * this class is for converting the values of x axis from 2ө to d using the
@@ -68,24 +68,27 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
     public void update() {
 
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
 //            setComponentEnable();
             if (defaultTableModel != null) {
                 defaultTableModel.getDataVector().removeAllElements();//remove all the rows from table
+                gSASTable.getGSASDefaultTableModel().getDataVector().removeAllElements();
             }
             dataTable.updateUI();
+            GSASTable.getGSASTable().updateUI();
             return;
         }
 
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
-            if (!inFocus.getPowderDataSet().get(i).getFileName().endsWith("gss")) {
+            if (inFocus.getPowderDataSet().get(i).getXUnit().equals("2θ")) {
 
                 // clear the table
                 // get all dataset in plot
                 // loop over dataset
                 // if GSAS_Instrument = null then add no numbers
                 // otherwise add numbers
+
 
                 bragsPanel.setVisible(true);
                 tablePanel.add(bragsPanel);
@@ -95,8 +98,12 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
         }
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
-            if (inFocus.getPowderDataSet().get(i).getFileName().endsWith("gss")) {
+            if (inFocus.getPowderDataSet().get(i).getXUnit().equals("TOF")) {
+
                 gSASTable.setVisible(true);
+                gSASTable.populateTable2();
+    
+
                 tablePanel.add(gSASTable);
                 bragsPanel.setVisible(false);
             }
@@ -125,6 +132,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         setSizeOfColumn();
 
         defaultTableModel.addTableModelListener(new TableListener(newWaveLength));
+
 
 //        defaultTableModel.addTableModelListener(new TableModelListener() {
 //
@@ -162,7 +170,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
      */
     public String[][] getDataSetAndWaveLength() {
 
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         int size = inFocus.getXYPlot().getDatasetCount();
         dataSetAndWaveLength = new String[size][2];
         for (int i = 0; i < size; i++) {
@@ -207,7 +215,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
      * Adding a message to table to ask user to add a value for the wave length.
      */
     public void requestMessage() {
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             if (!inFocus.getPowderDataSet().get(i).getFileName().endsWith(".cif")) {
 
@@ -232,7 +240,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
     }
 
     public void setDomainAxis() {
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
         NumberAxis numberAxis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
         numberAxis.setRange(0, 1);
     }
@@ -240,15 +248,19 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
     public void resetXaxis() {
         double maxX = 0;
         double minX = 0;
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-                for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
-          maxX = (Double) Collections.max(inFocus.getPowderDataSet().elementAt(i).getX());
-          minX = (Double) Collections.min(inFocus.getPowderDataSet().elementAt(i).getX());
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
+            maxX = (Double) Collections.max(inFocus.getPowderDataSet().elementAt(i).getX());
+            minX = (Double) Collections.min(inFocus.getPowderDataSet().elementAt(i).getX());
 //            System.out.println("max y" + maxY);
         }
         NumberAxis axis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
         axis.setLowerBound(minX);
         axis.setUpperBound(maxX);
+      
+//        System.out.println("MinX : "+minX);
+
+        inFocus.getchart().setNotify(true);
     }
 
     public void setColumn(String[] columns) {
@@ -263,7 +275,8 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
         return dataSetAndWaveLength;
     }
-    public static JTable getBragstable(){
+
+    public static JTable getBragstable() {
         return dataTable;
     }
 
@@ -436,11 +449,11 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
      * @param evt
      */
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
-        JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
 
 
         if (bragsPanel.isVisible()) {
-            if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+            if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
                 applyButton.setSelected(false);
                 return;
             }
@@ -543,12 +556,9 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                     if (unitComboBox1.getSelectedItem().toString().equals("TOF") &&
                             unitComboBox2.getSelectedItem().toString().equals("d")) {
                         inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(newX, j);
-
-
-
+                       resetXaxis();
 
 //            System.out.println("max y" + maxY);
-
 
                     }
                 }
@@ -561,9 +571,8 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_applyButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      resetXaxis();
+        resetXaxis();
     }//GEN-LAST:event_jButton2ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton applyButton;
     private javax.swing.JButton backButton;

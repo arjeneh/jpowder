@@ -47,8 +47,10 @@ public class GSAS_Reader {
 
     private static String aLine;
     private static double deltaT;
+    private static int bankNum=0;
 
     public static Vector<DataSet> read(File aFile) {
+        bankNum=0;
 
         Vector<Vector<Double>> localData = new Vector<Vector<Double>>();
 
@@ -60,7 +62,7 @@ public class GSAS_Reader {
 
                 if (aLine.contains("BANK")) //
                 {
-                    System.out.println("");
+                    bankNum++;     
                     String[] splits = aLine.split(" ");
 
                     if (splits == null || splits.length == 0) {
@@ -89,6 +91,11 @@ public class GSAS_Reader {
             }
             fileReader.close();
             bufferedReader.close();
+            for(int i=0;i<bankNum;i++){
+            retVal.get(i).setFileName("_Bank "+i+" "+aFile.getName());
+            }
+            retVal.get(0).setXUnit("TOF");
+
             return retVal;
 
         } catch (MalformedURLException e) {
@@ -156,6 +163,8 @@ public class GSAS_Reader {
      * @param localData
      */
     public static void calculateData(Vector<Vector<Double>> localData) {
+
+
 
         if (localData.size() > 1) {
 
