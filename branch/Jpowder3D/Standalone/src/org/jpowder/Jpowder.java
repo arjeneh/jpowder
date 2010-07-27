@@ -30,6 +30,8 @@
  */
 package org.jpowder;
 
+import org.jpowder.InernalFrame.JpowderInternalframe2D;
+import org.jpowder.InernalFrame.JpowderInternalframe;
 import java.beans.PropertyVetoException;
 import org.jpowder.tree.Tree;
 import java.awt.datatransfer.DataFlavor;
@@ -62,6 +64,7 @@ import java.net.URISyntaxException;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import org.jfree.chart.ChartColor;
+import org.jpowder.InernalFrame.InternalFrameIconifyListener;
 import org.jpowder.tree.JpowderFileSystemTreeModel;
 
 /**
@@ -270,6 +273,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
         return this.enforceFileExtensions;
     }
 
+    public static JTabbedPane getPlotsTab(){
+        return plotsTab;
+    }
+
     /** This method is called from within the constructor to
      * initialise the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -424,7 +431,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
             }
         });
 
-        messageLabel2D.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
+        messageLabel2D.setFont(new java.awt.Font("Arial", 0, 36));
         messageLabel2D.setForeground(new java.awt.Color(153, 153, 153));
         messageLabel2D.setText("Drag & Drop Files Here.");
         messageLabel2D.setEnabled(false);
@@ -436,7 +443,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         chartPlotterPane3D.setBackground(new java.awt.Color(236, 233, 216));
         chartPlotterPane3D.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "3D Plot Area", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 204))); // NOI18N
 
-        messageLabel3D.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
+        messageLabel3D.setFont(new java.awt.Font("Arial", 0, 36));
         messageLabel3D.setForeground(new java.awt.Color(153, 153, 153));
         messageLabel3D.setText("Drag & Drop Files Here.");
         messageLabel3D.setEnabled(false);
@@ -790,10 +797,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
     private void undoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoMenuActionPerformed
 
-        JpowderInternalframe2D frame = jPowderStackUndo.pop();
+        JpowderInternalframe frame = jPowderStackUndo.pop();
         if (frame != null) {
 
-            internalFrameInFocus = frame;
+//            internalFrameInFocus = frame;
             internalFrameInFocus.setVisible(true);
             jPowderStackRedo.push(internalFrameInFocus);
 
@@ -803,7 +810,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
     private void redoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoMenuActionPerformed
 
-        JpowderInternalframe2D internalFrame = jPowderStackRedo.pop();
+        JpowderInternalframe internalFrame = jPowderStackRedo.pop();
 
         if (internalFrame != null) {
             internalFrame.setVisible(false);
@@ -1382,7 +1389,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private javax.swing.JMenuItem oPenMenu;
     private javax.swing.JMenuItem onlieDocsandSupportMenu;
     private javax.swing.JMenuItem pDfMenu;
-    private javax.swing.JTabbedPane plotsTab;
+    private static javax.swing.JTabbedPane plotsTab;
     private javax.swing.JMenu printMenu;
     private javax.swing.JMenuItem printPublishingMenu;
     private javax.swing.JMenuItem propertiesMenu;

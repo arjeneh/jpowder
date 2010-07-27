@@ -1,5 +1,7 @@
 package org.jpowder;
 
+import org.jpowder.jfreechart.RainBowPaintScale;
+import org.jpowder.InernalFrame.JpowderInternalframe2D;
 import java.awt.Color;
 import java.util.Collections;
 import javax.swing.JPanel;

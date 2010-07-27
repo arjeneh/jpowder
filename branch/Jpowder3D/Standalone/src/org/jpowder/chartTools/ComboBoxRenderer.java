@@ -35,7 +35,7 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.LineBorder;
 import org.jpowder.Jpowder;
-import org.jpowder.JpowderInternalframe2D;
+import org.jpowder.InernalFrame.JpowderInternalframe2D;
 
 /**
  * Rendrer  for adding plots name to the ComboBoxes.

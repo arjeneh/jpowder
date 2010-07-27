@@ -10,6 +10,7 @@
  */
 package org.jpowder;
 
+import org.jpowder.InernalFrame.JpowderInternalframe3D;
 import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -37,6 +38,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 import org.jpowder.Analysis.Jpowder_Reader;
+import org.jpowder.InernalFrame.InternalFrameIconifyListener;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 
@@ -459,33 +461,27 @@ public class FilesTable extends javax.swing.JFrame {
         }
 
         // finally plot the data
-        JpowderInternalframe2D internalframe = new JpowderInternalframe2D(dataVisibleInChart, datasets);
-        Jpowder.jpowderInternalFrameUpdate(internalframe);
+        JpowderInternalframe3D internalframe = new JpowderInternalframe3D(dataVisibleInChart, datasets);
+//        Jpowder.jpowderInternalFrameUpdate(internalframe);
 
         InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
         internalframe.addInternalFrameListener(internalFrameListener);
-        Jpowder.getChartPlotter2D().add(internalframe);
+        Jpowder.getChartPlotter3D().add(internalframe);
         setVisible(true);
+
+        
+
+//        JInternalFrame frame = new JInternalFrame("XYZ");
+//        frame.add(Jpowder3DSecondTest.createDemoPanel());
+//        frame.setSize(internalframe.getSize());
+//        frame.setLocation(500, 300);
+//        frame.setResizable(true);
+//        frame.setClosable(true);
+//        frame.setMaximizable(true);
+//        frame.setIconifiable(true);
+//        frame.setVisible(true);
 //
-//                for(int i=0;i<defaultTableModel.getRowCount();i++){
-//                System.out.println(defaultTableModel.getValueAt(i, 0));
-//                File f = new File(String.valueOf(defaultTableModel.getValueAt(i, 4)));
-//                    System.out.println(f.getAbsoluteFile());
-//        System.out.println(defaultTableModel.getDataVector().get(i));
-//                }
-// Jpowder3DSecondTest dSecondTest= new Jpowder3DSecondTest("");
-
-        JInternalFrame frame = new JInternalFrame("XYZ");
-        frame.add(Jpowder3DSecondTest.createDemoPanel());
-        frame.setSize(internalframe.getSize());
-        frame.setLocation(500, 300);
-        frame.setResizable(true);
-        frame.setClosable(true);
-        frame.setMaximizable(true);
-        frame.setIconifiable(true);
-        frame.setVisible(true);
-
-        Jpowder.getChartPlotter3D().add(frame);
+//        Jpowder.getChartPlotter3D().add(frame);
 
         setVisible(true);
     }//GEN-LAST:event_potButtonActionPerformed

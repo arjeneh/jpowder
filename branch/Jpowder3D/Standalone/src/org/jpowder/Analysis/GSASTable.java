@@ -18,7 +18,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.jpowder.Jpowder;
-import org.jpowder.JpowderInternalframe2D;
+import org.jpowder.InernalFrame.JpowderInternalframe2D;
 import org.jpowder.dataset.GSASInstrument_Reader;
 
 /**

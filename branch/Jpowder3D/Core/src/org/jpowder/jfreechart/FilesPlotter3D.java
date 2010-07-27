@@ -15,6 +15,9 @@ import org.jfree.chart.renderer.GrayPaintScale;
 import org.jfree.chart.renderer.PaintScale;
 import org.jfree.chart.renderer.xy.XYBlockRenderer;
 import org.jfree.chart.title.PaintScaleLegend;
+import org.jfree.data.xy.DefaultXYZDataset;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYZDataset;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
@@ -31,9 +34,9 @@ public class FilesPlotter3D extends DatasetPlotter {
     private static JFreeChart chart;
     private static XYPlot plot;
 
-    public FilesPlotter3D(Vector<DataSet> d) {
+    public FilesPlotter3D(Vector<DataSet> d, String meta) {
         super(d);
-
+        FilesPlotter3D.datasets = d;
     }
 
     public FilesPlotter3D(DataSet d) {
@@ -50,7 +53,7 @@ public class FilesPlotter3D extends DatasetPlotter {
 
     @Override
     public ChartPanel createPowderChart() {
-        chart = createChart();
+        chart = createChart(createDataset());
         plot.setDomainPannable(true);
         plot.setRangePannable(true);
 
@@ -68,7 +71,7 @@ public class FilesPlotter3D extends DatasetPlotter {
         return chartPanel;
     }
 
-    public JFreeChart createChart() {
+    public JFreeChart createChart(XYDataset dataset) {
 
         NumberAxis xAxis = new NumberAxis("X");
         xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
@@ -83,6 +86,13 @@ public class FilesPlotter3D extends DatasetPlotter {
         NumberAxis zAxis = new NumberAxis("");
 
         XYBlockRenderer renderer = new XYBlockRenderer();
+
+
+//        r.setBlockHeight(1.0f);
+//        r.setBlockWidth(1.0f);
+        plot = new XYPlot(dataset, xAxis, yAxis, renderer);
+        chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, true);
+        chart.removeLegend();
         double maxY = 0;
         double minY = 0;
 
@@ -98,16 +108,6 @@ public class FilesPlotter3D extends DatasetPlotter {
         renderer.setPaintScale(lps);
 //        renderer.setBlockHeight(10);
         renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
-
-//        r.setBlockHeight(1.0f);
-//        r.setBlockWidth(1.0f);
-
-        for (int i = 1; i < datasets.size(); i++) {
-            plot = new XYPlot(new JpowderXYZDataset(datasets.elementAt(i)), xAxis, yAxis, renderer);
-        }
-        chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, true);
-        chart.removeLegend();
-
         PaintScaleLegend legend = new PaintScaleLegend(lps,
                 zAxis);
 //        legend.setAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
@@ -120,5 +120,29 @@ public class FilesPlotter3D extends DatasetPlotter {
         chart.setBackgroundPaint(Color.white);
 
         return chart;
+    }
+
+    public static XYZDataset createDataset() {
+
+
+        DefaultXYZDataset defaultXYZDataset = new DefaultXYZDataset();
+        //int xSize = datasets.elementAt(i).size();
+        for (int i = 0; i < datasets.size(); i++) {
+//            plot = new XYPlot(new JpowderXYZDataset(datasets.elementAt(i)), xAxis, yAxis, renderer);
+            //XYDataset ds = plot.getDataset(i);
+            double[][] data = new double[3][datasets.elementAt(i).getX().size()];
+            for (int j = 0; j < datasets.elementAt(i).getX().size(); j++) {
+
+                data[0][j] = (Double) datasets.elementAt(i).getX().get(j);//x
+//                data[1][10] = Jpowder_Reader.getLocalData().get(i).get(1);//x reading from Jpowder File
+                data[1][j] = i;//x by file number..
+                data[2][j] = (Double) datasets.elementAt(i).getY().get(j);//Colour
+
+            }
+            defaultXYZDataset.addSeries("Serie " + i, data);
+        }
+
+
+        return defaultXYZDataset;
     }
 }

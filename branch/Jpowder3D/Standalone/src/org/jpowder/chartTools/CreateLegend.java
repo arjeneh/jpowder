@@ -38,7 +38,7 @@ import org.jfree.chart.title.LegendTitle;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 import org.jpowder.Jpowder;
-import org.jpowder.JpowderInternalframe2D;
+import org.jpowder.InernalFrame.JpowderInternalframe2D;
 
   /**
      * label - the label (null not permitted).

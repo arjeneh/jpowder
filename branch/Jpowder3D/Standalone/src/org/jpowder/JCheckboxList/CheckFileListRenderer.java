@@ -31,6 +31,7 @@
 
 package org.jpowder.JCheckboxList;
 
+import org.jpowder.InernalFrame.JpowderInternalframe2D;
 import org.jpowder.*;
 import java.awt.Color;
 import java.awt.Component;

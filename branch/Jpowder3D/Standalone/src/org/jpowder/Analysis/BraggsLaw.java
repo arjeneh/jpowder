@@ -37,7 +37,7 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.data.xy.XYDataset;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
-import org.jpowder.JpowderInternalframe2D;
+import org.jpowder.InernalFrame.JpowderInternalframe2D;
 
 /**
  * this class is for converting the values of x axis from 2ө to d using the

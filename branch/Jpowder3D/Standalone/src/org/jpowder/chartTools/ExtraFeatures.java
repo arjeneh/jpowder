@@ -34,7 +34,7 @@ import org.jfree.ui.RectangleInsets;
 import org.jpowder.Analysis.ToolsIcon;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
-import org.jpowder.JpowderInternalframe2D;
+import org.jpowder.InernalFrame.JpowderInternalframe2D;
 import org.jpowder.jfreechart.JpowderXYDataset;
 import org.jpowder.jfreechart.JpowderXYLineAndShapeRender;
 

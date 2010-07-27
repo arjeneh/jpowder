@@ -50,7 +50,8 @@ public class PlotsTabButton extends JPanel {
  
         JButton button = new TabButton();
         JButton butt = new TabButton();
-        add(butt);
+        tabbedPane.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+//        add(butt);
         add(button);
         setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
         

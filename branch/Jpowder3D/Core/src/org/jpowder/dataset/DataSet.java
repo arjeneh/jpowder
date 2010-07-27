@@ -29,6 +29,8 @@
  */
 package org.jpowder.dataset;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 import org.jpowder.util.VectorMiscUtil;
 
@@ -47,6 +49,7 @@ public abstract class DataSet {
     private GSAS_Instrument gsasInst = null;
     private boolean isTOF = false;
     private Vector<Double> z;
+    private HashMap<String,Double> meta;
 
     //@param data: data from a powder diffraction file
     //@param fileName: filename of powder diffraction file.
@@ -116,5 +119,38 @@ public abstract class DataSet {
     public void setXUnit(String xunit) {
         this.xUnit = xunit;
     }
+    public void addMetaData(HashMap<String,Double> meta){
+        this.meta=meta;
+
+    }
+    public double getMetaData(String name){
+
+             double data = meta.get(name);
+             return data;
+
+    }
+
+//    public static void main(String[] args) {
+//       DataSet ds = new DataSet() {
+//
+//            @Override
+//            public String description() {
+//                throw new UnsupportedOperationException("Not supported yet.");
+//            }
+//        };
+//    }
+//
+//    public DataSet() {
+//        HashMap<String, Double> hm = new HashMap<String, Double>();
+//        hm.put("A", new Double(3.34));
+//        hm.put("B", new Double(1.22));
+//        hm.put("C", new Double(1.00));
+//        addMetaData(hm);
+////        getMetaData("C");
+//        System.out.println(getMetaData("c"));
+//
+//    }
+
+
 }
 

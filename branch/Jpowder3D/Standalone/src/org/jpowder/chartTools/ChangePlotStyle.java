@@ -41,7 +41,7 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jpowder.Analysis.ToolsIcon;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
-import org.jpowder.JpowderInternalframe2D;
+import org.jpowder.InernalFrame.JpowderInternalframe2D;
 import org.jpowder.chartTools.Markers.MarkerArray;
 import org.jpowder.chartTools.Markers.MarkerComboBoxRenderer;
 import org.jpowder.chartTools.Markers.MarkerShapes;

@@ -28,6 +28,7 @@
  */
 package org.jpowder;
 
+import org.jpowder.InernalFrame.JpowderInternalframe2D;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Rectangle;

@@ -30,6 +30,7 @@ package org.jpowder.dataset;
 
 import org.jpowder.jfreechart.FilesPlotter;
 import java.util.Vector;
+import org.jpowder.jfreechart.FilesPlotter3D;
 
 /**
  * Base class for (temporarely) holding the content of a powder diffraction
@@ -68,6 +69,16 @@ public abstract class DatasetPlotter {
             return null;
         }
     }
+
+    /**
+     * create DatasetPlotter and store the data that are can then be plotted
+     * using the method createPowderChart()
+     * @param datasets Contains the data of one or more powder diffraction files
+     */
+    public static DatasetPlotter createDatasetPlotter(Vector<DataSet> datasets, String meta) {
+       return new FilesPlotter3D(datasets, meta);
+    }
+
 
     /**
      * create DatasetPlotter and store the data that are can then be plotted

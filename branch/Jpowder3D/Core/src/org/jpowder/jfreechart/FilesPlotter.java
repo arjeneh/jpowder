@@ -159,6 +159,7 @@ public class FilesPlotter extends DatasetPlotter implements Serializable{
                 "{1},{2}", new DecimalFormat("0.000"), new DecimalFormat("0.000"));
         renderer2.setToolTipGenerator(tooltip);
         renderer1.setToolTipGenerator(tooltip);
+
         if (datasets.elementAt(0) instanceof DataSetNoErrors) {
 
             plot = new XYPlot(

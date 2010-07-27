@@ -29,6 +29,7 @@
  */
 package org.jpowder;
 
+import org.jpowder.InernalFrame.JpowderInternalframe2D;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
