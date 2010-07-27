@@ -108,7 +108,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
      * @param e
      */
     public void actionPerformed(ActionEvent e) {
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         String command = e.getActionCommand();
         if (command.equals(ChartPanel.PROPERTIES_COMMAND)) {
             chartPanel.doEditChartProperties();

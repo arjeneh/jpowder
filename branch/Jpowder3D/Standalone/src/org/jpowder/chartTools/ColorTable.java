@@ -10,7 +10,7 @@
  */
 package org.jpowder.chartTools;
 
-import com.sun.awt.AWTUtilities;
+//import com.sun.awt.AWTUtilities;
 import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 import java.awt.Color;
 import java.awt.geom.RoundRectangle2D;
@@ -29,8 +29,8 @@ public class ColorTable extends javax.swing.JFrame {
     /** Creates new form ColorTable */
     public ColorTable() {
         initComponents();
-           AWTUtilities.setWindowShape(this, new
-                   RoundRectangle2D.Double(0, 0, this.getWidth(), this.getHeight(), 15, 15));
+//           AWTUtilities.setWindowShape(this, new
+//                   RoundRectangle2D.Double(0, 0, this.getWidth(), this.getHeight(), 15, 15));
 //Samples Colours
         ColorPanel cp1 = new ColorPanel(new Color(0, 0, 102));
         ColorPanel cp5 = new ColorPanel(new Color(153, 0, 0));

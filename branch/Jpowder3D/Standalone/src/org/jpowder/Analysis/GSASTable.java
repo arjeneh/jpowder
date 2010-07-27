@@ -97,7 +97,7 @@ public class GSASTable extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JFileChooser chooser = new JFileChooser();
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         chooser.setMultiSelectionEnabled(false);
         int returnVal = chooser.showOpenDialog(null);
 
@@ -116,7 +116,7 @@ public class GSASTable extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jButton1ActionPerformed
     public void populateTable() {
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             row = new Vector<String>();
             row.add(inFocus.getPowderDataSet().get(i).getFileName());
@@ -129,7 +129,7 @@ public class GSASTable extends javax.swing.JPanel {
     }
 
     public void populateTable2() {
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         if (inFocus != null) {
             for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
                 row = new Vector<String>();
@@ -159,7 +159,7 @@ public class GSASTable extends javax.swing.JPanel {
 
     }
     public void addTableListener(){
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JTable gSASTabel;

@@ -1,6 +1,6 @@
 package org.jpowder;
 
-import org.jpowder.jfreechart.RainBowPaintScale;
+//import org.jpowder.jfreechart.RainBowPaintScale;
 import org.jpowder.InernalFrame.JpowderInternalframe2D;
 import java.awt.Color;
 import java.util.Collections;
@@ -10,6 +10,8 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.GrayPaintScale;
+import org.jfree.chart.renderer.PaintScale;
 import org.jfree.chart.renderer.xy.XYBlockRenderer;
 import org.jfree.chart.title.PaintScaleLegend;
 import org.jfree.data.general.DatasetChangeEvent;
@@ -62,17 +64,17 @@ public class Jpowder3DSecondTest extends ApplicationFrame {
         XYBlockRenderer renderer = new XYBlockRenderer();
         double maxY = 0;
         double minY = 0;
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             maxY = (Double) Collections.max(inFocus.getPowderDataSet().elementAt(i).getY());
             minY = (Double) Collections.min(inFocus.getPowderDataSet().elementAt(i).getY());
 //            System.out.println("max y" + maxY);
         }
 
-//       PaintScale lps = new GrayPaintScale(0, maxY);
+       PaintScale lps = new GrayPaintScale(0, maxY);
 //        LookupPaintScale lps = new LookupPaintScale(minY, maxY, Color.GRAY);
-//        GreenishPaintScale lps = new GreenishPaintScale(maxY);
-        RainBowPaintScale lps = new RainBowPaintScale(minY, maxY, Color.BLACK);
+  //      GreenishPaintScale lps = new GreenishPaintScale(maxY);
+      //  RainBowPaintScale lps = new RainBowPaintScale(minY, maxY, Color.BLACK);
 
         renderer.setPaintScale(lps);
 //        renderer.setBlockHeight(10);
@@ -106,7 +108,7 @@ public class Jpowder3DSecondTest extends ApplicationFrame {
 
     public static XYZDataset createDataset() {
 
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
         DefaultXYZDataset dataset = new DefaultXYZDataset();
 

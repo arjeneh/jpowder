@@ -87,6 +87,7 @@ public class DataVisibleInChart extends JPanel {
      */
     public void newChartInFocus(XYPlot xyplot, Vector<DataSet> dataSets) {
 
+        System.out.println(xyplot);
 
         clear();
         for (int i = 0; i < dataSets.size(); i++) {

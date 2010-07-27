@@ -48,7 +48,7 @@ public class CheckFileListRenderer extends CheckFileRenderer implements ListCell
 
     public Component getListCellRendererComponent(JList list, Object value,
             int index, boolean isSelected, boolean hasFocus) {
-       JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+       JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         setEnabled(list.isEnabled());
         label.setText(value.toString());
         check.setSelected(((CheckableFileItem) value).isSelected());

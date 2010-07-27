@@ -22,7 +22,7 @@ public class TableRenderer implements TableCellRenderer {
             Object value, boolean isSelected,
             boolean hasFocus, int row, int column) {
 
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         JLabel fileName = new JLabel(value.toString());
         fileName.setForeground((Color) inFocus.getXYPlot().getRenderer(row).getSeriesPaint(0));
         return fileName;

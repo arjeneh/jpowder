@@ -44,7 +44,7 @@ import org.jpowder.InernalFrame.JpowderInternalframe2D;
 public class ComboBoxRenderer implements ListCellRenderer {
 
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         JLabel label = new JLabel(value.toString());
         label.setOpaque(isSelected);
         if (index >= 0) {

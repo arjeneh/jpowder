@@ -68,7 +68,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
     public void update() {
 
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
 //            setComponentEnable();
             if (defaultTableModel != null) {
@@ -170,7 +170,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
      */
     public String[][] getDataSetAndWaveLength() {
 
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         int size = inFocus.getXYPlot().getDatasetCount();
         dataSetAndWaveLength = new String[size][2];
         for (int i = 0; i < size; i++) {
@@ -215,7 +215,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
      * Adding a message to table to ask user to add a value for the wave length.
      */
     public void requestMessage() {
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             if (!inFocus.getPowderDataSet().get(i).getFileName().endsWith(".cif")) {
 
@@ -240,7 +240,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
     }
 
     public void setDomainAxis() {
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         NumberAxis numberAxis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
         numberAxis.setRange(0, 1);
     }
@@ -248,7 +248,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
     public void resetXaxis() {
         double maxX = 0;
         double minX = 0;
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             maxX = (Double) Collections.max(inFocus.getPowderDataSet().elementAt(i).getX());
             minX = (Double) Collections.min(inFocus.getPowderDataSet().elementAt(i).getX());
@@ -449,7 +449,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
      * @param evt
      */
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
 
         if (bragsPanel.isVisible()) {

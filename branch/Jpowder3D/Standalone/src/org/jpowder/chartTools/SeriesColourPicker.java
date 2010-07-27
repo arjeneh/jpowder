@@ -50,7 +50,7 @@ public class SeriesColourPicker {
 
             public void actionPerformed(ActionEvent evt) {
 
-                JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+                JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
                 Color newColor = chooser.getColor();
                 for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
                     if (inFocus.getPowderDataSet().elementAt(i).getFileName().equals(

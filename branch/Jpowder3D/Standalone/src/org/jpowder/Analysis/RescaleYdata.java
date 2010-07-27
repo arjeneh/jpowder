@@ -80,7 +80,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
     }
 
     public String[] addDataSet() {
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         int size = inFocus.getXYPlot().getDatasetCount();
         string = new String[size];
         for (int i = 0; i < size; i++) {
@@ -106,7 +106,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
                 return;
             }
         }
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         int seriescount = inFocus.getXYPlot().getDatasetCount();
         for (int i = 0; i < seriescount; i++) {
             if (inFocus.getPowderDataSet().elementAt(i).getFileName().equals(
@@ -293,7 +293,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_constantFieldActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         double maxY, minY, resultant;
         Vector<Double> peaks = new Vector<Double>();
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {

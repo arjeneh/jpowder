@@ -93,7 +93,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
         model.clear();
 
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         getPeakCheckBox.setSelected(inFocus.getChartPanel().getHorizontalAxisTrace());
 
         for (int i = 0; i < inFocus.getMarkedPeakPosition().size(); i++) {
@@ -251,7 +251,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 
         if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() > 0) {
-                JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+                JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 //            removePeaksPosition();
                         //magnifier
             JXLayer layer = new JXLayer(inFocus.getChartPanel());
@@ -294,7 +294,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
-                JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+                JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
                 inFocus.getXYPlot().clearAnnotations();
 
                 x = inFocus.getXYPlot().getDomainCrosshairValue();
@@ -314,7 +314,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
     public void updatePeaksInPlot() {
 
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         XYTextAnnotation annotation = new XYTextAnnotation("(" + x + ", " + y + ")", x, y);
         annotation.setTextAnchor(TextAnchor.BOTTOM_CENTER);
         inFocus.getXYPlot().addAnnotation(annotation);
@@ -386,7 +386,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
 
 
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
         inFocus.getXYPlot().removeDomainMarker(inFocus.getPeakDomainMarker().get(peakList.getSelectedIndex()));
 
@@ -403,7 +403,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
     private void getPeakCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getPeakCheckBoxActionPerformed
 
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
         if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             getPeakCheckBox.setSelected(false);
@@ -464,7 +464,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     }//GEN-LAST:event_getPeakCheckBoxActionPerformed
 
     private void peakListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_peakListMouseClicked
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             getPeakCheckBox.setSelected(false);
             return;
@@ -501,7 +501,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
 
         model.clear();
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         inFocus.removeAllMarkedPeakPosition();
         inFocus.getChartPanel().removeChartMouseListener(this);
         inFocus.getChartPanel().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));

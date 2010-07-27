@@ -63,7 +63,7 @@ public class CreateLegend {
 
     private Shape shape = new Rectangle(10, 10);
     private LegendTitle legend;
-    private  JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+    private  JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
 
 

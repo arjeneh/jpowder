@@ -34,7 +34,7 @@ public class TableListener implements TableModelListener {
     }
 
     public void tableChanged(TableModelEvent e) {
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         int size = inFocus.getXYPlot().getDatasetCount();
         for (int i = 0; i < size; i++) {
 

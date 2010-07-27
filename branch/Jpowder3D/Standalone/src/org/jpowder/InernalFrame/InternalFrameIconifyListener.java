@@ -35,9 +35,9 @@ public class InternalFrameIconifyListener extends InternalFrameAdapter {
     @Override
     public void internalFrameClosed(InternalFrameEvent e) {
         Jpowder.jPowderStackUndo.push(jpowderinternalframe);
-//        Jpowder.jpowderInternalFrameUpdate(jpowderinternalframe);
+        Jpowder.jpowderInternalFrameUpdate(jpowderinternalframe);
         Jpowder.getChartPlotter2D().remove(jpowderinternalframe);
-        if (JpowderInternalframe.getnumberOfJpowderInternalframe() == 0) {
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             dataVisibleInChart.clear();
         }
     }
@@ -50,7 +50,7 @@ public class InternalFrameIconifyListener extends InternalFrameAdapter {
     public void internalFrameActivated(InternalFrameEvent e) {
 
         jpowderinternalframe = (JpowderInternalframe) e.getInternalFrame();
-//        Jpowder.jpowderInternalFrameUpdate(jpowderinternalframe);
+        Jpowder.jpowderInternalFrameUpdate(jpowderinternalframe);
 
         dataVisibleInChart = jpowderinternalframe.getDataVisibleInChartPanel();
         dataVisibleInChart.newChartInFocus(jpowderinternalframe.getXYPlot(),

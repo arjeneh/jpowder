@@ -66,7 +66,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }
 
     public void update() {
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         imageComboBoxTest.setRenderer(new MarkerComboBoxRenderer(null));
         if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             if (defaultTableModel != null) {
@@ -89,7 +89,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
         defaultTableModel.addTableModelListener(new TableModelListener() {
 
             public void tableChanged(TableModelEvent e) {
-                JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+                JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
                 int size = inFocus.getXYPlot().getDatasetCount();
                 for (int i = 0; i < size; i++) {
 
@@ -110,7 +110,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
 
     public String[][] getFileName() {
 
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         int size = inFocus.getXYPlot().getDatasetCount();
         fileName = new String[size][2];
         for (int i = 0; i < size; i++) {
@@ -132,7 +132,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }
 
     public void xAxisScientificNotation() {
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
         if (xScientific.isSelected()) {
             inFocus.getXYPlot().getDomainAxis().setStandardTickUnits(jpowderTickUnitSource);
@@ -144,7 +144,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }
 
     public void yAxisScientificNotation() {
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         if (yScientific.isSelected()) {
             inFocus.getXYPlot().getRangeAxis().setStandardTickUnits(jpowderTickUnitSource);
 
@@ -711,20 +711,20 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
 
     private void majorXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_majorXActionPerformed
 
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         boolean check = inFocus.getXYPlot().isDomainGridlinesVisible();
         inFocus.getXYPlot().setDomainGridlinesVisible(!check);
 
     }//GEN-LAST:event_majorXActionPerformed
 
     private void majorYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_majorYActionPerformed
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         boolean check = inFocus.getXYPlot().isRangeGridlinesVisible();
         inFocus.getXYPlot().setRangeGridlinesVisible(!check);
     }//GEN-LAST:event_majorYActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 //        JColorChooser colorChooser = new JColorChooser(Color.WHITE);
 //        JDialog dialog = JColorChooser.createDialog(this, "Gridline Colour", true, colorChooser, null, null);
 
@@ -747,7 +747,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
 
         double offset = Double.parseDouble(jSpinner1.getValue().toString());
@@ -757,19 +757,19 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_jSpinner1StateChanged
 
     private void minorXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minorXActionPerformed
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         boolean check = inFocus.getXYPlot().isDomainMinorGridlinesVisible();
         inFocus.getXYPlot().setDomainMinorGridlinesVisible(!check);
     }//GEN-LAST:event_minorXActionPerformed
 
     private void minorYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minorYActionPerformed
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         boolean check = inFocus.getXYPlot().isRangeMinorGridlinesVisible();
         inFocus.getXYPlot().setRangeMinorGridlinesVisible(!check);
     }//GEN-LAST:event_minorYActionPerformed
 
     private void gridlineWidthStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_gridlineWidthStateChanged
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         float gridwidth = (float) Double.parseDouble(gridlineWidth.getValue().toString());
         if (majorX.isSelected()) {
             inFocus.getXYPlot().setDomainGridlineStroke(new BasicStroke(gridwidth));
@@ -810,7 +810,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_decimalPlacesSpinnerStateChanged
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         Color c = JColorChooser.showDialog(
                 this, "Gridline Colour", Color.white);
         if (c == null) {
@@ -823,7 +823,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jSpinner2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner2StateChanged
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         float seriesWidth = (float) Double.parseDouble(jSpinner2.getValue().toString());
 
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
@@ -832,7 +832,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_jSpinner2StateChanged
 
     private void legendCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_legendCheckBoxActionPerformed
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         if (legendCheckBox.isSelected()) {
             CreateLegend createLegend = new CreateLegend();
             createLegend.setLegend();
@@ -849,7 +849,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
 
     private void legendPositionButtomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_legendPositionButtomActionPerformed
 
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         if (legendPositionButtom.isSelected()) {
 
             inFocus.getchart().getLegend().setPosition(RectangleEdge.BOTTOM);
@@ -859,7 +859,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_legendPositionButtomActionPerformed
 
     private void legendPositionTopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_legendPositionTopActionPerformed
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         if (legendPositionTop.isSelected()) {
             inFocus.getchart().getLegend().setPosition(RectangleEdge.TOP);
 
@@ -867,14 +867,14 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_legendPositionTopActionPerformed
 
     private void legendPositionLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_legendPositionLeftActionPerformed
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         if (legendPositionLeft.isSelected()) {
             inFocus.getchart().getLegend().setPosition(RectangleEdge.LEFT);
         }
     }//GEN-LAST:event_legendPositionLeftActionPerformed
 
     private void legendPositionRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_legendPositionRightActionPerformed
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
         if (legendPositionRight.isSelected()) {
             inFocus.getchart().getLegend().setPosition(RectangleEdge.RIGHT);
@@ -883,7 +883,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_legendPositionRightActionPerformed
 
     private void legendPositionTopRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_legendPositionTopRightActionPerformed
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
         if (legendPositionTopRight.isSelected()) {
 //            inFocus.getchart().getLegend().setPosition(RectangleEdge.RIGHT);
@@ -899,7 +899,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_legendPositionTopRightActionPerformed
 
     private void chartBGImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chartBGImageActionPerformed
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         JFileChooser fileChooser = new JFileChooser();
         int returnVal = fileChooser.showOpenDialog(null);
         FileFilter filter = new FileFilter() {
@@ -940,7 +940,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_chartBGImageActionPerformed
 
     private void plotBGImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotBGImageActionPerformed
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         JFileChooser fileChooser = new JFileChooser();
         int returnVal = fileChooser.showOpenDialog(null);
 
@@ -954,14 +954,14 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_plotBGImageActionPerformed
 
     private void jSpinner3StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner3StateChanged
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
         float f = Float.parseFloat(jSpinner3.getValue().toString());
         inFocus.getchart().setBackgroundImageAlpha(f);
     }//GEN-LAST:event_jSpinner3StateChanged
 
     private void jSpinner4StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner4StateChanged
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
         float f = Float.parseFloat(jSpinner4.getValue().toString());
         inFocus.getXYPlot().setBackgroundImageAlpha(f);
@@ -973,7 +973,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_jButton3MouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-            JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus;
+            JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
             NumberAxis xAxis = new NumberAxis("");
             NumberAxis yAxis = new NumberAxis("");
             JpowderXYLineAndShapeRender r = new JpowderXYLineAndShapeRender();
