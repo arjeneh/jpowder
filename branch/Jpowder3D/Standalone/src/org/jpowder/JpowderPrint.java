@@ -37,6 +37,7 @@ import javax.swing.JOptionPane;
 import org.jfree.chart.ChartColor;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
+import org.jpowder.InernalFrame.JpowderInternalframe;
 import org.jpowder.chartTools.CreateLegend;
 
 /**
@@ -51,6 +52,7 @@ public class JpowderPrint implements Serializable{
      */
     public void basicPrint() {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+
         if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
             NumberAxis xAxis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
             NumberAxis yAxis = (NumberAxis) inFocus.getXYPlot().getRangeAxis();
@@ -72,7 +74,7 @@ public class JpowderPrint implements Serializable{
                 CreateLegend createLegend = new CreateLegend();
                 createLegend.setLegend();
                 inFocus.getChartPanel().createChartPrintJob();
-                inFocus.getchart().removeLegend();
+                inFocus.getChart().removeLegend();
                 xAxis.setAutoTickUnitSelection(true);
                 yAxis.setAutoTickUnitSelection(true);
             }
@@ -87,8 +89,8 @@ public class JpowderPrint implements Serializable{
     }
 
     /**
-     * this method is design for easy print for spublication which needs to
-     * be printed in whiite background.
+     * this method is design for easy print for publication which needs to
+     * be printed in white background.
      */
     public void printForPublication() {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
@@ -121,4 +123,13 @@ public class JpowderPrint implements Serializable{
             return;
         }
     }
+
+
+
+    public void print1(JpowderInternalframe internalframe){
+
+
+
+    }
+
 }

@@ -169,6 +169,7 @@ public class GSAS_Reader {
         if (localData.size() > 1) {
 
             for (int i = 0; i < localData.size(); i++) {
+                System.out.println(localData.get(i).get(0));
                 double binwidth = localData.get(i).get(0) * deltaT;
 
                 localData.get(i).setElementAt(localData.get(i).get(1) / (binwidth), 1);

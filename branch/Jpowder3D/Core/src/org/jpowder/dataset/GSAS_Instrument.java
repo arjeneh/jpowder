@@ -4,8 +4,6 @@
  */
 package org.jpowder.dataset;
 
-import java.util.Vector;
-
 /**
  *
  * @author qyt21516
@@ -16,7 +14,6 @@ public class GSAS_Instrument {
     private double difA;
     private double zero;
     private double d;
-    private Vector<Double> newX;
 
     public GSAS_Instrument(double difc, double difa, double zero) {
 
@@ -54,7 +51,6 @@ public class GSAS_Instrument {
     public double toDspacing(double tof) {
 
 
-
         d = Math.pow(difC, 2) - 4 * (difA * (zero - tof));
 
         if (d < 0) {
@@ -80,32 +76,4 @@ public class GSAS_Instrument {
         return d;
     }
 
-    
-//  public Vector<Double> toDspacing(Vector<Double> tof) {
-//
-//      
-//   d = Math.pow(difC, 2) - 4 * (difA * (zero - tof.get(index)));
-//
-//        if (d < 0) {
-//            System.out.println("there is no real solution");
-//            javax.swing.JOptionPane.showMessageDialog(null, "Invalid data.");
-//        } else if (d == 0) {
-//            System.out.print("there is only one solution: ");
-//            System.out.println(-difC / 2 * difA);
-//            return -difC / 2 * difA;
-//        } else {
-//            double x1 = (-difC + Math.sqrt(d)) / (2 * difA);
-//            double x2 = (-difC - Math.sqrt(d)) / (2 * difA);
-//
-//            if (x1 > x2) {
-//                return x1;
-//            }
-//            if (x1 < x2) {
-//                return x2;
-//            }
-//
-//        }
-//
-//        return newX;
-//      }
 }

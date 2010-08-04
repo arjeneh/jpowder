@@ -23,22 +23,36 @@ import java.util.logging.Logger;
  */
 public class DragAndDrop3D implements DropTargetListener {
 
-    private FilesTable filesTable = new FilesTable();
+    private DataVisibleInChart dvic = new DataVisibleInChart();
 
+    public DragAndDrop3D(DataVisibleInChart dvic) {
+        this.dvic=dvic;
+    }
+
+
+
+
+    @Override
     public void dragEnter(DropTargetDragEvent dtde) {
     }
 
+    @Override
     public void dragOver(DropTargetDragEvent dtde) {
     }
 
+    @Override
     public void dropActionChanged(DropTargetDragEvent dtde) {
     }
 
+    @Override
     public void dragExit(DropTargetEvent dte) {
     }
 
+    @Override
     public void drop(DropTargetDropEvent dtde) {
 
+        FilesTable filesTable = new FilesTable(dvic);
+        
         Transferable transfeable = dtde.getTransferable();
         DataFlavor[] flavors = transfeable.getTransferDataFlavors();
         dtde.acceptDrop(DnDConstants.ACTION_COPY);

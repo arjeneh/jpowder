@@ -31,7 +31,7 @@ import org.jfree.chart.title.LegendTitle;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
-import org.jpowder.Analysis.ToolsIcon;
+import org.jpowder.Analysis.ToolsIcon2D;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 import org.jpowder.InernalFrame.JpowderInternalframe2D;
@@ -44,7 +44,7 @@ import org.jpowder.jfreechart.JpowderXYLineAndShapeRender;
  */
 public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
 
-    private ToolsIcon toolsIcon;
+    private ToolsIcon2D toolsIcon;
     private JpowderTickUnitSource jpowderTickUnitSource = new JpowderTickUnitSource();
     private static String decimal = "";
     private DefaultTableModel defaultTableModel;
@@ -55,7 +55,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     MarkesIcons[] carray = array.createCountriesArray();
 
     /** Creates new form ExtraFeatures */
-    public ExtraFeatures(ToolsIcon analysisIcon) {
+    public ExtraFeatures(ToolsIcon2D analysisIcon) {
 
         initComponents();
         this.toolsIcon = analysisIcon;
@@ -841,7 +841,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
 
         }
         if (!legendCheckBox.isSelected()) {
-            inFocus.getchart().removeLegend();
+            inFocus.getChart().removeLegend();
             legendTable.setEnabled(false);
             legendTable.setVisible(false);
         }
@@ -852,7 +852,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         if (legendPositionButtom.isSelected()) {
 
-            inFocus.getchart().getLegend().setPosition(RectangleEdge.BOTTOM);
+            inFocus.getChart().getLegend().setPosition(RectangleEdge.BOTTOM);
 
         }
 
@@ -861,7 +861,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     private void legendPositionTopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_legendPositionTopActionPerformed
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         if (legendPositionTop.isSelected()) {
-            inFocus.getchart().getLegend().setPosition(RectangleEdge.TOP);
+            inFocus.getChart().getLegend().setPosition(RectangleEdge.TOP);
 
         }
     }//GEN-LAST:event_legendPositionTopActionPerformed
@@ -869,7 +869,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     private void legendPositionLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_legendPositionLeftActionPerformed
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         if (legendPositionLeft.isSelected()) {
-            inFocus.getchart().getLegend().setPosition(RectangleEdge.LEFT);
+            inFocus.getChart().getLegend().setPosition(RectangleEdge.LEFT);
         }
     }//GEN-LAST:event_legendPositionLeftActionPerformed
 
@@ -877,7 +877,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
         if (legendPositionRight.isSelected()) {
-            inFocus.getchart().getLegend().setPosition(RectangleEdge.RIGHT);
+            inFocus.getChart().getLegend().setPosition(RectangleEdge.RIGHT);
 
         }
     }//GEN-LAST:event_legendPositionRightActionPerformed
@@ -892,9 +892,9 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
 //          ta.setMaxWidth(0.48);
 //         inFocus.getXYPlot().addAnnotation(ta);
 
-            LegendTitle legend = inFocus.getchart().getLegend();
+            LegendTitle legend = inFocus.getChart().getLegend();
             legend.setPosition(RectangleEdge.RIGHT); // cause items to wrap
-            ((XYPlot) inFocus.getchart().getPlot()).addAnnotation(new XYTitleAnnotation(0.98, 0.78, legend, RectangleAnchor.CENTER));
+            ((XYPlot) inFocus.getChart().getPlot()).addAnnotation(new XYTitleAnnotation(0.98, 0.78, legend, RectangleAnchor.CENTER));
         }
     }//GEN-LAST:event_legendPositionTopRightActionPerformed
 
@@ -934,7 +934,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
             // get the selected files
             File selectedFiles = fileChooser.getSelectedFile();
 
-            inFocus.getchart().setBackgroundImage(new ImageIcon(selectedFiles.getAbsolutePath()).getImage());
+            inFocus.getChart().setBackgroundImage(new ImageIcon(selectedFiles.getAbsolutePath()).getImage());
 
         }
     }//GEN-LAST:event_chartBGImageActionPerformed
@@ -957,7 +957,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
         float f = Float.parseFloat(jSpinner3.getValue().toString());
-        inFocus.getchart().setBackgroundImageAlpha(f);
+        inFocus.getChart().setBackgroundImageAlpha(f);
     }//GEN-LAST:event_jSpinner3StateChanged
 
     private void jSpinner4StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner4StateChanged

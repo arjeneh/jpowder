@@ -37,6 +37,7 @@ import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+import org.jpowder.InernalFrame.JpowderInternalframe3D;
 
 /**
  * To change this template, choose Tools | Templates
@@ -46,14 +47,17 @@ import javax.swing.ListCellRenderer;
 public class CheckFileListRenderer extends CheckFileRenderer implements ListCellRenderer {
 
 
+    @Override
     public Component getListCellRendererComponent(JList list, Object value,
             int index, boolean isSelected, boolean hasFocus) {
-       JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+
         setEnabled(list.isEnabled());
         label.setText(value.toString());
         check.setSelected(((CheckableFileItem) value).isSelected());
-        label.setForeground((Color) inFocus.getXYPlot().getRenderer(index).getSeriesPaint(0));
-
+      
+//        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+//                 label.setForeground((Color) inFocus.getXYPlot().getRenderer(index).getSeriesPaint(0));
+   
         label.setSelected(true);//hilighting the string
         label.setFocus(hasFocus);
         //Jpowder.jpowderInternalFrameUpdate(inFocus);

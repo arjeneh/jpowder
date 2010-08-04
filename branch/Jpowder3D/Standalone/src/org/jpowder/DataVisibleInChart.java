@@ -55,7 +55,6 @@ public class DataVisibleInChart extends JPanel {
 
     public DataVisibleInChart() {
 
-
         listModel = new FileNameListModel();
 
         checkboxList = new JCheckBoxJList(listModel);
@@ -70,15 +69,13 @@ public class DataVisibleInChart extends JPanel {
 
     }
 
+
     /**
      * clear the selection from the checkboxlist.
      */
     public void clear() {
         listModel.clear();
-      
     }
-
-
     /**
      * To inform DataVisibleInChart that a new chart has been highlighted and
      * pass it information so that DataVisibleInChart can update its checkbox list
@@ -87,14 +84,11 @@ public class DataVisibleInChart extends JPanel {
      */
     public void newChartInFocus(XYPlot xyplot, Vector<DataSet> dataSets) {
 
-        System.out.println(xyplot);
-
         clear();
         for (int i = 0; i < dataSets.size(); i++) {
             CheckableFileItem checkableFileItem = new CheckableFileItem(dataSets.elementAt(i).getFileName());
             listModel.addCheckableFile(checkableFileItem);
-           
-            checkableFileItem.setSelected(xyplot.getRenderer(i).isSeriesVisible(0));
+//            checkableFileItem.setSelected(xyplot.getRenderer(i).isSeriesVisible(0));
 
         }
         checkboxList.setm_plot(xyplot);

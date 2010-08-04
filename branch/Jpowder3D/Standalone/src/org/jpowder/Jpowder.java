@@ -51,7 +51,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.event.InternalFrameListener;
-import org.jpowder.Analysis.ToolsIcon;
+import org.jpowder.Analysis.ToolsIcon2D;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.util.ScreenUtil;
@@ -64,6 +64,7 @@ import java.net.URISyntaxException;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import org.jfree.chart.ChartColor;
+import org.jpowder.Analysis.ToolsIcon3D;
 import org.jpowder.InernalFrame.InternalFrameIconifyListener;
 import org.jpowder.InernalFrame.JpowderInternalframe3D;
 import org.jpowder.tree.JpowderFileSystemTreeModel;
@@ -79,7 +80,8 @@ public class Jpowder extends JFrame implements DropTargetListener {
     public DataVisibleInChart dataVisibleInChart = new DataVisibleInChart();
     private PowderFileCabinet mPowderFileCabinet;
     private java.awt.dnd.DropTarget dropTarget;
-    private ToolsIcon analysisIcon = new ToolsIcon(this);
+    private ToolsIcon2D analysisIcon = new ToolsIcon2D(this);
+    private ToolsIcon3D toolsIcon3D = new ToolsIcon3D(this);
     private CardLayout cardLayout;
     public static JpowderInternalframe2D internalFrameInFocus2D;
     public static JpowderInternalframe3D internalFrameInFocus3D;
@@ -105,14 +107,17 @@ public class Jpowder extends JFrame implements DropTargetListener {
         mPowderFileCabinet = new PowderFileCabinet();
 
         dropTarget = new DropTarget(chartPlotterPane2D, this);
-        dropTarget = new DropTarget(chartPlotterPane3D, new DragAndDrop3D());
+
         dataVisibleInChartPanel.add(dataVisibleInChart);
+        dropTarget = new DropTarget(chartPlotterPane3D, new DragAndDrop3D(dataVisibleInChart));
         explorertab.add(tree, "1");
         toolstab2D.add(analysisIcon, "1");
+        toolstab3D.add(toolsIcon3D, "1");
         messageLabel2D.setLocation(chartPlotterPane2D.getWidth() / 4, chartPlotterPane2D.getHeight() / 2);
 
         //to keep newly added JInternalFrame inside the JDesktopPane (KP)
         chartPlotterPane2D.addContainerListener(new FrameAddedSupervisor());
+        chartPlotterPane3D.addContainerListener(new FrameAddedSupervisor());
         ScreenUtil.adjustBounds(this);
 
 
@@ -157,8 +162,12 @@ public class Jpowder extends JFrame implements DropTargetListener {
      *
      * @return analysistab.
      */
-    public JPanel getanalysistab() {
+    public JPanel getToolsTab2D() {
         return toolstab2D;
+    }
+
+    public JPanel getToolsTab3D() {
+        return toolstab3D;
     }
 
     /**
@@ -195,32 +204,21 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
     }
 
-
-     /** A new plot area has been put in focus by user. Update accordingly
+    /** A new plot area has been put in focus by user. Update accordingly
      *
      * @param whichOne Is the plot area in focus 2D or 3D
      */
     public static void jpowderPlotAreaUpdate(String whichOne) {
         plotAreaInFocus = whichOne;
 
-        if ( plotAreaInFocus.equals("3D") ) {
-          Jpowder.jpowderInternalFrameUpdate(internalFrameInFocus3D);
+        if (plotAreaInFocus.equals("3D")) {
+            Jpowder.jpowderInternalFrameUpdate(internalFrameInFocus3D);
         }
-        if ( plotAreaInFocus.equals("2D") ) {
-          Jpowder.jpowderInternalFrameUpdate(internalFrameInFocus2D);
+        if (plotAreaInFocus.equals("2D")) {
+            Jpowder.jpowderInternalFrameUpdate(internalFrameInFocus2D);
         }
-        // make sure that Tools tab gets updated
 
-     //   if (internalFrame != internalFrameInFocus2D) {
-     //       internalFrameInFocus2D = internalFrame;
-     //   }
-     //   if (infoPanelInfocus != null) {
-     //       infoPanelInfocus.update();
-     //   }
-
-     //   internalFrame.getDataVisibleInChartPanel().newChartInFocus(internalFrame.getXYPlot(), internalFrame.getPowderDataSet());
     }
-
 
     /** A new internal frame has been put in focus by user. Update accordingly
      *
@@ -228,32 +226,28 @@ public class Jpowder extends JFrame implements DropTargetListener {
      */
     public static void jpowderInternalFrameUpdate(JpowderInternalframe internalFrame) {
 
-        if ( internalFrame instanceof JpowderInternalframe2D)
-        {
-          if (internalFrame != internalFrameInFocus2D) {
-            internalFrameInFocus2D = (JpowderInternalframe2D) internalFrame;
+        if (internalFrame instanceof JpowderInternalframe2D) {
+            if (internalFrame != internalFrameInFocus2D) {
+                internalFrameInFocus2D = (JpowderInternalframe2D) internalFrame;
 //            chartInFocus = internalFrame.getchart();
-          }
+            }
         }
-        if ( internalFrame instanceof JpowderInternalframe3D)
-        {
-          if (internalFrame != internalFrameInFocus3D) {
-            internalFrameInFocus3D = (JpowderInternalframe3D) internalFrame;
+        if (internalFrame instanceof JpowderInternalframe3D) {
+            if (internalFrame != internalFrameInFocus3D) {
+                internalFrameInFocus3D = (JpowderInternalframe3D) internalFrame;
 //            chartInFocus = internalFrame.getchart();
-          }
+            }
         }
-        
+
 
         if (infoPanelInfocus != null) {
             infoPanelInfocus.update();
         }
 
-        if (internalFrame != null)
-          internalFrame.getDataVisibleInChartPanel().newChartInFocus(internalFrame.getXYPlot(), internalFrame.getPowderDataSet());
+        if (internalFrame != null) {
+            internalFrame.getDataVisibleInChartPanel().newChartInFocus(internalFrame.getXYPlot(), internalFrame.getPowderDataSet());
+        }
     }
-
-
- 
 
     /**
      * this methods checks for internalframe inside the ChartPlotterPane and if it
@@ -261,17 +255,20 @@ public class Jpowder extends JFrame implements DropTargetListener {
      */
     public void displayingMessageLabel() {
 
-
-        if (chartPlotterPane2D.getAllFrames().length == 1) {
-            chartPlotterPane2D.remove(messageLabel2D);
-            chartPlotterPane2D.repaint();
+        if (plotsTab.getSelectedIndex() == 0) {
+            if (chartPlotterPane2D.getAllFrames().length == 1) {
+                chartPlotterPane2D.remove(messageLabel2D);
+                chartPlotterPane2D.repaint();
+            }
         }
-        if (chartPlotterPane3D.getAllFrames().length == 1) {
-            chartPlotterPane3D.remove(messageLabel3D);
-            chartPlotterPane3D.repaint();
+        if (plotsTab.getSelectedIndex() == 1) {
+            if (chartPlotterPane3D.getAllFrames().length == 1) {
+                chartPlotterPane3D.remove(messageLabel3D);
+                chartPlotterPane3D.repaint();
+            }
+
+
         }
-
-
     }
 
     public static JLabel getMessageLabel() {
@@ -286,7 +283,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         long freeM = (long) (Runtime.getRuntime().freeMemory() / oneByte);
         long MaxM = (long) (Runtime.getRuntime().maxMemory() / oneByte);
 
-        if ((totalM - freeM) > 120) {
+        if ((totalM - freeM) > 900) {
             // create a double internal frame and add to Plot Area
             // and then delete to trick JWM
             // print out new memory size
@@ -318,8 +315,12 @@ public class Jpowder extends JFrame implements DropTargetListener {
         return this.enforceFileExtensions;
     }
 
-    public static JTabbedPane getPlotsTab(){
+    public static JTabbedPane getPlotsTab() {
         return plotsTab;
+    }
+
+    public DataVisibleInChart getDataVisibleInChart() {
+        return dataVisibleInChart;
     }
 
     /** This method is called from within the constructor to
@@ -345,7 +346,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         messageLabel2D = new javax.swing.JLabel();
         chartPlotterPane3D = new javax.swing.JDesktopPane();
         messageLabel3D = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        JpowderMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         oPenMenu = new javax.swing.JMenuItem();
         saveWorksPaceMenu = new javax.swing.JMenuItem();
@@ -353,7 +354,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         appletMenu = new javax.swing.JMenuItem();
         imageMenu = new javax.swing.JMenuItem();
         pDfMenu = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        pdfForPublication = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JSeparator();
         printMenu = new javax.swing.JMenu();
         basicPrintMenu = new javax.swing.JMenuItem();
@@ -417,17 +418,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
         tabs.addTab(" Tools 2D", toolstab2D);
 
-        javax.swing.GroupLayout toolstab3DLayout = new javax.swing.GroupLayout(toolstab3D);
-        toolstab3D.setLayout(toolstab3DLayout);
-        toolstab3DLayout.setHorizontalGroup(
-            toolstab3DLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 315, Short.MAX_VALUE)
-        );
-        toolstab3DLayout.setVerticalGroup(
-            toolstab3DLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 440, Short.MAX_VALUE)
-        );
-
+        toolstab3D.setLayout(new java.awt.CardLayout());
         tabs.addTab("Tools 3D", toolstab3D);
 
         dataVisibleInChartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Plot(s) Visible In Chart"));
@@ -459,7 +450,6 @@ public class Jpowder extends JFrame implements DropTargetListener {
         });
 
         chartPlotterPane2D.setBackground(new java.awt.Color(236, 233, 216));
-        chartPlotterPane2D.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "2D Plot Area", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 204))); // NOI18N
         chartPlotterPane2D.setForeground(new java.awt.Color(102, 102, 102));
         chartPlotterPane2D.setDesktopManager(jPowderDesktopManager);
         chartPlotterPane2D.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -486,7 +476,20 @@ public class Jpowder extends JFrame implements DropTargetListener {
         plotsTab.addTab("2D Plots", chartPlotterPane2D);
 
         chartPlotterPane3D.setBackground(new java.awt.Color(236, 233, 216));
-        chartPlotterPane3D.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "3D Plot Area", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 204))); // NOI18N
+        chartPlotterPane3D.setDesktopManager(jPowderDesktopManager);
+        chartPlotterPane3D.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                chartPlotterPane3DComponentResized(evt);
+            }
+        });
+        chartPlotterPane3D.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                chartPlotterPane3DComponentAdded(evt);
+            }
+            public void componentRemoved(java.awt.event.ContainerEvent evt) {
+                chartPlotterPane3DComponentRemoved(evt);
+            }
+        });
 
         messageLabel3D.setFont(new java.awt.Font("Arial", 0, 36));
         messageLabel3D.setForeground(new java.awt.Color(153, 153, 153));
@@ -498,7 +501,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         plotsTab.addTab("3D Plots", chartPlotterPane3D);
         //chartPlotterPane3D.add(messageLabel2D, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jMenuBar1.setFont(new java.awt.Font("Tahoma", 0, 36));
+        JpowderMenuBar.setFont(new java.awt.Font("Tahoma", 0, 36));
 
         fileMenu.setText("File");
         fileMenu.setFont(new java.awt.Font("Tahoma", 0, 14));
@@ -551,13 +554,13 @@ public class Jpowder extends JFrame implements DropTargetListener {
         });
         saveAsMenu.add(pDfMenu);
 
-        jMenuItem1.setText("PDF For Publication");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        pdfForPublication.setText("PDF For Publication");
+        pdfForPublication.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                pdfForPublicationActionPerformed(evt);
             }
         });
-        saveAsMenu.add(jMenuItem1);
+        saveAsMenu.add(pdfForPublication);
 
         fileMenu.add(saveAsMenu);
         fileMenu.add(jSeparator2);
@@ -616,7 +619,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         });
         fileMenu.add(exitMenu);
 
-        jMenuBar1.add(fileMenu);
+        JpowderMenuBar.add(fileMenu);
 
         editMenu.setText("Edit");
         editMenu.setFont(new java.awt.Font("Tahoma", 0, 14));
@@ -674,7 +677,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         });
         editMenu.add(ImportTable3D);
 
-        jMenuBar1.add(editMenu);
+        JpowderMenuBar.add(editMenu);
 
         windowMenu.setText("Window");
         windowMenu.setFont(new java.awt.Font("Tahoma", 0, 14));
@@ -732,7 +735,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         });
         windowMenu.add(cascadeCheckBoxMenuItem);
 
-        jMenuBar1.add(windowMenu);
+        JpowderMenuBar.add(windowMenu);
 
         helpMenu.setText("Help");
         helpMenu.setFont(new java.awt.Font("Tahoma", 0, 14));
@@ -757,9 +760,9 @@ public class Jpowder extends JFrame implements DropTargetListener {
         });
         helpMenu.add(aboutMenu);
 
-        jMenuBar1.add(helpMenu);
+        JpowderMenuBar.add(helpMenu);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(JpowderMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -819,24 +822,42 @@ public class Jpowder extends JFrame implements DropTargetListener {
      * @param evt
      */
     private void copyMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuActionPerformed
+        if (plotsTab.getSelectedIndex() == 0) {
+            if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
 
-        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
+                internalFrameInFocus2D.getChartPanel().doCopy();
 
-            internalFrameInFocus2D.getChartPanel().doCopy();
-
-        } else {
-            return;
+            } else {
+                return;
+            }
         }
+        if (plotsTab.getSelectedIndex() == 1) {
+            if (JpowderInternalframe3D.getnumberOfJpowderInternalframe() != 0) {
 
+                internalFrameInFocus3D.getChartPanel().doCopy();
+
+            } else {
+                return;
+            }
+        }
     }//GEN-LAST:event_copyMenuActionPerformed
 
     private void propertiesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_propertiesMenuActionPerformed
+        if (plotsTab.getSelectedIndex() == 0) {
 
+            if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
+                internalFrameInFocus2D.getChartPanel().doEditChartProperties();
+            } else {
+                return;
+            }
+        }
+        if (plotsTab.getSelectedIndex() == 1) {
 
-        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
-            internalFrameInFocus2D.getChartPanel().doEditChartProperties();
-        } else {
-            return;
+            if (JpowderInternalframe3D.getnumberOfJpowderInternalframe() != 0) {
+                internalFrameInFocus3D.getChartPanel().doEditChartProperties();
+            } else {
+                return;
+            }
         }
     }//GEN-LAST:event_propertiesMenuActionPerformed
 
@@ -868,72 +889,156 @@ public class Jpowder extends JFrame implements DropTargetListener {
      * @param evt
      */
     private void defaultCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_defaultCheckBoxMenuItemActionPerformed
-        chartPlotterPane2D.setLayout(null);
+
+
+        if (plotsTab.getSelectedIndex() == 0) {
+
+            chartPlotterPane2D.setLayout(null);
+        }
+        if (plotsTab.getSelectedIndex() == 1) {
+            chartPlotterPane3D.setLayout(null);
+        }
     }//GEN-LAST:event_defaultCheckBoxMenuItemActionPerformed
 
     private void tileCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tileCheckBoxMenuItemActionPerformed
-        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() > 0) {
-            JInternalFrame jInternalFrames[] = chartPlotterPane2D.getAllFrames(); // get all open frames
-            chartPlotterPane2D.setLayout(new GridLayout(jInternalFrames.length, jInternalFrames.length, 0, 0));
-            chartPlotterPane2D.updateUI();
-        } else {
-            return;
-        }
 
+        if (plotsTab.getSelectedIndex() == 0) {
+            if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() > 0) {
+                JInternalFrame jInternalFrames[] = chartPlotterPane2D.getAllFrames(); // get all open frames
+                chartPlotterPane2D.setLayout(new GridLayout(jInternalFrames.length, jInternalFrames.length, 0, 0));
+                chartPlotterPane2D.updateUI();
+            } else {
+                return;
+            }
+
+        }
+        if (plotsTab.getSelectedIndex() == 1) {
+            if (JpowderInternalframe3D.getnumberOfJpowderInternalframe() > 0) {
+                JInternalFrame jInternalFrames[] = chartPlotterPane3D.getAllFrames(); // get all open frames
+                chartPlotterPane3D.setLayout(new GridLayout(jInternalFrames.length, jInternalFrames.length, 0, 0));
+                chartPlotterPane3D.updateUI();
+            } else {
+                return;
+            }
+        }
     }//GEN-LAST:event_tileCheckBoxMenuItemActionPerformed
 
     private void tileHorizontallyCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tileHorizontallyCheckBoxMenuItemActionPerformed
-        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() > 0) {
-            JInternalFrame jInternalFrames[] = chartPlotterPane2D.getAllFrames(); // get all open frames
-            chartPlotterPane2D.setLayout(new GridLayout(jInternalFrames.length, 1, 0, 0));
-            chartPlotterPane2D.updateUI();
-        } else {
-            return;
+        if (plotsTab.getSelectedIndex() == 0) {
+            if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() > 0) {
+                JInternalFrame jInternalFrames[] = chartPlotterPane2D.getAllFrames(); // get all open frames
+                chartPlotterPane2D.setLayout(new GridLayout(jInternalFrames.length, 1, 0, 0));
+                chartPlotterPane2D.updateUI();
+            } else {
+                return;
+            }
+        }
+        if (plotsTab.getSelectedIndex() == 1) {
+            if (JpowderInternalframe3D.getnumberOfJpowderInternalframe() > 0) {
+                JInternalFrame jInternalFrames[] = chartPlotterPane3D.getAllFrames(); // get all open frames
+                chartPlotterPane3D.setLayout(new GridLayout(jInternalFrames.length, 1, 0, 0));
+                chartPlotterPane3D.updateUI();
+            } else {
+                return;
+            }
         }
     }//GEN-LAST:event_tileHorizontallyCheckBoxMenuItemActionPerformed
 
     private void tileVerticallyCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tileVerticallyCheckBoxMenuItemActionPerformed
-        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() > 0) {
-            JInternalFrame jInternalFrames[] = chartPlotterPane2D.getAllFrames(); // get all open frames
-            chartPlotterPane2D.setLayout(new GridLayout(1, jInternalFrames.length, 0, 0));
-            chartPlotterPane2D.updateUI();
-        } else {
-            return;
+        if (plotsTab.getSelectedIndex() == 0) {
+            if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() > 0) {
+                JInternalFrame jInternalFrames[] = chartPlotterPane2D.getAllFrames(); // get all open frames
+                chartPlotterPane2D.setLayout(new GridLayout(1, jInternalFrames.length, 0, 0));
+                chartPlotterPane2D.updateUI();
+            } else {
+                return;
+            }
+        }
+        if (plotsTab.getSelectedIndex() == 1) {
+            if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() > 0) {
+                JInternalFrame jInternalFrames[] = chartPlotterPane3D.getAllFrames(); // get all open frames
+                chartPlotterPane3D.setLayout(new GridLayout(1, jInternalFrames.length, 0, 0));
+                chartPlotterPane3D.updateUI();
+            } else {
+                return;
+            }
         }
     }//GEN-LAST:event_tileVerticallyCheckBoxMenuItemActionPerformed
 
     private void cascadeCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cascadeCheckBoxMenuItemActionPerformed
-        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() > 0) {
-            chartPlotterPane2D.setLayout(null);
-            SwingUtilities.invokeLater(new Runnable() {
+        if (plotsTab.getSelectedIndex() == 0) {
+            if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() > 0) {
+                chartPlotterPane2D.setLayout(null);
+                SwingUtilities.invokeLater(new Runnable() {
 
-                public void run() {
-                    JInternalFrame jInternalFrames[] = chartPlotterPane2D.getAllFrames(); // get all open frames
-                    int top = 0;
-                    int left = 0;
-                    for (int i = 0; i < jInternalFrames.length; i++) {
+                    @Override
+                    public void run() {
+                        JInternalFrame jInternalFrames[] = chartPlotterPane2D.getAllFrames(); // get all open frames
+                        int top = 0;
+                        int left = 0;
+                        for (int i = 0; i < jInternalFrames.length; i++) {
 
-                        SwingUtilities.invokeLater(new Runnable() {
+                            SwingUtilities.invokeLater(new Runnable() {
 
-                            public void run() {
-                                try {
-                                    internalFrameInFocus2D.setSelected(true);
-                                    internalFrameInFocus2D.moveToBack();
-                                } catch (PropertyVetoException ex) {
-                                    Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
+                                @Override
+                                public void run() {
+                                    try {
+                                        internalFrameInFocus2D.setSelected(true);
+                                        internalFrameInFocus2D.moveToBack();
+                                    } catch (PropertyVetoException ex) {
+                                        Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
                                 }
-                            }
-                        });
-                        jInternalFrames[i].setSize(chartPlotterPane2D.getWidth() / 2, 300);
-                        jInternalFrames[i].setLocation(top, left);
-                        top += 30;
-                        left += 30;
+                            });
+                            jInternalFrames[i].setSize(chartPlotterPane2D.getWidth() / 2, 300);
+                            jInternalFrames[i].setLocation(top, left);
+                            top += 30;
+                            left += 30;
+                        }
                     }
-                }
-            });
-        } else {
-            return;
+                });
+            } else {
+                return;
+            }
         }
+
+
+        if (plotsTab.getSelectedIndex() == 1) {
+            if (JpowderInternalframe3D.getnumberOfJpowderInternalframe() > 0) {
+                chartPlotterPane2D.setLayout(null);
+                SwingUtilities.invokeLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        JInternalFrame jInternalFrames[] = chartPlotterPane3D.getAllFrames(); // get all open frames
+                        int top = 0;
+                        int left = 0;
+                        for (int i = 0; i < jInternalFrames.length; i++) {
+
+                            SwingUtilities.invokeLater(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    try {
+                                        internalFrameInFocus3D.setSelected(true);
+                                        internalFrameInFocus3D.moveToBack();
+                                    } catch (PropertyVetoException ex) {
+                                        Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                            });
+                            jInternalFrames[i].setSize(chartPlotterPane3D.getWidth() / 2, 300);
+                            jInternalFrames[i].setLocation(top, left);
+                            top += 30;
+                            left += 30;
+                        }
+                    }
+                });
+            } else {
+                return;
+            }
+        }
+
     }//GEN-LAST:event_cascadeCheckBoxMenuItemActionPerformed
 
     private void exitMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuActionPerformed
@@ -941,30 +1046,62 @@ public class Jpowder extends JFrame implements DropTargetListener {
 }//GEN-LAST:event_exitMenuActionPerformed
 
     private void clossAllMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clossAllMenuActionPerformed
-        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() > 0) {
-            JInternalFrame jInternalFrames[] = chartPlotterPane2D.getAllFrames(); // get all open frames
-            for (int i = 0; i < jInternalFrames.length; i++) {
-                try {
-                    jInternalFrames[i].setClosed(true);
-                } catch (PropertyVetoException ex) {
-                    Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        if (plotsTab.getSelectedIndex() == 0) {
+            if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() > 0) {
+                JInternalFrame jInternalFrames[] = chartPlotterPane2D.getAllFrames(); // get all open frames
+                for (int i = 0; i < jInternalFrames.length; i++) {
+                    try {
+                        jInternalFrames[i].setClosed(true);
+                    } catch (PropertyVetoException ex) {
+                        Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
+                }
+            } else {
+                return;
             }
-        } else {
-            return;
+        }
+        if (plotsTab.getSelectedIndex() == 1) {
+            if (JpowderInternalframe3D.getnumberOfJpowderInternalframe() > 0) {
+                JInternalFrame jInternalFrames[] = chartPlotterPane3D.getAllFrames(); // get all open frames
+                for (int i = 0; i < jInternalFrames.length; i++) {
+                    try {
+                        jInternalFrames[i].setClosed(true);
+                    } catch (PropertyVetoException ex) {
+                        Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+            } else {
+                return;
+            }
         }
 }//GEN-LAST:event_clossAllMenuActionPerformed
 
     private void closeFrameMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeFrameMenuActionPerformed
-        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
-            try {
-                internalFrameInFocus2D.setClosed(true);
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
+
+        if (plotsTab.getSelectedIndex() == 0) {
+            if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
+                try {
+                    internalFrameInFocus2D.setClosed(true);
+                } catch (PropertyVetoException ex) {
+                    Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                return;
             }
-        } else {
-            return;
+        }
+
+        if (plotsTab.getSelectedIndex() == 1) {
+            if (JpowderInternalframe3D.getnumberOfJpowderInternalframe() != 0) {
+                try {
+                    internalFrameInFocus3D.setClosed(true);
+                } catch (PropertyVetoException ex) {
+                    Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                return;
+            }
         }
 }//GEN-LAST:event_closeFrameMenuActionPerformed
 
@@ -977,32 +1114,65 @@ public class Jpowder extends JFrame implements DropTargetListener {
 }//GEN-LAST:event_basicPrintMenuActionPerformed
 
     private void pDfMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pDfMenuActionPerformed
-        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
-            JpowderPopupMenu jpowderPopupMenu = new JpowderPopupMenu(internalFrameInFocus2D.getChartPanel());
-            jpowderPopupMenu.pDF();
-        } else {
-            return;
+        if (plotsTab.getSelectedIndex() == 0) {
+            if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
+                JpowderPopupMenu jpowderPopupMenu = new JpowderPopupMenu(internalFrameInFocus2D.getChartPanel());
+                jpowderPopupMenu.pDF();
+            } else {
+                return;
+            }
+        }
+        if (plotsTab.getSelectedIndex() == 1) {
+            if (JpowderInternalframe3D.getnumberOfJpowderInternalframe() != 0) {
+                JpowderPopupMenu jpowderPopupMenu = new JpowderPopupMenu(internalFrameInFocus3D.getChartPanel());
+                jpowderPopupMenu.pDF();
+            } else {
+                return;
+            }
         }
     }//GEN-LAST:event_pDfMenuActionPerformed
 
     private void imageMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imageMenuActionPerformed
-        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
-            try {
-                internalFrameInFocus2D.getChartPanel().doSaveAs();
-            } catch (IOException ex) {
-                Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
+        if (plotsTab.getSelectedIndex() == 0) {
+            if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
+                try {
+                    internalFrameInFocus2D.getChartPanel().doSaveAs();
+                } catch (IOException ex) {
+                    Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                return;
             }
-        } else {
-            return;
+        }
+        if (plotsTab.getSelectedIndex() == 1) {
+            if (JpowderInternalframe3D.getnumberOfJpowderInternalframe() != 0) {
+                try {
+                    internalFrameInFocus3D.getChartPanel().doSaveAs();
+                } catch (IOException ex) {
+                    Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                return;
+            }
         }
 }//GEN-LAST:event_imageMenuActionPerformed
 
     private void appletMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appletMenuActionPerformed
-        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
-            JpowderPopupMenu jpowderPopupMenu = new JpowderPopupMenu(internalFrameInFocus2D.getChartPanel());
-            jpowderPopupMenu.saveAsJpowderApplet();
-        } else {
-            return;
+        if (plotsTab.getSelectedIndex() == 0) {
+            if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
+                JpowderPopupMenu jpowderPopupMenu = new JpowderPopupMenu(internalFrameInFocus2D.getChartPanel());
+                jpowderPopupMenu.saveAsJpowderApplet();
+            } else {
+                return;
+            }
+        }
+        if (plotsTab.getSelectedIndex() == 1) {
+            if (JpowderInternalframe3D.getnumberOfJpowderInternalframe() != 0) {
+                JpowderPopupMenu jpowderPopupMenu = new JpowderPopupMenu(internalFrameInFocus3D.getChartPanel());
+                jpowderPopupMenu.saveAsJpowderApplet();
+            } else {
+                return;
+            }
         }
 }//GEN-LAST:event_appletMenuActionPerformed
 
@@ -1163,12 +1333,34 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
             }
             // finally plot the data
-            JpowderInternalframe2D internalframe = new JpowderInternalframe2D(dataVisibleInChart, datasets);
-            Jpowder.jpowderInternalFrameUpdate(internalframe);
+            JpowderInternalframe2D internalframe;
+            JpowderInternalframe3D internalframe3D;
 
-            InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
-            internalframe.addInternalFrameListener(internalFrameListener);
-            chartPlotterPane2D.add(internalframe);
+            if (plotsTab.getSelectedIndex() == 1) {
+
+                FilesTable filesTable = new FilesTable(dataVisibleInChart);
+                  filesTable.addFilesToTable(selectedFiles);
+                  filesTable.setVisible(true);
+
+
+//                internalframe3D = new JpowderInternalframe3D(dataVisibleInChart, datasets);
+//                chartPlotterPane3D.add(internalframe3D);
+//
+//                Jpowder.jpowderInternalFrameUpdate(internalframe3D);
+//                InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
+//                internalframe3D.addInternalFrameListener(internalFrameListener);
+            }
+            if (plotsTab.getSelectedIndex() == 0) {
+                internalframe = new JpowderInternalframe2D(dataVisibleInChart, datasets);
+                chartPlotterPane2D.add(internalframe);
+                Jpowder.jpowderInternalFrameUpdate(internalframe);
+                InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
+                internalframe.addInternalFrameListener(internalFrameListener);
+            }
+
+
+
+
             setVisible(true);
             moemoryChecker();
             displayingMessageLabel();
@@ -1177,23 +1369,38 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
     }//GEN-LAST:event_oPenMenuActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
-            JpowderPopupMenu jpowderPopupMenu = new JpowderPopupMenu(internalFrameInFocus2D.getChartPanel());
+    private void pdfForPublicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdfForPublicationActionPerformed
+        if (plotsTab.getSelectedIndex() == 0) {
+            if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
+                JpowderPopupMenu jpowderPopupMenu = new JpowderPopupMenu(internalFrameInFocus2D.getChartPanel());
 
-            internalFrameInFocus2D.getXYPlot().setBackgroundPaint(ChartColor.white);
-            internalFrameInFocus2D.getXYPlot().setOutlinePaint(ChartColor.white);
-            jpowderPopupMenu.pDF();
-            internalFrameInFocus2D.getXYPlot().setBackgroundPaint(ChartColor.LIGHT_GRAY);
-            internalFrameInFocus2D.getXYPlot().setOutlinePaint(ChartColor.LIGHT_GRAY);
-        } else {
-            return;
+                internalFrameInFocus2D.getXYPlot().setBackgroundPaint(ChartColor.white);
+                internalFrameInFocus2D.getXYPlot().setOutlinePaint(ChartColor.white);
+                jpowderPopupMenu.pDF();
+                internalFrameInFocus2D.getXYPlot().setBackgroundPaint(ChartColor.LIGHT_GRAY);
+                internalFrameInFocus2D.getXYPlot().setOutlinePaint(ChartColor.LIGHT_GRAY);
+            } else {
+                return;
+            }
+        }
+        if (plotsTab.getSelectedIndex() == 1) {
+            if (JpowderInternalframe3D.getnumberOfJpowderInternalframe() != 0) {
+                JpowderPopupMenu jpowderPopupMenu = new JpowderPopupMenu(internalFrameInFocus3D.getChartPanel());
+
+                internalFrameInFocus3D.getXYPlot().setBackgroundPaint(ChartColor.white);
+                internalFrameInFocus3D.getXYPlot().setOutlinePaint(ChartColor.white);
+                jpowderPopupMenu.pDF();
+                internalFrameInFocus3D.getXYPlot().setBackgroundPaint(ChartColor.LIGHT_GRAY);
+                internalFrameInFocus3D.getXYPlot().setOutlinePaint(ChartColor.LIGHT_GRAY);
+            } else {
+                return;
+            }
         }
 
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_pdfForPublicationActionPerformed
 
     private void ImportTable3DActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportTable3DActionPerformed
-        new FilesTable().setVisible(true);
+        new FilesTable(dataVisibleInChart).setVisible(true);
         plotsTab.setSelectedComponent(chartPlotterPane3D);
     }//GEN-LAST:event_ImportTable3DActionPerformed
 
@@ -1226,6 +1433,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
         int w = (int) evt.getComponent().getSize().getWidth();
         messageLabel2D.setFont(new java.awt.Font("Arial", 0, (w / 36)));
+        messageLabel3D.setFont(new java.awt.Font("Arial", 0, (w / 36)));
     }//GEN-LAST:event_formComponentResized
 
     private void chartPlotterPane2DComponentRemoved(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_chartPlotterPane2DComponentRemoved
@@ -1252,24 +1460,46 @@ public class Jpowder extends JFrame implements DropTargetListener {
         if (plotsTab.getSelectedIndex() == 1) {
 
             tabs.remove(toolstab2D);
-            tabs.add(" Tools 3D ",toolstab3D);
+            tabs.add(" Tools 3D ", toolstab3D);
             Jpowder.jpowderPlotAreaUpdate("3D");
         }
         if (plotsTab.getSelectedIndex() == 0) {
 
             tabs.add(" Tools 2D ", toolstab2D);
             tabs.remove(toolstab3D);
-            Jpowder.jpowderPlotAreaUpdate("2D");            
+            Jpowder.jpowderPlotAreaUpdate("2D");
         }
 
     }//GEN-LAST:event_plotsTabStateChanged
 
+    private void chartPlotterPane3DComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_chartPlotterPane3DComponentResized
+        int w = (int) evt.getComponent().getSize().getWidth();
+        int h = (int) evt.getComponent().getSize().getHeight();
+        messageLabel3D.setLocation(w / 4, h / 2);
+    }//GEN-LAST:event_chartPlotterPane3DComponentResized
+
+    private void chartPlotterPane3DComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_chartPlotterPane3DComponentAdded
+        displayingMessageLabel();
+    }//GEN-LAST:event_chartPlotterPane3DComponentAdded
+
+    private void chartPlotterPane3DComponentRemoved(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_chartPlotterPane3DComponentRemoved
+        if (chartPlotterPane3D.getAllFrames().length == 0) {
+
+            chartPlotterPane3D.add(messageLabel3D);
+            chartPlotterPane3D.repaint();
+
+        }
+    }//GEN-LAST:event_chartPlotterPane3DComponentRemoved
+
+    @Override
     public void dragEnter(DropTargetDragEvent dtde) {
     }
 
+    @Override
     public void dragOver(DropTargetDragEvent dtde) {
     }
 
+    @Override
     public void dropActionChanged(DropTargetDragEvent dtde) {
     }
 
@@ -1277,9 +1507,11 @@ public class Jpowder extends JFrame implements DropTargetListener {
      *
      * @param dte
      */
+    @Override
     public void dragExit(DropTargetEvent dte) {
     }
 
+    @Override
     public void drop(DropTargetDropEvent dtde) {
 
 
@@ -1340,36 +1572,36 @@ public class Jpowder extends JFrame implements DropTargetListener {
         for (Map.Entry<String, File> entry : hash.entrySet()) {
             String fileName = entry.getKey();
             File file = entry.getValue();
-            if (mPowderFileCabinet.checkAcceptedFileType(fileName)) {
+//            if (mPowderFileCabinet.checkAcceptedFileType(fileName)) {
 
 
-                Vector<DataSet> allDatasets = PowderFileCabinet.createDataSetFromPowderFile(file);
-                if (allDatasets == null) {
-                    return;
-                }
-                for (int iSet = 0; iSet < allDatasets.size(); iSet++) {
-                    if (allDatasets.elementAt(iSet) != null) {
-                        datasets.add(allDatasets.elementAt(iSet));
-                    } else {
-                        return;
-                    }
-                }
-            } else {
-                //return so no chart object is created and Expception is not thrown.
-                javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
+            Vector<DataSet> allDatasets = PowderFileCabinet.createDataSetFromPowderFile(file);
+            if (allDatasets == null) {
                 return;
             }
+            for (int iSet = 0; iSet < allDatasets.size(); iSet++) {
+                if (allDatasets.elementAt(iSet) != null) {
+                    datasets.add(allDatasets.elementAt(iSet));
+                } else {
+                    return;
+                }
+            }
+//            } else {
+//                //return so no chart object is created and Expception is not thrown.
+//                javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
+//                return;
+//            }
         }
 
         // finally plot the data
         JpowderInternalframe2D internalframe = new JpowderInternalframe2D(dataVisibleInChart, datasets);
-        Jpowder.jpowderInternalFrameUpdate(internalframe);
+//        Jpowder.jpowderInternalFrameUpdate(internalframe);
 
         InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
 
         internalframe.addInternalFrameListener(internalFrameListener);
 
-        chartPlotterPane2D.add(internalframe);
+        getChartPlotter2D().add(internalframe);
         setVisible(true);
         displayingMessageLabel();
         moemoryChecker();
@@ -1403,6 +1635,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem ImportTable3D;
+    private javax.swing.JMenuBar JpowderMenuBar;
     private javax.swing.JMenuItem aboutMenu;
     private javax.swing.JMenuItem appletMenu;
     private javax.swing.JMenuItem basicPrintMenu;
@@ -1423,8 +1656,6 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private javax.swing.JPanel homePanel;
     private javax.swing.JScrollPane homePanelScrollPane;
     private javax.swing.JMenuItem imageMenu;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
@@ -1435,6 +1666,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private javax.swing.JMenuItem oPenMenu;
     private javax.swing.JMenuItem onlieDocsandSupportMenu;
     private javax.swing.JMenuItem pDfMenu;
+    private javax.swing.JMenuItem pdfForPublication;
     private static javax.swing.JTabbedPane plotsTab;
     private javax.swing.JMenu printMenu;
     private javax.swing.JMenuItem printPublishingMenu;

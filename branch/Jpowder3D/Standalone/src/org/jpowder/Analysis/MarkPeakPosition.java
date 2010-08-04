@@ -59,7 +59,7 @@ import org.jpowder.chartTools.Magnifier;
  */
 public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, ChartMouseListener {
 
-    private ToolsIcon toolsIcon;
+    private ToolsIcon2D toolsIcon;
 //    private List<Marker> peakRangeMarker = new ArrayList<Marker>();
 //    private List<Marker> peakDomainMarker = new ArrayList<Marker>();
     private String[] string;
@@ -69,7 +69,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
 //  private String[] strings;
     /** Creates new form Peack */
-    public MarkPeakPosition(ToolsIcon analysisIcon) {
+    public MarkPeakPosition(ToolsIcon2D analysisIcon) {
         initComponents();
         this.toolsIcon = analysisIcon;
 

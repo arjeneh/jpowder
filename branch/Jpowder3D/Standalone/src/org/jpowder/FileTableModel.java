@@ -2,76 +2,70 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.jpowder;
 
-import java.io.File;
 import java.util.Vector;
-import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author qyt21516
  */
-public class FileTableModel  extends AbstractTableModel{
+public class FileTableModel extends AbstractTableModel {
 
     protected Vector data;
-    protected Vector columnNames ;
+    protected Vector columnNames;
     protected String datafile;
-   JFileChooser chooser = new JFileChooser(new File("C:/Documents and Settings/qyt21516/Desktop/My Dropbox/jpowder/trunk/data/xy-format data"));
 
-
-    public FileTableModel(String f) {
-
-        datafile=f;
-        initVectors();
-    }
-
-        public void initVectors() {
+    public FileTableModel() {
 
         data = new Vector();
         columnNames = new Vector();
 
+        addHeader();
+        addRow();
+    }
 
-            // extract column names
+    public void addHeader() {
+        columnNames.add("XXX");
+        columnNames.add("XX");
+        columnNames.add("X");
+    }
 
-                columnNames.addElement("Name");
-            // extract data
-
-               for(int i=0;i<chooser.getSelectedFiles().length;i++){
-                   data.add(i, chooser.getSelectedFiles()[i].getName());
-               }
-
-        }
-
-
-
-
-
+    public void addRow() {
+        data.add("1");
+        data.add("2");
+        data.add("3");
 
 
+    }
 
-   public int getRowCount() {
+    @Override
+    public int getRowCount() {
         return data.size() / getColumnCount();
     }
 
-    public int getColumnCount(){
+    @Override
+    public int getColumnCount() {
         return columnNames.size();
     }
 
     @Override
     public String getColumnName(int columnIndex) {
+
         String colName = "";
 
-        if (columnIndex <= getColumnCount())
-            colName = (String)columnNames.elementAt(columnIndex);
+        if (columnIndex <= getColumnCount()) {
+            colName = (String) columnNames.elementAt(columnIndex);
+        }
 
         return colName;
     }
 
     @Override
-    public Class getColumnClass(int columnIndex){
+    public Class getColumnClass(int columnIndex) {
         return String.class;
     }
 
@@ -80,8 +74,9 @@ public class FileTableModel  extends AbstractTableModel{
         return false;
     }
 
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return (String)data.elementAt( (rowIndex * getColumnCount()) + columnIndex);
+        return (String) data.elementAt((rowIndex * getColumnCount()) + columnIndex);
     }
 
     @Override
@@ -89,4 +84,14 @@ public class FileTableModel  extends AbstractTableModel{
         return;
     }
 
+    public static void main(String[] args) {
+        FileTableModel fileTableModel = new FileTableModel();
+        JFrame frm = new JFrame();
+        JTable table = new JTable(fileTableModel);
+        frm.add(table);
+        frm.setVisible(true);
+        frm.setSize(100, 100);
+        frm.setDefaultCloseOperation(3);
+
+    }
 }

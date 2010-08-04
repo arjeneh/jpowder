@@ -13,7 +13,6 @@ package org.jpowder.Analysis;
 import java.io.File;
 import java.util.Vector;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -27,10 +26,12 @@ import org.jpowder.dataset.GSASInstrument_Reader;
  */
 public class GSASTable extends javax.swing.JPanel {
 
-    BragsTableModel bragsTableModel = new BragsTableModel();
     private static DefaultTableModel defaultTableModel;
     Vector<String> columnNames = new Vector<String>();
     Vector<String> row = new Vector<String>();
+    private double newDifC;
+    private double newDifA;
+    private double newZero;
 
     /** Creates new form GSASTableTest */
     public GSASTable() {
@@ -44,6 +45,7 @@ public class GSASTable extends javax.swing.JPanel {
 
         initComponents();
 
+        defaultTableModel.addTableModelListener(new TableListenerGSAS());
 
     }
 
@@ -58,18 +60,19 @@ public class GSASTable extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         gSASTabel = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        importInsturButton = new javax.swing.JButton();
 
         gSASTabel.setModel(defaultTableModel);
         TableColumn column = gSASTabel.getColumnModel().getColumn(0);
         column.setPreferredWidth(160);
         jScrollPane1.setViewportView(gSASTabel);
 
-        jButton1.setText("Impot data");
-        jButton1.setToolTipText("import data from instrument file");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        importInsturButton.setText("Instrument file");
+        importInsturButton.setToolTipText("import data from instrument file");
+        importInsturButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
+        importInsturButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                importInsturButtonActionPerformed(evt);
             }
         });
 
@@ -78,10 +81,13 @@ public class GSASTable extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(importInsturButton, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -90,12 +96,12 @@ public class GSASTable extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(importInsturButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void importInsturButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importInsturButtonActionPerformed
         JFileChooser chooser = new JFileChooser();
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         chooser.setMultiSelectionEnabled(false);
@@ -106,72 +112,84 @@ public class GSASTable extends javax.swing.JPanel {
             GSASInstrument_Reader.read(inFocus.getPowderDataSet(), file);
             removeAllrows();
             populateTable();
-        }
-        else{
+        } else {
             return;
         }
-     
 
-   
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+
+
+    }//GEN-LAST:event_importInsturButtonActionPerformed
+
     public void populateTable() {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             row = new Vector<String>();
             row.add(inFocus.getPowderDataSet().get(i).getFileName());
+
             row.add(String.valueOf(inFocus.getPowderDataSet().get(i).getGSAS_Instrument().getDifC()));
             row.add(String.valueOf(inFocus.getPowderDataSet().get(i).getGSAS_Instrument().getDifA()));
             row.add(String.valueOf(inFocus.getPowderDataSet().get(i).getGSAS_Instrument().getZero()));
+
             defaultTableModel.addRow(row);
         }
         addRenderer();
+        addTableListener();
     }
 
     public void populateTable2() {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         if (inFocus != null) {
             for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
+
                 row = new Vector<String>();
                 row.add(inFocus.getPowderDataSet().get(i).getFileName());
+
+
                 row.add("");
                 row.add("");
                 row.add("");
+
                 defaultTableModel.addRow(row);
+
+
             }
         }
         addRenderer();
+        addTableListener();
     }
+//-0.66d^2 + 4569.88d + 1.58-t=0
 
     public void removeAllrows() {
         defaultTableModel.getDataVector().removeAllElements();
     }
-    public void addRenderer(){
-             gSASTabel.getColumn(gSASTabel.getColumnName(0)).setCellRenderer(new TableRenderer());
+
+    public void addRenderer() {
+        gSASTabel.getColumn(gSASTabel.getColumnName(0)).setCellRenderer(new TableRenderer());
     }
 
     public static JTable getGSASTable() {
         return gSASTabel;
     }
 
-    public DefaultTableModel getGSASDefaultTableModel() {
+    public static DefaultTableModel getGSASDefaultTableModel() {
         return defaultTableModel;
 
     }
-    public void addTableListener(){
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+
+    public void addTableListener() {
+//        defaultTableModel.addTableModelListener(new TableListenerBrags());
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JTable gSASTabel;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton importInsturButton;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
-
-    public static void main(String[] args) {
-        JFrame frm = new JFrame();
-        frm.add(new GSASTable());
-        frm.setVisible(true);
-        frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frm.setSize(300, 200);
-    }
+//    public static void main(String[] args) {
+//        JFrame frm = new JFrame();
+//        frm.add(new GSASTable());
+//        frm.setVisible(true);
+//        frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frm.setSize(300, 200);
+//    }
 }

@@ -13,11 +13,11 @@ import org.jfree.chart.renderer.PaintScale;
  *
  * @author qyt21516
  */
-class LevelPaintScale implements PaintScale {
+public class GreenishPaintScale implements PaintScale {
 
     private double upperBound;
 
-    public LevelPaintScale(double upperBound) {
+    public GreenishPaintScale(double upperBound) {
         this.upperBound = upperBound;
     }
 
@@ -30,11 +30,11 @@ class LevelPaintScale implements PaintScale {
     }
 
     public Paint getPaint(double value) {
-        System.out.println("");
+    
         if (value < 0.0 || value >= upperBound) {
             return Color.GRAY;
         }
-        System.out.println("v : " + value);
+    
         double scaledValue = value / upperBound * 511;
 //        System.out.println(scaledValue);
         if (scaledValue > 511) {

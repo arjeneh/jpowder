@@ -12,8 +12,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.GrayPaintScale;
-import org.jfree.chart.renderer.PaintScale;
-import org.jfree.chart.renderer.xy.XYBlockRenderer;
 import org.jfree.chart.title.PaintScaleLegend;
 import org.jfree.data.xy.DefaultXYZDataset;
 import org.jfree.data.xy.XYDataset;
@@ -65,9 +63,12 @@ public class FilesPlotter3D extends DatasetPlotter {
         }
 
         ChartPanel chartPanel = new ChartPanel(chart, true);
+        chartPanel.restoreAutoBounds();
+       
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
         chartPanel.addChartMouseListener(new PowderChartMouseObserver(chartPanel));
+        
         return chartPanel;
     }
 
@@ -77,22 +78,27 @@ public class FilesPlotter3D extends DatasetPlotter {
         xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         xAxis.setLowerMargin(0.0);
         xAxis.setUpperMargin(0.0);
+        xAxis.setAutoRangeStickyZero(false);
+
 
         NumberAxis yAxis = new NumberAxis("Y");
         yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         yAxis.setLowerMargin(0.0);
         yAxis.setUpperMargin(0.0);
+        yAxis.setAutoRangeStickyZero(false);
 
         NumberAxis zAxis = new NumberAxis("");
 
-        XYBlockRenderer renderer = new XYBlockRenderer();
+        JpowderXYBlockRenderer renderer = new JpowderXYBlockRenderer();
+        
+        renderer.clearSeriesPaints(true);
+
 
 
 //        r.setBlockHeight(1.0f);
 //        r.setBlockWidth(1.0f);
         plot = new XYPlot(dataset, xAxis, yAxis, renderer);
-        chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, true);
-        chart.removeLegend();
+        chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
         double maxY = 0;
         double minY = 0;
 
@@ -102,26 +108,34 @@ public class FilesPlotter3D extends DatasetPlotter {
 //            System.out.println("max y" + maxY);
         }
 
-        PaintScale lps = new GrayPaintScale(minY, maxY);
+        GrayPaintScale lps = new GrayPaintScale(minY, maxY);
 
 
         renderer.setPaintScale(lps);
 //        renderer.setBlockHeight(10);
         renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
+       
+//        renderer.setBlockHeight(100);
         PaintScaleLegend legend = new PaintScaleLegend(lps,
                 zAxis);
 //        legend.setAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
         legend.setMargin(new RectangleInsets(0, 0, 5, 0));
         legend.setPadding(new RectangleInsets(0, 40, 0, 10));
+     
+
         legend.setStripWidth(10);
         legend.setPosition(RectangleEdge.BOTTOM);
-//        legend.setBackgroundPaint(Color.WHITE);
         chart.addSubtitle(legend);
         chart.setBackgroundPaint(Color.white);
+        legend.setBackgroundPaint(chart.getBackgroundPaint());
+//        legend.setFrame(new BlockBorder(Color.red));
 
         return chart;
     }
 
+    public static JFreeChart getChart(){
+        return chart;
+    }
     public static XYZDataset createDataset() {
 
 

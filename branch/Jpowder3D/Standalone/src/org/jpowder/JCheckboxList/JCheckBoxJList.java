@@ -30,8 +30,6 @@
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
  */
-
-
 package org.jpowder.JCheckboxList;
 
 import java.awt.event.MouseAdapter;
@@ -56,8 +54,6 @@ public class JCheckBoxJList extends JList implements Serializable {
     private PropertyChangeSupport propertySupport;
     private DefaultListModel model;
     private XYPlot m_plot = null;
-
-
 
     public JCheckBoxJList(DefaultListModel model) {
         super(model);
@@ -84,22 +80,19 @@ public class JCheckBoxJList extends JList implements Serializable {
                 // turn off/on tick in tickbox
                 item.setSelected(!item.isSelected());
 
-
                 //this neccessary for checking and unchecking the jcheckbox list
                 java.awt.Rectangle rect = list.getCellBounds(index, index);
                 list.repaint(rect);
+
+                    if (!item.isSelected()) {
+                        m_plot.getRenderer(index).setSeriesVisible(0, Boolean.FALSE);
+
+                    }
+                    if (item.isSelected()) {
+                        m_plot.getRenderer(index).setSeriesVisible(0, Boolean.TRUE);
+
+                    }
                 
-
-                if (!item.isSelected()) {
-                    m_plot.getRenderer(index).setSeriesVisible(0, Boolean.FALSE);
-
-                }
-                if (item.isSelected()) {
-                    m_plot.getRenderer(index).setSeriesVisible(0, Boolean.TRUE);
-
-                }
-
-
             }
         });
 

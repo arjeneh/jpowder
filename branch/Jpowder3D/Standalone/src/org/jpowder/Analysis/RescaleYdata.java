@@ -46,11 +46,11 @@ import org.jpowder.chartTools.ComboBoxRenderer;
  */
 public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 
-    private ToolsIcon toolsIcon;
+    private ToolsIcon2D toolsIcon;
     private String[] string;
 
     /** Creates new form RescaleYdata */
-    public RescaleYdata(ToolsIcon analysisIcon) {
+    public RescaleYdata(ToolsIcon2D analysisIcon) {
         initComponents();
         this.toolsIcon = analysisIcon;
 

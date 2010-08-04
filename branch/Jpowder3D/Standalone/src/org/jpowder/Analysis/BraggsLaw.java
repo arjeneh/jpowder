@@ -28,9 +28,10 @@
  */
 package org.jpowder.Analysis;
 
+import java.io.File;
 import java.util.Collections;
+import javax.swing.JFileChooser;
 import javax.swing.JTable;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.jfree.chart.axis.NumberAxis;
@@ -38,6 +39,7 @@ import org.jfree.data.xy.XYDataset;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 import org.jpowder.InernalFrame.JpowderInternalframe2D;
+import org.jpowder.dataset.GSASInstrument_Reader;
 
 /**
  * this class is for converting the values of x axis from 2ө to d using the
@@ -49,23 +51,25 @@ import org.jpowder.InernalFrame.JpowderInternalframe2D;
  */
 public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
-    private ToolsIcon toolsIcon;
+    private ToolsIcon2D toolsIcon;
     private String[][] dataSetAndWaveLength;
-    private String columnsName[] = {"Plot(s)", "Wavelength"};
-    private DefaultTableModel defaultTableModel;
+    private String[][] gSASData;
     private double newWaveLength;
+    private String columnsName[] = {"Plot(s)", "Wavelength"};
+    private String columnsNameGSAS[] = {"Plot(s)", "DifC","DifA","Zero"};
+    private DefaultTableModel defaultTableModel;
+    private DefaultTableModel defaultTableModel2;
     private GSASTable gSASTable = new GSASTable();
 
     /** Creates new form BraggsLow */
-    public BraggsLaw(ToolsIcon analysisIcon) {
+    public BraggsLaw(ToolsIcon2D analysisIcon) {
         initComponents();
 
         this.toolsIcon = analysisIcon;
 
-
-
     }
 
+    @Override
     public void update() {
 
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
@@ -73,26 +77,19 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 //            setComponentEnable();
             if (defaultTableModel != null) {
                 defaultTableModel.getDataVector().removeAllElements();//remove all the rows from table
-                gSASTable.getGSASDefaultTableModel().getDataVector().removeAllElements();
+                defaultTableModel2.getDataVector().removeAllElements();
             }
-            dataTable.updateUI();
-            GSASTable.getGSASTable().updateUI();
+       
             return;
         }
 
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             if (inFocus.getPowderDataSet().get(i).getXUnit().equals("2θ")) {
 
-                // clear the table
-                // get all dataset in plot
-                // loop over dataset
-                // if GSAS_Instrument = null then add no numbers
-                // otherwise add numbers
-
-
                 bragsPanel.setVisible(true);
                 tablePanel.add(bragsPanel);
-                gSASTable.setVisible(false);
+                gsaspanel.setVisible(false);
+//                gSASTable.setVisible(false);
 
             }
 
@@ -100,18 +97,26 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             if (inFocus.getPowderDataSet().get(i).getXUnit().equals("TOF")) {
 
-                gSASTable.setVisible(true);
-                gSASTable.populateTable2();
-    
-
-                tablePanel.add(gSASTable);
+                gsaspanel.setVisible(true);
+//                gSASTable.setVisible(true);
+//                gSASTable.populateTable2();
+                tablePanel.add(gsaspanel);
                 bragsPanel.setVisible(false);
+
             }
 
         }
 
-
-
+        defaultTableModel2= new DefaultTableModel(getGSASData(), columnsNameGSAS){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if (column == 0) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        };
         defaultTableModel = new DefaultTableModel(getDataSetAndWaveLength(), columnsName) {
 
             @Override
@@ -125,36 +130,15 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         };
 
 
-
-
-
         dataTable.setModel(defaultTableModel);
+        gsastable.setModel(defaultTableModel2);
         setSizeOfColumn();
 
-        defaultTableModel.addTableModelListener(new TableListener(newWaveLength));
-
-
-//        defaultTableModel.addTableModelListener(new TableModelListener() {
-//
-//            public void tableChanged(TableModelEvent e) {
-//                JpowderInternalframe inFocus = Jpowder.internalFrameInFocus;
-//                int size = inFocus.getXYPlot().getDatasetCount();
-//                for (int i = 0; i < size; i++) {
-//
-//                    if (!defaultTableModel.getValueAt(i, 1).equals("")) {
-//
-//                        newWaveLength = Double.parseDouble(dataTable.getModel().getValueAt(i, 1).toString());
-//                        inFocus.getPowderDataSet().get(i).setWaveLength(newWaveLength);
-//
-//                    }
-//                }
-//
-//
-//            }
-//        });
+        defaultTableModel.addTableModelListener(new TableListenerBrags());
+        defaultTableModel2.addTableModelListener(new TableListenerGSAS());
 
         dataTable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableRenderer());
-
+        gsastable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableRenderer());
 
 //        dataTable.setEditingColumn(1);
         //printing the data in the tables
@@ -179,19 +163,42 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
             row[0] = inFocus.getPowderDataSet().elementAt(i).getFileName();
             row[1] = "" + inFocus.getPowderDataSet().elementAt(i).getWaveLength();
 
+
             dataSetAndWaveLength[i] = row;
 
         }
         return dataSetAndWaveLength;
     }
 
-    /**
-     * 
-     * @param dataSetAndWaveLength
-     */
-    public void setDataSetAndWaveLength(String[][] dataSetAndWaveLength) {
-        this.dataSetAndWaveLength = dataSetAndWaveLength;
+
+      public String[][] getGSASData() {
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+        int size = inFocus.getXYPlot().getDatasetCount();
+        gSASData = new String[size][4];
+        for (int i = 0; i < size; i++) {
+
+            String[] row = new String[4];
+            row[0] = inFocus.getPowderDataSet().elementAt(i).getFileName();
+
+            if(inFocus.getPowderDataSet().elementAt(i).getGSAS_Instrument()!=null){
+            row[1] = "" + inFocus.getPowderDataSet().elementAt(i).getGSAS_Instrument().getDifC();
+            row[2] = "" + inFocus.getPowderDataSet().elementAt(i).getGSAS_Instrument().getDifA();
+            row[3] = "" + inFocus.getPowderDataSet().elementAt(i).getGSAS_Instrument().getZero();
+            }else {
+          
+             row[1]="";
+             row[2]="";
+             row[3]="";
+            }
+            gSASData[i] = row;
+            
+
+        }
+        return gSASData;
     }
+
+
+
 
     /**
      *  this method prints the data which is in the table.
@@ -234,9 +241,10 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
     public void setSizeOfColumn() {
         //seting the column width
         TableColumn column = dataTable.getColumnModel().getColumn(0);
+
         int width = 220;
         column.setPreferredWidth(width);
-
+        gsastable.getColumnModel().getColumn(0).setPreferredWidth(width);
     }
 
     public void setDomainAxis() {
@@ -257,10 +265,10 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         NumberAxis axis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
         axis.setLowerBound(minX);
         axis.setUpperBound(maxX);
-      
+
 //        System.out.println("MinX : "+minX);
 
-        inFocus.getchart().setNotify(true);
+        inFocus.getChart().setNotify(true);
     }
 
     public void setColumn(String[] columns) {
@@ -271,10 +279,6 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         return columnsName;
     }
 
-    public String[][] getRowData() {
-
-        return dataSetAndWaveLength;
-    }
 
     public static JTable getBragstable() {
         return dataTable;
@@ -292,7 +296,10 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         bragsPanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         dataTable = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        gsaspanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        gsastable = new javax.swing.JTable();
+        jButton3 = new javax.swing.JButton();
         tablePanel = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         backButton = new javax.swing.JButton();
@@ -305,7 +312,6 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         jButton2 = new javax.swing.JButton();
 
         dataTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        dataTable.setModel(new DefaultTableModel());
         dataTable.setToolTipText("Fill The Empty WaveLength Rows");
         jScrollPane3.setViewportView(dataTable);
 
@@ -313,24 +319,52 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         bragsPanel.setLayout(bragsPanelLayout);
         bragsPanelLayout.setHorizontalGroup(
             bragsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 306, Short.MAX_VALUE)
             .addGroup(bragsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(bragsPanelLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         bragsPanelLayout.setVerticalGroup(
             bragsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 134, Short.MAX_VALUE)
             .addGroup(bragsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(bragsPanelLayout.createSequentialGroup()
                     .addGap(2, 2, 2)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
                     .addGap(3, 3, 3)))
         );
 
-        jButton1.setText("jButton1");
+        jScrollPane1.setViewportView(gsastable);
+
+        jButton3.setText("Instrument file");
+        jButton3.setToolTipText("import data from instrument file");
+        jButton3.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout gsaspanelLayout = new javax.swing.GroupLayout(gsaspanel);
+        gsaspanel.setLayout(gsaspanelLayout);
+        gsaspanelLayout.setHorizontalGroup(
+            gsaspanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gsaspanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(gsaspanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        gsaspanelLayout.setVerticalGroup(
+            gsaspanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(gsaspanelLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addComponent(jButton3))
+        );
 
         setFocusCycleRoot(true);
 
@@ -522,6 +556,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                             unitComboBox2.getSelectedItem().toString().equals("d")) {
                         inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(spacing, j);
                         inFocus.getXYPlot().getDomainAxis().setLabel("d [Å]");
+        
                         setDomainAxis();
 
                     }
@@ -532,10 +567,9 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                         inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(theta, j);
 
                         inFocus.getXYPlot().getDomainAxis().setLabel(x.toUpperCase());
+
                         setDomainAxis();
                     }
-
-
 
                 }
 
@@ -548,41 +582,70 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
                 inFocus.getPowderDataSet().elementAt(i).getX();
                 XYDataset ds = inFocus.getXYPlot().getDataset(i);
-
+            
                 for (int j = 0; j < ds.getItemCount(i); j++) {
-
+             
                     Double X = (Double) inFocus.getPowderDataSet().elementAt(i).getX().get(j);
                     double newX = inFocus.getPowderDataSet().get(i).getGSAS_Instrument().toDspacing(X);
+
                     if (unitComboBox1.getSelectedItem().toString().equals("TOF") &&
                             unitComboBox2.getSelectedItem().toString().equals("d")) {
                         inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(newX, j);
-                       resetXaxis();
+                            inFocus.getXYPlot().getDomainAxis().setLabel("d [Å]");
 
-//            System.out.println("max y" + maxY);
+
 
                     }
+                         if (unitComboBox1.getSelectedItem().toString().equals("d") &&
+                            unitComboBox2.getSelectedItem().toString().equals("TOF")) {
+                             
+                         }
                 }
-
             }
         }
+
+
         inFocus.getChartPanel().restoreAutoBounds();
-        inFocus.getchart().setNotify(true);
+        inFocus.getChart().setNotify(true);
 
     }//GEN-LAST:event_applyButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         resetXaxis();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+        chooser.setMultiSelectionEnabled(false);
+        int returnVal = chooser.showOpenDialog(null);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+
+            defaultTableModel2.getDataVector().removeAllElements();
+            File file = chooser.getSelectedFile();
+            GSASInstrument_Reader.read(inFocus.getPowderDataSet(), file);
+            defaultTableModel2 = new DefaultTableModel(getGSASData(), columnsNameGSAS);
+            gsastable.setModel(defaultTableModel2);
+           gsastable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableRenderer());
+        } else {
+            return;
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton applyButton;
     private javax.swing.JButton backButton;
     private javax.swing.JPanel bragsPanel;
     public static javax.swing.JTable dataTable;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JPanel gsaspanel;
+    private javax.swing.JTable gsastable;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     static javax.swing.JPanel tablePanel;

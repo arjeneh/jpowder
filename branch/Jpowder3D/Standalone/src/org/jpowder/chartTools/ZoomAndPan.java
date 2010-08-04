@@ -29,7 +29,7 @@
 package org.jpowder.chartTools;
 
 import javax.swing.JLabel;
-import org.jpowder.Analysis.ToolsIcon;
+import org.jpowder.Analysis.ToolsIcon2D;
 import org.jpowder.InfoPanel;
 
 /**
@@ -39,7 +39,7 @@ import org.jpowder.InfoPanel;
 public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
 
 
-    private ToolsIcon toolsIcon;
+    private ToolsIcon2D toolsIcon;
         /* Using Multi line jLabel.*/
      private String labelText =
       "<html><FONT COLOR=RED>Red</FONT> and " +
@@ -48,7 +48,7 @@ public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
      *
      * @param chartToolsIcon
      */
-    public ZoomAndPan(ToolsIcon analysisIcon) {
+    public ZoomAndPan(ToolsIcon2D analysisIcon) {
         initComponents();
         this.toolsIcon = analysisIcon;
 

@@ -44,14 +44,12 @@ import javax.swing.JInternalFrame;
  */
 public class JPowderDesktopManager extends DefaultDesktopManager {
 
-    private JpowderInternalframe2D jpowderInternalframe;
 
         /* The frame which is currently selected/activated.
      * We store this value to enforce MDI's single-selection
 model.
      */
-    JpowderInternalframe2D currentFrame;
-    JpowderInternalframe2D initialFrame;
+
 
 //    public void activateFrame(JInternalFrame f) {
 //        try {

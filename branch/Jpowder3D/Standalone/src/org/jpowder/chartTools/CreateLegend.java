@@ -115,7 +115,7 @@ public class CreateLegend {
                     
                     legend.setMargin(new RectangleInsets(1.0, 1.0, 1.0, 1.0));
                     legend.setPosition(RectangleEdge.BOTTOM);
-                    inFocus.getchart().addSubtitle(legend);
+                    inFocus.getChart().addSubtitle(legend);
 
 
 

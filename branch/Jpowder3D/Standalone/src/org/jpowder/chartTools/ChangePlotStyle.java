@@ -38,7 +38,7 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.renderer.xy.XYErrorRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jpowder.Analysis.ToolsIcon;
+import org.jpowder.Analysis.ToolsIcon2D;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 import org.jpowder.InernalFrame.JpowderInternalframe2D;
@@ -55,7 +55,7 @@ import org.jpowder.dataset.DataSetWithErrors;
  */
 public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
 
-    private ToolsIcon toolsIcon;
+    private ToolsIcon2D toolsIcon;
     /*Array of string which contains the all the file names that have been plotted. */
     private String[] string;
     /* Using Multi line jLabel.*/
@@ -69,7 +69,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
      *
      * @param chartToolsIcon
      */
-    public ChangePlotStyle(ToolsIcon analysisIcon) {
+    public ChangePlotStyle(ToolsIcon2D analysisIcon) {
         initComponents();
         this.toolsIcon = analysisIcon;
 

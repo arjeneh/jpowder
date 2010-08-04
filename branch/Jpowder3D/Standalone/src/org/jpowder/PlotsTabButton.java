@@ -79,19 +79,19 @@ public class PlotsTabButton extends JPanel {
 //                pane.remove(i);
 //            }
 //            java.awt.Dimension[width=853,height=727]
-            final JFrame frm = new JFrame();
-            frm.add(tabbedPane.getComponentAt(i));
-            frm.setVisible(true);
-//            frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frm.setSize(853, 727);
-           frm.addWindowListener(new WindowAdapter() {
-                @Override
-             public void windowClosing(WindowEvent e) {
-                  int i = tabbedPane.indexOfTabComponent(PlotsTabButton.this);
-                 tabbedPane.add(tabbedPane.getTitleAt(0),frm.getComponent(0));
-           
-             }
-           });
+//            final JFrame frm = new JFrame();
+//            frm.add(tabbedPane.getComponentAt(i));
+//            frm.setVisible(true);
+////            frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//            frm.setSize(853, 727);
+//           frm.addWindowListener(new WindowAdapter() {
+//                @Override
+//             public void windowClosing(WindowEvent e) {
+//                  int i = tabbedPane.indexOfTabComponent(PlotsTabButton.this);
+//                 tabbedPane.add(tabbedPane.getTitleAt(0),frm.getComponent(0));
+//
+//             }
+//           });
            
    
         }

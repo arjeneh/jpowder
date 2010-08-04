@@ -46,6 +46,7 @@ import java.util.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jfree.chart.JFreeChart;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.jfreechart.FilesPlotter;
 import org.jpowder.fileCabinet.PowderFileCabinet;
@@ -69,6 +70,7 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
     private List<Marker> peakDomainMarker = new ArrayList<Marker>();
     private NumberAxis xAxis;
     private NumberAxis yAxis;
+    private JFreeChart chart;
 
     /**
      *
@@ -80,7 +82,7 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
         m_data = data;
         this.dataVisibleInChartPanel = dataVisibleInChartPanel;
         xYPlot = this.getXYPlot();
-
+        chart=FilesPlotter.getChart();
         dropTarget = new DropTarget(this, this);
 
     }
@@ -145,6 +147,9 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
         return yAxis.getTickUnit().getSize();
     }
 
+    public JFreeChart getChart(){
+        return chart;
+    }
     public void dragEnter(DropTargetDragEvent dtde) {
     }
 

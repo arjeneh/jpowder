@@ -19,7 +19,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
-import org.jpowder.jfreechart.FilesPlotter;
 
 /**
  *
@@ -47,23 +46,22 @@ public class JpowderInternalframe extends JInternalFrame {
         m_data = data;
         if (Jpowder.getPlotsTab().getSelectedIndex() == 0) {
             plotMultiCol = DatasetPlotter.createDatasetPlotter(data);
+            
         }
         if (Jpowder.getPlotsTab().getSelectedIndex() == 1) {
             plotMultiCol = DatasetPlotter.createDatasetPlotter(data, "");
+//                 chart = FilesPlotter3D.getChart();
         }
+
         ChartPanel jfreeChartPanels = plotMultiCol.createPowderChart();
         jfreeChartPanels.add(new JpowderPopupMenu(jfreeChartPanels));
         this.jfreeChartPanel = jfreeChartPanels;
 
-        chart = FilesPlotter.getChart();
+   
 
         xYPlot = jfreeChartPanels.getChart().getXYPlot();
         this.add(jfreeChartPanels);
 
-//JFrame frm = new JFrame();
-//frm.add(jfreeChartPanels);
-//frm.setVisible(true);
-//frm.setSize(500,500);
 
         internalframeStackes.push(this);
         this.setTitle(getNames());
@@ -78,6 +76,7 @@ public class JpowderInternalframe extends JInternalFrame {
         this.setLocation((int) Jpowder.getDropLocationX(), (int) Jpowder.getDropLocationY());
         SwingUtilities.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
                 select();
             }
@@ -177,12 +176,5 @@ public class JpowderInternalframe extends JInternalFrame {
         return m_data;
     }
 
-    /**
-     *
-     * @return
-     */
-    public JFreeChart getchart() {
-        return chart;
-    }
 }
 

@@ -36,8 +36,13 @@ public class InternalFrameIconifyListener extends InternalFrameAdapter {
     public void internalFrameClosed(InternalFrameEvent e) {
         Jpowder.jPowderStackUndo.push(jpowderinternalframe);
         Jpowder.jpowderInternalFrameUpdate(jpowderinternalframe);
+        
         Jpowder.getChartPlotter2D().remove(jpowderinternalframe);
+        Jpowder.getChartPlotter3D().remove(jpowderinternalframe);
         if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
+            dataVisibleInChart.clear();
+        }
+            if (JpowderInternalframe3D.getnumberOfJpowderInternalframe() == 0) {
             dataVisibleInChart.clear();
         }
     }
