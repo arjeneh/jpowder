@@ -340,11 +340,15 @@ public class ColorBar extends javax.swing.JPanel implements InfoPanel {
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
 
-   JpowderXYBlockRenderer renderer =(JpowderXYBlockRenderer) inFocus.getXYPlot().getRenderer();
-   boolean set=renderer.isSeriesVisible(0);
-   renderer.setSeriesVisible(0, !set);
+        JpowderXYBlockRenderer renderer =(JpowderXYBlockRenderer) inFocus.getXYPlot().getRenderer(0);
+//        renderer.setBlockHeight(10);
 
+//        boolean set=renderer.isSeriesVisible(1);
+//        renderer.setSeriesVisible(1, !set);
 
+//org.jfree.data.xy.DefaultXYZDataset@a43a3662
+//String s=inFocus.getChart().getXYPlot().getDataset().toString();
+//        System.out.println(s.substring(0,s.indexOf("@") ));
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
 

@@ -91,7 +91,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     public static JPowderStack jPowderStackUndo = new JPowderStack(3);
     public static JPowderStack jPowderStackRedo = new JPowderStack(3);
     private static double dropLocationX, dropLocationY;
-    private JpowderPrint jpowderPrint = new JpowderPrint();
+//    private JpowderPrint jpowderPrint = new JpowderPrint();
     /** A flag that controls whether or not file extensions are enforced. */
     private boolean enforceFileExtensions = true;
 
@@ -428,13 +428,13 @@ public class Jpowder extends JFrame implements DropTargetListener {
         homePanel.setLayout(homePanelLayout);
         homePanelLayout.setHorizontalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-            .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+            .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+            .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
-                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -669,7 +669,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         });
         editMenu.add(propertiesMenu);
 
-        ImportTable3D.setText("3D Import Table");
+        ImportTable3D.setText("Create 3D Plot");
         ImportTable3D.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ImportTable3DActionPerformed(evt);
@@ -1106,11 +1106,25 @@ public class Jpowder extends JFrame implements DropTargetListener {
 }//GEN-LAST:event_closeFrameMenuActionPerformed
 
     private void printPublishingMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printPublishingMenuActionPerformed
-        jpowderPrint.printForPublication();
+               if (plotsTab.getSelectedIndex() == 0) {
+            JpowderPrint jpowderPrint = new JpowderPrint(internalFrameInFocus2D.getChartPanel());
+            jpowderPrint.printForPublication();
+               }
+           if (plotsTab.getSelectedIndex() == 1) {
+            JpowderPrint jpowderPrint = new JpowderPrint(internalFrameInFocus3D.getChartPanel());
+            jpowderPrint.printForPublication();
+               }
 }//GEN-LAST:event_printPublishingMenuActionPerformed
 
     private void basicPrintMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_basicPrintMenuActionPerformed
+         if (plotsTab.getSelectedIndex() == 0) {
+        JpowderPrint jpowderPrint = new JpowderPrint(internalFrameInFocus2D.getChartPanel());
         jpowderPrint.basicPrint();
+         }
+           if (plotsTab.getSelectedIndex() == 1) {
+        JpowderPrint jpowderPrint = new JpowderPrint(internalFrameInFocus3D.getChartPanel());
+        jpowderPrint.basicPrint();
+         }
 }//GEN-LAST:event_basicPrintMenuActionPerformed
 
     private void pDfMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pDfMenuActionPerformed

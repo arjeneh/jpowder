@@ -40,6 +40,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import org.jfree.chart.plot.XYPlot;
+import org.jpowder.InernalFrame.JpowderInternalframe3D;
+import org.jpowder.Jpowder;
+import org.jpowder.jfreechart.JpowderXYBlockRenderer;
 
 /**
  *
@@ -84,15 +87,30 @@ public class JCheckBoxJList extends JList implements Serializable {
                 java.awt.Rectangle rect = list.getCellBounds(index, index);
                 list.repaint(rect);
 
+                 //check what dataset has been used then try remove the Plot
+                //since jfreechart dose not support this feature I had my modfied code in the JpowderXYBlockRenderer
+                //to try romove the series.
+                String dataSetType = m_plot.getDataset().toString();
+                if (!dataSetType.substring(0, dataSetType.indexOf("@")).equals("org.jfree.data.xy.DefaultXYZDataset")) {
                     if (!item.isSelected()) {
+
                         m_plot.getRenderer(index).setSeriesVisible(0, Boolean.FALSE);
+
 
                     }
                     if (item.isSelected()) {
                         m_plot.getRenderer(index).setSeriesVisible(0, Boolean.TRUE);
 
                     }
-                
+                } else {
+                    JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
+                    JpowderXYBlockRenderer renderer = (JpowderXYBlockRenderer) inFocus.getXYPlot().getRenderer();
+                    boolean set = renderer.isSeriesVisible(index);
+                    renderer.setSeriesVisible(index, !set);
+                }
+
+
+
             }
         });
 

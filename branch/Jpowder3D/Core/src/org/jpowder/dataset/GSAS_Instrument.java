@@ -14,6 +14,7 @@ public class GSAS_Instrument {
     private double difA;
     private double zero;
     private double d;
+    private double tof;
 
     public GSAS_Instrument(double difc, double difa, double zero) {
 
@@ -75,5 +76,18 @@ public class GSAS_Instrument {
 //        System.out.println("HIIIIIIIII" + d);
         return d;
     }
+
+   /**
+    *
+    * @param dspacing
+    * @return
+    */
+    public double toTOF(double dspacing){
+
+        tof = (difA*Math.pow(dspacing, 2))+(difC*dspacing)+zero;
+ 
+        return tof;
+    }
+
 
 }

@@ -6,7 +6,6 @@ import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
 import java.io.Serializable;
 
 import org.jfree.chart.axis.ValueAxis;
@@ -354,6 +353,8 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
         if (entities != null) {
             addEntity(entities, block, dataset, series, item, 0.0, 0.0);
         }
+//        setBlockHeight(y);
+
 
     }
 

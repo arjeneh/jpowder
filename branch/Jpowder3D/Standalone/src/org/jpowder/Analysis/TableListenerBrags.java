@@ -32,8 +32,8 @@ public class TableListenerBrags implements TableModelListener {
 
         for (int i = 0; i < size; i++) {
     
-                if (!BraggsLaw.getBragstable().getValueAt(i, 1).equals("")) {
-                    newWaveLength = Double.parseDouble(BraggsLaw.getBragstable().getModel().
+                if (!Transforming_XAxis.getBragstable().getValueAt(i, 1).equals("")) {
+                    newWaveLength = Double.parseDouble(Transforming_XAxis.getBragstable().getModel().
                             getValueAt(i, 1).toString());
                     inFocus.getPowderDataSet().get(i).setWaveLength(newWaveLength);
 

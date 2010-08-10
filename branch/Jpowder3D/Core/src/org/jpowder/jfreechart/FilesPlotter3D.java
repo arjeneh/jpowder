@@ -52,6 +52,7 @@ public class FilesPlotter3D extends DatasetPlotter {
     @Override
     public ChartPanel createPowderChart() {
         chart = createChart(createDataset());
+      
         plot.setDomainPannable(true);
         plot.setRangePannable(true);
 
@@ -62,13 +63,14 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         }
 
+
         ChartPanel chartPanel = new ChartPanel(chart, true);
-        chartPanel.restoreAutoBounds();
+     
        
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
         chartPanel.addChartMouseListener(new PowderChartMouseObserver(chartPanel));
-        
+        chartPanel.restoreAutoBounds();
         return chartPanel;
     }
 
@@ -78,14 +80,14 @@ public class FilesPlotter3D extends DatasetPlotter {
         xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         xAxis.setLowerMargin(0.0);
         xAxis.setUpperMargin(0.0);
-        xAxis.setAutoRangeStickyZero(false);
+        xAxis.setAutoRangeIncludesZero(false);
 
 
         NumberAxis yAxis = new NumberAxis("Y");
         yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         yAxis.setLowerMargin(0.0);
         yAxis.setUpperMargin(0.0);
-        yAxis.setAutoRangeStickyZero(false);
+  
 
         NumberAxis zAxis = new NumberAxis("");
 
@@ -113,7 +115,7 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         renderer.setPaintScale(lps);
 //        renderer.setBlockHeight(10);
-        renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
+//        renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
        
 //        renderer.setBlockHeight(100);
         PaintScaleLegend legend = new PaintScaleLegend(lps,
@@ -148,8 +150,7 @@ public class FilesPlotter3D extends DatasetPlotter {
             for (int j = 0; j < datasets.elementAt(i).getX().size(); j++) {
 
                 data[0][j] = (Double) datasets.elementAt(i).getX().get(j);//x
-//                data[1][10] = Jpowder_Reader.getLocalData().get(i).get(1);//x reading from Jpowder File
-                data[1][j] = i;//x by file number..
+                data[1][j] = datasets.get(i).getMetaData(datasets.get(i).getFileName());//x by file number..
                 data[2][j] = (Double) datasets.elementAt(i).getY().get(j);//Colour
 
             }

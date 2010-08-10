@@ -47,7 +47,7 @@ public class ToolsIcon2D extends javax.swing.JPanel {
     private RescaleYdata rescaleYdata = new RescaleYdata(this);
     private ChangePlotStyle changePlotStyle = new ChangePlotStyle(this);
     private ZoomAndPan zoomAndPan = new ZoomAndPan(this);
-    private BraggsLaw braggsLow= new BraggsLaw(this);
+    private Transforming_XAxis braggsLow= new Transforming_XAxis(this);
     private ExtraFeatures extraFeatures = new ExtraFeatures(this);
     private Jpowder jpowder;
 

@@ -86,7 +86,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
     private JMenuItem menuItem;
     /** A flag that controls whether or not file extensions are enforced. */
     private boolean enforceFileExtensions = true;
-    private JpowderPrint jpowderPrint = new JpowderPrint();
+ 
 
     public JpowderPopupMenu(final ChartPanel chartPanel) {
 
@@ -107,6 +107,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
      * all the popUpMenu Action.
      * @param e
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         String command = e.getActionCommand();
@@ -122,6 +123,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
                 Logger.getLogger(JpowderPopupMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (command.equals(ChartPanel.PRINT_COMMAND)) {
+            JpowderPrint jpowderPrint = new JpowderPrint(chartPanel);
             jpowderPrint.basicPrint();
 
 
@@ -144,6 +146,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         } else if (command.equals(ChartPanel.ZOOM_RESET_RANGE_COMMAND)) {
             chartPanel.restoreAutoRangeBounds();
         } else if (command.equals(PRINT_FOR_PUBLICATION_CAMAND)) {
+              JpowderPrint jpowderPrint = new JpowderPrint(chartPanel);
             jpowderPrint.printForPublication();
         } else if (command.equals(JPOWDER_APPLET_CAMAND)) {
             saveAsJpowderApplet();

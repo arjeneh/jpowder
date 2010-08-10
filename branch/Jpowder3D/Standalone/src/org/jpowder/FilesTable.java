@@ -14,16 +14,10 @@ package org.jpowder;
 import org.jpowder.InernalFrame.JpowderInternalframe3D;
 import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -31,6 +25,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -38,10 +33,12 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.ui.RectangleAnchor;
 import org.jpowder.InernalFrame.InternalFrameIconifyListener;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.IO_MetaFile;
 import org.jpowder.fileCabinet.PowderFileCabinet;
+import org.jpowder.jfreechart.JpowderXYBlockRenderer;
 
 /**
  *
@@ -55,8 +52,9 @@ public class FilesTable extends javax.swing.JFrame {
     private Vector<String> row = new Vector<String>();
     private static File afile;
     private DataVisibleInChart dataVisibleInChart = new DataVisibleInChart();
-    private Vector<String> comboBoxList = new Vector<String>();
+//    private Vector<String> comboBoxList = new Vector<String>();
     private Vector<Vector<String>> tableDataVector = new Vector<Vector<String>>();
+    private Vector<String> metaColumnesName = new Vector<String>();
 
     /** Creates new form FilesTable */
     public FilesTable(DataVisibleInChart dvic) {
@@ -66,18 +64,21 @@ public class FilesTable extends javax.swing.JFrame {
         if (defaultTableModel != null) {
             defaultTableModel.getDataVector().removeAllElements();//remove all the rows from table
             }
-        columnNames.add("Index");
+//        columnNames.add("Index");
         columnNames.add("Name");
-        columnNames.add("Size");
-        columnNames.add("Type");
-        columnNames.add("Date Modified");
+//        columnNames.add("Size");
+//        columnNames.add("Type");
+//        columnNames.add("Date Modified");
         columnNames.add("Path");
+
+        metaColumnesName.add("Name");
+        metaColumnesName.add("Path");
 
         defaultTableModel = new DefaultTableModel(row, columnNames) {
 
             @Override
             public boolean isCellEditable(int row, int column) {
-                if (column == 0 || column == 1 || column == 2 || column == 3) {
+                if (column == 1) {
                     return false;
                 } else {
                     return true;
@@ -88,12 +89,12 @@ public class FilesTable extends javax.swing.JFrame {
         initComponents();
 
         importData3DTable.getTableHeader().addMouseListener(new TablePopUpListener(columnHeaderPopMenu));
-        comboBoxList.add("Index");
-        plotAsComboBox.setModel(new DefaultComboBoxModel(comboBoxList));
+
+        plotAsComboBox.setModel(new DefaultComboBoxModel(columnNames));
         importData3DTable.getTableHeader().setReorderingAllowed(false);
         importData3DTable.addMouseListener(new TablePopUpListener(rowHeaderPopMenu));
 
-        firstColumn();
+//        firstColumn();
 
         addWindowListener(new WindowAdapter() {
 
@@ -142,31 +143,41 @@ public class FilesTable extends javax.swing.JFrame {
                 options, //the titles of buttons
                 options[0]); //default button title
         if (n == 0) {
-            defaultTableModel.addColumn(textField.getText());
+            if (!textField.getText().isEmpty()) {
+                defaultTableModel.addColumn(textField.getText());
 
-            comboBoxList.add(textField.getText());
-          
+
+                metaColumnesName.add(textField.getText());
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Please enter column's name.");
+                addColumn();
+            }
 
         } else {
             return;
         }
-        firstColumn();
+//        firstColumn();
 
 //        importData3DTable.moveColumn( importData3DTable.getColumnCount() - 1,
 //                (importData3DTable.getColumnCount() + 2) - importData3DTable.getColumnCount());
     }
 
+    public void addFilesToTable(String filePath) {
+        addaFileToTable(new File(filePath));
+    }
+
     public void addFilesToTable(File[] file) {
 
-        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
+//        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
         for (int i = 0; i < file.length; i++) {
             row = new Vector<String>();
 
-            row.add(String.valueOf(i));
+//            row.add(String.valueOf(i));
             row.add(file[i].getName());
-            row.add(String.valueOf(file[i].length() / 1024) + " KB");
-            row.add(chooser.getTypeDescription(file[i]));
-            row.add(dateFormat.format(new Date(file[i].lastModified())));
+//            row.add(String.valueOf(file[i].length() / 1024) + " KB");
+//            row.add(chooser.getTypeDescription(file[i]));
+//            row.add(dateFormat.format(new Date(file[i].lastModified())));
             row.add(file[i].toString());
 
             defaultTableModel.addRow(row);
@@ -174,20 +185,29 @@ public class FilesTable extends javax.swing.JFrame {
     }
 
     public void addaFileToTable(File afile) {
-        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
+//        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
 
         row = new Vector<String>();
 
-        row.add(String.valueOf(defaultTableModel.getRowCount()));
+//        row.add(String.valueOf(defaultTableModel.getRowCount()));
 
         row.add(afile.getName());
-        row.add(String.valueOf(afile.length() / 1024) + " KB");
-        row.add(chooser.getTypeDescription(afile));
-        row.add(dateFormat.format(new Date(afile.lastModified())));
+//        row.add(String.valueOf(afile.length() / 1024) + " KB");
+//        row.add(chooser.getTypeDescription(afile));
+//        row.add(dateFormat.format(new Date(afile.lastModified())));
         row.add(afile.toString());
 
         defaultTableModel.addRow(row);
 
+    }
+
+    public void setBlockSize() {
+        JpowderInternalframe3D infocus= Jpowder.internalFrameInFocus3D;
+                  JpowderXYBlockRenderer renderer = (JpowderXYBlockRenderer)infocus.getXYPlot().getRenderer();
+         for(int i=0;i<infocus.getXYPlot().getDatasetCount();i++){
+        renderer.setBlockHeight(Double.parseDouble(defaultTableModel.getValueAt(i, plotAsComboBox.getSelectedIndex()).toString()));
+        renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
+         }
     }
 
     /** This method is called from within the constructor to
@@ -212,7 +232,7 @@ public class FilesTable extends javax.swing.JFrame {
         plotButton = new javax.swing.JButton();
         removeRowButton = new javax.swing.JButton();
         removeAllRowsButton = new javax.swing.JButton();
-        fileChooserButton = new javax.swing.JButton();
+        importFileButton = new javax.swing.JButton();
         loadMetaFileButton = new javax.swing.JButton();
         saveMetaFileButton = new javax.swing.JButton();
         addColumnButton = new javax.swing.JButton();
@@ -243,6 +263,8 @@ public class FilesTable extends javax.swing.JFrame {
         rowHeaderPopMenu.add(removeRow);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Plot Data 3D");
+        setIconImage(new ImageIcon(getClass().getResource("/images/JpowderLogo.png")).getImage());
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -287,10 +309,10 @@ public class FilesTable extends javax.swing.JFrame {
             }
         });
 
-        fileChooserButton.setText("ImportFiles");
-        fileChooserButton.addActionListener(new java.awt.event.ActionListener() {
+        importFileButton.setText("ImportFiles");
+        importFileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fileChooserButtonActionPerformed(evt);
+                importFileButtonActionPerformed(evt);
             }
         });
 
@@ -317,21 +339,10 @@ public class FilesTable extends javax.swing.JFrame {
 
         jLabel1.setText("as a function of");
 
-        plotAsComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                plotAsComboBoxMouseEntered(evt);
-            }
-        });
-
-        jButton6.setFont(new java.awt.Font("Tahoma", 1, 12));
+        jButton6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton6.setText("?");
         jButton6.setFocusPainted(false);
         jButton6.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton6MouseEntered(evt);
-            }
-        });
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -357,7 +368,7 @@ public class FilesTable extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(plotAsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(fileChooserButton)
+                        .addComponent(importFileButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -385,7 +396,7 @@ public class FilesTable extends javax.swing.JFrame {
                             .addComponent(jButton6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addColumnButton))
-                    .addComponent(fileChooserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(importFileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -401,32 +412,30 @@ public class FilesTable extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fileChooserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooserButtonActionPerformed
+    private void importFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importFileButtonActionPerformed
 
         chooser.setMultiSelectionEnabled(true);
         chooser.showOpenDialog(chooser);
         addFilesToTable(chooser.getSelectedFiles());
 
-    }//GEN-LAST:event_fileChooserButtonActionPerformed
+    }//GEN-LAST:event_importFileButtonActionPerformed
 
     private void plotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotButtonActionPerformed
 
-        System.out.println(importData3DTable.getColumnCount());
-//        Jpowder.getChartPlotter().remove(Jpowder.getMessageLabel());
-        System.out.println(defaultTableModel.getValueAt(0, columnNames.size()-2));
-        System.out.println(columnNames.size());
         Vector<DataSet> datasets = new Vector<DataSet>();
         HashMap<String, String> hashMap = new LinkedHashMap<String, String>();
+
+
         PowderFileCabinet mPowderFileCabinet = new PowderFileCabinet();
         String fileName;
         String paths;
+
+
         // loop over the selected file
         for (int i = 0, n = defaultTableModel.getRowCount(); i < n; i++) {
-//            afile = new File(String.valueOf(defaultTableModel.getValueAt(i, 5)));
-//            System.out.println(afile);
-//            fileName = afile.getName();
-            hashMap.put(String.valueOf(defaultTableModel.getValueAt(i, 5)),
-                    String.valueOf(defaultTableModel.getValueAt(i, 5)));
+
+            hashMap.put(String.valueOf(defaultTableModel.getValueAt(i, 0)),
+                    String.valueOf(defaultTableModel.getValueAt(i, 1)));
 
         }//for
 
@@ -453,7 +462,21 @@ public class FilesTable extends javax.swing.JFrame {
                 break;
             }
         }
+//setting dataset in hashmap
+        for (int i = 0; i < datasets.size(); i++) {
+            HashMap<String, Double> hm = new HashMap<String, Double>();
+            if (plotAsComboBox.getSelectedIndex() == 0 || plotAsComboBox.getSelectedIndex() == 1) {
 
+
+                hm.put((String) defaultTableModel.getValueAt(i, 0), (double) i);
+
+            } else {
+                   hm.put((String) defaultTableModel.getValueAt(i, 0),
+                           Double.parseDouble(defaultTableModel.getValueAt(i, plotAsComboBox.getSelectedIndex()).toString()));
+            }
+            datasets.get(i).addMetaData(hm);
+
+        }
         // finally plot the data
         JpowderInternalframe3D internalframe = new JpowderInternalframe3D(dataVisibleInChart, datasets);
         Jpowder.jpowderInternalFrameUpdate(internalframe);
@@ -484,26 +507,9 @@ public class FilesTable extends javax.swing.JFrame {
 
     }//GEN-LAST:event_removeAllRowsButtonActionPerformed
 
-    private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
-        jButton6.setRolloverEnabled(true);
-
-        Graphics g = jButton6.getGraphics();
-        Graphics2D g2 = (Graphics2D) g.create();
-        g.setColor(Color.BLACK);
-        if (jButton6.getModel().isRollover()) {
-            g2.setColor(Color.RED);
-        }
-        jButton6.paint(g2);
-
-    }//GEN-LAST:event_jButton6MouseEntered
-
     private void addColumnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addColumnButtonActionPerformed
         addColumn();
     }//GEN-LAST:event_addColumnButtonActionPerformed
-
-    private void plotAsComboBoxMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plotAsComboBoxMouseEntered
-        plotAsComboBox.setModel(new DefaultComboBoxModel(comboBoxList));
-    }//GEN-LAST:event_plotAsComboBoxMouseEntered
 
     private void addColumnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addColumnActionPerformed
         addColumn();
@@ -530,7 +536,6 @@ public class FilesTable extends javax.swing.JFrame {
         chooser.setMultiSelectionEnabled(false);
         chooser.showOpenDialog(chooser);
         File file = chooser.getSelectedFile();
-
         columnNames.clear();
         IO_MetaFile metaFile = new IO_MetaFile(defaultTableModel, columnNames, row);
         metaFile.read_MetaFile(file);
@@ -538,8 +543,20 @@ public class FilesTable extends javax.swing.JFrame {
     }//GEN-LAST:event_loadMetaFileButtonActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        IO_MetaFile metaFile = new IO_MetaFile(defaultTableModel, columnNames, row);
-        metaFile.save_MetaFile(new File("C:/Documents and Settings/qyt21516/Desktop/xxx.xml"));
+
+        JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
+
+        System.out.println(plotAsComboBox.getSelectedIndex());
+        System.out.println(defaultTableModel.getValueAt(0, plotAsComboBox.getSelectedIndex()));
+        HashMap<String, Double> hm = new LinkedHashMap<String, Double>();
+        if (plotAsComboBox.getSelectedIndex() == 0 || plotAsComboBox.getSelectedIndex() == 1) {
+            System.out.println("xxxxxxxxx");
+            hm.put((String) defaultTableModel.getValueAt(0, 0), 0.0);
+        } else {
+        }
+        System.out.println(inFocus.getPowderDataSet().get(0).getMetaData(defaultTableModel.getValueAt(0, 0).toString()));
+//        System.out.println(inFocus.getPowderDataSet().get(0).getFileName());
+//        inFocus.getPowderDataSet().get(0).addMetaData(null);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void showPopup(MouseEvent e) {
@@ -574,8 +591,8 @@ public class FilesTable extends javax.swing.JFrame {
     private javax.swing.JMenuItem addRow;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPopupMenu columnHeaderPopMenu;
-    private javax.swing.JButton fileChooserButton;
     private javax.swing.JTable importData3DTable;
+    private javax.swing.JButton importFileButton;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;

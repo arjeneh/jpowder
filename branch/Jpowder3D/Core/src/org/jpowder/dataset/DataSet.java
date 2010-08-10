@@ -118,6 +118,7 @@ public abstract class DataSet {
     public void setXUnit(String xunit) {
         this.xUnit = xunit;
     }
+    
     public void addMetaData(HashMap<String,Double> meta){
         this.meta=meta;
 
@@ -146,7 +147,7 @@ public abstract class DataSet {
 //        hm.put("C", new Double(1.00));
 //        addMetaData(hm);
 ////        getMetaData("C");
-//        System.out.println(getMetaData("c"));
+//        System.out.println(getMetaData("B"));
 //
 //    }
 

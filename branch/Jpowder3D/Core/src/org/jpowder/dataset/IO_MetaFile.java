@@ -27,7 +27,8 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author qyt21516
+ * this class is for reading and writing data the 3d plot table into
+ * a xml file.
  */
 public class IO_MetaFile {
 
@@ -68,7 +69,7 @@ public class IO_MetaFile {
             }
             NodeList listOfColumns = doc.getElementsByTagName("Columns");
             int totalColumns = listOfColumns.getLength();
-            System.out.println("Total no of Columns : " + totalColumns);
+//            System.out.println("Total no of Columns : " + totalColumns);
 
 
 
@@ -121,7 +122,7 @@ public class IO_MetaFile {
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(IO_MetaFile.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            System.out.println("FINALLLLLLLLLLLLLLLLLLLLLLLY");
+//            System.out.println("FINALLLLLLLLLLLLLLLLLLLLLLLY");
             return;
         }
 
@@ -170,7 +171,11 @@ public class IO_MetaFile {
             Logger.getLogger(IO_MetaFile.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(IO_MetaFile.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+//            System.out.println("FINALLLLLLLLLLLLLLLLLLLLLLLY");
+            return;
         }
+
     }
 
     /**

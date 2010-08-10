@@ -45,7 +45,7 @@ public class GSASTable extends javax.swing.JPanel {
 
         initComponents();
 
-        defaultTableModel.addTableModelListener(new TableListenerGSAS());
+//        defaultTableModel.addTableModelListener(new TableListenerGSAS());
 
     }
 

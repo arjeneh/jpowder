@@ -35,8 +35,11 @@ import java.awt.print.PrinterJob;
 import java.io.Serializable;
 import javax.swing.JOptionPane;
 import org.jfree.chart.ChartColor;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.plot.XYPlot;
 import org.jpowder.InernalFrame.JpowderInternalframe;
 import org.jpowder.chartTools.CreateLegend;
 
@@ -46,18 +49,36 @@ import org.jpowder.chartTools.CreateLegend;
  */
 public class JpowderPrint implements Serializable{
 
+    private ChartPanel chartPanel;
+    private XYPlot plot;
+    private JFreeChart chart;
+
+
+    public JpowderPrint(final ChartPanel chartPanel) {
+
+
+        this.chartPanel=chartPanel;
+        chart = this.chartPanel.getChart();
+        this.plot = (XYPlot) chart.getPlot();
+
+
+
+    }
+
+
+
     /**
      * this method invokes on print out which enable users to add legend to the
      * chart.
      */
     public void basicPrint() {
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+//        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
         if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() != 0) {
-            NumberAxis xAxis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
-            NumberAxis yAxis = (NumberAxis) inFocus.getXYPlot().getRangeAxis();
-            xAxis.setTickUnit(new NumberTickUnit(inFocus.getXAxis()));
-            yAxis.setTickUnit(new NumberTickUnit(inFocus.getYAxis()));
+            NumberAxis xAxis = (NumberAxis) plot.getDomainAxis();
+            NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
+//            xAxis.setTickUnit(new NumberTickUnit(inFocus.getXAxis()));
+//            yAxis.setTickUnit(new NumberTickUnit(inFocus.getYAxis()));
 
             Object[] options = {"Yes",
                 "No"};
@@ -73,13 +94,13 @@ public class JpowderPrint implements Serializable{
 
                 CreateLegend createLegend = new CreateLegend();
                 createLegend.setLegend();
-                inFocus.getChartPanel().createChartPrintJob();
-                inFocus.getChart().removeLegend();
+                chartPanel.createChartPrintJob();
+                chart.removeLegend();
                 xAxis.setAutoTickUnitSelection(true);
                 yAxis.setAutoTickUnitSelection(true);
             }
             if (n == 1) {
-                inFocus.getChartPanel().createChartPrintJob();
+                chartPanel.createChartPrintJob();
                 xAxis.setAutoTickUnitSelection(true);
                 yAxis.setAutoTickUnitSelection(true);
             }

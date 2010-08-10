@@ -43,7 +43,8 @@ import java.util.Vector;
 import javax.swing.JFileChooser;
 import org.jpowder.dataset.Cif_Reader;
 import org.jpowder.dataset.DataSet;
-import org.jpowder.dataset.GSAS_Reader;
+import org.jpowder.dataset.GSAS_FXYE_Reader;
+import org.jpowder.dataset.GSAS_FormatChecker;
 import org.jpowder.dataset.XYandXYE_Reader;
 import org.jpowder.util.Stopwatch;
 
@@ -201,20 +202,14 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
              if (aFile.getName().endsWith("gss")) {
                 //retval.addElement(GSAS_Reader.read(aFile));
                 //return retval;
-                 return GSAS_Reader.read(aFile);
+//                 return GSAS_FXYE_Reader.read(aFile);
+                    return GSAS_FormatChecker.read(aFile);
             }
                if (aFile.getName().endsWith("")) {
                 retval.addElement(XYandXYE_Reader.read(aFile));
                 return retval;
             }
-            if (aFile.getName().endsWith("")) {
-                retval.addElement(Cif_Reader.read(aFile));
-                return retval;
-            }
-
-             
-
-          
+        
             return null;
         } catch (Exception ex) {
             System.out.println(ex);
