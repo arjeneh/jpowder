@@ -65,6 +65,7 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
 
     }
 
+    @Override
     public void update() {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         imageComboBoxTest.setRenderer(new MarkerComboBoxRenderer(null));
@@ -968,34 +969,32 @@ public class ExtraFeatures extends javax.swing.JPanel implements InfoPanel {
     }//GEN-LAST:event_jSpinner4StateChanged
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-    ColorTable colorTable = new ColorTable();
-    colorTable.setLocationRelativeTo(jButton3);
+        ColorTable colorTable = new ColorTable();
+        colorTable.setLocationRelativeTo(jButton3);
     }//GEN-LAST:event_jButton3MouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-            JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-            NumberAxis xAxis = new NumberAxis("");
-            NumberAxis yAxis = new NumberAxis("");
-            JpowderXYLineAndShapeRender r = new JpowderXYLineAndShapeRender();
-            XYPlot plot = new XYPlot(
-                    new JpowderXYDataset(inFocus.getPowderDataSet().elementAt(0)),
-                    xAxis, yAxis, r);
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+        NumberAxis xAxis = new NumberAxis("");
+        NumberAxis yAxis = new NumberAxis("");
+        JpowderXYLineAndShapeRender r = new JpowderXYLineAndShapeRender();
+        XYPlot plot = new XYPlot(
+                new JpowderXYDataset(inFocus.getPowderDataSet().elementAt(0)),
+                xAxis, yAxis, r);
 
-            JFreeChart chart = new JFreeChart(null, null, plot, false);// for getting the chart header
-            ChartPanel cp= new ChartPanel(chart);
-            JFrame frame = new JFrame();
-            frame.add(cp);
-            frame.setVisible(true);
-            frame.setSize(500,500);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JFreeChart chart = new JFreeChart(null, null, plot, false);// for getting the chart header
+        ChartPanel cp = new ChartPanel(chart);
+        JFrame frame = new JFrame();
+        frame.add(cp);
+        frame.setVisible(true);
+        frame.setSize(500, 500);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
     }//GEN-LAST:event_jButton5ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.ButtonGroup buttonGroup1;

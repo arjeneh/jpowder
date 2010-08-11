@@ -21,6 +21,7 @@ public class JpowderTickUnitSource implements TickUnitSource {
         super();
     }
 
+    @Override
     public TickUnit getLargerTickUnit(TickUnit unit) {
         double x = unit.getSize();
         double log = Math.log(x) / LOG_10_VALUE;
@@ -28,14 +29,16 @@ public class JpowderTickUnitSource implements TickUnitSource {
 //        System.out.println("high : "+higher);
 //        System.out.println("Math.pow(10, higher) : "+Math.pow(10, higher));
         return new NumberTickUnit(Math.pow(10, higher),
-                new DecimalFormat(ExtraFeatures.getDecimalPattern()));
+                new DecimalFormat(AxisFormatPanel.getDecimalPattern()));
 
     }
 
+    @Override
     public TickUnit getCeilingTickUnit(TickUnit unit) {
         return getLargerTickUnit(unit);
     }
 
+    @Override
     public TickUnit getCeilingTickUnit(double size) {
         double log = Math.log(size) / LOG_10_VALUE;
         double higher = Math.ceil(log);

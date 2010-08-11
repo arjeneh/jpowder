@@ -59,7 +59,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
     private String columnsNameGSAS[] = {"Plot(s)", "DifC","DifA","Zero"};
     private DefaultTableModel defaultTableModel;
     private DefaultTableModel defaultTableModel2;
-    private GSASTable gSASTable = new GSASTable();
+
 
     /** Creates new form BraggsLow */
     public BraggsLaw(ToolsIcon2D analysisIcon) {
@@ -135,7 +135,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         setSizeOfColumn();
 
         defaultTableModel.addTableModelListener(new TableListenerBrags());
-        defaultTableModel2.addTableModelListener(new TableListenerGSAS());
+        defaultTableModel2.addTableModelListener(new TableListenerGSAS(gsastable));
 
         dataTable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableRenderer());
         gsastable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableRenderer());
@@ -577,7 +577,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         }
 
 
-        if (gSASTable.isVisible()) {
+        if (gsastable.isVisible()) {
             for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
 
                 inFocus.getPowderDataSet().elementAt(i).getX();
