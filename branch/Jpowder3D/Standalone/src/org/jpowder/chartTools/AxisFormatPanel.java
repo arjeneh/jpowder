@@ -10,9 +10,14 @@
  */
 package org.jpowder.chartTools;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.text.DefaultFormatter;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.ui.RectangleInsets;
@@ -28,7 +33,8 @@ import org.jpowder.Jpowder;
 public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
 
     private ToolsIcon2D toolsIcon2D;
-    private JpowderTickUnitSource jpowderTickUnitSource = new JpowderTickUnitSource();
+    private JpowderTickUnitSourceXAxis jpowderTickUnitSourceX = new JpowderTickUnitSourceXAxis();
+    private JpowderTickUnitSourceYAxis jpowderTickUnitSourceY = new JpowderTickUnitSourceYAxis();
     private static String decimal = "";
 
     /** Creates new form AxisFormatPanel */
@@ -39,6 +45,50 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
 
     @Override
     public void update() {
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
+            Component[] np = numberPanel.getComponents();
+            Component[] tsp = tickSpacingPanel.getComponents();
+            Component[] op = OffsetPanel.getComponents();
+            for (Component comp : np) {
+                comp.setEnabled(false);
+            }
+            for (Component comp : tsp) {
+                comp.setEnabled(false);
+            }
+            for (Component comp : op) {
+                comp.setEnabled(false);
+            }
+
+            return;
+        } else {
+            Component[] np = numberPanel.getComponents();
+            Component[] tsp = tickSpacingPanel.getComponents();
+            Component[] op = OffsetPanel.getComponents();
+            for (Component comp : np) {
+                comp.setEnabled(true);
+            }
+            for (Component comp : tsp) {
+                comp.setEnabled(true);
+            }
+            for (Component comp : op) {
+                comp.setEnabled(true);
+            }
+
+            decimalPlacesSpinner.setValue(inFocus.getDecimalPlaces());
+        }
+
+
+        xScientific.setSelected(inFocus.getXYPlot().getDomainAxis().getStandardTickUnits().toString().contains("JpowderTickUnitSourceXAxis"));
+        yScientific.setSelected(inFocus.getXYPlot().getRangeAxis().getStandardTickUnits().toString().contains("JpowderTickUnitSourceYAxis"));
+
+        fillTheXTickField();
+        fillTheYTickField();
+//this bit of code is for disabling jspinner from any charctor being added to it.
+        ((DefaultFormatter) ((JSpinner.DefaultEditor) decimalPlacesSpinner.getEditor()).getTextField().getFormatter()).setAllowsInvalid(true);
+        ((DefaultFormatter) ((JSpinner.DefaultEditor) axisOffserSpinner.getEditor()).getTextField().getFormatter()).setAllowsInvalid(true);
+
     }
 
     public static String getDecimalPattern() {
@@ -50,7 +100,7 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
         if (xScientific.isSelected()) {
-            inFocus.getXYPlot().getDomainAxis().setStandardTickUnits(jpowderTickUnitSource);
+            inFocus.getXYPlot().getDomainAxis().setStandardTickUnits(jpowderTickUnitSourceX);
         }
         if (!xScientific.isSelected()) {
             inFocus.getXYPlot().getDomainAxis().setStandardTickUnits(NumberAxis.createIntegerTickUnits());
@@ -61,7 +111,7 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
     public void yAxisScientificNotation() {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         if (yScientific.isSelected()) {
-            inFocus.getXYPlot().getRangeAxis().setStandardTickUnits(jpowderTickUnitSource);
+            inFocus.getXYPlot().getRangeAxis().setStandardTickUnits(jpowderTickUnitSourceY);
 
 
         }
@@ -122,31 +172,27 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
     private void initComponents() {
 
         jSeparator1 = new javax.swing.JSeparator();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        appearancePanel = new javax.swing.JTabbedPane();
+        numberPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        decimalPlacesSpinner = new javax.swing.JSpinner();
         xScientific = new javax.swing.JCheckBox();
         yScientific = new javax.swing.JCheckBox();
-        jPanel3 = new javax.swing.JPanel();
+        decimalPlacesSpinner = new javax.swing.JSpinner();
+        tickSpacingPanel = new javax.swing.JPanel();
         tickSpacingApplyButton = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         yTickField = new javax.swing.JTextField();
         xTickField = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        OffsetPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        axisOffserSpinner = new javax.swing.JSpinner();
         jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        axisOffserSpinner1 = new javax.swing.JSpinner();
         backButton = new javax.swing.JButton();
 
         jLabel4.setText("Decimal places:");
-
-        decimalPlacesSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                decimalPlacesSpinnerStateChanged(evt);
-            }
-        });
 
         xScientific.setText("X axis scientific format");
         xScientific.addActionListener(new java.awt.event.ActionListener() {
@@ -162,31 +208,38 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        decimalPlacesSpinner.setModel(new javax.swing.SpinnerNumberModel(0, -10, 10, 1));
+        decimalPlacesSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                decimalPlacesSpinnerStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout numberPanelLayout = new javax.swing.GroupLayout(numberPanel);
+        numberPanel.setLayout(numberPanelLayout);
+        numberPanelLayout.setHorizontalGroup(
+            numberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(numberPanelLayout.createSequentialGroup()
+                .addGroup(numberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(numberPanelLayout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(decimalPlacesSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(decimalPlacesSpinner))
+                    .addGroup(numberPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(numberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(xScientific)
                             .addComponent(yScientific))))
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        numberPanelLayout.setVerticalGroup(
+            numberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(numberPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(decimalPlacesSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                .addGroup(numberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(decimalPlacesSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(xScientific)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -194,7 +247,7 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
                 .addContainerGap(158, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Number", jPanel1);
+        appearancePanel.addTab("Number", numberPanel);
 
         tickSpacingApplyButton.setText("Apply");
         tickSpacingApplyButton.addActionListener(new java.awt.event.ActionListener() {
@@ -219,36 +272,34 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
 
         jLabel9.setText("X Axis:");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 248, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout tickSpacingPanelLayout = new javax.swing.GroupLayout(tickSpacingPanel);
+        tickSpacingPanel.setLayout(tickSpacingPanelLayout);
+        tickSpacingPanelLayout.setHorizontalGroup(
+            tickSpacingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tickSpacingPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(tickSpacingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(tickSpacingPanelLayout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(xTickField))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGroup(tickSpacingPanelLayout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(tickSpacingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(yTickField, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tickSpacingApplyButton))))
                 .addContainerGap(120, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 245, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        tickSpacingPanelLayout.setVerticalGroup(
+            tickSpacingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tickSpacingPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(tickSpacingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(xTickField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(tickSpacingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(yTickField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -256,13 +307,14 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
                 .addContainerGap(147, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Tick Spacing", jPanel3);
+        appearancePanel.addTab("Tick Spacing", tickSpacingPanel);
 
-        jLabel2.setText("Set Axis Offset");
+        jLabel2.setText("Axis Offset:");
 
-        jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
+        axisOffserSpinner.setModel(new javax.swing.SpinnerNumberModel(5.0d, -50.0d, 50.0d, 1.0d));
+        axisOffserSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinner1StateChanged(evt);
+                axisOffserSpinnerStateChanged(evt);
             }
         });
 
@@ -273,33 +325,51 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jLabel1.setText("Axis Width:");
+
+        axisOffserSpinner1.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.0f), Float.valueOf(10.0f), Float.valueOf(0.25f)));
+        axisOffserSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                axisOffserSpinner1StateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout OffsetPanelLayout = new javax.swing.GroupLayout(OffsetPanel);
+        OffsetPanel.setLayout(OffsetPanelLayout);
+        OffsetPanelLayout.setHorizontalGroup(
+            OffsetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(OffsetPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(55, 55, 55)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton2))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addGroup(OffsetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
+                    .addGroup(OffsetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(OffsetPanelLayout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(axisOffserSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, OffsetPanelLayout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(axisOffserSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(119, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        OffsetPanelLayout.setVerticalGroup(
+            OffsetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(OffsetPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(OffsetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(axisOffserSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(OffsetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(axisOffserSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addContainerGap(185, Short.MAX_VALUE))
+                .addContainerGap(159, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Appearance", jPanel2);
+        appearancePanel.addTab("Appearance", OffsetPanel);
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.PNG"))); // NOI18N
         backButton.setText("Back");
@@ -320,7 +390,7 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                    .addComponent(appearancePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                     .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -331,10 +401,10 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
                 .addGap(71, 71, 71)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(appearancePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5))
+                .addGap(11, 11, 11))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -343,21 +413,6 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
         this.setVisible(false);
 }//GEN-LAST:event_backButtonActionPerformed
 
-    private void decimalPlacesSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_decimalPlacesSpinnerStateChanged
-        //        decimal = decimalPlacesSpinner.getValue().toString();
-        decimal = "";
-        int dec = (int) Integer.parseInt(decimalPlacesSpinner.getValue().toString());
-        for (int i = 0; i < dec; i++) {
-            decimal += "0";
-        }
-        if (xScientific.isSelected()) {
-            xAxisScientificNotation();
-        }
-        if (yScientific.isSelected()) {
-            yAxisScientificNotation();
-        }
-    }//GEN-LAST:event_decimalPlacesSpinnerStateChanged
-
     private void xScientificActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xScientificActionPerformed
         xAxisScientificNotation();
 }//GEN-LAST:event_xScientificActionPerformed
@@ -365,15 +420,6 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
     private void yScientificActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yScientificActionPerformed
         yAxisScientificNotation();
 }//GEN-LAST:event_yScientificActionPerformed
-
-    private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-
-
-        double offset = Double.parseDouble(jSpinner1.getValue().toString());
-
-        inFocus.getXYPlot().setAxisOffset(new RectangleInsets(offset, offset, offset, offset));
-    }//GEN-LAST:event_jSpinner1StateChanged
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
@@ -399,21 +445,70 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
     private void xTickFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_xTickFieldMouseClicked
         applyTickSpacing();
 }//GEN-LAST:event_xTickFieldMouseClicked
+
+    private void axisOffserSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_axisOffserSpinnerStateChanged
+
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+        double offset = Double.parseDouble(axisOffserSpinner.getValue().toString());
+        inFocus.getXYPlot().setAxisOffset(new RectangleInsets(offset, offset, offset, offset));
+
+}//GEN-LAST:event_axisOffserSpinnerStateChanged
+
+    private void decimalPlacesSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_decimalPlacesSpinnerStateChanged
+//        System.out.println("XXXXXXXXXXXXXXXXXX"+decimalPlacesSpinner.getValue().toString());
+//        String str =decimalPlacesSpinner.getValue().toString();
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+        decimal = "";
+        int dec = (int) Integer.parseInt(decimalPlacesSpinner.getValue().toString());
+        for (int i = 0; i < dec; i++) {
+            decimal += "0";
+        }
+        inFocus.setDecimalPlaces(dec);
+        if (xScientific.isSelected()) {
+            xAxisScientificNotation();
+        }
+        if (yScientific.isSelected()) {
+            yAxisScientificNotation();
+        }
+    }//GEN-LAST:event_decimalPlacesSpinnerStateChanged
+
+    private void axisOffserSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_axisOffserSpinner1StateChanged
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+
+        float axisWidth = Float.parseFloat(axisOffserSpinner1.getValue().toString());
+        
+        //axis stroke
+        inFocus.getXYPlot().getDomainAxis().setAxisLineStroke(new BasicStroke(axisWidth));
+        inFocus.getXYPlot().getRangeAxis().setAxisLineStroke(new BasicStroke(axisWidth));
+       
+        //tick unit stroke
+
+        inFocus.getXYPlot().getDomainAxis().setTickMarkStroke(new BasicStroke(axisWidth));
+        inFocus.getXYPlot().getRangeAxis().setTickMarkStroke(new BasicStroke(axisWidth));
+
+        //setting axis Font
+        inFocus.getXYPlot().getDomainAxis().setTickLabelFont(new Font("SansSerif",Font.PLAIN, (int)axisWidth+10));
+        inFocus.getXYPlot().getRangeAxis().setTickLabelFont(new Font("SansSerif",Font.PLAIN, (int)axisWidth+10));
+
+    }//GEN-LAST:event_axisOffserSpinner1StateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel OffsetPanel;
+    private javax.swing.JTabbedPane appearancePanel;
+    private javax.swing.JSpinner axisOffserSpinner;
+    private javax.swing.JSpinner axisOffserSpinner1;
     private javax.swing.JButton backButton;
-    private static javax.swing.JSpinner decimalPlacesSpinner;
+    private javax.swing.JSpinner decimalPlacesSpinner;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JPanel numberPanel;
     private javax.swing.JButton tickSpacingApplyButton;
+    private javax.swing.JPanel tickSpacingPanel;
     private javax.swing.JCheckBox xScientific;
     private javax.swing.JTextField xTickField;
     private javax.swing.JCheckBox yScientific;

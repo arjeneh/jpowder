@@ -28,21 +28,20 @@
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
  */
-
 package org.jpowder.JCheckboxList;
 
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+import org.jpowder.InernalFrame.JpowderInternalframe2D;
+import org.jpowder.Jpowder;
 
 /**
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 public class CheckFileListRenderer extends CheckFileRenderer implements ListCellRenderer {
-
 
     @Override
     public Component getListCellRendererComponent(JList list, Object value,
@@ -51,11 +50,19 @@ public class CheckFileListRenderer extends CheckFileRenderer implements ListCell
         setEnabled(list.isEnabled());
         label.setText(value.toString());
         check.setSelected(((CheckableFileItem) value).isSelected());
-      
-//        label.setForeground((Color) inFocus.getXYPlot().getRenderer(index).getSeriesPaint(0));
-  
-        label.setForeground(Color.BLACK);
-     
+        if (Jpowder.getPlotsTab().getSelectedIndex() == 0) {
+            JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+            label.setForeground((Color) inFocus.getXYPlot().getRenderer(index).getSeriesPaint(0));
+
+        }
+        if (Jpowder.getPlotsTab().getSelectedIndex() == 1) {
+
+            label.setForeground(Color.BLACK);
+
+        }
+
+
+
 
         label.setSelected(true);//hilighting the string
         label.setFocus(hasFocus);

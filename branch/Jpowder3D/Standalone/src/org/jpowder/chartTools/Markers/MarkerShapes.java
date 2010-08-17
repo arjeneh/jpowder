@@ -37,8 +37,8 @@ public class MarkerShapes {
         ShapeUtilities.createUpTriangle(flot),
         ShapeUtilities.createRegularCross(flot, 0),
         ShapeUtilities.createDiagonalCross(flot, 0),
-        ShapeUtilities.createLineRegion(line2D2, 10f),
-        ShapeUtilities.createLineRegion(line2D1, 10f)
+        ShapeUtilities.createLineRegion(line2D2, flot),
+        ShapeUtilities.createLineRegion(line2D1, flot)
  
 
 

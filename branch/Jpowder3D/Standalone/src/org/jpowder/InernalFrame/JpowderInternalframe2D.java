@@ -68,6 +68,7 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
     private Vector<Double> markedPeakPosition = new Vector<Double>();
     private List<Marker> peakRangeMarker = new ArrayList<Marker>();
     private List<Marker> peakDomainMarker = new ArrayList<Marker>();
+    private int decimalPlaces;
     private NumberAxis xAxis;
     private NumberAxis yAxis;
     private JFreeChart chart;
@@ -82,7 +83,7 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
         m_data = data;
         this.dataVisibleInChartPanel = dataVisibleInChartPanel;
         xYPlot = this.getXYPlot();
-        chart=FilesPlotter.getChart();
+        chart = FilesPlotter.getChart();
         dropTarget = new DropTarget(this, this);
 
     }
@@ -94,7 +95,6 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
     public static int getnumberOfJpowderInternalframe() {
         return Jpowder.getChartPlotter2D().getAllFrames().length;
     }
-
 
     /**
      *
@@ -147,18 +147,31 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
         return yAxis.getTickUnit().getSize();
     }
 
-    public JFreeChart getChart(){
+    public JFreeChart getChart() {
         return chart;
     }
+
+    public int getDecimalPlaces() {
+        return decimalPlaces;
+    }
+
+    public void setDecimalPlaces(int decimalPlaces) {
+        this.decimalPlaces = decimalPlaces;
+    }
+
+    @Override
     public void dragEnter(DropTargetDragEvent dtde) {
     }
 
+    @Override
     public void dragOver(DropTargetDragEvent dtde) {
     }
 
+    @Override
     public void dropActionChanged(DropTargetDragEvent dtde) {
     }
 
+    @Override
     public void dragExit(DropTargetEvent dte) {
     }
 
@@ -166,6 +179,7 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
      *
      * @param dtde
      */
+    @Override
     public void drop(DropTargetDropEvent dtde) {
 
         Jpowder.jpowderInternalFrameUpdate(this);

@@ -37,18 +37,35 @@ public class LegendPanel extends javax.swing.JPanel implements InfoPanel {
         initComponents();
         this.toolsIcon = analysisIcon;
         legendTable.setVisible(false);
-       
+
     }
 
     @Override
     public void update() {
 
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
+            legendCheckBox.setEnabled(false);
+            legendPositionPanel.setVisible(false);
+            if (defaultTableModel != null) {
+                defaultTableModel.getDataVector().clear();
+                
+            }
+            return;
+        }else{
+              legendCheckBox.setEnabled(true);
+        }
+
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+        if (inFocus.getChart().getLegend() != null) {
+            legendCheckBox.setSelected(true);
+        } else {
+            legendCheckBox.setSelected(false);
+        }
+        setLegentPositionPanel();
+
+
         defaultTableModel = new DefaultTableModel(getFileName(), columnsName);
         legendTable.setModel(defaultTableModel);
-
-        setLegentPositionPanel();
-      
-
         defaultTableModel.addTableModelListener(new TableModelListener() {
 
             @Override
@@ -208,10 +225,7 @@ public class LegendPanel extends javax.swing.JPanel implements InfoPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
+                        .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,26 +235,29 @@ public class LegendPanel extends javax.swing.JPanel implements InfoPanel {
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(legendPositionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE))))
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(68, 68, 68)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(63, 63, 63)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(legendCheckBox)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(152, 152, 152)
-                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(legendPositionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(5, 5, 5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -280,6 +297,9 @@ public class LegendPanel extends javax.swing.JPanel implements InfoPanel {
 
     private void legendCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_legendCheckBoxActionPerformed
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
+            return;
+        }
         if (legendCheckBox.isSelected()) {
             CreateLegend createLegend = new CreateLegend();
             createLegend.setLegend();
@@ -290,6 +310,7 @@ public class LegendPanel extends javax.swing.JPanel implements InfoPanel {
         }
         if (!legendCheckBox.isSelected()) {
             inFocus.getChart().removeLegend();
+
             legendTable.setEnabled(false);
             legendTable.setVisible(false);
             setLegentPositionPanel();

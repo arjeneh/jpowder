@@ -8,13 +8,13 @@
  *
  * Created on Aug 10, 2010, 2:25:35 PM
  */
-
 package org.jpowder.chartTools;
 
+import java.awt.Component;
 import java.io.File;
-import java.io.FileFilter;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
 import org.jpowder.Analysis.ToolsIcon2D;
 import org.jpowder.InernalFrame.JpowderInternalframe2D;
 import org.jpowder.InfoPanel;
@@ -24,9 +24,11 @@ import org.jpowder.Jpowder;
  *
  * @author Arjeneh
  */
-public class BackGroundPanel extends javax.swing.JPanel implements InfoPanel  {
+public class BackGroundPanel extends javax.swing.JPanel implements InfoPanel {
 
     private ToolsIcon2D toolsIcon;
+    private File file;
+
     /** Creates new form BackGroundPanel */
     public BackGroundPanel(ToolsIcon2D analysisIcon) {
         initComponents();
@@ -36,11 +38,79 @@ public class BackGroundPanel extends javax.swing.JPanel implements InfoPanel  {
 
     }
 
-
     @Override
     public void update() {
-        
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
+            Component[] c = jPanel1.getComponents();
+            for (Component comp : c) {
+                comp.setEnabled(false);
+            }
+
+            return;
+        } else {
+            Component[] c = jPanel1.getComponents();
+            for (Component comp : c) {
+                comp.setEnabled(true);
+            }
+        }
+
+        if (inFocus.getXYPlot().getBackgroundImage() == null) {
+            disablePlotBackGround.setSelected(true);
+        } else {
+            disablePlotBackGround.setSelected(false);
+        }
+        if (inFocus.getChart().getBackgroundImage() == null) {
+            disableChartBackground.setSelected(true);
+        } else {
+            disableChartBackground.setSelected(false);
+        }
+
     }
+
+    public void setBackGroundImage() {
+
+
+        JFileChooser fileChooser = new JFileChooser();
+        int returnVal = fileChooser.showOpenDialog(null);
+        FileFilter filter = new FileFilter() {
+
+            @Override
+            public boolean accept(File f) {
+                String fileName = f.getName();
+                if (fileName.endsWith(".png")) {
+                    return true;
+                }
+                if (fileName.endsWith(".gif")) {
+                    return true;
+                }
+                if (fileName.endsWith(".bmp")) {
+                    return true;
+                }
+                if (fileName.endsWith(".tif")) {
+                    return true;
+                }
+                if (fileName.endsWith(".jpeg")) {
+                    return true;
+                }
+
+                return false;
+
+            }
+
+            @Override
+            public String getDescription() {
+                return "Image(*.png, *.gif,*.bmp,*.tif,*.jpeg)";
+            }
+        };
+        fileChooser.addChoosableFileFilter(filter);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            // get the selected files
+            file = fileChooser.getSelectedFile();
+        }
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -60,6 +130,8 @@ public class BackGroundPanel extends javax.swing.JPanel implements InfoPanel  {
         jSpinner3 = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
         chartBGImage = new javax.swing.JButton();
+        disableChartBackground = new javax.swing.JCheckBox();
+        disablePlotBackGround = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.PNG"))); // NOI18N
@@ -108,26 +180,48 @@ public class BackGroundPanel extends javax.swing.JPanel implements InfoPanel  {
             }
         });
 
+        disableChartBackground.setText("Disable Chart Background Image");
+        disableChartBackground.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                disableChartBackgroundActionPerformed(evt);
+            }
+        });
+
+        disablePlotBackGround.setText("Disable Plot Background Image");
+        disablePlotBackGround.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                disablePlotBackGroundActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(plotBGImage, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chartBGImage, javax.swing.GroupLayout.Alignment.LEADING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(disableChartBackground, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(chartBGImage)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel6)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(plotBGImage, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(disablePlotBackGround, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                        .addGap(79, 79, 79))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,11 +232,15 @@ public class BackGroundPanel extends javax.swing.JPanel implements InfoPanel  {
                     .addComponent(jLabel6)
                     .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(disableChartBackground)
+                .addGap(49, 49, 49)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(plotBGImage)
                     .addComponent(jLabel7)
                     .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(186, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(disablePlotBackGround)
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("BackGround Image", jPanel1);
@@ -187,70 +285,41 @@ public class BackGroundPanel extends javax.swing.JPanel implements InfoPanel  {
 
     private void plotBGImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotBGImageActionPerformed
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-        JFileChooser fileChooser = new JFileChooser();
-        int returnVal = fileChooser.showOpenDialog(null);
-
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            // get the selected files
-            File selectedFiles = fileChooser.getSelectedFile();
-
-            inFocus.getXYPlot().setBackgroundImage(new ImageIcon(selectedFiles.getAbsolutePath()).getImage());
-
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
+            return;
         }
+        setBackGroundImage();
+        inFocus.getXYPlot().setBackgroundImage(new ImageIcon(file.getAbsolutePath()).getImage());
+
 }//GEN-LAST:event_plotBGImageActionPerformed
 
     private void jSpinner4StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner4StateChanged
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
+            return;
+        }
         float f = Float.parseFloat(jSpinner4.getValue().toString());
         inFocus.getXYPlot().setBackgroundImageAlpha(f);
+
 }//GEN-LAST:event_jSpinner4StateChanged
 
     private void jSpinner3StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner3StateChanged
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
+            return;
+        }
         float f = Float.parseFloat(jSpinner3.getValue().toString());
         inFocus.getChart().setBackgroundImageAlpha(f);
 }//GEN-LAST:event_jSpinner3StateChanged
 
     private void chartBGImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chartBGImageActionPerformed
+
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-        JFileChooser fileChooser = new JFileChooser();
-        int returnVal = fileChooser.showOpenDialog(null);
-        FileFilter filter = new FileFilter() {
-
-            @Override
-            public boolean accept(File f) {
-                String fileName = f.getName();
-                if (fileName.endsWith(".png")) {
-                    return true;
-                }
-                if (fileName.endsWith(".gif")) {
-                    return true;
-                }
-                if (fileName.endsWith(".xy")) {
-                    return true;
-                }
-                if (fileName.endsWith(".gss")) {
-                    return true;
-                }
-
-                return false;
-
-            }
-
-            public String getDescription() {
-                return "File (*.xy, *.xye,*.cif,*.gss)";
-            }
-        };
-
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            // get the selected files
-            File selectedFiles = fileChooser.getSelectedFile();
-
-            inFocus.getChart().setBackgroundImage(new ImageIcon(selectedFiles.getAbsolutePath()).getImage());
-
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
+            return;
         }
+        setBackGroundImage();
+        inFocus.getChart().setBackgroundImage(new ImageIcon(file.getAbsolutePath()).getImage());
 }//GEN-LAST:event_chartBGImageActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -258,10 +327,27 @@ public class BackGroundPanel extends javax.swing.JPanel implements InfoPanel  {
         this.setVisible(false);
 }//GEN-LAST:event_backButtonActionPerformed
 
+    private void disableChartBackgroundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disableChartBackgroundActionPerformed
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
+            return;
+        }
+        inFocus.getChart().setBackgroundImage(null);
+    }//GEN-LAST:event_disableChartBackgroundActionPerformed
 
+    private void disablePlotBackGroundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disablePlotBackGroundActionPerformed
+        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
+            return;
+        }
+        inFocus.getXYPlot().setBackgroundImage(null);
+
+    }//GEN-LAST:event_disablePlotBackGroundActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.JButton chartBGImage;
+    private javax.swing.JCheckBox disableChartBackground;
+    private javax.swing.JCheckBox disablePlotBackGround;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
@@ -272,7 +358,4 @@ public class BackGroundPanel extends javax.swing.JPanel implements InfoPanel  {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton plotBGImage;
     // End of variables declaration//GEN-END:variables
-
-
-
 }

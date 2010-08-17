@@ -16,7 +16,6 @@ import org.jfree.chart.title.PaintScaleLegend;
 import org.jfree.data.xy.DefaultXYZDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
-import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 import org.jpowder.dataset.DataSet;
@@ -52,7 +51,7 @@ public class FilesPlotter3D extends DatasetPlotter {
     @Override
     public ChartPanel createPowderChart() {
         chart = createChart(createDataset());
-      
+
         plot.setDomainPannable(true);
         plot.setRangePannable(true);
 
@@ -65,8 +64,8 @@ public class FilesPlotter3D extends DatasetPlotter {
 
 
         ChartPanel chartPanel = new ChartPanel(chart, true);
-     
-       
+
+
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
         chartPanel.addChartMouseListener(new PowderChartMouseObserver(chartPanel));
@@ -87,12 +86,12 @@ public class FilesPlotter3D extends DatasetPlotter {
         yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         yAxis.setLowerMargin(0.0);
         yAxis.setUpperMargin(0.0);
-  
+
 
         NumberAxis zAxis = new NumberAxis("");
 
         JpowderXYBlockRenderer renderer = new JpowderXYBlockRenderer();
-        
+
         renderer.clearSeriesPaints(true);
 
 
@@ -116,14 +115,14 @@ public class FilesPlotter3D extends DatasetPlotter {
         renderer.setPaintScale(lps);
 //        renderer.setBlockHeight(10);
 //        renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
-       
-//        renderer.setBlockHeight(100);
+
+
         PaintScaleLegend legend = new PaintScaleLegend(lps,
                 zAxis);
 //        legend.setAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
         legend.setMargin(new RectangleInsets(0, 0, 5, 0));
         legend.setPadding(new RectangleInsets(0, 40, 0, 10));
-     
+
 
         legend.setStripWidth(10);
         legend.setPosition(RectangleEdge.BOTTOM);
@@ -135,17 +134,17 @@ public class FilesPlotter3D extends DatasetPlotter {
         return chart;
     }
 
-    public static JFreeChart getChart(){
+    public static JFreeChart getChart() {
         return chart;
     }
+
     public static XYZDataset createDataset() {
 
 
         DefaultXYZDataset defaultXYZDataset = new DefaultXYZDataset();
         //int xSize = datasets.elementAt(i).size();
         for (int i = 0; i < datasets.size(); i++) {
-//            plot = new XYPlot(new JpowderXYZDataset(datasets.elementAt(i)), xAxis, yAxis, renderer);
-            //XYDataset ds = plot.getDataset(i);
+
             double[][] data = new double[3][datasets.elementAt(i).getX().size()];
             for (int j = 0; j < datasets.elementAt(i).getX().size(); j++) {
 

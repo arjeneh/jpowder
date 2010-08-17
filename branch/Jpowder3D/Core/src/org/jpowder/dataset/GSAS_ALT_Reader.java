@@ -57,7 +57,7 @@ public class GSAS_ALT_Reader {
                     int countColumn = localData.firstElement().size();
                     // create dataset object
 //                    if (countColumn == 3) {
-                    System.out.println(localData);
+
                     retVal.addElement(new DataSetWithErrors(localData, aFile.getName()));
                     //                retVal.addElement(new DataSetWithErrors(localData, "fake"));
 //                    }
@@ -104,70 +104,42 @@ public class GSAS_ALT_Reader {
             while ((aLine = br.readLine()) != null) {
                 if (!aLine.isEmpty()) {
                     // create a vector to hold the field values
-                    int numberDataPointInLine = 0;
+
                     Vector<Double> newRow = new Vector<Double>();
-                    Vector<Double> dataPoint1 = new Vector<Double>();
-                    Vector<Double> dataPoint2 = new Vector<Double>();
-                    Vector<Double> dataPoint3 = new Vector<Double>();
-                    Vector<Double> dataPoint4 = new Vector<Double>();
 
+                    String[] st = aLine.split("");
+                    try {
+                        newRow.addElement(Double.parseDouble(aLine.substring(0, 8)));
+                        newRow.addElement(Double.parseDouble(aLine.substring(8, 15)));
+                        newRow.addElement(Double.parseDouble(aLine.substring(15, 20)));
 
-                    String[] splits = aLine.trim().split("  ");
+                        newRow.addElement(Double.parseDouble(aLine.substring(20, 28)));
+                        newRow.addElement(Double.parseDouble(aLine.substring(28, 35)));
+                        newRow.addElement(Double.parseDouble(aLine.substring(35, 40)));
 
+                        newRow.addElement(Double.parseDouble(aLine.substring(40, 48)));
+                        newRow.addElement(Double.parseDouble(aLine.substring(48, 55)));
+                        newRow.addElement(Double.parseDouble(aLine.substring(55, 60)));
 
-          StringTokenizer stringTokenizer = new StringTokenizer(aLine);
-                    //
-          
-                    int numToken = stringTokenizer.countTokens();
-                    for (int i = 0; i < numToken; i++) {
-                        String stringToken = stringTokenizer.nextToken();
-                          newRow.addElement(Double.parseDouble(stringToken));
-                    }
-
-
-                    for (int i = 0; i < 3; i++) {
-                       
-                        dataPoint1.add(newRow.get(i));
-                    }
-
-                    for (int i = 3; i < 6; i++) {
-
-                        dataPoint2.add(newRow.get(i));
-                    }
-                         for (int i = 6; i < 9; i++) {
-
-                        dataPoint3.add(newRow.get(i));
-                    }
-                         for (int i = 9; i < 12; i++) {
-
-                        dataPoint4.add(newRow.get(i));
-                    }
-             
-//                    for (int i = 0; i < 3; i++) {
-//
-//                        String dataPoint = splits[i];
-//
-//                        try {
-//                            newRow.addElement(Double.parseDouble(dataPoint));
-//
-//                        } catch (NumberFormatException e) {
-//                            return localData;
-//                        }
-//
-//                    } //for
-
-                 
-                    if (splits.length != 0) {
-                        localData.addElement(dataPoint1);
-                        localData.addElement(dataPoint2);
-                        localData.addElement(dataPoint3);
-                        localData.addElement(dataPoint4);
-                    } else {
+                        newRow.addElement(Double.parseDouble(aLine.substring(60, 68)));
+                        newRow.addElement(Double.parseDouble(aLine.substring(68, 75)));
+                        newRow.addElement(Double.parseDouble(aLine.substring(75, 80)));
+                        
+                    } catch (NumberFormatException e) {
                         return localData;
                     }
+
+                    if (st.length != 0) {
+                        localData.addElement(newRow);
+
+                    } else {
+                        return localData;
+
+                    }
+                 
                 }
             }
-     
+
         } catch (IOException ex) {
             Logger.getLogger(GSAS_FXYE_Reader.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -189,12 +161,12 @@ public class GSAS_ALT_Reader {
 //                System.out.println(localData.get(i).get(0));
 
 
-                double xDivideBy32=localData.get(i).get(0)/32;//time of flight      
-                double yDividedBy1000=localData.get(i).get(1)/1000;//intensity
-                double eDividedBy1000=localData.get(i).get(2)/1000;//error bar
-      
+                double xDivideBy32 = localData.get(i).get(0) / 32;//time of flight
+                double yDividedBy1000 = localData.get(i).get(1) / 1000;//intensity
+                double eDividedBy1000 = localData.get(i).get(2) / 1000;//error bar
+
                 double binwidth = xDivideBy32 * deltaT;
-    
+
                 localData.get(i).setElementAt(xDivideBy32, 0);
                 localData.get(i).setElementAt(yDividedBy1000 / (binwidth), 1);
                 localData.get(i).setElementAt(eDividedBy1000 / (binwidth), 2);
@@ -203,7 +175,7 @@ public class GSAS_ALT_Reader {
 
     }
 
-//    public static void main(String[] args) {
-//        read(new File("C:/Users/Arjeneh/Desktop/PRL_ALT.gss"));
-//    }
+    public static void main(String[] args) {
+        read(new File("C:/Users/Arjeneh/Desktop/newPRL.gss"));
+    }
 }

@@ -51,7 +51,7 @@ import org.jfree.ui.RectangleInsets;
  * one or more powder diffraction files.
  *
  */
-public class FilesPlotter extends DatasetPlotter implements Serializable{
+public class FilesPlotter extends DatasetPlotter implements Serializable {
 
     private static Vector<DataSet> datasets;
     public static XYPlot plot;
@@ -142,7 +142,7 @@ public class FilesPlotter extends DatasetPlotter implements Serializable{
         NumberAxis xAxis = new NumberAxis(datasets.get(0).getXUnit());
         NumberAxis yAxis = new NumberAxis("Intensity");
         yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        
+
 
 
 //         xAxis.setAxisLineVisible(false);
@@ -211,7 +211,10 @@ public class FilesPlotter extends DatasetPlotter implements Serializable{
         plot.getRenderer().setToolTipGenerator(tooltip);
         chart = new JFreeChart(null, null, plot, false);// for getting the chart header
         chart.setBackgroundPaint(Color.white);
-         chart.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000,Color.BLACK,true));
+        chart.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000, Color.BLACK, true));
+//         plot.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000,Color.BLUE,true));
+        chart.setAntiAlias(true);
+
 
         return chart;
     }
