@@ -813,7 +813,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         //this bit of the code search for the files
 
         new About().setVisible(true);
-        BuidDate buidDate = new BuidDate();
+        BuildDate buidDate = new BuildDate();
         About.getDateTextField().setText(buidDate.getVersion());
 
     }//GEN-LAST:event_aboutMenuActionPerformed

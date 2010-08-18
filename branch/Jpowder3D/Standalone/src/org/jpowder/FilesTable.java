@@ -12,7 +12,7 @@ package org.jpowder;
 
 //import com.generationjava.io.xml.AbstractXmlWriter;
 import org.jpowder.InernalFrame.JpowderInternalframe3D;
-import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
+//import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -572,11 +572,11 @@ public class FilesTable extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
 
-        try {
-            UIManager.setLookAndFeel(new NimbusLookAndFeel());
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(FilesTable.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            UIManager.setLookAndFeel(new NimbusLookAndFeel());
+//        } catch (UnsupportedLookAndFeelException ex) {
+ //           Logger.getLogger(FilesTable.class.getName()).log(Level.SEVERE, null, ex);
+ //       }
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             @Override

@@ -114,8 +114,8 @@ public class FilesPlotter3D extends DatasetPlotter {
 
 
         renderer.setPaintScale(lps);
-//        renderer.setBlockHeight(10);
-//        renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
+        renderer.setBlockHeight(10);
+       // renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
 
 
         PaintScaleLegend legend = new PaintScaleLegend(lps,

@@ -39,7 +39,7 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
     /**
      * The block height (defaults to 1.0).
      */
-    private double blockHeight = 1.0;
+    private double blockHeight = 3.0;
 
     /**
      * The anchor point used to align each block to its (x, y) location.  The
@@ -323,6 +323,9 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
         if (dataset instanceof XYZDataset) {
             z = ((XYZDataset) dataset).getZValue(series, item);
         }
+
+        System.out.println("block" + this.blockHeight*item);
+
         Paint p = this.paintScale.getPaint(z);
         double xx0 = domainAxis.valueToJava2D(x + this.xOffset, dataArea,
                 plot.getDomainAxisEdge());
