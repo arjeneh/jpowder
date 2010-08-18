@@ -36,7 +36,7 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="legendPositionPanel" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jSeparator1" alignment="0" pref="307" max="32767" attributes="1"/>
+                          <Component id="jSeparator1" alignment="0" pref="311" max="32767" attributes="1"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">

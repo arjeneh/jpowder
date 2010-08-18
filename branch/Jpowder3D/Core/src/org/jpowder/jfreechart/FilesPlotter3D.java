@@ -5,6 +5,7 @@
 package org.jpowder.jfreechart;
 
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.util.Collections;
 import java.util.Vector;
 import org.jfree.chart.ChartPanel;
@@ -126,11 +127,13 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         legend.setStripWidth(10);
         legend.setPosition(RectangleEdge.BOTTOM);
-        chart.addSubtitle(legend);
-        chart.setBackgroundPaint(Color.white);
-        legend.setBackgroundPaint(chart.getBackgroundPaint());
-//        legend.setFrame(new BlockBorder(Color.red));
 
+        chart.addSubtitle(legend);
+
+
+//      legend.setFrame(new BlockBorder(Color.red));
+        chart.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000, Color.BLACK, true));
+        legend.setBackgroundPaint(chart.getBackgroundPaint());
         return chart;
     }
 

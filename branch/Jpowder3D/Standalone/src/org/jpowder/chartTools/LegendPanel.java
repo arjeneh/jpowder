@@ -48,12 +48,13 @@ public class LegendPanel extends javax.swing.JPanel implements InfoPanel {
             legendPositionPanel.setVisible(false);
             if (defaultTableModel != null) {
                 defaultTableModel.getDataVector().clear();
-                
+
             }
             return;
-        }else{
-              legendCheckBox.setEnabled(true);
+        } else {
+            legendCheckBox.setEnabled(true);
         }
+        legendPositionButtom.setSelected(true);
 
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         if (inFocus.getChart().getLegend() != null) {
@@ -88,6 +89,24 @@ public class LegendPanel extends javax.swing.JPanel implements InfoPanel {
             }
         });
         legendTable.getColumn(legendTable.getColumnName(0)).setCellRenderer(new TableRenderer());
+
+        if (inFocus.getChart().getLegend() != null) {
+
+
+
+            if (inFocus.getChart().getLegend().getPosition().toString().contains("BOTTOM")) {
+                legendPositionButtom.setSelected(true);
+            }
+            if (inFocus.getChart().getLegend().getPosition().toString().contains("TOP")) {
+                legendPositionTop.setSelected(true);
+            }
+            if (inFocus.getChart().getLegend().getPosition().toString().contains("LEFT")) {
+                legendPositionLeft.setSelected(true);
+            }
+            if (inFocus.getChart().getLegend().getPosition().toString().contains("RIGHT")) {
+                legendPositionRight.setSelected(true);
+            }
+        }
     }
 
     public String[][] getFileName() {
@@ -293,6 +312,7 @@ public class LegendPanel extends javax.swing.JPanel implements InfoPanel {
             inFocus.getChart().getLegend().setPosition(RectangleEdge.BOTTOM);
 
         }
+
 }//GEN-LAST:event_legendPositionButtomActionPerformed
 
     private void legendCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_legendCheckBoxActionPerformed
