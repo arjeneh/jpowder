@@ -36,7 +36,7 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
     /**
      * The block height (defaults to 1.0).
      */
-    private double blockHeight = 3.0;
+    private double blockHeight = 1.0;
     private Vector<Double> blockHeightLower;
     private Vector<Double> blockHeightUpper;
     /**
@@ -343,8 +343,8 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
         } else {
             block = new Rectangle2D.Double(Math.min(xx0, xx1),
                     Math.min(yy0, yy1), Math.abs(xx1 - xx0),
-                    Math.abs(yy1 - yy0)+10);
-              
+                    Math.abs(yy1 - yy0)+120);
+              System.out.println( Math.abs(yy1 - yy0));
         }
         g2.setPaint(p);
         g2.fill(block);

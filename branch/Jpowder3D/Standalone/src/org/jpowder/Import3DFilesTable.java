@@ -1,19 +1,35 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * FilesTable.java
+/* ===========================================================
+ * This file is part of Jpowder, see <http://www.jpowder.org/>
+ * ===========================================================
  *
- * Created on 09-Jun-2010, 13:27:28
+ * Jpowder is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jpowder is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ---------
+ * Import3DFilesTable.java
+ * ---------
+ * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
+ * Kasem Bundit University.
+ *
+ * Author(s):  M Arjeneh, ISIS, Rutherford Appleton Laboratory
+ *
+ * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
+ *
  */
 package org.jpowder;
 
-//import com.generationjava.io.xml.AbstractXmlWriter;
-import org.jpowder.InernalFrame.JpowderInternalframe3D;
-//import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
 
+import org.jpowder.InernalFrame.JpowderInternalframe3D;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -22,15 +38,11 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.ui.RectangleAnchor;
@@ -41,10 +53,10 @@ import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.jfreechart.JpowderXYBlockRenderer;
 
 /**
- *
- * @author qyt21516
+ * A table which contains File name and File paths data files
+ * which  are going to be plotted in 3D.
  */
-public class FilesTable extends javax.swing.JFrame {
+public class Import3DFilesTable extends javax.swing.JFrame {
 
     private static DefaultTableModel defaultTableModel;
     JFileChooser chooser = new JFileChooser(new File("C:/Documents and Settings/qyt21516/Desktop/My Dropbox"));
@@ -57,7 +69,7 @@ public class FilesTable extends javax.swing.JFrame {
     private Vector<String> metaColumnesName = new Vector<String>();
 
     /** Creates new form FilesTable */
-    public FilesTable(DataVisibleInChart dvic) {
+    public Import3DFilesTable(DataVisibleInChart dvic) {
 
         this.dataVisibleInChart = dvic;
 
@@ -121,14 +133,9 @@ public class FilesTable extends javax.swing.JFrame {
 
     }
 
-    public static File getAFile() {
-        return afile;
-    }
-
-    public static DefaultTableModel getDefaultTableModel() {
-        return defaultTableModel;
-    }
-
+/**
+ * adding column to the table.
+ */
     public void addColumn() {
 
         JTextField textField = new JTextField();
@@ -162,11 +169,17 @@ public class FilesTable extends javax.swing.JFrame {
 //        importData3DTable.moveColumn( importData3DTable.getColumnCount() - 1,
 //                (importData3DTable.getColumnCount() + 2) - importData3DTable.getColumnCount());
     }
-
+/**
+ * Add file to table by filePaths
+ * @param filePath
+ */
     public void addFilesToTable(String filePath) {
         addaFileToTable(new File(filePath));
     }
-
+/**
+ * adding a single file at the time to the table.
+ * @param file
+ */
     public void addFilesToTable(File[] file) {
 
 //        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
@@ -183,7 +196,10 @@ public class FilesTable extends javax.swing.JFrame {
             defaultTableModel.addRow(row);
         }
     }
-
+/**
+ * Adding array of files to the table.
+ * @param afile
+ */
     public void addaFileToTable(File afile) {
 //        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
 
@@ -201,14 +217,6 @@ public class FilesTable extends javax.swing.JFrame {
 
     }
 
-    public void setBlockSize() {
-        JpowderInternalframe3D infocus= Jpowder.internalFrameInFocus3D;
-                  JpowderXYBlockRenderer renderer = (JpowderXYBlockRenderer)infocus.getXYPlot().getRenderer();
-         for(int i=0;i<infocus.getXYPlot().getDatasetCount();i++){
-        renderer.setBlockHeight(Double.parseDouble(defaultTableModel.getValueAt(i, plotAsComboBox.getSelectedIndex()).toString()));
-        renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
-         }
-    }
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -339,7 +347,7 @@ public class FilesTable extends javax.swing.JFrame {
 
         jLabel1.setText("as a function of");
 
-        jButton6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton6.setFont(new java.awt.Font("Tahoma", 1, 12));
         jButton6.setText("?");
         jButton6.setFocusPainted(false);
         jButton6.setMargin(new java.awt.Insets(0, 0, 0, 0));
@@ -567,24 +575,6 @@ public class FilesTable extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-
-//        try {
-//            UIManager.setLookAndFeel(new NimbusLookAndFeel());
-//        } catch (UnsupportedLookAndFeelException ex) {
- //           Logger.getLogger(FilesTable.class.getName()).log(Level.SEVERE, null, ex);
- //       }
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-//                new FilesTable().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addColumn;
     private javax.swing.JButton addColumnButton;

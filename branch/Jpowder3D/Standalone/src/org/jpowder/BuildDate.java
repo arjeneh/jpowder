@@ -21,7 +21,7 @@
  * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
  * Kasem Bundit University.
  *
- * Author(s):  Milad Arjeneh, ISIS, Rutherford Appleton Laboratory
+ * Author(s):  M Arjeneh, ISIS, Rutherford Appleton Laboratory
  *
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
@@ -37,7 +37,7 @@ import java.util.ResourceBundle;
  * the project is buid.
  * 
  */
-public class BuidDate {
+public class BuildDate {
 
     public String getVersion() {
         
