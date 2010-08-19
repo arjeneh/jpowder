@@ -1,6 +1,31 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/* ===========================================================
+ * This file is part of Jpowder, see <http://www.jpowder.org/>
+ * ===========================================================
+ *
+ * Jpowder is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jpowder is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ---------
+ * FilePlotter3D.java
+ * ---------
+ * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
+ * Kasem Bundit University.
+ *
+ * Author(s):  M Arjeneh, ISIS, Rutherford Appleton Laboratory
+ *             Anders Marvardsen, ISIS, Rutherford Appleton Laboratory
+ *
+ * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
+ *
  */
 package org.jpowder.jfreechart;
 
@@ -23,7 +48,7 @@ import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
 
 /**
- *
+ * Plotting the 3D data.
  * @author qyt21516
  */
 public class FilesPlotter3D extends DatasetPlotter {
@@ -32,6 +57,11 @@ public class FilesPlotter3D extends DatasetPlotter {
     private static JFreeChart chart;
     private static XYPlot plot;
 
+    /**
+     *
+     * @param d
+     * @param meta
+     */
     public FilesPlotter3D(Vector<DataSet> d, String meta) {
         super(d);
         FilesPlotter3D.datasets = d;
@@ -74,6 +104,11 @@ public class FilesPlotter3D extends DatasetPlotter {
         return chartPanel;
     }
 
+    /**
+     * creating chart
+     * @param dataset
+     * @return
+     */
     public JFreeChart createChart(XYDataset dataset) {
 
         NumberAxis xAxis = new NumberAxis("X");
@@ -114,8 +149,13 @@ public class FilesPlotter3D extends DatasetPlotter {
 
 
         renderer.setPaintScale(lps);
-        renderer.setBlockHeight(10);
-       // renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
+
+
+//        renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
+
+//        renderer.setBlockHeight(10);
+        // renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
+
 
 
         PaintScaleLegend legend = new PaintScaleLegend(lps,
@@ -141,6 +181,10 @@ public class FilesPlotter3D extends DatasetPlotter {
         return chart;
     }
 
+    /**
+     *  Creating XYZDataset
+     * @return XYZDataset
+     */
     public static XYZDataset createDataset() {
 
 

@@ -1352,7 +1352,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
             if (plotsTab.getSelectedIndex() == 1) {
 
-                FilesTable filesTable = new FilesTable(dataVisibleInChart);
+                Import3DFilesTable filesTable = new Import3DFilesTable(dataVisibleInChart);
                   filesTable.addFilesToTable(selectedFiles);
                   filesTable.setVisible(true);
 
@@ -1414,7 +1414,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     }//GEN-LAST:event_pdfForPublicationActionPerformed
 
     private void ImportTable3DActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportTable3DActionPerformed
-        new FilesTable(dataVisibleInChart).setVisible(true);
+        new Import3DFilesTable(dataVisibleInChart).setVisible(true);
         plotsTab.setSelectedComponent(chartPlotterPane3D);
     }//GEN-LAST:event_ImportTable3DActionPerformed
 

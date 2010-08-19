@@ -32,6 +32,8 @@
         </references>
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
             <word>Jpowder</word>
+            <word>Renderering</word>
+            <word>scientfic</word>
         </spellchecker-wordlist>
     </configuration>
 </project>

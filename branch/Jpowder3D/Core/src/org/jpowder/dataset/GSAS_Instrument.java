@@ -1,12 +1,38 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/* ===========================================================
+ * This file is part of Jpowder, see <http://www.jpowder.org/>
+ * ===========================================================
+ *
+ * Jpowder is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jpowder is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ---------
+ * GSAS_Instrument.java
+ * ---------
+ * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
+ * Kasem Bundit University.
+ *
+ * Author(s):  M Arjeneh, ISIS, Rutherford Appleton Laboratory
+ *
+ *
+ * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
+ *
  */
 package org.jpowder.dataset;
 
 /**
- *
- * @author qyt21516
+ *This class holds all the GSAS instrument file data and the calculate the
+ * value of Dspacing in order to convert data from TOF to Dspacing.
+ * 
  */
 public class GSAS_Instrument {
 
@@ -16,6 +42,12 @@ public class GSAS_Instrument {
     private double d;
     private double tof;
 
+    /**
+     *
+     * @param difc
+     * @param difa
+     * @param zero
+     */
     public GSAS_Instrument(double difc, double difa, double zero) {
 
 
@@ -48,7 +80,13 @@ public class GSAS_Instrument {
     public double getZero() {
         return zero;
     }
-
+/**
+ * Solves the quadratic equation (Ad^2+C*d+(zero-t)=0) for d
+ * if Quadratic equation has more than one answer then it returns
+ * any which is bigger.
+ * @param tof
+ * @return d
+ */
     public double toDspacing(double tof) {
 
 
@@ -78,9 +116,11 @@ public class GSAS_Instrument {
     }
 
    /**
+    * Solves quadratic equation for TOF. So data can be converted back
+    * into the original form.
     *
     * @param dspacing
-    * @return
+    * @return tof
     */
     public double toTOF(double dspacing){
 

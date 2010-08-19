@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * ---------
- * JpowderInternalframe.java
+ * JpowderInternalframe2D.java
  * ---------
  * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
  * Kasem Bundit University.
@@ -57,7 +57,7 @@ import org.jfree.chart.plot.XYPlot;
 
 /**
  *
- * @author M Arjeneh
+ * InternalFrame 2D
  */
 public class JpowderInternalframe2D extends JpowderInternalframe implements DropTargetListener {
 

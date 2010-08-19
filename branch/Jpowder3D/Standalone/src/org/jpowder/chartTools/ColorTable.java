@@ -11,18 +11,13 @@
 package org.jpowder.chartTools;
 
 //import com.sun.awt.AWTUtilities;
-import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
+//import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 import java.awt.Color;
-import java.awt.geom.RoundRectangle2D;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JColorChooser;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- *
- * @author qyt21516
+ * Colour Panel Test.
+ * @author Arjeneh
  */
 public class ColorTable extends javax.swing.JFrame {
 
@@ -237,11 +232,7 @@ public class ColorTable extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                try {
-                    UIManager.setLookAndFeel(new WindowsLookAndFeel());
-                } catch (UnsupportedLookAndFeelException ex) {
-                    Logger.getLogger(ColorTable.class.getName()).log(Level.SEVERE, null, ex);
-                }
+           
 //                 JFrame.setDefaultLookAndFeelDecorated(true);
                 ColorTable colorTable = new ColorTable();
 

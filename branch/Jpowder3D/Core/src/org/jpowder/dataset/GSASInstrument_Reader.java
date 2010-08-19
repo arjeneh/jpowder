@@ -1,6 +1,31 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/* ===========================================================
+ * This file is part of Jpowder, see <http://www.jpowder.org/>
+ * ===========================================================
+ *
+ * Jpowder is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jpowder is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ---------
+ * GSASInstrument_Reader.java
+ * ---------
+ * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
+ * Kasem Bundit University.
+ *
+ * Author(s):  M Arjeneh, ISIS, Rutherford Appleton Laboratory
+ *
+ *
+ * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
+ *
  */
 package org.jpowder.dataset;
 
@@ -15,14 +40,21 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author qyt21516
+ * Reads data from the instrument file and store into a Vector of a Vector.
+ * It find DifC, DifA and Zero values from the instrument file.
  */
 public class GSASInstrument_Reader {
 
     private static double t = 1;//time of flight
     private static double d;//d spacing
     private static Vector<Vector<String>> aBC = new Vector<Vector<String>>();
-
+/**
+ * Get the file paths then extract the required information and store into the
+ * DataSet as Vector.
+ *
+ * @param dataset
+ * @param aFile
+ */
     public static void read(Vector<DataSet> dataset, File aFile) {
         FileReader fileReader = null;
         try {
@@ -62,43 +94,14 @@ public class GSASInstrument_Reader {
 
 
 
-//
-//                         d = (Math.pow(Double.parseDouble(aBC.get(0).get(4)), 2)) -
-//                                 (4 * Double.parseDouble(aBC.get(0).get(3)) *
-//                                 Double.parseDouble(aBC.get(0).get(5)));
-//                         System.out.println(d);
-
-
                     }
                 }
 
             }
 
-//            d = Math.pow(Double.parseDouble(aBC.get(0).get(3)), 2) -
-//                    4 * (Double.parseDouble(aBC.get(0).get(4)) *
-//                    ((Double.parseDouble(aBC.get(0).get(5))) - t));
-//            System.out.println(d);
-//
-//            if (d < 0) {
-//                System.out.println("there is no real solution");
-//
-//            } else if (d == 0) {
-//                System.out.print("there is only one solution: ");
-//                System.out.println(-Double.parseDouble(aBC.get(0).get(3)) / (2 * Double.parseDouble(aBC.get(0).get(4))));
-//            } else {
-//                System.out.println("X1 = " + (-Double.parseDouble(aBC.get(0).get(3)) + Math.sqrt(d)) / (2 * Double.parseDouble(aBC.get(0).get(4))));
-//                System.out.println("X2 = " + (-Double.parseDouble(aBC.get(0).get(3)) - Math.sqrt(d)) / (2 * Double.parseDouble(aBC.get(0).get(4))));
-//            }
-            //d=2.08838047456E7
-// enter value for a: -0.66
-//enter value for b: 4569.88
-//enter value for c: 0.58
-//X1 = -1.2691799094516847E-4
-//X2 = 6924.060732978597
-
-            System.out.println(Double.parseDouble(aBC.get(0).get(4)) + "d^2 + " +
-                    Double.parseDouble(aBC.get(0).get(3)) + "d + " +
-                    Double.parseDouble(aBC.get(0).get(5)) + "-t" + "=0");
+//            System.out.println(Double.parseDouble(aBC.get(0).get(4)) + "d^2 + " +
+//                    Double.parseDouble(aBC.get(0).get(3)) + "d + " +
+//                    Double.parseDouble(aBC.get(0).get(5)) + "-t" + "=0");
         } catch (IOException ex) {
             Logger.getLogger(GSASInstrument_Reader.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -116,7 +119,4 @@ public class GSASInstrument_Reader {
         }
     }
 
-    public static Vector<Vector<String>> getABC() {
-        return aBC;
-    }
 }

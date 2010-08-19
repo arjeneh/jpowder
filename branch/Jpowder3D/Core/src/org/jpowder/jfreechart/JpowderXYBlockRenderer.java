@@ -1,5 +1,3 @@
-
-
 package org.jpowder.jfreechart;
 
 import java.awt.BasicStroke;
@@ -8,6 +6,7 @@ import java.awt.Paint;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
+import java.util.Vector;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -27,7 +26,6 @@ import org.jfree.data.xy.XYZDataset;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.util.PublicCloneable;
 
-
 public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
         implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
 
@@ -35,24 +33,21 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
      * The block width (defaults to 1.0).
      */
     private double blockWidth = 1.0;
-
     /**
      * The block height (defaults to 1.0).
      */
     private double blockHeight = 3.0;
-
+    private Vector<Double> blockHeightLower;
+    private Vector<Double> blockHeightUpper;
     /**
      * The anchor point used to align each block to its (x, y) location.  The
      * default value is <code>RectangleAnchor.CENTER</code>.
      */
-    private RectangleAnchor blockAnchor = RectangleAnchor.CENTER;
-
+    private RectangleAnchor blockAnchor = RectangleAnchor.BOTTOM;
     /** Temporary storage for the x-offset used to align the block anchor. */
     private double xOffset;
-
     /** Temporary storage for the y-offset used to align the block anchor. */
     private double yOffset;
-
     /** The paint scale. */
     private PaintScale paintScale;
 
@@ -90,6 +85,21 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
                     "The 'width' argument must be > 0.0");
         }
         this.blockWidth = width;
+        updateOffsets();
+        fireChangeEvent();
+    }
+
+    /**
+     * Sets the width of the blocks used to represent each data item and
+     * sends a {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param width  the new width, in data/axis units (must be > 0.0).
+     *
+     * @see #getBlockWidth()
+     */
+    public void setBlockWidth(Vector<Double> low, Vector<Double> upper) {
+        this.blockHeightLower = low;
+        this.blockHeightLower = upper;
         updateOffsets();
         fireChangeEvent();
     }
@@ -192,36 +202,28 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
         if (this.blockAnchor.equals(RectangleAnchor.BOTTOM_LEFT)) {
             this.xOffset = 0.0;
             this.yOffset = 0.0;
-        }
-        else if (this.blockAnchor.equals(RectangleAnchor.BOTTOM)) {
+        } else if (this.blockAnchor.equals(RectangleAnchor.BOTTOM)) {
             this.xOffset = -this.blockWidth / 2.0;
             this.yOffset = 0.0;
-        }
-        else if (this.blockAnchor.equals(RectangleAnchor.BOTTOM_RIGHT)) {
+        } else if (this.blockAnchor.equals(RectangleAnchor.BOTTOM_RIGHT)) {
             this.xOffset = -this.blockWidth;
             this.yOffset = 0.0;
-        }
-        else if (this.blockAnchor.equals(RectangleAnchor.LEFT)) {
+        } else if (this.blockAnchor.equals(RectangleAnchor.LEFT)) {
             this.xOffset = 0.0;
             this.yOffset = -this.blockHeight / 2.0;
-        }
-        else if (this.blockAnchor.equals(RectangleAnchor.CENTER)) {
+        } else if (this.blockAnchor.equals(RectangleAnchor.CENTER)) {
             this.xOffset = -this.blockWidth / 2.0;
             this.yOffset = -this.blockHeight / 2.0;
-        }
-        else if (this.blockAnchor.equals(RectangleAnchor.RIGHT)) {
+        } else if (this.blockAnchor.equals(RectangleAnchor.RIGHT)) {
             this.xOffset = -this.blockWidth;
             this.yOffset = -this.blockHeight / 2.0;
-        }
-        else if (this.blockAnchor.equals(RectangleAnchor.TOP_LEFT)) {
+        } else if (this.blockAnchor.equals(RectangleAnchor.TOP_LEFT)) {
             this.xOffset = 0.0;
             this.yOffset = -this.blockHeight;
-        }
-        else if (this.blockAnchor.equals(RectangleAnchor.TOP)) {
+        } else if (this.blockAnchor.equals(RectangleAnchor.TOP)) {
             this.xOffset = -this.blockWidth / 2.0;
             this.yOffset = -this.blockHeight;
-        }
-        else if (this.blockAnchor.equals(RectangleAnchor.TOP_RIGHT)) {
+        } else if (this.blockAnchor.equals(RectangleAnchor.TOP_RIGHT)) {
             this.xOffset = -this.blockWidth;
             this.yOffset = -this.blockHeight;
         }
@@ -244,13 +246,11 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
             Range r = DatasetUtilities.findDomainBounds(dataset, false);
             if (r == null) {
                 return null;
-            }
-            else {
+            } else {
                 return new Range(r.getLowerBound() + this.xOffset,
                         r.getUpperBound() + this.blockWidth + this.xOffset);
             }
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -272,13 +272,11 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
             Range r = DatasetUtilities.findRangeBounds(dataset, false);
             if (r == null) {
                 return null;
-            }
-            else {
+            } else {
                 return new Range(r.getLowerBound() + this.yOffset,
                         r.getUpperBound() + this.blockHeight + this.yOffset);
             }
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -312,8 +310,8 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
 
         //This if statement controls the visbility of data in xyblockrenderer.
         if (!getItemVisible(series, item)) {
-             return;
-           }
+            return;
+        }
 
 
         if (!isSeriesVisible(series)) {
@@ -324,28 +322,29 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
             z = ((XYZDataset) dataset).getZValue(series, item);
         }
 
-        System.out.println("block" + this.blockHeight*item);
+ 
 
         Paint p = this.paintScale.getPaint(z);
         double xx0 = domainAxis.valueToJava2D(x + this.xOffset, dataArea,
                 plot.getDomainAxisEdge());
         double yy0 = rangeAxis.valueToJava2D(y + this.yOffset, dataArea,
                 plot.getRangeAxisEdge());
-        double xx1 = domainAxis.valueToJava2D(x + this.blockWidth
-                + this.xOffset, dataArea, plot.getDomainAxisEdge());
-        double yy1 = rangeAxis.valueToJava2D(y + this.blockHeight
-                + this.yOffset, dataArea, plot.getRangeAxisEdge());
+        double xx1 = domainAxis.valueToJava2D(x + this.blockWidth +
+                this.xOffset, dataArea, plot.getDomainAxisEdge());
+        double yy1 = rangeAxis.valueToJava2D(y + this.blockHeight+
+                this.yOffset, dataArea, plot.getRangeAxisEdge());
         Rectangle2D block;
         PlotOrientation orientation = plot.getOrientation();
         if (orientation.equals(PlotOrientation.HORIZONTAL)) {
             block = new Rectangle2D.Double(Math.min(yy0, yy1),
                     Math.min(xx0, xx1), Math.abs(yy1 - yy0),
                     Math.abs(xx0 - xx1));
-        }
-        else {
+        
+        } else {
             block = new Rectangle2D.Double(Math.min(xx0, xx1),
                     Math.min(yy0, yy1), Math.abs(xx1 - xx0),
-                    Math.abs(yy1 - yy0));
+                    Math.abs(yy1 - yy0)+10);
+              
         }
         g2.setPaint(p);
         g2.fill(block);
@@ -416,5 +415,4 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
         }
         return clone;
     }
-
 }

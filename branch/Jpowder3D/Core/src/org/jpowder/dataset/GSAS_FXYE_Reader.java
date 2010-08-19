@@ -16,13 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * ---------
- * GSAS_Reader.java
+ * GSAS_FXYE_Reader.java
  * ---------
  * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
  * Kasem Bundit University.
  *
  * Author(s):  M Arjeneh, ISIS, Rutherford Appleton Laboratory
- *             Anders Marvardsen, ISIS, Rutherford Appleton Laboratory
+ *             
  *
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *

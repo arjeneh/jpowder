@@ -11,8 +11,8 @@ import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 
 /**
- *
- * @author qyt21516
+ * A test Class
+ * @author Arjeneh
  */
 public class ColorPanel extends JPanel implements MouseListener {
 

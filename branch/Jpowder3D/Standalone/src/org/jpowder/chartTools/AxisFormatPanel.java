@@ -1,12 +1,30 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * AxisFormatPanel.java
+/* ===========================================================
+ * This file is part of Jpowder, see <http://www.jpowder.org/>
+ * ===========================================================
  *
- * Created on Aug 10, 2010, 3:25:04 PM
+ * Jpowder is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jpowder is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ---------
+ * AxisFormatPanel.java
+ * ---------
+ * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
+ * Kasem Bundit University.
+ *
+ * Author(s):  M Arjeneh, ISIS, Rutherford Appleton Laboratory
+ *
+ * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
+ *
  */
 package org.jpowder.chartTools;
 
@@ -27,8 +45,8 @@ import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 
 /**
+ * Formatting the axis like change the colour, Width and NumberFormat.
  *
- * @author Arjeneh
  */
 public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
 
@@ -90,12 +108,17 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
         ((DefaultFormatter) ((JSpinner.DefaultEditor) axisOffserSpinner.getEditor()).getTextField().getFormatter()).setAllowsInvalid(true);
 
     }
-
+/**
+ * get Decimal places for scientfic format.
+ * @return String
+ */
     public static String getDecimalPattern() {
 //        decimal = decimalPlacesSpinner.getValue().toString();
         return "0." + decimal + "E0";
     }
-
+/**
+ * Change the xAxis to scientific format.
+ */
     public void xAxisScientificNotation() {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
@@ -107,7 +130,9 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
         }
 
     }
-
+/**
+ * change yAxis to scientific format.
+ */
     public void yAxisScientificNotation() {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         if (yScientific.isSelected()) {
@@ -120,13 +145,17 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
         }
 
     }
-
+/**
+ * fill the text files with xAxis tickUnit size
+ */
     public void fillTheXTickField() {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         NumberAxis xAxis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
         xTickField.setText(Double.toString(xAxis.getTickUnit().getSize()));
     }
-
+/**
+ * file the yAxis with range tickUnit size.
+ */
     public void fillTheYTickField() {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         NumberAxis yAxis = (NumberAxis) inFocus.getXYPlot().getRangeAxis();
@@ -134,7 +163,7 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
     }
 
     /**
-     * 
+     * apply tick spacing to the axes.
      */
     public void applyTickSpacing() {
         if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {

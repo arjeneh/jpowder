@@ -15,7 +15,6 @@ import java.awt.Color;
 import java.util.Collections;
 import org.jfree.chart.renderer.GrayPaintScale;
 import org.jfree.chart.renderer.PaintScale;
-import org.jfree.chart.renderer.xy.XYBlockRenderer;
 import org.jfree.chart.title.PaintScaleLegend;
 import org.jfree.ui.RectangleEdge;
 import org.jpowder.Analysis.ToolsIcon3D;
@@ -28,7 +27,7 @@ import org.jpowder.jfreechart.RainBowPaintScale;
 
 /**
  *
- * @author Arjeneh
+ * first Tools for 3D plot
  */
 public class ColorBar extends javax.swing.JPanel implements InfoPanel {
 
@@ -62,7 +61,6 @@ public class ColorBar extends javax.swing.JPanel implements InfoPanel {
         jRadioButton5 = new javax.swing.JRadioButton();
         jRadioButton6 = new javax.swing.JRadioButton();
         jRadioButton7 = new javax.swing.JRadioButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
 
         jLabel1.setText("Setting Colour bar  location");
 
@@ -142,14 +140,6 @@ public class ColorBar extends javax.swing.JPanel implements InfoPanel {
             }
         });
 
-        jCheckBox1.setSelected(true);
-        jCheckBox1.setText("Test");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -177,7 +167,6 @@ public class ColorBar extends javax.swing.JPanel implements InfoPanel {
                             .addComponent(jRadioButton1))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox1)
                     .addComponent(jRadioButton5)
                     .addComponent(jButton1)
                     .addComponent(jRadioButton6)
@@ -213,9 +202,7 @@ public class ColorBar extends javax.swing.JPanel implements InfoPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jRadioButton6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton7)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCheckBox1)))
+                        .addComponent(jRadioButton7)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -337,27 +324,12 @@ public class ColorBar extends javax.swing.JPanel implements InfoPanel {
          renderer.setPaintScale(gr);
     }//GEN-LAST:event_jRadioButton7ActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
-
-        JpowderXYBlockRenderer renderer =(JpowderXYBlockRenderer) inFocus.getXYPlot().getRenderer(0);
-//        renderer.setBlockHeight(10);
-
-//        boolean set=renderer.isSeriesVisible(1);
-//        renderer.setSeriesVisible(1, !set);
-
-//org.jfree.data.xy.DefaultXYZDataset@a43a3662
-//String s=inFocus.getChart().getXYPlot().getDataset().toString();
-//        System.out.println(s.substring(0,s.indexOf("@") ));
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
