@@ -34,21 +34,13 @@ import org.jpowder.Jpowder;
 import org.jpowder.InernalFrame.JpowderInternalframe2D;
 
 /**
- * listen for change event in the table and if value changes then
- * it set new value of WaveLength in DataSet Class as well.
+ * listen for change event in the table and if value is changed then
+ * it is set as the new WaveLength value in DataSet Class as well.
  * 
  */
-public class TableListenerBrags implements TableModelListener {
+public class TableListenerBraggsLaw implements TableModelListener {
 
     private double newWaveLength;
-
-
-//    public TableListenerBrags(double newWavelength) {
-//
-//        this.newWaveLength = newWavelength;
-//
-//    }
-
 
     @Override
     public void tableChanged(TableModelEvent e) {

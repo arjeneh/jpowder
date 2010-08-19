@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * IN TESTING STATE: PURPOSE SAVE ALL INTERNAL FRAMES
  */
 package org.jpowder;
 
@@ -30,7 +29,8 @@ import javax.swing.UIManager;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
-/**
+/**  IN TESTING STATE
+ *
  * A simple internal frame demo.
  *
  */

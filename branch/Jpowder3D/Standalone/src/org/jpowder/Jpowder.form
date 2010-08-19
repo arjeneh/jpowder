@@ -236,12 +236,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="propertiesMenuActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="ImportTable3D">
+            <MenuItem class="javax.swing.JMenuItem" name="importTable3D">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Create 3D Plot"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ImportTable3DActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="importTable3DActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -341,7 +341,7 @@
             </Property>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="onlieDocsandSupportMenu">
+            <MenuItem class="javax.swing.JMenuItem" name="onlineDocsAndSupportMenu">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+F2"/>
@@ -352,7 +352,7 @@
                 <Property name="text" type="java.lang.String" value="Online Docs and Support"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onlieDocsandSupportMenuActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onlineDocsAndSupportMenuActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="aboutMenu">

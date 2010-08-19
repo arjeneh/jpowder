@@ -37,7 +37,7 @@ import org.jpowder.dataset.GSAS_Instrument;
 
 /**
  *
- * This Class get value fro the Table and sets values of
+ * This class get value from the Table and sets values of
  * DifC, DifA and Zero values.
  */
 public class TableListenerGSAS implements TableModelListener {
@@ -53,12 +53,7 @@ public class TableListenerGSAS implements TableModelListener {
         gsasi = new GSAS_Instrument(newDifC, newDifC, newZero);
     }
 
-//    public TableListenerGSAS(double newDifC, double newDifA, double newZero) {
-//        this.newDifC = newDifC;
-//        this.newDifA = newDifA;
-//        this.newZero = newZero;
-//
-//    }
+
     @Override
     public void tableChanged(TableModelEvent e) {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
@@ -103,13 +98,6 @@ public class TableListenerGSAS implements TableModelListener {
                 }
 
                 inFocus.getPowderDataSet().get(i).setGSAS_Instrument(gsasi);
-
-//System.out.println(GSASTable.getGSASTable().getModel().
-//                                getValueAt(i, 1).toString());
-//                        System.out.println(GSASTable.getGSASTable().getModel().
-//                                getValueAt(i, 2).toString());
-//                        System.out.println(GSASTable.getGSASTable().getModel().
-//                                getValueAt(i, 3).toString());
 
             }
         }

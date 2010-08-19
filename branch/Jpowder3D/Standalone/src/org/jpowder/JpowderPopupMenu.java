@@ -63,20 +63,21 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.ui.ExtensionFileFilter;
 
 /**
- * This class created some new popupMenu and also amodifiies the default
- * popupMenu of jfreechart.
- * @author M Arjeneh
+ * This class creates some new popupMenu and also modifies some of the
+ * JFreeChart default menu options
  */
 public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
 
     private JFreeChart chart;
     private JPopupMenu popupMenu;
     private ChartPanel chartPanel;
-    private XYPlot plot;
+    private XYPlot plot;  // used to pick up whether 2D or 3D plot
     private double X = -1;
         /** The resourceBundle for the localization. */
     protected static ResourceBundle localizationResources =
             ResourceBundle.getBundle("org/jpowder/JpowderPopUpMenu");
+    //    protected static ResourceBundle localizationResources =
+    //        ResourceBundle.getBundle("org/jpowder/JpowderPopUpMenuDanish");
     
     public static final String PDF_CAMAND = "PDF";
     public static final String PDFForPublicatio_CAMAND = "PDFForPublication";

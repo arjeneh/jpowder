@@ -41,7 +41,7 @@ import org.jpowder.InernalFrame.JpowderInternalframe2D;
 import org.jpowder.chartTools.ComboBoxRenderer;
 
 /**
- * Move and rescale a plot along the y axis .
+ * Move and rescale a plot along the y axis.
  * 
  */
 public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
@@ -53,9 +53,6 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
     public RescaleYdata(ToolsIcon2D analysisIcon) {
         initComponents();
         this.toolsIcon = analysisIcon;
-
-
-
     }
 
     public void update() {
@@ -67,15 +64,13 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
             String labels[] = {"No Chart Added"};
             dataSetComboBox.setModel(new javax.swing.DefaultComboBoxModel(labels));
         }
-
-
     }
 
     /**
      * This Label is for adding the
-     * @return rescaleLabel
+     * @return rescaled label
      */
-    public JLabel getRescalLabel() {
+    public JLabel getRescaleLabel() {
         return rescaleLabel;
     }
 
@@ -87,16 +82,12 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
             string[i] = inFocus.getPowderDataSet().elementAt(i).getFileName();
 
             dataSetComboBox.setRenderer(new ComboBoxRenderer());
-
-//    dataSetComboBox.setBackground((Color) FilesPlotter.allseriescolors[i]);
-
         }
         return string;
     }
 
     public void applyRescaling() {
         if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
-//            applyButton.setSelected(false);
             return;
         }
         for (int i = 0; i < 4; i++) {
@@ -139,9 +130,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
                     }
                 }
             }
-
         }
-
         inFocus.getChartPanel().restoreAutoRangeBounds();
     }
 
@@ -163,7 +152,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
         constantField = new javax.swing.JTextField();
         backButton = new javax.swing.JButton();
         rescaleLabel = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        autoRescaling = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(320, 400));
 
@@ -210,10 +199,10 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
         rescaleLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rescale_Large.png"))); // NOI18N
         rescaleLabel.setToolTipText("Rescale And Move The Plot");
 
-        jButton1.setText("Auto Rescalying");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        autoRescaling.setText("Auto Rescaling");
+        autoRescaling.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                autoRescalingActionPerformed(evt);
             }
         });
 
@@ -221,7 +210,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -229,7 +218,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rescaleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+                    .addComponent(rescaleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -237,15 +226,15 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dataSetComboBox, 0, 259, Short.MAX_VALUE)
+                            .addComponent(dataSetComboBox, 0, 244, Short.MAX_VALUE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(constantField, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(operationComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 41, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(216, Short.MAX_VALUE))
+                .addComponent(autoRescaling)
+                .addContainerGap(205, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,8 +257,8 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
                             .addComponent(jLabel4)
                             .addComponent(constantField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(27, 27, 27)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                .addComponent(autoRescaling)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -292,7 +281,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
         applyRescaling();
     }//GEN-LAST:event_constantFieldActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void autoRescalingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoRescalingActionPerformed
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         double maxY, minY, resultant;
         Vector<Double> peaks = new Vector<Double>();
@@ -300,7 +289,6 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 
             maxY = (Double) Collections.max(inFocus.getPowderDataSet().elementAt(i).getY());
             minY = (Double) Collections.min(inFocus.getPowderDataSet().elementAt(i).getY());
-//              peaks.add(minY);
             peaks.add(minY);
 
         }
@@ -335,12 +323,12 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
   inFocus.getChartPanel().restoreAutoRangeBounds();
         }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_autoRescalingActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton autoRescaling;
     private javax.swing.JButton backButton;
     private javax.swing.JTextField constantField;
     private javax.swing.JComboBox dataSetComboBox;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

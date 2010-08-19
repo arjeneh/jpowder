@@ -39,7 +39,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- *
+ * Look and Feel for the whole application.
  * 
  */
 public class LookAndFeel {

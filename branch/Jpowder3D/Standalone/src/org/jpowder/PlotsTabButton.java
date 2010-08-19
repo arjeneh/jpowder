@@ -29,7 +29,7 @@
 package org.jpowder;
 
 /**
- * Creating button to be added to the 2D and 3D tabs.
+ * Creating button to be added to the 2D and 3D tabs, which contains a desktop pane
  * 
  */
 import javax.swing.*;

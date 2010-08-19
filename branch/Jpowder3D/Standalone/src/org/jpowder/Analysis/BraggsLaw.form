@@ -129,21 +129,21 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jSeparator1" alignment="0" pref="324" max="32767" attributes="0"/>
+          <Component id="jSeparator1" alignment="0" pref="328" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="backButton" min="-2" pref="84" max="-2" attributes="1"/>
-              <EmptySpace pref="230" max="32767" attributes="0"/>
+              <EmptySpace pref="234" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel2" pref="304" max="32767" attributes="0"/>
+              <Component id="jLabel2" pref="308" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="105" max="32767" attributes="0"/>
+              <EmptySpace pref="109" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="1" attributes="0">
@@ -152,7 +152,7 @@
                       <Component id="unitComboBox1" min="-2" pref="56" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="97" max="32767" attributes="0"/>
+                      <EmptySpace pref="101" max="32767" attributes="0"/>
                       <Component id="unitComboBox2" min="-2" pref="53" max="-2" attributes="1"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
@@ -166,7 +166,7 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="tablePanel" pref="304" max="32767" attributes="0"/>
+              <Component id="tablePanel" pref="308" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>

@@ -42,8 +42,8 @@ import org.jpowder.InernalFrame.JpowderInternalframe2D;
 import org.jpowder.dataset.GSASInstrument_Reader;
 
 /**
- * this class is for converting the values of x axis from 2ө to d using the
- * braggs law (2dSinө=λ), where λ is the wavelength of the X-rays (and moving
+ * This class is for converting the x-axis values from 2ө to d using
+ * braggs law (2dSinө=λ), where λ is the wavelength of the X-rays (or moving
  * electrons, protons and neutrons), d is the spacing between the planes in the
  * atomic lattice, and θ is the angle between the incident ray and the scattering
  * planes.
@@ -54,11 +54,10 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
     private ToolsIcon2D toolsIcon;
     private String[][] dataSetAndWaveLength;
     private String[][] gSASData;
-    private double newWaveLength;
     private String columnsName[] = {"Plot(s)", "Wavelength"};
     private String columnsNameGSAS[] = {"Plot(s)", "DifC","DifA","Zero"};
-    private DefaultTableModel defaultTableModel;
-    private DefaultTableModel defaultTableModel2;
+    private DefaultTableModel tableModelConstantWavelength; 
+    private DefaultTableModel tableModelGSAS;
 
 
     /** Creates new form BraggsLow */
@@ -75,9 +74,9 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
 //            setComponentEnable();
-            if (defaultTableModel != null) {
-                defaultTableModel.getDataVector().removeAllElements();//remove all the rows from table
-                defaultTableModel2.getDataVector().removeAllElements();
+            if (tableModelConstantWavelength != null) {
+                tableModelConstantWavelength.getDataVector().removeAllElements();//remove all the rows from table
+                tableModelGSAS.getDataVector().removeAllElements();
             }
        
             return;
@@ -89,7 +88,6 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                 bragsPanel.setVisible(true);
                 tablePanel.add(bragsPanel);
                 gsaspanel.setVisible(false);
-//                gSASTable.setVisible(false);
 
             }
 
@@ -98,8 +96,6 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
             if (inFocus.getPowderDataSet().get(i).getXUnit().equals("TOF")) {
 
                 gsaspanel.setVisible(true);
-//                gSASTable.setVisible(true);
-//                gSASTable.populateTable2();
                 tablePanel.add(gsaspanel);
                 bragsPanel.setVisible(false);
 
@@ -107,7 +103,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
         }
 
-        defaultTableModel2= new DefaultTableModel(getGSASData(), columnsNameGSAS){
+        tableModelGSAS= new DefaultTableModel(getGSASData(), columnsNameGSAS){
             @Override
             public boolean isCellEditable(int row, int column) {
                 if (column == 0) {
@@ -117,7 +113,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                 }
             }
         };
-        defaultTableModel = new DefaultTableModel(getDataSetAndWaveLength(), columnsName) {
+        tableModelConstantWavelength = new DefaultTableModel(getDataSetAndWaveLength(), columnsName) {
 
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -130,19 +126,15 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         };
 
 
-        dataTable.setModel(defaultTableModel);
-        gsastable.setModel(defaultTableModel2);
+        dataTable.setModel(tableModelConstantWavelength);
+        gsastable.setModel(tableModelGSAS);
         setSizeOfColumn();
 
-        defaultTableModel.addTableModelListener(new TableListenerBrags());
-        defaultTableModel2.addTableModelListener(new TableListenerGSAS(gsastable));
+        tableModelConstantWavelength.addTableModelListener(new TableListenerBraggsLaw());
+        tableModelGSAS.addTableModelListener(new TableListenerGSAS(gsastable));
 
         dataTable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableRenderer());
         gsastable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableRenderer());
-
-//        dataTable.setEditingColumn(1);
-        //printing the data in the tables
-//        printStringArray(getDataSetAndWaveLength());
 
         requestMessage();
     }
@@ -150,7 +142,7 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
     /**
      * This method create a two dimensional array which holds the file names and
      * and the WaveLengths if it exist in the data files.
-     * @return dataSetAndWaveLength
+     * @return filename and possibly wavelength
      */
     public String[][] getDataSetAndWaveLength() {
 
@@ -170,8 +162,12 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         return dataSetAndWaveLength;
     }
 
-
-      public String[][] getGSASData() {
+    /**
+     * This method create a two dimensional array which holds the file names and
+     * and the DIFA, DIFC, ZERO if exist in the data files.
+     * @return filename and possibly DIFA, DIFC, ZERO
+     */
+     public String[][] getGSASData() {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         int size = inFocus.getXYPlot().getDatasetCount();
         gSASData = new String[size][4];
@@ -198,8 +194,6 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
     }
 
 
-
-
     /**
      *  this method prints the data which is in the table.
      * @param printArray
@@ -214,10 +208,9 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                 }
             }
         }
-
-
     }
 
+    
     /**
      * Adding a message to table to ask user to add a value for the wave length.
      */
@@ -226,8 +219,8 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             if (!inFocus.getPowderDataSet().get(i).getFileName().endsWith(".cif")) {
 
-                if (defaultTableModel.getValueAt(i, 1).equals("0.0")) {
-                    defaultTableModel.setValueAt("", i, 1);
+                if (tableModelConstantWavelength.getValueAt(i, 1).equals("0.0")) {
+                    tableModelConstantWavelength.setValueAt("", i, 1);
                 }
 
             }
@@ -260,13 +253,10 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             maxX = (Double) Collections.max(inFocus.getPowderDataSet().elementAt(i).getX());
             minX = (Double) Collections.min(inFocus.getPowderDataSet().elementAt(i).getX());
-//            System.out.println("max y" + maxY);
         }
         NumberAxis axis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
         axis.setLowerBound(minX);
         axis.setUpperBound(maxX);
-
-//        System.out.println("MinX : "+minX);
 
         inFocus.getChart().setNotify(true);
     }
@@ -520,10 +510,8 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
                 javax.swing.JOptionPane.showMessageDialog(null, "The unit is already in 2Ө.");
                 return;
             }
+
             // testing if all wavelenghts have been set
-
-
-
 
             for (int i = 0; i < seriescount; i++) {
                 try {
@@ -540,7 +528,6 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
 
             for (int i = 0; i < seriescount; i++) {
-//            try {
                 inFocus.getPowderDataSet().elementAt(i).getX();
                 XYDataset ds = inFocus.getXYPlot().getDataset(i);
 
@@ -622,11 +609,11 @@ public class BraggsLaw extends javax.swing.JPanel implements InfoPanel {
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
 
-            defaultTableModel2.getDataVector().removeAllElements();
+            tableModelGSAS.getDataVector().removeAllElements();
             File file = chooser.getSelectedFile();
             GSASInstrument_Reader.read(inFocus.getPowderDataSet(), file);
-            defaultTableModel2 = new DefaultTableModel(getGSASData(), columnsNameGSAS);
-            gsastable.setModel(defaultTableModel2);
+            tableModelGSAS = new DefaultTableModel(getGSASData(), columnsNameGSAS);
+            gsastable.setModel(tableModelGSAS);
            gsastable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableRenderer());
         } else {
             return;

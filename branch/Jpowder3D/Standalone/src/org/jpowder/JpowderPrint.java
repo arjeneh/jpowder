@@ -44,7 +44,7 @@ import org.jpowder.InernalFrame.JpowderInternalframe;
 import org.jpowder.chartTools.CreateLegend;
 
 /**
- *This class prints the chart
+ * This class prints the chart
  *
  */
 public class JpowderPrint implements Serializable{

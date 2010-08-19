@@ -248,7 +248,7 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
                     this.getPowderDataSet());
         }
         Jpowder.jpowderInternalFrameUpdate(this);
-        Jpowder.moemoryChecker();
+        Jpowder.memoryChecker();
     }
 }
 

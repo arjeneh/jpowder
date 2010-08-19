@@ -54,26 +54,21 @@ import org.jpowder.InernalFrame.JpowderInternalframe2D;
 import org.jpowder.chartTools.Magnifier;
 
 /**
- *Selecting the peak positions
+ * Selecting the peak positions
  * 
  */
 public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, ChartMouseListener {
 
     private ToolsIcon2D toolsIcon;
-//    private List<Marker> peakRangeMarker = new ArrayList<Marker>();
-//    private List<Marker> peakDomainMarker = new ArrayList<Marker>();
     private String[] string;
     private double x;
     private double y;
     private DefaultListModel model = new DefaultListModel();
 
-//  private String[] strings;
     /** Creates new form Peack */
     public MarkPeakPosition(ToolsIcon2D analysisIcon) {
         initComponents();
         this.toolsIcon = analysisIcon;
-
-
     }
 
     public void update() {
@@ -86,9 +81,6 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
         }else {
             getPeakCheckBox.setEnabled(true);
-
-
-
         }
 
         model.clear();
@@ -100,19 +92,6 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
             model.addElement(inFocus.getMarkedPeakPosition().elementAt(i));
 
         }
-
-//        getPeakDomainMarker().clear();
-//        System.out.println("marker size1::"+getPeakDomainMarker().size());
-//        for (int i = 0; i < inFocus.getMarkedPeakPosition().size(); i++) {
-////             inFocus.getChartPanel().addChartMouseListener(this);
-//
-//        ValueMarker domainMarker = new ValueMarker(inFocus.getMarkedPeakPosition().get(i));
-//        domainMarker.setStroke(new BasicStroke(1.4f));
-//        domainMarker.setPaint(Color.yellow);
-////        peakDomainMarker.add(domainMarker);
-////        inFocus.getXYPlot().addDomainMarker(domainMarker);
-//        }
-//          System.out.println("marker size2::"+getPeakDomainMarker().size());
     }
 
     /** This method is called from within the constructor to
@@ -251,9 +230,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 
         if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() > 0) {
-                JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-//            removePeaksPosition();
-                        //magnifier
+            JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
             JXLayer layer = new JXLayer(inFocus.getChartPanel());
             Magnifier magnifier = new Magnifier();
             magnifier.setRadius(0);
@@ -341,28 +318,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     public void chartMouseMoved(ChartMouseEvent arg0) {
     }
 
-    /**
-     *
-     * @return
-     */
-//    public ValueMarker getValueMarker() {
-//        return domainMarker;
-//    }
-    /**
-     *
-     * @return
-     */
-//    public List<Marker> getPeakRangeMarker() {
-//
-//        return peakRangeMarker;
-//    }
-    /**
-     *
-     * @return
-     */
-//    public List<Marker> getPeakDomainMarker() {
-//        return peakDomainMarker;
-//    }
+
     private void removeAllButtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAllButtActionPerformed
         if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             removeAllButt.setSelected(false);
@@ -450,10 +406,10 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
             //Range
 
             inFocus.getChartPanel().setVerticalAxisTrace(false);
-//
-            //Anotation
+
+            // Anotation
             inFocus.getXYPlot().clearAnnotations();
-            //magnifier
+            // magnifier
             JXLayer layer = new JXLayer(inFocus.getChartPanel());
             Magnifier magnifier = new Magnifier();
             magnifier.setRadius(0);

@@ -29,7 +29,8 @@
 package org.jpowder;
 
 /**
- *Checks for what operating system we are using.
+ * Checks which operating system we are using. (used when selecting look and
+ * feel).
  * 
  */
 public class OSValidator {

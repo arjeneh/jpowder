@@ -133,7 +133,7 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
         gsastable.setModel(defaultTableModel2);
         setSizeOfColumn();
 
-        defaultTableModel.addTableModelListener(new TableListenerBrags());
+        defaultTableModel.addTableModelListener(new TableListenerBraggsLaw());
         defaultTableModel2.addTableModelListener(new TableListenerGSAS(gsastable));
 
         dataTable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableRenderer());

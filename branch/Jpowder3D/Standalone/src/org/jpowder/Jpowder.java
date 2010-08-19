@@ -266,40 +266,43 @@ public class Jpowder extends JFrame implements DropTargetListener {
         return messageLabel2D;
     }
 
-    public static void moemoryChecker() {
+    /**
+     * this methods provides a bit memory management
+     */
+    public static void memoryChecker() {
 
-        double oneByte = (1024 * 1024);//M bytes
+        double oneByte = (1024 * 1024);  // 1M bytes
 
         long totalM = (long) (Runtime.getRuntime().totalMemory() / oneByte);
         long freeM = (long) (Runtime.getRuntime().freeMemory() / oneByte);
-        long MaxM = (long) (Runtime.getRuntime().maxMemory() / oneByte);
+        //long MaxM = (long) (Runtime.getRuntime().maxMemory() / oneByte);
 
         if ((totalM - freeM) > 900) {
             // create a double internal frame and add to Plot Area
-            // and then delete to trick JWM
+            // and then delete it to trick JWM
             // print out new memory size
+
             JOptionPane.showMessageDialog(null,
                     "Close some of charts " +
                     "you are about to run out of memory.",
                     "Memory warning",
                     JOptionPane.WARNING_MESSAGE);
-
-//            this.setExtendedState(JFrame.ICONIFIED);
-//            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//            this.setSize(1154, 888);
             JInternalFrame frame = new JInternalFrame("Memory release");
             chartPlotterPane2D.add(frame);
             chartPlotterPane2D.remove(frame);
 
-//            this.setSize(500, 500);
+// potential useful comments
+//            this.setExtendedState(JFrame.ICONIFIED);
+//            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//            this.setSize(1154, 888);
+
         }
 
 //        System.out.println("total M : " + totalM);
 //        System.out.println("free M  : " + freeM);
 //        System.out.println("Max M  : " + MaxM);
 //        System.out.println("total- free M : " + (totalM - freeM));
-
-
+        
     }
 
     public boolean isEnforceFileExtensions() {
@@ -362,7 +365,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         copyMenu = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JSeparator();
         propertiesMenu = new javax.swing.JMenuItem();
-        ImportTable3D = new javax.swing.JMenuItem();
+        importTable3D = new javax.swing.JMenuItem();
         windowMenu = new javax.swing.JMenu();
         defaultCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         tileCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
@@ -370,7 +373,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         tileVerticallyCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         cascadeCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         helpMenu = new javax.swing.JMenu();
-        onlieDocsandSupportMenu = new javax.swing.JMenuItem();
+        onlineDocsAndSupportMenu = new javax.swing.JMenuItem();
         aboutMenu = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -425,7 +428,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
-                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(dataVisibleInChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -660,13 +663,13 @@ public class Jpowder extends JFrame implements DropTargetListener {
         });
         editMenu.add(propertiesMenu);
 
-        ImportTable3D.setText("Create 3D Plot");
-        ImportTable3D.addActionListener(new java.awt.event.ActionListener() {
+        importTable3D.setText("Create 3D Plot");
+        importTable3D.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ImportTable3DActionPerformed(evt);
+                importTable3DActionPerformed(evt);
             }
         });
-        editMenu.add(ImportTable3D);
+        editMenu.add(importTable3D);
 
         JpowderMenuBar.add(editMenu);
 
@@ -731,15 +734,15 @@ public class Jpowder extends JFrame implements DropTargetListener {
         helpMenu.setText("Help");
         helpMenu.setFont(new java.awt.Font("Tahoma", 0, 14));
 
-        onlieDocsandSupportMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, java.awt.event.InputEvent.CTRL_MASK));
-        onlieDocsandSupportMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Web.png"))); // NOI18N
-        onlieDocsandSupportMenu.setText("Online Docs and Support");
-        onlieDocsandSupportMenu.addActionListener(new java.awt.event.ActionListener() {
+        onlineDocsAndSupportMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, java.awt.event.InputEvent.CTRL_MASK));
+        onlineDocsAndSupportMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Web.png"))); // NOI18N
+        onlineDocsAndSupportMenu.setText("Online Docs and Support");
+        onlineDocsAndSupportMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onlieDocsandSupportMenuActionPerformed(evt);
+                onlineDocsAndSupportMenuActionPerformed(evt);
             }
         });
-        helpMenu.add(onlieDocsandSupportMenu);
+        helpMenu.add(onlineDocsAndSupportMenu);
 
         aboutMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         aboutMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/info_16x16.png"))); // NOI18N
@@ -783,7 +786,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
      * open the browser to Jpowder web site for addition helps.
      * @param evt
      */
-    private void onlieDocsandSupportMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onlieDocsandSupportMenuActionPerformed
+    private void onlineDocsAndSupportMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onlineDocsAndSupportMenuActionPerformed
         try {
 
             java.net.URI uri = new URI("http://www.jpowder.org");
@@ -795,7 +798,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
             JOptionPane.showMessageDialog(null,
                     "Error attempting to launch web browser\n" + ex.toString());
         }
-    }//GEN-LAST:event_onlieDocsandSupportMenuActionPerformed
+    }//GEN-LAST:event_onlineDocsAndSupportMenuActionPerformed
     /**
      * call the about panel.
      * @param evt
@@ -864,7 +867,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
             chartPlotterPane2D.add(internalFrameInFocus2D);
         }
     }//GEN-LAST:event_undoMenuActionPerformed
-
+    /**
+     * 
+     * @param evt
+     */
     private void redoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoMenuActionPerformed
 
         JpowderInternalframe internalFrame = jPowderStackRedo.pop();
@@ -1367,7 +1373,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
 
             setVisible(true);
-            moemoryChecker();
+            memoryChecker();
             displayingMessageLabel();
 
         }//if open approved
@@ -1404,10 +1410,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
     }//GEN-LAST:event_pdfForPublicationActionPerformed
 
-    private void ImportTable3DActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportTable3DActionPerformed
+    private void importTable3DActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importTable3DActionPerformed
         new Import3DFilesTable(dataVisibleInChart).setVisible(true);
         plotsTab.setSelectedComponent(chartPlotterPane3D);
-    }//GEN-LAST:event_ImportTable3DActionPerformed
+    }//GEN-LAST:event_importTable3DActionPerformed
 
     private void saveWorksPaceMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveWorksPaceMenuActionPerformed
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
@@ -1609,7 +1615,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         getChartPlotter2D().add(internalframe);
         setVisible(true);
         displayingMessageLabel();
-        moemoryChecker();
+        memoryChecker();
     }
 
     /**
@@ -1639,7 +1645,6 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem ImportTable3D;
     private javax.swing.JMenuBar JpowderMenuBar;
     private javax.swing.JMenuItem aboutMenu;
     private javax.swing.JMenuItem appletMenu;
@@ -1661,6 +1666,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private javax.swing.JPanel homePanel;
     private javax.swing.JScrollPane homePanelScrollPane;
     private javax.swing.JMenuItem imageMenu;
+    private javax.swing.JMenuItem importTable3D;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
@@ -1669,7 +1675,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private static javax.swing.JLabel messageLabel2D;
     private static javax.swing.JLabel messageLabel3D;
     private javax.swing.JMenuItem oPenMenu;
-    private javax.swing.JMenuItem onlieDocsandSupportMenu;
+    private javax.swing.JMenuItem onlineDocsAndSupportMenu;
     private javax.swing.JMenuItem pDfMenu;
     private javax.swing.JMenuItem pdfForPublication;
     private static javax.swing.JTabbedPane plotsTab;
