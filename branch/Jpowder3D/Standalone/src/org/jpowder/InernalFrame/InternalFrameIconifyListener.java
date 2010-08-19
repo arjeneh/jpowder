@@ -46,7 +46,7 @@ public class InternalFrameIconifyListener extends InternalFrameAdapter {
 
     /**
      *
-     * @param dataVisibleInChart
+     * @param visibleInChart
      */
     public InternalFrameIconifyListener(DataVisibleInChart visibleInChart) {
         this.dataVisibleInChart = visibleInChart;

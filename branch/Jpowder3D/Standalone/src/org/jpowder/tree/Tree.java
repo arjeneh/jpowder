@@ -144,13 +144,6 @@ public class Tree extends JPanel implements Serializable {
         tree.scrollPathToVisible(p);
     }
 
-    /**
-     * Returns the JTree.
-     *
-     * @param
-     *
-     * @return The value of the JTree.
-     */
     public static JTree getTree() {
         return tree;
     }

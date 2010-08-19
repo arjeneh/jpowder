@@ -45,12 +45,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
-import org.jfree.ui.RectangleAnchor;
 import org.jpowder.InernalFrame.InternalFrameIconifyListener;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.IO_MetaFile;
 import org.jpowder.fileCabinet.PowderFileCabinet;
-import org.jpowder.jfreechart.JpowderXYBlockRenderer;
 
 /**
  * A table which contains File names, File paths and meta data of powder

@@ -88,10 +88,7 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
 
     }
 
-    /**
-     *
-     * @return
-     */
+
     public static int getnumberOfJpowderInternalframe() {
         return Jpowder.getChartPlotter2D().getAllFrames().length;
     }
@@ -104,10 +101,6 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
         markedPeakPosition.add(peaks);
     }
 
-    /**
-     *
-     * @return
-     */
     public Vector<Double> getMarkedPeakPosition() {
         return markedPeakPosition;
     }
@@ -120,19 +113,12 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
         markedPeakPosition.clear();
     }
 
-    /**
-     *
-     * @return
-     */
     public List<Marker> getPeakRangeMarker() {
 
         return peakRangeMarker;
     }
 
-    /**
-     *
-     * @return
-     */
+
     public List<Marker> getPeakDomainMarker() {
         return peakDomainMarker;
     }

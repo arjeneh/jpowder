@@ -55,11 +55,6 @@ public class JpowderInternalframe3D extends JpowderInternalframe{
         
     }
 
-
-    /**
-     *
-     * @return
-     */
     public static int getnumberOfJpowderInternalframe() {
         return Jpowder.getChartPlotter3D().getAllFrames().length;
     }

@@ -80,7 +80,7 @@ public class DataVisibleInChart extends JPanel {
      * To inform DataVisibleInChart that a new chart has been highlighted and
      * pass it information so that DataVisibleInChart can update its checkbox list
      * @param xyplot
-     * @param datasets
+     * @param dataSets
      */
     public void newChartInFocus(XYPlot xyplot, Vector<DataSet> dataSets) {
 

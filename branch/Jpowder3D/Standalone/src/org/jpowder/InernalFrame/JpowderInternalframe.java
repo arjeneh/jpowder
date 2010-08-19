@@ -128,10 +128,7 @@ public class JpowderInternalframe extends JInternalFrame {
         }
     }
 
-    /**
-     *
-     * @return
-     */
+
     public JInternalFrame getFrame() {
         return this;
     }
@@ -153,24 +150,18 @@ public class JpowderInternalframe extends JInternalFrame {
 
     /**
      * this methods return ChartPanel.
-     * @return
+     * @return jfreeChartPanel
      */
     public ChartPanel getChartPanel() {
         return jfreeChartPanel;
     }
 
-    /**
-     *
-     * @return
-     */
+
     public XYPlot getXYPlot() {
         return xYPlot;
     }
 
-    /**
-     *
-     * @return
-     */
+
     public Vector<DataSet> getPowderDataSet() {
         return m_data;
     }
@@ -178,7 +169,7 @@ public class JpowderInternalframe extends JInternalFrame {
     /**
      *
      * @param comp
-     * @return
+     * @return super.add(comp)
      */
     @Override
     public Component add(Component comp) {
@@ -192,10 +183,7 @@ public class JpowderInternalframe extends JInternalFrame {
         return dataVisibleInChartPanel;
     }
 
-    /**
-     *
-     * @return
-     */
+
     public Vector<DataSet> addDataset() {
         return m_data;
     }

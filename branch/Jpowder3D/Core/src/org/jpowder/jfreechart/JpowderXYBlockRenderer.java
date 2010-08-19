@@ -344,7 +344,7 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
             block = new Rectangle2D.Double(Math.min(xx0, xx1),
                     Math.min(yy0, yy1), Math.abs(xx1 - xx0),
                     Math.abs(yy1 - yy0)+120);
-              System.out.println( Math.abs(yy1 - yy0));
+             
         }
         g2.setPaint(p);
         g2.fill(block);

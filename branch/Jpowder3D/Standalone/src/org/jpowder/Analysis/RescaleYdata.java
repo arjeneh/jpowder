@@ -73,7 +73,7 @@ public class RescaleYdata extends javax.swing.JPanel implements InfoPanel {
 
     /**
      * This Label is for adding the
-     * @return
+     * @return rescaleLabel
      */
     public JLabel getRescalLabel() {
         return rescaleLabel;

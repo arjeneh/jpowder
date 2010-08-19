@@ -94,12 +94,8 @@ public class Jpowder extends JFrame implements DropTargetListener {
     /** A flag that controls whether or not file extensions are enforced. */
     private boolean enforceFileExtensions = true;
 
-    //  private stackInternalFrames;
-    /**
-     * JVM starting point
-     *
-     * @param args
-     */
+ 
+ 
     public Jpowder() {
         initComponents();
 
@@ -169,17 +165,13 @@ public class Jpowder extends JFrame implements DropTargetListener {
         return toolstab3D;
     }
 
-    /**
-     *
-     * @return
-     */
     public CardLayout getCardLayout() {
         return cardLayout;
     }
 
     /**
      * this method return the x location of whereever the file is droped.
-     * @return
+     * @return dropLocationX
      */
     public static double getDropLocationX() {
         return dropLocationX;
@@ -187,7 +179,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
     /**
      * this method return the y location of the where the file is droped.
-     * @return
+     * @return dropLocationY
      */
     public static double getDropLocationY() {
         return dropLocationY;
@@ -221,7 +213,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
     /** A new internal frame has been put in focus by user. Update accordingly
      *
-     * @param JpowderInternalframe
+     * @param internalFrame
      */
     public static void jpowderInternalFrameUpdate(JpowderInternalframe internalFrame) {
 
