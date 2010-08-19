@@ -33,7 +33,7 @@ import org.jpowder.InernalFrame.JpowderInternalframe;
 import java.util.Stack;
 
 /**
- *This class is used for putting certain number of internalfrmaes
+ * This class is used for putting certain number of internalfrmaes
  * in stack so they can be retrived on event of close.
  * 
  */

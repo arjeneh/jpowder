@@ -42,7 +42,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Get the information from the files which have been dropped into 3D plot
+ * Get the information from the files which have been dropped into the 3D plot
  * area and add them to the 3D import table.
  *
  */

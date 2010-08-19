@@ -64,7 +64,7 @@ public class ChangePlotStyle extends javax.swing.JPanel implements InfoPanel {
 
     /**
      *
-     * @param chartToolsIcon
+     * @param analysisIcon
      */
     public ChangePlotStyle(ToolsIcon2D analysisIcon) {
         initComponents();

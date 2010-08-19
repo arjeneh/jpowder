@@ -29,15 +29,12 @@
  */
 package org.jpowder;
 
-/** Update information panel. For example when a JpowderInternalFrame is
-     *  activated by the user this method is called to reflect that a new
-     *  JpowderInternalFrame is in focus.
-     * @author 
-     */
-
- 
+/**
+ * Interface for an information panel. For example when a JpowderInternalFrame
+ * is activated by the user the update() method is called to reflect that a new
+ * JpowderInternalFrame is in focus.
+ */
 public interface InfoPanel {
-
     
     public void update();
 }

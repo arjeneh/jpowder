@@ -29,10 +29,7 @@
  */
 package org.jpowder;
 
-import org.jpowder.InernalFrame.JpowderInternalframe2D;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.beans.PropertyVetoException;
 import javax.swing.DefaultDesktopManager;
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
@@ -43,72 +40,6 @@ import javax.swing.JInternalFrame;
  *
  */
 public class JPowderDesktopManager extends DefaultDesktopManager {
-
-
-        /* The frame which is currently selected/activated.
-     * We store this value to enforce MDI's single-selection
-model.
-     */
-
-
-//    public void activateFrame(JInternalFrame f) {
-//        try {
-//            super.activateFrame(f);
-//
-//            if (currentFrame != null && f != currentFrame) {
-//                // If the current frame is maximized,
-//
-//                // attribute to the frame being activated.
-//                if (currentFrame.isMaximum() &&
-//		    (f.getClientProperty("JInternalFrame.frameType") !=
-//		    "optionDialog") ) {
-//                    currentFrame.setMaximum(false);
-//                    f.setMaximum(true);
-//                }
-//                if (currentFrame.isSelected()) {
-//                    currentFrame.setSelected(false);
-//                }
-//            }
-//
-//            if (!f.isSelected()) {
-//                f.setSelected(true);
-//            }
-////            currentFrame = (JpowderInternalframe) f;
-//        } catch (PropertyVetoException e) {}
-//    }
-//
-//  public void closeFrame(JInternalFrame f) {
-//        JDesktopPane d = Jpowder.getChartPlotter();
-//        if (d == null) {
-//            return;
-//        }
-//        boolean findNext = f.isSelected();
-//        Container c = f.getParent();
-//       JInternalFrame nextFrame = null;
-//       if (findNext) {
-////           nextFrame = d.getNextFrame(f);
-//            try { f.setSelected(false); } catch (PropertyVetoException e2) { }
-//       }
-//        if(c != null) {
-//            c.remove(f); // Removes the focus.
-//            c.repaint(f.getX(), f.getY(), f.getWidth(), f.getHeight());
-//        }
-//        removeIconFor(f);
-//        if(f.getNormalBounds() != null)
-//            f.setNormalBounds(null);
-//        if(wasIcon(f))
-//            setWasIcon(f, null);
-//       if (nextFrame != null) {
-//           try { nextFrame.setSelected(true); }
-//           catch (PropertyVetoException e2) { }
-//       } else if (findNext && d.getComponentCount() == 0) {
-//           // It was selected and was the last component on the desktop.
-//           d.requestFocus();
-//       }
-//       if (findNext) {
-//          d.selectFrame(true);
-//      }
-//    }
 
     /**
      * To handle action when a frame is moved and keeps the frame from leaving the desktop.

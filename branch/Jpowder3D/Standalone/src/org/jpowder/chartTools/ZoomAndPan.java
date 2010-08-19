@@ -38,15 +38,15 @@ import org.jpowder.InfoPanel;
  */
 public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
 
-
     private ToolsIcon2D toolsIcon;
         /* Using Multi line jLabel.*/
-     private String labelText =
+    private String labelText =
       "<html><FONT COLOR=RED>Red</FONT> and " +
       "<FONT COLOR=BLUE>Blue</FONT> Text</html>";
+
     /**
      *
-     * @param chartToolsIcon
+     * @param analysisIcon
      */
     public ZoomAndPan(ToolsIcon2D analysisIcon) {
         initComponents();

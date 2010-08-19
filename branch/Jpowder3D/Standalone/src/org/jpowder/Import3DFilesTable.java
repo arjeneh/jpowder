@@ -53,8 +53,8 @@ import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.jfreechart.JpowderXYBlockRenderer;
 
 /**
- * A table which contains File name and File paths data files
- * which  are going to be plotted in 3D.
+ * A table which contains File names, File paths and meta data of powder
+ * data files which are going to be plotted in 3D.
  */
 public class Import3DFilesTable extends javax.swing.JFrame {
 

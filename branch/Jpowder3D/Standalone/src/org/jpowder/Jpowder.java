@@ -70,7 +70,7 @@ import org.jpowder.InernalFrame.JpowderInternalframe3D;
 import org.jpowder.tree.JpowderFileSystemTreeModel;
 
 /**
- * mainly for putting toghther all the GUIs.
+ * Mainly used for putting all the GUIs together for Jpowder.
  *
  */
 public class Jpowder extends JFrame implements DropTargetListener {
@@ -79,10 +79,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private Tree tree = new Tree(treeModel);
     public DataVisibleInChart dataVisibleInChart = new DataVisibleInChart();
     private PowderFileCabinet mPowderFileCabinet;
-    private java.awt.dnd.DropTarget dropTarget;
-    private ToolsIcon2D analysisIcon = new ToolsIcon2D(this);
+    private java.awt.dnd.DropTarget dropTarget;    // for desktop dragging and dropping
+    private ToolsIcon2D toolsIcon2D = new ToolsIcon2D(this);
     private ToolsIcon3D toolsIcon3D = new ToolsIcon3D(this);
-    private CardLayout cardLayout;
+    private CardLayout cardLayout;  // layout for tools tab
     public static JpowderInternalframe2D internalFrameInFocus2D;
     public static JpowderInternalframe3D internalFrameInFocus3D;
     public static String plotAreaInFocus;
@@ -91,7 +91,6 @@ public class Jpowder extends JFrame implements DropTargetListener {
     public static JPowderStack jPowderStackUndo = new JPowderStack(3);
     public static JPowderStack jPowderStackRedo = new JPowderStack(3);
     private static double dropLocationX, dropLocationY;
-//    private JpowderPrint jpowderPrint = new JpowderPrint();
     /** A flag that controls whether or not file extensions are enforced. */
     private boolean enforceFileExtensions = true;
 
@@ -111,7 +110,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         dataVisibleInChartPanel.add(dataVisibleInChart);
         dropTarget = new DropTarget(chartPlotterPane3D, new DragAndDrop3D(dataVisibleInChart));
         explorertab.add(tree, "1");
-        toolstab2D.add(analysisIcon, "1");
+        toolstab2D.add(toolsIcon2D, "1");
         toolstab3D.add(toolsIcon3D, "1");
         messageLabel2D.setLocation(chartPlotterPane2D.getWidth() / 4, chartPlotterPane2D.getHeight() / 2);
 
