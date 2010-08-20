@@ -33,7 +33,6 @@ import java.util.Comparator;
 
 /**
  * Purpose: A class to sort File with different sorting types.
- * @author Kreecha Puphaiboon
  */
 public class FileComparator implements Comparator {
 

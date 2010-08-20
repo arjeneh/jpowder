@@ -35,8 +35,8 @@ import org.jfree.chart.axis.TickUnitSource;
 
 
 /**
- * Set the Y Axis number to Scientific number format.
- *
+ * Set the Y Axis number to Scientific number format. For now same as X axis
+ * version, but will be modified.
  */
 public class JpowderTickUnitSourceYAxis implements TickUnitSource {
 

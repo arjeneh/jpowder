@@ -36,7 +36,7 @@ import java.awt.geom.Rectangle2D;
 import org.jfree.util.ShapeUtilities;
 
 /**
- * Array shapes of markers.
+ * Array of marker shapes.
  * 
  */
 public class MarkerShapes {

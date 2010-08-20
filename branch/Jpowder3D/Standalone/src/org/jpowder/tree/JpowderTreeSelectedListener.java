@@ -34,14 +34,6 @@ import javax.swing.event.TreeSelectionListener;
 
 /**
  * If anyone wants to know what file in the tree is selected, then use this.
- *
- * ----------------------
- * JpowderTreeSelectedListener.java
- * ----------------------
- *
- * Changes
- * -------
- * 04-March-2010 : Version 1 (KP);
  */
 public class JpowderTreeSelectedListener implements TreeSelectionListener {
 

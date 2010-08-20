@@ -29,16 +29,14 @@
 
 package org.jpowder.JCheckboxList;
 
-/**
- *
- */
 import java.awt.*;
-
 import javax.swing.*;
 import javax.swing.tree.*;
 import javax.swing.plaf.ColorUIResource;
 
-
+/**
+ *
+ */
 public class CheckFileRenderer extends JPanel implements TreeCellRenderer {
 
     protected JCheckBox check;

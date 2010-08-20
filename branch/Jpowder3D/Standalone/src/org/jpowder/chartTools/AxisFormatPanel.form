@@ -76,7 +76,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="107" max="32767" attributes="0"/>
+                      <EmptySpace pref="109" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -92,7 +92,7 @@
                       <Component id="xScientific" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="yScientific" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="158" max="32767" attributes="0"/>
+                      <EmptySpace pref="163" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -179,7 +179,7 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="tickSpacingApplyButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="147" max="32767" attributes="0"/>
+                      <EmptySpace pref="150" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -263,7 +263,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="159" max="32767" attributes="0"/>
+                      <EmptySpace pref="166" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

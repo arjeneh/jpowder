@@ -28,11 +28,6 @@
  */
 package org.jpowder.chartTools.Markers;
 
-/**
- *
- * @author Arjeneh
- */
-
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.BorderFactory;
@@ -43,8 +38,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.border.Border;
 
 /**
- *
- * Rendering the comboBox with marker in side.
+ * Rendering the comboBox with markers inside.
  */
 public class MarkerComboBoxRenderer extends JLabel implements ListCellRenderer {
 

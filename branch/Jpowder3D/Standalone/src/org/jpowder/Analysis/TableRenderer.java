@@ -37,8 +37,8 @@ import org.jpowder.Jpowder;
 import org.jpowder.InernalFrame.JpowderInternalframe2D;
 
 /**
- * Renderer class which added colour of the each series to file name
- * in the all tables which contains file names
+ * Renderer class which adds colour to each file name listed in a
+ * tables 
  * 
  */
 public class TableRenderer implements TableCellRenderer {

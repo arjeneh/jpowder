@@ -31,7 +31,6 @@ package org.jpowder.chartTools.Markers;
 import java.util.ArrayList;
 
 /**
- *
  * Array of markers name
  */
 public class MarkerArray {

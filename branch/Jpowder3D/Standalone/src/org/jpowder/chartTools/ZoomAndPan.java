@@ -33,8 +33,7 @@ import org.jpowder.Analysis.ToolsIcon2D;
 import org.jpowder.InfoPanel;
 
 /**
- *
- * @author M Arjeneh
+ *  Information about how to zoom and pan. 
  */
 public class ZoomAndPan extends javax.swing.JPanel implements InfoPanel {
 

@@ -28,7 +28,6 @@
  */
 package org.jpowder.chartTools;
 
-
 import java.awt.Rectangle;
 import java.awt.Shape;
 import org.jfree.chart.LegendItem;
@@ -40,38 +39,39 @@ import org.jfree.ui.RectangleInsets;
 import org.jpowder.Jpowder;
 import org.jpowder.InernalFrame.JpowderInternalframe2D;
 
-  /**
-     * label - the label (null not permitted).
-    description - the description (not currently used, null permitted).
-    toolTipText - the tool tip text (null permitted).
-    urlText - the URL text (null permitted).
-    shapeVisible - a flag that controls whether or not the shape is displayed.
-    shape - the shape (null permitted).
-    shapeFilled - a flag that controls whether or not the shape is filled.
-    fillPaint - the fill paint (null not permitted).
-    shapeOutlineVisible - a flag that controls whether or not the shape is outlined.
-    outlinePaint - the outline paint (null not permitted).
-    outlineStroke - the outline stroke (null not permitted).
-    lineVisible - a flag that controls whether or not the line is visible.
-    line - the line.
-    lineStroke - the stroke (null not permitted).
-    linePaint - the line paint (null not permitted).
+/**
+ * To create legends in charts.
+ *
+ *  Below is a decriptions of the things you have to set to set a legend:
 
-   */
+label - the label (null not permitted).
+description - the description (not currently used, null permitted).
+toolTipText - the tool tip text (null permitted).
+urlText - the URL text (null permitted).
+shapeVisible - a flag that controls whether or not the shape is displayed.
+shape - the shape (null permitted).
+shapeFilled - a flag that controls whether or not the shape is filled.
+fillPaint - the fill paint (null not permitted).
+shapeOutlineVisible - a flag that controls whether or not the shape is outlined.
+outlinePaint - the outline paint (null not permitted).
+outlineStroke - the outline stroke (null not permitted).
+lineVisible - a flag that controls whether or not the line is visible.
+line - the line.
+lineStroke - the stroke (null not permitted).
+linePaint - the line paint (null not permitted).
 
+ */
 public class CreateLegend {
 
     private Shape shape = new Rectangle(10, 10);
     private LegendTitle legend;
-    private  JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-
-
+    private JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
     public void setLegend() {
 
-          LegendItemCollection legendItemCollection = new LegendItemCollection();
+        LegendItemCollection legendItemCollection = new LegendItemCollection();
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
-             XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer(i);
+            XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) inFocus.getXYPlot().getRenderer(i);
             if (renderer.getBaseShapesVisible()) {
                 legendItemCollection.add(new LegendItem(
                         inFocus.getPowderDataSet().elementAt(i).getFileName(),
@@ -90,37 +90,38 @@ public class CreateLegend {
                         inFocus.getXYPlot().getRenderer(i).getBaseOutlineStroke(),
                         inFocus.getXYPlot().getRenderer(i).getSeriesPaint(0)));
             }
-                if (!renderer.getBaseShapesVisible()) {
-                    legendItemCollection.add(new LegendItem(
-                            inFocus.getPowderDataSet().elementAt(i).getFileName(),
-                            null,
-                            null,
-                            null,
-                            false,//
-                            shape,
-                            false,
-                            inFocus.getXYPlot().getRenderer(i).getSeriesPaint(0),
-                            true,
-                            inFocus.getXYPlot().getRenderer(i).getSeriesPaint(0),
-                            inFocus.getXYPlot().getRenderer(i).getBaseOutlineStroke(),
-                            true,
-                            renderer.getLegendLine(),
-                            inFocus.getXYPlot().getRenderer(i).getBaseOutlineStroke(),
-                            inFocus.getXYPlot().getRenderer(i).getSeriesPaint(0)));
-                }
+            if (!renderer.getBaseShapesVisible()) {
+                legendItemCollection.add(new LegendItem(
+                        inFocus.getPowderDataSet().elementAt(i).getFileName(),
+                        null,
+                        null,
+                        null,
+                        false,//
+                        shape,
+                        false,
+                        inFocus.getXYPlot().getRenderer(i).getSeriesPaint(0),
+                        true,
+                        inFocus.getXYPlot().getRenderer(i).getSeriesPaint(0),
+                        inFocus.getXYPlot().getRenderer(i).getBaseOutlineStroke(),
+                        true,
+                        renderer.getLegendLine(),
+                        inFocus.getXYPlot().getRenderer(i).getBaseOutlineStroke(),
+                        inFocus.getXYPlot().getRenderer(i).getSeriesPaint(0)));
+            }
         }
-                    inFocus.getXYPlot().setFixedLegendItems(legendItemCollection);
+        inFocus.getXYPlot().setFixedLegendItems(legendItemCollection);
 
-                     legend = new LegendTitle(inFocus.getXYPlot());
-                    
-                    legend.setMargin(new RectangleInsets(1.0, 1.0, 1.0, 1.0));
-                    legend.setPosition(RectangleEdge.BOTTOM);
-                    inFocus.getChart().addSubtitle(legend);
+        legend = new LegendTitle(inFocus.getXYPlot());
+
+        legend.setMargin(new RectangleInsets(1.0, 1.0, 1.0, 1.0));
+        legend.setPosition(RectangleEdge.BOTTOM);
+        inFocus.getChart().addSubtitle(legend);
 
 
 
     }
-    public LegendTitle getLegendTitle(){
+
+    public LegendTitle getLegendTitle() {
         return legend;
     }
 }

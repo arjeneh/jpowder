@@ -32,7 +32,7 @@ import org.jpowder.Jpowder;
 import org.jpowder.chartTools.ColorBar;
 
 /**
- * this class contains all the Jpowder icons 3D.
+ * This class contains all the Jpowder icons 3D.
  *
  */
 public class ToolsIcon3D extends javax.swing.JPanel {

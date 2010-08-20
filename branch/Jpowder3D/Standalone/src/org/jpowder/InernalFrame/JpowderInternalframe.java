@@ -39,14 +39,13 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
 
 /**
  * Super class which contains all the common methods and fields
- * between 2d and 3D.
+ * for 2D and 3D.
  */
 public class JpowderInternalframe extends JInternalFrame {
 
@@ -58,10 +57,8 @@ public class JpowderInternalframe extends JInternalFrame {
     private DataVisibleInChart dataVisibleInChartPanel;
     private Vector<DataSet> m_data;
     private XYPlot xYPlot;  // hold reference to plot created from dataset in constructor
-    //public static int numberOfJpowderInternalframe = 0;
     private DatasetPlotter plotMultiCol;
     private ChartPanel jfreeChartPanel;
-    private JFreeChart chart;
     private String name = new String();
 
     public JpowderInternalframe(DataVisibleInChart dataVisibleInChartPanel, Vector<DataSet> data) {
@@ -70,22 +67,17 @@ public class JpowderInternalframe extends JInternalFrame {
         m_data = data;
         if (Jpowder.getPlotsTab().getSelectedIndex() == 0) {
             plotMultiCol = DatasetPlotter.createDatasetPlotter(data);
-            
         }
         if (Jpowder.getPlotsTab().getSelectedIndex() == 1) {
             plotMultiCol = DatasetPlotter.createDatasetPlotter(data, "");
-//                 chart = FilesPlotter3D.getChart();
         }
 
         ChartPanel jfreeChartPanels = plotMultiCol.createPowderChart();
         jfreeChartPanels.add(new JpowderPopupMenu(jfreeChartPanels));
         this.jfreeChartPanel = jfreeChartPanels;
 
-   
-
         xYPlot = jfreeChartPanels.getChart().getXYPlot();
         this.add(jfreeChartPanels);
-
 
         internalframeStackes.push(this);
         this.setTitle(getNames());

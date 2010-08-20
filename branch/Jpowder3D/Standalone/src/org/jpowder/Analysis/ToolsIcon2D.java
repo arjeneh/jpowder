@@ -31,14 +31,14 @@ package org.jpowder.Analysis;
 
 import org.jpowder.Jpowder;
 import org.jpowder.chartTools.AxisFormatPanel;
-import org.jpowder.chartTools.BackGroundPanel;
+import org.jpowder.chartTools.ChartAreaFormatPanel;
 import org.jpowder.chartTools.ChangePlotStyle;
 import org.jpowder.chartTools.GridLinesPanel;
 import org.jpowder.chartTools.LegendPanel;
 import org.jpowder.chartTools.ZoomAndPan;
 
 /**
- * this class contains all the Jpowder icons.
+ * This class contains all the 2D Jpowder icons.
  * 
  */
 public class ToolsIcon2D extends javax.swing.JPanel {
@@ -50,7 +50,7 @@ public class ToolsIcon2D extends javax.swing.JPanel {
     private Transforming_XAxis braggsLow = new Transforming_XAxis(this);
     private GridLinesPanel extraFeatures = new GridLinesPanel(this);
     private LegendPanel legendPanel = new LegendPanel(this);
-    private BackGroundPanel backGroundPanel = new BackGroundPanel(this);
+    private ChartAreaFormatPanel backGroundPanel = new ChartAreaFormatPanel(this);
     private AxisFormatPanel axisFormatPanel = new AxisFormatPanel(this);
     private Jpowder jpowder;
 
@@ -326,12 +326,6 @@ public class ToolsIcon2D extends javax.swing.JPanel {
     }//GEN-LAST:event_peakButtonActionPerformed
 
     private void rescaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rescaleButtonActionPerformed
-
-//        Object source = evt.getSource();
-//        if (source instanceof JButton) {
-//            JButton button = (JButton) source;
-//            rescaleYdata.getRescalLabel().setIcon(button.getIcon());
-//        }
 
         jpowder.getToolsTab2D().add(rescaleYdata, "1");
         rescaleYdata.setVisible(true);

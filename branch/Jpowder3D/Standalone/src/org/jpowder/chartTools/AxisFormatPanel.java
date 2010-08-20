@@ -45,12 +45,13 @@ import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 
 /**
- * Formatting the axis like change the colour, Width and NumberFormat.
+ * Formatting the axes like change the colour, Width and NumberFormat (scientific).
  *
  */
 public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
 
     private ToolsIcon2D toolsIcon2D;
+    /// for scientific notation needs an extra pair of axes
     private JpowderTickUnitSourceXAxis jpowderTickUnitSourceX = new JpowderTickUnitSourceXAxis();
     private JpowderTickUnitSourceYAxis jpowderTickUnitSourceY = new JpowderTickUnitSourceYAxis();
     private static String decimal = "";
@@ -103,22 +104,23 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
 
         fillTheXTickField();
         fillTheYTickField();
-//this bit of code is for disabling jspinner from any charctor being added to it.
+        //this bit of code is for disabling jspinner from any character being added to it.
         ((DefaultFormatter) ((JSpinner.DefaultEditor) decimalPlacesSpinner.getEditor()).getTextField().getFormatter()).setAllowsInvalid(true);
         ((DefaultFormatter) ((JSpinner.DefaultEditor) axisOffserSpinner.getEditor()).getTextField().getFormatter()).setAllowsInvalid(true);
 
     }
-/**
- * get Decimal places for scientfic format.
- * @return String
- */
+
+    /**
+     * get Decimal places for scientfic format.
+     * @return String
+     */
     public static String getDecimalPattern() {
-//        decimal = decimalPlacesSpinner.getValue().toString();
         return "0." + decimal + "E0";
     }
-/**
- * Change the xAxis to scientific format.
- */
+
+    /**
+     * Change the xAxis to scientific format.
+     */
     public void xAxisScientificNotation() {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
@@ -130,9 +132,10 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
         }
 
     }
-/**
- * change yAxis to scientific format.
- */
+
+    /**
+     * change yAxis to scientific format.
+     */
     public void yAxisScientificNotation() {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         if (yScientific.isSelected()) {
@@ -145,17 +148,19 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
         }
 
     }
-/**
- * fill the text files with xAxis tickUnit size
- */
+
+    /**
+     * fill the text files with xAxis tickUnit size
+     */
     public void fillTheXTickField() {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         NumberAxis xAxis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
         xTickField.setText(Double.toString(xAxis.getTickUnit().getSize()));
     }
-/**
- * file the yAxis with range tickUnit size.
- */
+
+    /**
+     * file the yAxis with range tickUnit size.
+     */
     public void fillTheYTickField() {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         NumberAxis yAxis = (NumberAxis) inFocus.getXYPlot().getRangeAxis();
@@ -484,8 +489,7 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
 }//GEN-LAST:event_axisOffserSpinnerStateChanged
 
     private void decimalPlacesSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_decimalPlacesSpinnerStateChanged
-//        System.out.println("XXXXXXXXXXXXXXXXXX"+decimalPlacesSpinner.getValue().toString());
-//        String str =decimalPlacesSpinner.getValue().toString();
+
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         decimal = "";
         int dec = (int) Integer.parseInt(decimalPlacesSpinner.getValue().toString());
@@ -505,22 +509,21 @@ public class AxisFormatPanel extends javax.swing.JPanel implements InfoPanel {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
 
         float axisWidth = Float.parseFloat(axisOffserSpinner1.getValue().toString());
-        
+
         //axis stroke
         inFocus.getXYPlot().getDomainAxis().setAxisLineStroke(new BasicStroke(axisWidth));
         inFocus.getXYPlot().getRangeAxis().setAxisLineStroke(new BasicStroke(axisWidth));
-       
+
         //tick unit stroke
 
         inFocus.getXYPlot().getDomainAxis().setTickMarkStroke(new BasicStroke(axisWidth));
         inFocus.getXYPlot().getRangeAxis().setTickMarkStroke(new BasicStroke(axisWidth));
 
         //setting axis Font
-        inFocus.getXYPlot().getDomainAxis().setTickLabelFont(new Font("SansSerif",Font.PLAIN, (int)axisWidth+10));
-        inFocus.getXYPlot().getRangeAxis().setTickLabelFont(new Font("SansSerif",Font.PLAIN, (int)axisWidth+10));
+        inFocus.getXYPlot().getDomainAxis().setTickLabelFont(new Font("SansSerif", Font.PLAIN, (int) axisWidth + 10));
+        inFocus.getXYPlot().getRangeAxis().setTickLabelFont(new Font("SansSerif", Font.PLAIN, (int) axisWidth + 10));
 
     }//GEN-LAST:event_axisOffserSpinner1StateChanged
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel OffsetPanel;
     private javax.swing.JTabbedPane appearancePanel;

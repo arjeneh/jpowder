@@ -43,14 +43,9 @@ package org.jpowder.tree;
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.TreeExpansionEvent;
-import javax.swing.event.TreeExpansionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeModel;
@@ -64,7 +59,7 @@ public class Tree extends JPanel implements Serializable {
     private JpowderFileSystemTreeModel model = new JpowderFileSystemTreeModel();
     private JpowderFileTreeRenderer renderer = new JpowderFileTreeRenderer();
     private java.awt.dnd.DropTarget dt;
-    private static JTree tree;
+    private JTree tree;
 
     /**
      *
@@ -144,9 +139,6 @@ public class Tree extends JPanel implements Serializable {
         tree.scrollPathToVisible(p);
     }
 
-    public static JTree getTree() {
-        return tree;
-    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {

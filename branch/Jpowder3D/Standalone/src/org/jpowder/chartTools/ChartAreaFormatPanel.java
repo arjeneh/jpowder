@@ -39,21 +39,18 @@ import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 
 /**
- * Formatting the chart area.
+ * Formatting the chart area, meaning e.g. add a background image.
  * 
  */
-public class BackGroundPanel extends javax.swing.JPanel implements InfoPanel {
+public class ChartAreaFormatPanel extends javax.swing.JPanel implements InfoPanel {
 
     private ToolsIcon2D toolsIcon;
     private File file;
 
     /** Creates new form BackGroundPanel */
-    public BackGroundPanel(ToolsIcon2D analysisIcon) {
+    public ChartAreaFormatPanel(ToolsIcon2D analysisIcon) {
         initComponents();
         this.toolsIcon = analysisIcon;
-
-
-
     }
 
     @Override
@@ -85,10 +82,11 @@ public class BackGroundPanel extends javax.swing.JPanel implements InfoPanel {
         }
 
     }
-/**
- * opening a file chooser and select image for applying to the
- * BackGround.
- */
+
+    /**
+     * opening a file chooser and select image for applying to the
+     * BackGround.
+     */
     public void setBackGroundImage() {
 
 
@@ -234,14 +232,14 @@ public class BackGroundPanel extends javax.swing.JPanel implements InfoPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(plotBGImage, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                                .addComponent(plotBGImage, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(disablePlotBackGround, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                        .addComponent(disablePlotBackGround, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                         .addGap(79, 79, 79))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -261,7 +259,7 @@ public class BackGroundPanel extends javax.swing.JPanel implements InfoPanel {
                     .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(disablePlotBackGround)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("BackGround Image", jPanel1);
@@ -274,7 +272,7 @@ public class BackGroundPanel extends javax.swing.JPanel implements InfoPanel {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 261, Short.MAX_VALUE)
+            .addGap(0, 264, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Gradient Fill", jPanel2);

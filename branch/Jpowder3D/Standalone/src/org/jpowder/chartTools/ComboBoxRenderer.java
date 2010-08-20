@@ -38,8 +38,7 @@ import org.jpowder.Jpowder;
 import org.jpowder.InernalFrame.JpowderInternalframe2D;
 
 /**
- * Rendrer  for adding plots name to the ComboBoxes.
- * @author M Arjeneh
+ * To add colour to names in ComboBoxes.
  */
 public class ComboBoxRenderer implements ListCellRenderer {
 

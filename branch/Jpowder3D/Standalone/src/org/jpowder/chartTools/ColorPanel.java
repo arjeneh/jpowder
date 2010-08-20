@@ -1,7 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * THIS IS CURRENTLY BEING TESTED
  */
+
 package org.jpowder.chartTools;
 
 import java.awt.Color;

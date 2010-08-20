@@ -38,8 +38,7 @@ import org.jpowder.InernalFrame.JpowderInternalframe2D;
 import org.jpowder.Jpowder;
 
 /**
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ *
  */
 public class CheckFileListRenderer extends CheckFileRenderer implements ListCellRenderer {
 

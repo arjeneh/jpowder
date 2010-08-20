@@ -30,21 +30,13 @@
 package org.jpowder.JCheckboxList;
 
 /**
- *
- *Used in the FileChooserPanel.java to display dataset files in the program.
- *It presents as a list model also updates when the file is deleted and inserted.
- *This class assumes that the string used to initialize
- *fullPath has a directory path, filename, and extension.
- *The methods won't work if it doesn't match.
+ * Get the file name and add to JList
  */
 public class FileNameListModel extends javax.swing.DefaultListModel {
 
     private java.util.Vector<CheckableFileItem> fileNameModelVec;
 
-    //public javax.swing.JPanel jfreeChartPanel;
-    // public XYPlot m_plot = null;
     public FileNameListModel() {
-        //this.fileNameModelVec = new java.util.Vector<String>();
         this.fileNameModelVec = new java.util.Vector<CheckableFileItem>();
     }
 
@@ -59,8 +51,7 @@ public class FileNameListModel extends javax.swing.DefaultListModel {
     }
 
     public void addCheckableFile(Object element) {
-
-        //CheckableFileItem c = (CheckableFileItem) element;
+        
         if (fileNameModelVec.add((CheckableFileItem) element)) {
             fireContentsChanged(this, 0, getSize());
         }

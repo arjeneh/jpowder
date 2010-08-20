@@ -38,8 +38,7 @@ import org.jpowder.Jpowder;
 import org.jpowder.InernalFrame.JpowderInternalframe2D;
 
 /**
- *
- * Enabling and disabling grid lines and set width and colour of them./
+ * Enabling and disabling grid lines and set width and colour of them.
  */
 public class GridLinesPanel extends javax.swing.JPanel implements InfoPanel {
 
@@ -271,8 +270,6 @@ public class GridLinesPanel extends javax.swing.JPanel implements InfoPanel {
             return;
         }
 
-//        dialog.setVisible(true);
-//        Color newColor = colorChooser.getColor();
         if (majorX.isSelected()) {
             inFocus.getXYPlot().setDomainGridlinePaint(c);
         }

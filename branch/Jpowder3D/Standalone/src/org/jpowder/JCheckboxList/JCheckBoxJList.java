@@ -16,11 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * ---------
-<<<<<<< .mine
- * JCheckboxList.java
-=======
  * JCheckBoxJList.java
->>>>>>> .r284
  * ---------
  * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
  * Kasem Bundit University.
@@ -45,10 +41,7 @@ import org.jpowder.Jpowder;
 import org.jpowder.jfreechart.JpowderXYBlockRenderer;
 
 /**
- *
- * Used in the FileChooserPanel to display a tickbox of JList (JList by itself does not support tickbox).
- * It also allow user to select multiple files.
- *
+ * Used to display a JList with tickboxes. 
  */
 public class JCheckBoxJList extends JList implements Serializable {
 
@@ -83,24 +76,21 @@ public class JCheckBoxJList extends JList implements Serializable {
                 // turn off/on tick in tickbox
                 item.setSelected(!item.isSelected());
 
-                //this neccessary for checking and unchecking the jcheckbox list
+                // this neccessary for checking and unchecking the jcheckbox list
                 java.awt.Rectangle rect = list.getCellBounds(index, index);
                 list.repaint(rect);
 
-                 //check what dataset has been used then try remove the Plot
-                //since jfreechart dose not support this feature I had my modfied code in the JpowderXYBlockRenderer
-                //to try romove the series.
+                // check what dataset has been used then try remove the Plot
+                // since jfreechart does not support this feature I had to
+                // modfied code in the JpowderXYBlockRenderer to try to remove
+                // the series.
                 String dataSetType = m_plot.getDataset().toString();
                 if (!dataSetType.substring(0, dataSetType.indexOf("@")).equals("org.jfree.data.xy.DefaultXYZDataset")) {
                     if (!item.isSelected()) {
-
                         m_plot.getRenderer(index).setSeriesVisible(0, Boolean.FALSE);
-
-
                     }
                     if (item.isSelected()) {
                         m_plot.getRenderer(index).setSeriesVisible(0, Boolean.TRUE);
-
                     }
                 } else {
                     JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
@@ -108,9 +98,6 @@ public class JCheckBoxJList extends JList implements Serializable {
                     boolean set = renderer.isSeriesVisible(index);
                     renderer.setSeriesVisible(index, !set);
                 }
-
-
-
             }
         });
 

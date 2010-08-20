@@ -30,7 +30,6 @@ package org.jpowder.tree;
 
 /**
  *
- * @author Kreecha Puphaiboon
  */
 public enum SORTBY {
 

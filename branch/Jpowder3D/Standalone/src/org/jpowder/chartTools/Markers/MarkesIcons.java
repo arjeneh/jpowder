@@ -32,7 +32,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 
 /**
- * getting image paths and making ImageIcon to be added to the
+ * Getting image paths and making ImageIcon to be added to the
  * ComboBox.
  * 
  */
