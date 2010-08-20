@@ -75,9 +75,6 @@ public class DefaultSeriesColours {
     public static final Color LIGHT_MAGENTA = new Color(0xFF, 0x40, 0xFF);
     public static final Color VERY_LIGHT_MAGENTA = new Color(0xFF, 0x80, 0xFF);
 
-//    public DefaultColours(int r, int g, int b) {
-//        super(r, g, b);
-//    }
     /**
      * array of colours
      * @return array of colour

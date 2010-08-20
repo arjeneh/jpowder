@@ -80,6 +80,7 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
      */
     public JpowderInternalframe2D(DataVisibleInChart dataVisibleInChartPanel, Vector<DataSet> data) {
         super(dataVisibleInChartPanel, data);
+        doStuff("xxx");
         m_data = data;
         this.dataVisibleInChartPanel = dataVisibleInChartPanel;
         xYPlot = this.getXYPlot();

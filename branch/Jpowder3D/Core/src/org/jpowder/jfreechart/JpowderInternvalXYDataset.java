@@ -44,15 +44,11 @@ public class JpowderInternvalXYDataset extends AbstractIntervalXYDataset {
     private Vector<Double> x;
     private Vector<Double> y;
     private Vector<Double> e;
-    //private Vector<Double> yLower;
-    //private Vector<Double> yUpper;
 
     public JpowderInternvalXYDataset(DataSetWithErrors dataset) {
         this.x = dataset.getX();
         this.y = dataset.getY();
         this.e = dataset.getE();
-        // this.yLower=dataset.getYLower();
-        // this.yUpper=dataset.getYUpper();
     }
 
     @Override

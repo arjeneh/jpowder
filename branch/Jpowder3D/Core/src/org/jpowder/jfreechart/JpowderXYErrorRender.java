@@ -33,10 +33,6 @@ package org.jpowder.jfreechart;
 import org.jfree.chart.renderer.xy.XYErrorRenderer;
 
 /**
- *
- * @author M Arjeneh
- */
-/**
  * A line and shape renderer that can also display x and/or y-error values.
  */
 public class JpowderXYErrorRender extends XYErrorRenderer {

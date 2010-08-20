@@ -32,18 +32,8 @@ package org.jpowder.jfreechart;
 import org.jpowder.util.ScreenUtil;
 
 /*
- * Class name: EditChartFrame.java
-@author: Kreecha Puphaiboon
-Date: Created on 22 May 2007, 10:51
-Modf:
-Description:
+ * Pops-up chart when double click
  *
- * A frame allocated a chart from the main JPowder class. With functionalities
- * such as zoom, save, delete, edit and etc. But none has yet implemented!
- *
- * called by PowderChartMouseObserver.java method
- * chartMouseClicked(ChartMouseEvent chartMouseEvent)
-
  */
 public class EditChartFrame extends javax.swing.JFrame {
 

@@ -31,15 +31,6 @@
  */
 package org.jpowder.tree;
 
-/**
- *
- * Changes
- * -------
- * 17-Dec-2009 : Version 1;
- * 03-March-2010 : Use TreeModel -> JpowderFileSystemTreeModel (KP);
- *                  add features for open and collapse JTree.
- *                  move FileSystemView to the JpowderFileSystemTreeModel.java
- */
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

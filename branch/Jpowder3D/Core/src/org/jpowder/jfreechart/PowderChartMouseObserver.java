@@ -37,7 +37,6 @@ import org.jfree.chart.JFreeChart;
  * This class support the click of the mouse on the chart so it brings up a Frame 
  * and user can edit.
  * 
- * @author Toshiba
  */
 public class PowderChartMouseObserver implements ChartMouseListener {
 

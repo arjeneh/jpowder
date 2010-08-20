@@ -36,7 +36,6 @@ import org.jpowder.util.VectorMiscUtil;
 /**
  * Base class for holding the content of a powder diffraction file
  *
- *
  */
 public abstract class DataSet {
 

@@ -49,13 +49,14 @@ import org.jpowder.dataset.DatasetPlotter;
 
 /**
  * Plotting the 3D data.
- * @author qyt21516
+ *
  */
 public class FilesPlotter3D extends DatasetPlotter {
 
     private static Vector<DataSet> datasets;
     private static JFreeChart chart;
     private static XYPlot plot;
+    private static String selectedMetaItem;
 
     /**
      *
@@ -65,6 +66,7 @@ public class FilesPlotter3D extends DatasetPlotter {
     public FilesPlotter3D(Vector<DataSet> d, String meta) {
         super(d);
         FilesPlotter3D.datasets = d;
+        selectedMetaItem = meta;
     }
 
     public FilesPlotter3D(DataSet d) {
@@ -156,6 +158,21 @@ public class FilesPlotter3D extends DatasetPlotter {
 //        renderer.setBlockHeight(10);
         // renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
 
+        Vector<Double> widthsLow = new Vector<Double>();
+        Vector<Double> widthsUpper = new Vector<Double>();
+        for (int i = 0; i < datasets.size()-1; i++) {
+            widthsUpper.add(datasets.get(i+1).getMetaData(selectedMetaItem)
+                    - datasets.get(i).getMetaData(selectedMetaItem));
+            widthsLow.add(0.0);
+        }
+        if (datasets.size()-1 > 0)
+          widthsUpper.add(widthsUpper.lastElement());
+        else
+          widthsUpper.add(1.0);
+        widthsLow.add(0.0);
+
+        renderer.setBlockHeight(widthsLow, widthsUpper);
+
 
 
         PaintScaleLegend legend = new PaintScaleLegend(lps,
@@ -196,7 +213,7 @@ public class FilesPlotter3D extends DatasetPlotter {
             for (int j = 0; j < datasets.elementAt(i).getX().size(); j++) {
 
                 data[0][j] = (Double) datasets.elementAt(i).getX().get(j);//x
-                data[1][j] = datasets.get(i).getMetaData(datasets.get(i).getFileName());//x by file number..
+                data[1][j] = datasets.get(i).getMetaData(selectedMetaItem);//x by file number..
                 data[2][j] = (Double) datasets.elementAt(i).getY().get(j);//Colour
 
             }

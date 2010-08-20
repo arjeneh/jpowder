@@ -35,8 +35,6 @@ import org.jpowder.jfreechart.FilesPlotter3D;
 /**
  * Base class for (temporarely) holding the content of a powder diffraction
  * files and then create JFreeChart plots of such data
- *
- *
  */
 public abstract class DatasetPlotter {
 

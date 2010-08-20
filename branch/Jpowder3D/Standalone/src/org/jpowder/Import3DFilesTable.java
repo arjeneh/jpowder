@@ -468,23 +468,29 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                 break;
             }
         }
-//setting dataset in hashmap
+          //setting hashmap in dataset
         for (int i = 0; i < datasets.size(); i++) {
             HashMap<String, Double> hm = new HashMap<String, Double>();
+            hm.put("Name", (double) i);
             if (plotAsComboBox.getSelectedIndex() == 0 || plotAsComboBox.getSelectedIndex() == 1) {
 
-
-                hm.put((String) defaultTableModel.getValueAt(i, 0), (double) i);
+                //hm.put("index", (double) i);
 
             } else {
-                   hm.put((String) defaultTableModel.getValueAt(i, 0),
+                for (int iCol = 2; iCol < importData3DTable.getColumnCount(); iCol++)
+                {
+                   hm.put(defaultTableModel.getColumnName(iCol),
                            Double.parseDouble(defaultTableModel.getValueAt(i, plotAsComboBox.getSelectedIndex()).toString()));
+                }
             }
             datasets.get(i).addMetaData(hm);
 
         }
+      
+
         // finally plot the data
-        JpowderInternalframe3D internalframe = new JpowderInternalframe3D(dataVisibleInChart, datasets);
+        JpowderInternalframe3D internalframe = new JpowderInternalframe3D(dataVisibleInChart, datasets,
+                plotAsComboBox.getSelectedItem().toString());
         Jpowder.jpowderInternalFrameUpdate(internalframe);
         InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
         internalframe.addInternalFrameListener(internalFrameListener);

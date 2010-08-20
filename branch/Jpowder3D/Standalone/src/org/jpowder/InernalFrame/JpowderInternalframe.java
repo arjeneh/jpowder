@@ -57,19 +57,18 @@ public class JpowderInternalframe extends JInternalFrame {
     private DataVisibleInChart dataVisibleInChartPanel;
     private Vector<DataSet> m_data;
     private XYPlot xYPlot;  // hold reference to plot created from dataset in constructor
-    private DatasetPlotter plotMultiCol;
+    protected DatasetPlotter plotMultiCol;
     private ChartPanel jfreeChartPanel;
     private String name = new String();
 
-    public JpowderInternalframe(DataVisibleInChart dataVisibleInChartPanel, Vector<DataSet> data) {
 
-        this.dataVisibleInChartPanel = dataVisibleInChartPanel;
-        m_data = data;
+    protected void doStuff(String selectedMetaItem)
+    {
         if (Jpowder.getPlotsTab().getSelectedIndex() == 0) {
-            plotMultiCol = DatasetPlotter.createDatasetPlotter(data);
+            plotMultiCol = DatasetPlotter.createDatasetPlotter(m_data);
         }
         if (Jpowder.getPlotsTab().getSelectedIndex() == 1) {
-            plotMultiCol = DatasetPlotter.createDatasetPlotter(data, "");
+            plotMultiCol = DatasetPlotter.createDatasetPlotter(m_data, selectedMetaItem);
         }
 
         ChartPanel jfreeChartPanels = plotMultiCol.createPowderChart();
@@ -107,6 +106,12 @@ public class JpowderInternalframe extends JInternalFrame {
 
             }
         });
+    }
+
+    public JpowderInternalframe(DataVisibleInChart dataVisibleInChartPanel, Vector<DataSet> data) {
+
+        this.dataVisibleInChartPanel = dataVisibleInChartPanel;
+        m_data = data;
     }
 
     /**

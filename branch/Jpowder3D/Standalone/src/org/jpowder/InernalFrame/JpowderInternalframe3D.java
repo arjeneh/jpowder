@@ -43,15 +43,18 @@ import org.jpowder.jfreechart.FilesPlotter3D;
 public class JpowderInternalframe3D extends JpowderInternalframe{
     private XYPlot xYPlot;  // hold reference to plot created from dataset in constructor
     private JFreeChart chart;
+    private String selectedMetaItem;
     /**
      *
      * @param dataVisibleInChartPanel
      * @param data
      */
-    public JpowderInternalframe3D(DataVisibleInChart dataVisibleInChartPanel, Vector<DataSet> data) {
+    public JpowderInternalframe3D(DataVisibleInChart dataVisibleInChartPanel, Vector<DataSet> data, String selectedMetaItem) {
         super(dataVisibleInChartPanel,data);
+        doStuff(selectedMetaItem);
         xYPlot = this.getXYPlot();
         chart=FilesPlotter3D.getChart();
+        this.selectedMetaItem = selectedMetaItem;
         
     }
 

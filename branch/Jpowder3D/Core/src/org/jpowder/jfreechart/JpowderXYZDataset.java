@@ -19,7 +19,6 @@ import org.jpowder.dataset.DataSet;
 
 /**
  *
- * @author qyt21516
  */
 public class JpowderXYZDataset extends AbstractXYZDataset {
 

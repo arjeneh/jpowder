@@ -97,9 +97,9 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
      *
      * @see #getBlockWidth()
      */
-    public void setBlockWidth(Vector<Double> low, Vector<Double> upper) {
+    public void setBlockHeight(Vector<Double> low, Vector<Double> upper) {
         this.blockHeightLower = low;
-        this.blockHeightLower = upper;
+        this.blockHeightUpper = upper;
         updateOffsets();
         fireChangeEvent();
     }
@@ -331,7 +331,7 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
                 plot.getRangeAxisEdge());
         double xx1 = domainAxis.valueToJava2D(x + this.blockWidth +
                 this.xOffset, dataArea, plot.getDomainAxisEdge());
-        double yy1 = rangeAxis.valueToJava2D(y + this.blockHeight+
+        double yy1 = rangeAxis.valueToJava2D(y + this.blockHeightUpper.get(series)+
                 this.yOffset, dataArea, plot.getRangeAxisEdge());
         Rectangle2D block;
         PlotOrientation orientation = plot.getOrientation();
