@@ -5,8 +5,7 @@ The source code contains the project files for Netbeans version 6.7, which is co
 
   http://www.netbeans.info/downloads/dev.php
 
-On this web site select ‘!NetBeans version’ from the drop down menu 
-and from the ‘Build Type’ dropdown menu select ‘release’.
+On this web site select 6.7.1 from the ‘!NetBeans version’ combobox on the right hand side and then hit the 'continue' button situated below this combobox. You will then be forwarded to a web-page where you will be presented with a number of download options. You can pick any of the download options which includes 'Java SE'.
 
 The next step is to download the source from by clicking the 'Source' tab or following the link http://code.google.com/p/jpowder/source/checkout.
 
