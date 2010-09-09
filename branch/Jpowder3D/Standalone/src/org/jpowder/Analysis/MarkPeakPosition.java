@@ -34,6 +34,8 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.DefaultListModel;
@@ -46,6 +48,7 @@ import org.jdesktop.jxlayer.JXLayer;
 import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.annotations.XYTextAnnotation;
+import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.ui.TextAnchor;
 import org.jpowder.InfoPanel;
@@ -276,6 +279,19 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
 
                 x = inFocus.getXYPlot().getDomainCrosshairValue();
                 y = inFocus.getXYPlot().getRangeCrosshairValue();
+
+                // if domain marker position has been selected previously don't add
+                // a new marker
+                Iterator itr = inFocus.getMarkedPeakPosition().iterator();
+                while(itr.hasNext()) {
+                    Object element = itr.next();
+
+                  if (element.equals(x))
+                  {
+                    return;
+                  }
+                }
+
                 inFocus.addMarkedPeakPosition(x);
                 final String[] strings = convertDoubleToString(inFocus.getMarkedPeakPosition());
 
@@ -304,10 +320,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
         domainMarker.setStroke(new BasicStroke(1.4f));
         domainMarker.setPaint(Color.yellow);
 
-//        peakRangeMarker.add(rangeMarker);
         inFocus.getPeakDomainMarker().add(domainMarker);
-
-//        inFocus.getXYPlot().addRangeMarker(rangeMarker);
         inFocus.getXYPlot().addDomainMarker(domainMarker);
     }
 
@@ -498,5 +511,9 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     private javax.swing.JButton removeAllButt;
     private javax.swing.JButton removeButt;
     // End of variables declaration//GEN-END:variables
+
+    private void iterator() {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }
 
