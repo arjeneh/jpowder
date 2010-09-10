@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JCheckBox;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
@@ -83,7 +84,7 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
             return;
 
         }else {
-            getPeakCheckBox.setEnabled(true);
+            getPeakCheckBox.setEnabled(true);          
         }
 
         model.clear();
@@ -231,16 +232,20 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-
+            
         if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() > 0) {
             JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
             JXLayer layer = new JXLayer(inFocus.getChartPanel());
             Magnifier magnifier = new Magnifier();
             magnifier.setRadius(0);
             layer.setUI(magnifier);
-            inFocus.setContentPane(layer);
+            inFocus.setContentPane(layer);           
         }
 
+      // To force the tick box to be 'not' ticked from start
+         if (getPeakCheckBox.isSelected()) {             
+             getPeakCheckBox.doClick();
+         }
 
         this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
@@ -512,8 +517,6 @@ public class MarkPeakPosition extends javax.swing.JPanel implements InfoPanel, C
     private javax.swing.JButton removeButt;
     // End of variables declaration//GEN-END:variables
 
-    private void iterator() {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
+    
 }
 
