@@ -1,0 +1,96 @@
+<mockup version="1.0" skin="sketch" measuredW="972" measuredH="475" mockupW="938" mockupH="414">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::TitleWindow" x="24" y="51" w="625" h="410" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Plot%20Data%203D</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Button" x="293" y="82" w="137" h="28" measuredW="137" measuredH="28" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Save%20as%20Meta%20File</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::Canvas" x="31" y="155" w="603" h="237" measuredW="100" measuredH="70" zOrder="2" locked="false" isInGroup="-1"/>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::ButtonBar" x="33" y="159" w="435" h="31" measuredW="321" measuredH="31" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Name%2C%20T%2C%20P%2C%20Type%2C%20Date%20Modified</text>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::Button" x="254" y="392" w="-1" h="-1" measuredW="47" measuredH="28" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Plot</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Button" x="31" y="392" w="-1" h="-1" measuredW="76" measuredH="28" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>12</size>
+        <text>Clear%20All</text>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Paragraph" x="40" y="186" w="98" h="140" measuredW="200" measuredH="140" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Data1.xye%0AData2.xye%0AData3.xye%0AData4.xye</text>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Paragraph" x="249" y="186" w="122" h="140" measuredW="200" measuredH="140" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>xye%0Axye%0Axye%0Axye</text>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::Paragraph" x="319" y="186" w="156" h="140" measuredW="200" measuredH="140" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>08/07/2010%2011%3A34%3A15%0A08/07/2010%2011%3A34%3A15%0A08/07/2010%2011%3A34%3A15%0A08/07/2010%2011%3A34%3A15</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Button" x="40" y="82" w="95" h="48" measuredW="101" measuredH="28" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Import%20Data</text>
+      </controlProperties>
+    </control>
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::Button" x="156" y="82" w="137" h="28" measuredW="117" measuredH="28" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Load%20Meta%20File</text>
+      </controlProperties>
+    </control>
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::Label" x="301" y="395" w="-1" h="-1" measuredW="18" measuredH="25" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>as</text>
+      </controlProperties>
+    </control>
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::ComboBox" x="328" y="393" w="291" h="-1" measuredW="74" measuredH="72" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>ranked%0Afunction%20of%20T%0Afunction%20of%20P</text>
+      </controlProperties>
+    </control>
+    <control controlID="20" controlTypeID="com.balsamiq.mockups::Button" x="540" y="117" w="-1" h="-1" measuredW="94" measuredH="28" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Add%20column</text>
+      </controlProperties>
+    </control>
+    <control controlID="22" controlTypeID="com.balsamiq.mockups::Paragraph" x="128" y="186" w="44" h="140" measuredW="200" measuredH="140" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>10%0A20%0A40%0A100</text>
+      </controlProperties>
+    </control>
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::Paragraph" x="187" y="186" w="41" h="140" measuredW="200" measuredH="140" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>50%20%0A40%0A10%0A1</text>
+      </controlProperties>
+    </control>
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::TextArea" x="678" y="155" w="284" h="187" measuredW="200" measuredH="140" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%3CJpowderMetaFile%3E%0AFilename%20%20%20%20%20%20%20%20T%20%20%20%20P%20%20%20%20%20%20%20%20FilePath%0AData1.xye%20%20%20%20%2010%20%20%2050%20%20%20%20%20%20%20C%3A%5Cblah%0AData2.xye%20%20%20%20%2020%20%20%2040%20%20%20%20%20%20%20C%3A%5Cblah%0AData3.xye%20%20%20%20%2040%20%20%2010%20%20%20%20%20%20%20C%3A%5Cblah%5Cblah%0AData4.xye%20%20%20%20%20100%20%20%201%20%20%20%20%20%20%20C%3A%5Cblah%0A%3Cdefault%20row%3D%22T%22%20/%3E%0A%3C/JpowderMetaFile%3E%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::StickyNote" x="848" y="326" w="99" h="109" measuredW="109" measuredH="123" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Example%20Meta%20File</text>
+      </controlProperties>
+    </control>
+    <control controlID="26" controlTypeID="com.balsamiq.mockups::Button" x="602" y="82" w="-1" h="-1" measuredW="32" measuredH="28" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%3F</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

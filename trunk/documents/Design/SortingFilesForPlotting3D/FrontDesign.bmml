@@ -1,0 +1,45 @@
+<mockup version="1.0" skin="sketch" measuredW="1232" measuredH="555">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::MenuBar" x="36" y="130" w="449" h="29" measuredW="235" measuredH="29" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>File%2C%20Edit%2C%20Window%2C%20Help</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Canvas" x="36" y="158" w="449" h="362" measuredW="100" measuredH="70" zOrder="1" locked="false" isInGroup="-1"/>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::TabBar" x="36" y="159" w="175" h="236" measuredW="202" measuredH="100" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Explorer%2C%20Tools</text>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::FieldSet" x="44" y="402" w="167" h="109" measuredW="200" measuredH="170" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Plot%20Visible%20in%20chart</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Arrow" x="132" y="146" w="443" h="28" measuredW="150" measuredH="100" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Menu" x="590" y="54" w="211" h="-1" measuredW="150" measuredH="165" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Undo%20Closed%20Frame%20Ctrl+Z%0ARedo%20Closed%20Frame%20Ctrl+Y%0A---%0A.%0A.%0A.%0ACreate%203D%20Plot</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::Tree" x="42" y="191" w="165" h="186" measuredW="300" measuredH="220" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>C%0AF%20Use%0Af%20Use%20%0Af%20Use%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::TabBar" x="211" y="167" w="266" h="344" measuredW="220" measuredH="100" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>2D%20Plots%2C%203D%20Plots</text>
+      </controlProperties>
+    </control>
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::StickyNote" x="477" y="288" w="745" h="257" measuredW="109" measuredH="123" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Dragging%20in%20plot%20files%20will%20create%0Adifferent%20response%20depending%20on%20%0A2D%20or%203D%20tab%20selected.%0A%20%0AIn%202D%20as%20normal%0AIn%203D%20this%20will%20open%20the%203D%20browse%20window%20if%20normal%20powder%20files%20selected%0AIn%202D%20if%20a%20Jpowder%20meta%20file%20is%20dragged%20in%20then%20simply%20just%20try%20to%20plot%20files%20listed%20in%20meta%20file%0AIn%203D%20if%20a%20meta%20file%20is%20dragged%20in%20then%201st%20try%20to%20create%203D%20chart%2C%20if%20cannot%20locate%20filenames%20then%20open%203D%20browser%20window%20</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
