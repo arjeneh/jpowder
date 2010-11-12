@@ -28,10 +28,15 @@
  */
 package org.jpowder.Analysis;
 
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.Collections;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
+import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.jfree.chart.axis.NumberAxis;
@@ -286,6 +291,28 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
         return dataTable;
     }
 
+    /**
+     * This method is used so user dont need to press enter after adding
+     * wavelength to the Jtable.
+     */
+    private void stopAllCellEditing() {
+        for (int i = 0; i < dataTable.getRowCount(); i++) {
+            for (int j = 0; j < dataTable.getColumnCount(); j++) {
+                javax.swing.table.TableCellEditor editor = dataTable.getCellEditor(i, j);
+                editor.stopCellEditing();
+            }
+        }
+    }
+
+    private void stopAllCellEditingGstable() {
+        for (int i = 0; i <gsastable.getRowCount(); i++) {
+            for (int j = 0; j < gsastable.getColumnCount(); j++) {
+                javax.swing.table.TableCellEditor editor = gsastable.getCellEditor(i, j);
+                editor.stopCellEditing();
+            }
+        }
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -472,13 +499,14 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
      */
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-
         if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
             applyButton.setSelected(false);
             return;
         }
 
+
         if (bragsPanel.isVisible()) {
+       
 
 //        for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
 //            if (inFocus.getPowderDataSet().get(i).getFileName().endsWith("gss")) {
@@ -487,9 +515,11 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
 //            }
 //
 //        }
-
+         
+            stopAllCellEditing();
             String x = "2\u03D1";//unicode 2thetha
             dataTable.clearSelection();
+ 
             if (unitComboBox1.getSelectedItem().toString().equals("2Ө") &&
                     unitComboBox2.getSelectedItem().toString().equals("2Ө")) {
                 return;
@@ -568,6 +598,7 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
 
         if (gsaspanel.isVisible()) {
 
+            stopAllCellEditingGstable();
             for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
 
                 inFocus.getPowderDataSet().elementAt(i).getX();
