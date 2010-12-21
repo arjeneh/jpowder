@@ -84,16 +84,16 @@
               <Component id="changePlotStyleLabel" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
-          <Component id="jSeparator1" alignment="1" pref="320" max="32767" attributes="0"/>
+          <Component id="jSeparator1" alignment="1" pref="324" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="backButton" min="-2" pref="84" max="-2" attributes="0"/>
-              <EmptySpace pref="226" max="32767" attributes="0"/>
+              <EmptySpace pref="228" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jTabbedPane1" alignment="0" pref="300" max="32767" attributes="1"/>
+                  <Component id="jTabbedPane1" alignment="0" pref="302" max="32767" attributes="1"/>
                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -112,7 +112,7 @@
               <Component id="jTabbedPane1" pref="302" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="backButton" min="-2" pref="25" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -358,7 +358,7 @@
                       <SpinnerModel initial="1.0" maximum="50.0" minimum="1.0" numberType="java.lang.Double" stepSize="0.5" type="number"/>
                     </Property>
                     <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="2" type="code"/>
+                      <Connection code="2.0" type="code"/>
                     </Property>
                   </Properties>
                   <Events>
@@ -413,7 +413,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="errorBars" min="-2" max="-2" attributes="1"/>
-                                      <EmptySpace pref="136" max="-2" attributes="0"/>
+                                      <EmptySpace pref="105" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="1" attributes="0">
@@ -424,10 +424,10 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jSpinner2" min="-2" pref="65" max="-2" attributes="0"/>
-                                              <EmptySpace pref="165" max="-2" attributes="0"/>
+                                              <EmptySpace pref="147" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="colourPickerButton" alignment="0" pref="230" max="32767" attributes="1"/>
-                                          <Component id="seriesColourComboBox" alignment="0" pref="230" max="32767" attributes="1"/>
+                                          <Component id="colourPickerButton" alignment="0" pref="212" max="32767" attributes="1"/>
+                                          <Component id="seriesColourComboBox" alignment="0" pref="212" max="32767" attributes="1"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -459,7 +459,7 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="colourPickerButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="100" max="32767" attributes="0"/>
+                      <EmptySpace pref="53" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
