@@ -153,12 +153,11 @@ public class IO_MetaFile {
     }
 
     /**
-     * Saving data in the Jtabel into a XML file.
-     * @param aFile
+     * Saving data in the Jtable into a XML file.
+     * @param aFile Filename to save the metafile to
      */
     public void save_MetaFile(File aFile) {
         try {
-
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             Document document = documentBuilder.newDocument();
