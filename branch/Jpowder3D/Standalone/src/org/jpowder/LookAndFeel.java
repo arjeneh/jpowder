@@ -110,14 +110,14 @@ public class LookAndFeel {
     }
 
     public static void appleLook() {
-        try {
-            UIManager.setLookAndFeel("com.apple.mrj.swing.MacLookAndFeel");
-
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Need Mac operating system ",
-                    "error", JOptionPane.ERROR_MESSAGE);
-        }
+//        try {
+//            UIManager.setLookAndFeel(new );
+//
+//
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "Need Mac operating system ",
+//                    "error", JOptionPane.ERROR_MESSAGE);
+//        }
     }
 
     public void windosclassic() {
