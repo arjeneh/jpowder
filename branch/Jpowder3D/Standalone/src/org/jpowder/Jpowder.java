@@ -330,10 +330,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
         homePanelScrollPane = new javax.swing.JScrollPane();
         homePanel = new javax.swing.JPanel();
         tabs = new javax.swing.JTabbedPane();
-        explorertab = new javax.swing.JPanel();
         cardLayout = new CardLayout();
         toolstab2D = new javax.swing.JPanel();
         toolstab3D = new javax.swing.JPanel();
+        explorertab = new javax.swing.JPanel();
         dataVisibleInChartPanel = new javax.swing.JPanel();
         plotsTab = new javax.swing.JTabbedPane();
         chartPlotterPane2D = new javax.swing.JDesktopPane();
@@ -401,10 +401,6 @@ public class Jpowder extends JFrame implements DropTargetListener {
         tabs.setPreferredSize(new java.awt.Dimension(275, 800));
         tabs.setVerifyInputWhenFocusTarget(false);
 
-        explorertab.setPreferredSize(new java.awt.Dimension(275, 400));
-        explorertab.setLayout(new java.awt.CardLayout());
-        tabs.addTab("Explorer", explorertab);
-
         toolstab2D.setPreferredSize(new java.awt.Dimension(270, 320));
         toolstab2D.setLayout(new java.awt.CardLayout());
 
@@ -414,6 +410,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
         toolstab3D.setLayout(new java.awt.CardLayout());
         tabs.addTab("Tools 3D", toolstab3D);
+
+        explorertab.setPreferredSize(new java.awt.Dimension(275, 400));
+        explorertab.setLayout(new java.awt.CardLayout());
+        tabs.addTab("Explorer", explorertab);
 
         dataVisibleInChartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Plot(s) Visible In Chart"));
         dataVisibleInChartPanel.setLayout(new java.awt.BorderLayout());
