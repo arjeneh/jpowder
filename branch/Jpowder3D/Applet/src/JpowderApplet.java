@@ -30,10 +30,14 @@
  */
 import java.io.ObjectInputStream;
 import java.net.URL;
+import java.util.Vector;
 import javax.swing.JApplet;
 import javax.swing.UIManager;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jpowder.dataset.DataSet;
+import org.jpowder.fileCabinet.PowderFileCabinet;
+import org.jpowder.jfreechart.FilesPlotter;
 
 /**
  *
@@ -48,11 +52,23 @@ public class JpowderApplet extends JApplet {
         try {
 
             String fileName = this.getParameter("PATH");
-            URL source = new URL(getCodeBase(), fileName);
+            //fileName = "/home/anders/Desktop/Jpowder/branch/Jpowder3D/Applet/build/classes/BM16_C6-H6-N6-O4_H2O.xye"; //"milad.ser";
 
-            ObjectInputStream charts = new ObjectInputStream(source.openStream());
-            serializedChart = (JFreeChart) charts.readObject();
+            if ( fileName.endsWith(".ser") )
+            {
+              URL source = new URL(getCodeBase(), fileName);
+              ObjectInputStream charts = new ObjectInputStream(source.openStream());
+              serializedChart = (JFreeChart) charts.readObject();
+            }
+            else
+            {
+                //URL source = new URL(getCodeBase(), fileName);
+                Vector<DataSet> data = PowderFileCabinet.createDataSetFromPowderFile(fileName);
+                FilesPlotter fileplotter = new FilesPlotter(data);
+                serializedChart = fileplotter.createChart();
+            }
         } catch (Exception e) {
+
 
             e.printStackTrace();
         }
