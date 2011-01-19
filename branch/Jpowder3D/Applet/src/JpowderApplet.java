@@ -24,10 +24,13 @@
  * Kasem Bundit University.
  *
  * Author(s):  Milad Arjeneh, ISIS, Rutherford Appleton Laboratory
+ *             Anders Markvardsen, ISIS, Rutherford Appleton Laboratory
  *
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
  */
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.Vector;
@@ -40,8 +43,8 @@ import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.jfreechart.FilesPlotter;
 
 /**
- *
- * @author M Arjeneh
+ * Not for now it will read anything ending with .ser as a serialised object and
+ * anything else as some kind of raw ascii powder diffraction file
  */
 public class JpowderApplet extends JApplet {
 
@@ -52,7 +55,7 @@ public class JpowderApplet extends JApplet {
         try {
 
             String fileName = this.getParameter("PATH");
-            //fileName = "/home/anders/Desktop/Jpowder/branch/Jpowder3D/Applet/build/classes/BM16_C6-H6-N6-O4_H2O.xye"; //"milad.ser";
+            //fileName = "pd_0001.xy"; //"4.ser"; //
 
             if ( fileName.endsWith(".ser") )
             {
@@ -62,14 +65,14 @@ public class JpowderApplet extends JApplet {
             }
             else
             {
-                //URL source = new URL(getCodeBase(), fileName);
-                Vector<DataSet> data = PowderFileCabinet.createDataSetFromPowderFile(fileName);
+                URL source = new URL(getCodeBase(), fileName);
+                File file = new File(source.getPath());
+                FileInputStream fis = new FileInputStream(source.getPath());
+                Vector<DataSet> data = PowderFileCabinet.createDataSetFromPowderFile(fis, file);
                 FilesPlotter fileplotter = new FilesPlotter(data);
                 serializedChart = fileplotter.createChart();
             }
         } catch (Exception e) {
-
-
             e.printStackTrace();
         }
 

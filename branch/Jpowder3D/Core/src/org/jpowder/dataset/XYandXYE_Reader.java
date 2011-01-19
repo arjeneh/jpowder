@@ -49,13 +49,12 @@ public class XYandXYE_Reader {
     private final static String[] digits = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
 
-    public static DataSet read(File aFile) {
+    public static DataSet read(FileInputStream fileInputStream, File aFile) {
         String aLine;
         boolean TOF=false;
         Vector<Vector<Double>> localData = new Vector<Vector<Double>>();
 
         try {
-            FileInputStream fileInputStream = new FileInputStream(aFile);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
             int lineNum = 0;
 
@@ -178,4 +177,5 @@ public class XYandXYE_Reader {
 
 
     }
+
 }

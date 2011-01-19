@@ -31,8 +31,9 @@ package org.jpowder.dataset;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -45,13 +46,12 @@ public class Cif_Reader {
 
     private static double waveLength;
 
-    public static DataSet read(File aFile) {
+    public static DataSet read(FileInputStream fileInputStream, File aFile) {
 
         String aLine;
         Vector<Vector<Double>> localData = new Vector<Vector<Double>>();
         try {
-            FileReader fileReader = new FileReader(aFile);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
             while ((aLine = bufferedReader.readLine()) != null) {
                 if ( !aLine.startsWith("#") ) {
                     if (aLine.contains("_diffrn_radiation_wavelength")) {
@@ -137,7 +137,6 @@ public class Cif_Reader {
                     }
                 }
             }
-            fileReader.close();
             bufferedReader.close();
             // Determine how many columns there are
             int countColumn = localData.firstElement().size();

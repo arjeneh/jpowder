@@ -181,51 +181,72 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
      * @param aFile Name of the powder diffraction file to be read
      */
     public static Vector<DataSet> createDataSetFromPowderFile(String filename) {
-        return PowderFileCabinet.createDataSetFromPowderFile(new File(filename));
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(filename);
+
+            } catch (Exception ex) {
+            System.out.println(ex);
+                 javax.swing.JOptionPane.showMessageDialog(null, "Can't process selected file or directory.");
+        }
+        return PowderFileCabinet.createDataSetFromPowderFile(fis, new File(filename));
     }
+
 
     public static Vector<DataSet> createDataSetFromPowderFile(File aFile) {
         FileInputStream fis = null;
-        Vector<DataSet> retval = new Vector<DataSet>();
         try {
             fis = new FileInputStream(aFile);
-            //BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-            //int lineNum = 0;
+
+            } catch (Exception ex) {
+            System.out.println(ex);
+                 javax.swing.JOptionPane.showMessageDialog(null, "Can't process selected file or directory.");
+        }
+        return PowderFileCabinet.createDataSetFromPowderFile(fis, aFile);
+    }
+
+
+    /**
+     * Create a dataset object from a powder file. It appears to be necessary
+     * to input this method both with a File (i.e. which hold the filename) and
+     * a FileInputStream of this file in to get the JpowderApplet to load a file,
+     * i.e. for some security reason the stream appears to be required to be
+     * open in JpowderApplet and cannot be open in Core.
+     *
+     * @param fis FileInputStream of the second argument aFile
+     * @param aFile Name of the powder diffraction file to be read
+     * @return vector of DataSet objects
+     */
+    public static Vector<DataSet> createDataSetFromPowderFile(FileInputStream fis, File aFile) {
+        Vector<DataSet> retval = new Vector<DataSet>();
+        try {
             if (aFile.getName().endsWith("xye") || aFile.getName().endsWith("xy") || aFile.getName().endsWith("txt")) {
-                retval.addElement(XYandXYE_Reader.read(aFile));
+                retval.addElement(XYandXYE_Reader.read(fis, aFile));
                 return retval;
             }
             if (aFile.getName().endsWith("cif")) {
-                retval.addElement(Cif_Reader.read(aFile));
+                retval.addElement(Cif_Reader.read(fis, aFile));
                 return retval;
             }
              if (aFile.getName().endsWith("gss")) {
                 //retval.addElement(GSAS_Reader.read(aFile));
                 //return retval;
 //                 return GSAS_FXYE_Reader.read(aFile);
-                    return GSAS_FormatChecker.read(aFile);
+                    return GSAS_FormatChecker.read(fis, aFile);
             }
                if (aFile.getName().endsWith("")) {
-                retval.addElement(XYandXYE_Reader.read(aFile));
+                retval.addElement(XYandXYE_Reader.read(fis, aFile));
                 return retval;
             }
-        
+
             return null;
         } catch (Exception ex) {
             System.out.println(ex);
                  javax.swing.JOptionPane.showMessageDialog(null, "Can't process selected file or directory.");
-        } finally {
-            try {
-
-                if (fis != null) {
-                    fis.close();
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(PowderFileCabinet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        } 
         return null;
     }
+
 
     /**
      * Checking whether file type is allowed

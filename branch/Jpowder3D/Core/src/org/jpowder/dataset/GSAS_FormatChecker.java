@@ -31,8 +31,9 @@ package org.jpowder.dataset;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,13 +51,11 @@ public class GSAS_FormatChecker {
  * @param aFile
  * @return Vector<DataSet>
  */
-    public static Vector<DataSet> read(File aFile) {
-        FileReader fileReader = null;
+    public static Vector<DataSet> read(FileInputStream fileInputStream, File aFile) {
+
         String aLine = null;
         try {
-
-            fileReader = new FileReader(aFile);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
 
             while ((aLine = bufferedReader.readLine()) != null) {
 
@@ -87,12 +86,6 @@ public class GSAS_FormatChecker {
 
         } catch (IOException ex) {
             Logger.getLogger(GSAS_FormatChecker.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                fileReader.close();
-            } catch (IOException ex) {
-                Logger.getLogger(GSAS_FormatChecker.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         return null;
     }
