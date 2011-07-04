@@ -1,4 +1,4 @@
-#for code developers
+#summary for code developers
 
 = Jpowder Wiki for developers =
 
