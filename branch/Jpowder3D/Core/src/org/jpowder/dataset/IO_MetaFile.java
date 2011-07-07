@@ -114,7 +114,7 @@ public class IO_MetaFile {
                     for (String s : str) {
 //                        System.out.println(s);
 //                        columnNames.add(s);
-                        defaultTableModel.addColumn(s);
+                        defaultTableModel.addColumn(s.trim());
 
                     }
 

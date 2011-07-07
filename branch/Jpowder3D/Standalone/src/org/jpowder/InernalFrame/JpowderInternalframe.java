@@ -61,12 +61,16 @@ public class JpowderInternalframe extends JInternalFrame {
     private ChartPanel jfreeChartPanel;
     private String name = new String();
 
-
-    protected void doStuff(String selectedMetaItem)
-    {
+    /**
+     * ....
+     * @param selectedMetaItem For 3D plotting
+     */
+    protected void doStuff(String selectedMetaItem) {
+        // if 2D
         if (Jpowder.getPlotsTab().getSelectedIndex() == 0) {
             plotMultiCol = DatasetPlotter.createDatasetPlotter(m_data);
         }
+        // if 3D
         if (Jpowder.getPlotsTab().getSelectedIndex() == 1) {
             plotMultiCol = DatasetPlotter.createDatasetPlotter(m_data, selectedMetaItem);
         }

@@ -95,9 +95,7 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         }
 
-
         ChartPanel chartPanel = new ChartPanel(chart, true);
-
 
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
@@ -133,9 +131,6 @@ public class FilesPlotter3D extends DatasetPlotter {
         renderer.clearSeriesPaints(true);
 
 
-
-//        r.setBlockHeight(1.0f);
-//        r.setBlockWidth(1.0f);
         plot = new XYPlot(dataset, xAxis, yAxis, renderer);
         chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
         double maxY = 0;
@@ -152,11 +147,7 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         renderer.setPaintScale(lps);
 
-
 //        renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
-
-//        renderer.setBlockHeight(10);
-        // renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
 
         Vector<Double> widthsLow = new Vector<Double>();
         Vector<Double> widthsUpper = new Vector<Double>();
@@ -173,20 +164,16 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         renderer.setBlockHeight(widthsLow, widthsUpper);
 
-
-
         PaintScaleLegend legend = new PaintScaleLegend(lps,
                 zAxis);
 //        legend.setAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
         legend.setMargin(new RectangleInsets(0, 0, 5, 0));
         legend.setPadding(new RectangleInsets(0, 40, 0, 10));
 
-
         legend.setStripWidth(10);
         legend.setPosition(RectangleEdge.BOTTOM);
 
         chart.addSubtitle(legend);
-
 
 //      legend.setFrame(new BlockBorder(Color.red));
         chart.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000, Color.BLACK, true));

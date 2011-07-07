@@ -49,7 +49,8 @@ public class JpowderInternalframe3D extends JpowderInternalframe{
      * @param dataVisibleInChartPanel
      * @param data
      */
-    public JpowderInternalframe3D(DataVisibleInChart dataVisibleInChartPanel, Vector<DataSet> data, String selectedMetaItem) {
+    public JpowderInternalframe3D(DataVisibleInChart dataVisibleInChartPanel,
+            Vector<DataSet> data, String selectedMetaItem) {
         super(dataVisibleInChartPanel,data);
         doStuff(selectedMetaItem);
         xYPlot = this.getXYPlot();
