@@ -47,6 +47,8 @@ public abstract class DataSet {
     private GSAS_Instrument gsasInst = null;
     private boolean isTOF = false;
     private Vector<Double> z;
+    // hold meta data for the DataSet in pairs
+    // of name/value
     private HashMap<String,Double> meta;
 
     //@param data: data from a powder diffraction file
