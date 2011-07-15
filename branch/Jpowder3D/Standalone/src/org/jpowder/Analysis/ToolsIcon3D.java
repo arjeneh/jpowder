@@ -84,7 +84,7 @@ public class ToolsIcon3D extends javax.swing.JPanel {
 
         jLabel2.setText("Colour Bar Format");
 
-        jLabel3.setText("Block Height");
+        jLabel3.setText("Y-axis display");
 
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,7 +92,7 @@ public class ToolsIcon3D extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setText("jLabel4");
+        jLabel4.setText("No be decided");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -116,7 +116,7 @@ public class ToolsIcon3D extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel4))
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
