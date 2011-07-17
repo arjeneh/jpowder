@@ -1,0 +1,70 @@
+<div style="margin-left:1px; border:2px dotted #9292FF; padding:0 1ex;">
+
+
+'''Jpowder''' is an open-source charting software for displaying powder diffraction data.[[File:JpowderLogo.png|right|Jpowder Plots]] It is a collaborative project between the ISIS Facility of the STFC Rutherford Appleton Laboratory and the E-Learning and Software Develepment Unit of the Kasem Bundit University.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+== Pages on this Wiki ==
+<table style="width:100%; vertical-align: top">
+<tr style="vertical-align: top;">
+<td style="width: 50%; vertical-align: top;">
+{{Jpowder_Video_Tutorials}}
+</td>
+
+
+<td style="width: 50%; vertical-align: top;">
+{{Jpowder_Applications}}
+</td>
+
+
+</tr>
+</table>
+<table style="width:100%; vertical-align: top">
+<tr style="vertical-align: top;">
+
+<td style="width: 50%; vertical-align: top;">
+{{Installing_Jpowder}}
+</td>
+
+<td style="width: 50%; vertical-align: top;">
+{{Jpowder_Development}}
+</td>
+
+
+</tr>
+</table>
+
+
+----
+
+==Screenshots==
+
+<gallery widths=200px heights=150px>
+Image:JpowderScreenShot1.png |Jpowder start up page.
+Image: JpowderScreenShot2.png|view of Jpowder information panels.
+Image:JpowderScreenShot3.png |View of Propeties window.
+
+</gallery>
+
+== External links ==
+*[http://www.jpowder.org  Project Home Page.]
+*[http://code.google.com/p/jpowder Developer Page.]
