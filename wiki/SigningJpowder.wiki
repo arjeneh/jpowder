@@ -1,13 +1,16 @@
-#summary One-sentence summary of this page.
+#summary Signing a web start application (Jpowder).
 
-= Introduction =
+= Reason =
 
-Add your content here.
+Jpowder is deployed as a Java web start application. In order for this application to work as a 'normal' application, which e.g. can access files from local disk, it must be signed. 
 
+= Requirements =
 
-= Details =
+To sign jars for use in web start you need JDK installed, which includes Jarsigner.exe in the jdk bin directory. 
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+= Step by step =
+
+  * Package the application into a jar (from Netbeans e.g. right-click Standalone and select clean and build which will create the jar file Standalone\dist\Jpowder.jar)
+  * The default keystore file used for signing Jpowder is located at trunk\code\Signing_Jpowder\Jpowder.jks. The certificate name for this keystore is "Jpowder". If you are creating your own keystore, please use this name, or something equivalently obvious or neutral. The Jpowder.jks file is added to SVN for convenience. If jarsigner.exe, Jpowder.jks and Jpowder.jar is in the same directory then sign Jpowder.jar using the command (if not in same directory then add relevant paths): 
+
+jarsigner.exe" –keystore Jpowder.jks jPowder.jar anders.markvardsen
