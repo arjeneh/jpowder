@@ -8,3 +8,5 @@ This is just a place for placing links to sites that look good and which one of 
 http://code.google.com/p/esmska/ (note uses web start as a download option)
 
 http://code.google.com/p/javauploader/ (for uploading pictures rather than diffraction patterns. Uses what appears to be the same base code for the File chooser, or perhaps it is the same?)
+
+http://code.google.com/p/javanotebook/ (demonstrate how to run an applet from within a google wiki page)
