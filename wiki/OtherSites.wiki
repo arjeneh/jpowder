@@ -9,4 +9,6 @@ http://code.google.com/p/esmska/ (note uses web start as a download option)
 
 http://code.google.com/p/javauploader/ (for uploading pictures rather than diffraction patterns. Uses what appears to be the same base code for the File chooser, or perhaps it is the same?)
 
-http://code.google.com/p/javanotebook/ (demonstrate how to run an applet from within a google wiki page)
+http://code.google.com/p/javanotebook/ (perhaps demonstrates how to run an applet from within a google wiki page)
+
+http://code.google.com/p/jzebra/ (includes a page demonstrating how to create an html page running the jzebra Applet)
