@@ -1,4 +1,4 @@
-#summary for code developers
+#summary For code developers
 #labels Featured
 
 = Jpowder Wiki for developers =
