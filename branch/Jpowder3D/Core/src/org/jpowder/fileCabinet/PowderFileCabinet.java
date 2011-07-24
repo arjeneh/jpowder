@@ -187,7 +187,8 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
 
             } catch (Exception ex) {
             System.out.println(ex);
-                 javax.swing.JOptionPane.showMessageDialog(null, "Can't process selected file or directory.");
+                 javax.swing.JOptionPane.showMessageDialog(null, 
+                         "Can't process (1) file " + filename);
         }
         return PowderFileCabinet.createDataSetFromPowderFile(fis, new File(filename));
     }
@@ -200,7 +201,8 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
 
             } catch (Exception ex) {
             System.out.println(ex);
-                 javax.swing.JOptionPane.showMessageDialog(null, "Can't process selected file or directory.");
+                 javax.swing.JOptionPane.showMessageDialog(null, 
+                         "Can't process (2) file " + aFile.getPath());
         }
         return PowderFileCabinet.createDataSetFromPowderFile(fis, aFile);
     }
@@ -242,7 +244,8 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
             return null;
         } catch (Exception ex) {
             System.out.println(ex);
-                 javax.swing.JOptionPane.showMessageDialog(null, "Can't process selected file or directory.");
+                 javax.swing.JOptionPane.showMessageDialog(null, 
+                         "Can't process (3) file " + aFile.getPath());
         } 
         return null;
     }

@@ -67,7 +67,7 @@ public class JpowderApplet extends JApplet {
             {
                 URL source = new URL(getCodeBase(), fileName);
                 File file = new File(source.getPath());
-                FileInputStream fis = new FileInputStream(source.getPath());
+                FileInputStream fis = new FileInputStream(file);
                 Vector<DataSet> data = PowderFileCabinet.createDataSetFromPowderFile(fis, file);
                 FilesPlotter fileplotter = new FilesPlotter(data);
                 serializedChart = fileplotter.createChart();
