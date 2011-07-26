@@ -1,0 +1,10 @@
+#summary Creating E-learning content with Jpowder.
+
+= Introduction =
+For a demonstration of how to use JpowderApplet to create interactive web content see http://www.jpowder.org/JpowderApplet.html.
+
+This page explain how to create such content.
+
+  # Load data into Jpowder. Optionally adjust how the data are displayed until the region and features of interest of the data are highlighted. 
+  # The mouse right click over the chart displaying the data and select
+
