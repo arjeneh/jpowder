@@ -1,0 +1,167 @@
+﻿body
+{
+	font-weight: normal; 
+	font-family: sans-serif; 
+	text-decoration: none	
+	text-align: left;
+}
+.bodyWithText {
+	margin-left: 30px; 
+	margin-right: 30px; 
+	text-align: left; 
+}
+
+#commonTableSettings
+{
+	width: 1000px;
+	background-color: white;
+	padding: 10px;
+	height: 100%;
+	text-align: right;
+}
+#topMenuBar
+{
+	width: 800px;
+	background-color: white;
+	padding: 10px;
+	height: 100%;
+	text-align: right;
+}
+#topbar
+{
+	width:100%;
+	border-top:1px solid gray;
+	border-bottom:1px solid gray;
+	color:#000066;
+	font-weight:normal;
+	font-size:small;
+}
+#strapline
+{
+    color: #95CAFF;
+    font-weight: normal;
+    font-size: xx-large;
+}
+#downloadnotes
+{
+    color:#95CAFF;
+    font-size:x-small;
+}
+#intro
+{
+    color: #003366;
+    font-weight: normal;
+    font-size: large;
+}
+#copyright
+{
+	text-align: center;
+	padding-top: 0px;
+	font-family: 'Trebuchet MS', arial, verdana, helvetica;
+	font-weight: bolder;
+	font-size: 0.9em;
+	color: #003;
+	padding-right: 0px;
+	padding-left: 20px;
+	margin-left: 30px;
+}
+img
+{
+	border: 0px none White;
+	text-align: center;
+}
+
+.left
+{
+    text-align: left;
+}
+.right
+{
+    text-align: right;
+}
+.copyright
+{
+    text-align: center;
+    width: 100%;
+}
+.fill
+{
+    width: 100%;
+}
+
+.rightbottom
+{
+    vertical-align: bottom;
+    text-align: right;
+}
+.righttop
+{
+	vertical-align: top;
+	text-align: right;
+	color: #003;
+}
+.lefttop
+{
+    vertical-align: top;
+    text-align: left;
+}
+.smallText
+{
+	font-size:small;
+}
+#Aboutable {
+	color: #0F3;
+}
+#IsisLogo {
+	padding-top: 5px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	vertical-align:middle;
+}
+.imagelayout {
+	text-align: center;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	word-spacing: 20em;
+}
+#copyright {
+	color: grey;
+	font-size: 10px;	
+}
+
+.Downloaddata {
+	color: #95CAFF;
+	font-size: 18px;
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-right: 450px;
+}
+
+.RedHighligthText {
+	color: red;
+	font-size: 20px;
+	margin-top: 0px;
+	margin-left: 40px;
+}
+.RedText {
+	color: red;
+}
+h1,h2 {
+	margin-top: 10px;
+	font-weight: bold
+}
+h1 {
+	font-size:x-large;
+}
+h2 {
+	font-size:large;
+}
+a:link {
+	font-weight: bold; color:#0076AE; text-decoration: none
+}
+a:visited {
+	font-weight: bold; color:#0076AE; text-decoration: none
+}

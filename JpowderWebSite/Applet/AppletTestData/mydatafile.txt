@@ -1,0 +1,1 @@
+I am Trying to read this File using Applet.
