@@ -1,13 +1,17 @@
 The Jpowder Code directory is structured as follows:
 
 
-|| *Top directory* || *Sub-directory* || *Description* ||
-|| !JpowderViewer || || Root !JpowderViewer directory ||
-|| ||  Applet || Code specific to !JpowderViewer-Applet || 
-|| ||  Core || Any code common to !JpowderViewer-Applet and !JpowderViewer-Standalone || 
-|| ||  Libraries || External libraries, e.g. JFreeChart || 
-|| ||  Standalone || Code specific to !JpowderViewer-Standalone || 
+|| *Top directory* || *Sub-directory* || *Sub-directory* || *Sub-directory* || *Description* ||
+|| branch || || || || Branch directory where substantial temporary new feature development may take place before such features are merged back into the trunk ||
+|| trunk || || || || The directory which holds the code of the official release downloadable from www.jpowder.org plus other docs and example data ||
+|| || data || || || contain example data set used while developing !Jpowder ||
+|| || documents || || || various design, meetings etc documents ||
+|| || code || || || trunk code ||
+|| || || !JpowderViewer || || Root !JpowderViewer directory ||
+|| || || ||  Standalone || Code for !JpowderViewer-Standalone ||
+|| || || ||  Applet || Code for !JpowderViewer-Applet || 
+|| || || ||  Core || Code common to !JpowderViewer-Applet and !JpowderViewer-Standalone || 
+|| || || ||  Libraries || External libraries, e.g. JFreeChart || 
+|| || || ||  JfreeChartCuttDownJar || Contain cutdown version of the JFreeChart libraries used to minimize the footprint of the !Jpowder || 
 
-Note as of this writing the Applet project is empty. Also, it may turn
-out that !JpowderViewer-Applet sub-application will be merged in with
-the !JpowderViewer-Standalone application.
+The above code tree structure was last updated 17/2-2012.
