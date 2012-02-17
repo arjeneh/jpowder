@@ -12,6 +12,7 @@ The Jpowder Code directory is structured as follows:
 || || || ||  Applet || Code for !JpowderViewer-Applet || 
 || || || ||  Core || Code common to !JpowderViewer-Applet and !JpowderViewer-Standalone || 
 || || || ||  Libraries || External libraries, e.g. JFreeChart || 
-|| || || ||  JfreeChartCuttDownJar || Contain cutdown version of the JFreeChart libraries used to minimize the footprint of the !Jpowder || 
+|| || || ||  !JfreeChartCuttDownJar || Contain cutdown version of the JFreeChart libraries used to minimize the footprint of the !Jpowder || 
+|| || || !Signing_Jpowder || || Contains .jks file used for the Jpowder including the Jpowder WebStart application downloadable from www.jpowder.org ||
 
 The above code tree structure was last updated 17/2-2012.
