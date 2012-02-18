@@ -28,7 +28,6 @@
  */
 package org.jpowder;
 
-
 import org.jpowder.InernalFrame.JpowderInternalframe3D;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -124,18 +123,12 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     /**
      * Return the plotable column names
      */
-    private Vector<String> getPlotableColumnNames(Vector<String> names)
-    {
+    private Vector<String> getPlotableColumnNames(Vector<String> names) {
         Vector<String> retVal = new Vector<String>();
-        for (int i = 0; i < names.size(); i++)
-        {
+        for (int i = 0; i < names.size(); i++) {
             String bob = names.get(i);
-            if ( bob.trim().equalsIgnoreCase("Path") )
-            {
-
-            }
-            else
-            {
+            if (bob.trim().equalsIgnoreCase("Path")) {
+            } else {
                 retVal.add(names.get(i));
             }
         }
@@ -152,9 +145,9 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
     }
 
-/**
- * adding column to the table.
- */
+    /**
+     * adding column to the table.
+     */
     public void addColumn() {
 
         JTextField textField = new JTextField();
@@ -188,17 +181,19 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 //        importData3DTable.moveColumn( importData3DTable.getColumnCount() - 1,
 //                (importData3DTable.getColumnCount() + 2) - importData3DTable.getColumnCount());
     }
-/**
- * Add file to table by filePaths
- * @param filePath
- */
+
+    /**
+     * Add file to table by filePaths
+     * @param filePath
+     */
     public void addFilesToTable(String filePath) {
         addaFileToTable(new File(filePath));
     }
-/**
- * adding a single file at the time to the table.
- * @param file
- */
+
+    /**
+     * adding a single file at the time to the table.
+     * @param file
+     */
     public void addFilesToTable(File[] file) {
 
 //        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
@@ -215,10 +210,11 @@ public class Import3DFilesTable extends javax.swing.JFrame {
             defaultTableModel.addRow(row);
         }
     }
-/**
- * Adding array of files to the table.
- * @param afile
- */
+
+    /**
+     * Adding array of files to the table.
+     * @param afile
+     */
     public void addaFileToTable(File afile) {
 //        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
 
@@ -235,7 +231,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         defaultTableModel.addRow(row);
 
     }
-
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -456,34 +451,33 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     private void plotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotButtonActionPerformed
 
         Vector<DataSet> datasets = new Vector<DataSet>();
-        // map linking filename and path
-        HashMap<String, String> hashMap = new LinkedHashMap<String, String>();
-
-
+        // map linking filename and path.
+        // why LinkedHaspMap is used? --Kreecha P.
+        HashMap<String, String> linkedHashMap = new LinkedHashMap<String, String>();
         PowderFileCabinet mPowderFileCabinet = new PowderFileCabinet();
         String fileName;
         String paths;
 
-
         // loop over the selected file
         for (int i = 0, n = defaultTableModel.getRowCount(); i < n; i++) {
             // assume in this loop for now that path the 2nd column
-            hashMap.put(String.valueOf(defaultTableModel.getValueAt(i, 0)),
+            linkedHashMap.put(String.valueOf(defaultTableModel.getValueAt(i, 0)),
                     String.valueOf(defaultTableModel.getValueAt(i, 1)));
 
         }//for
 
-        for (Map.Entry<String, String> entry : hashMap.entrySet()) {
-
+        for (Map.Entry<String, String> entry : linkedHashMap.entrySet()) {
             fileName = entry.getKey();
             paths = entry.getValue();
+            System.out.println("File name is: " + fileName + " and Path is: " + paths);
 
-//            System.out.println(afile);
+            //System.out.println(afile);
             if (mPowderFileCabinet.checkAcceptedFileType(fileName)) {
                 Vector<DataSet> allDatasets = PowderFileCabinet.createDataSetFromPowderFile(paths.trim());
                 if (allDatasets == null) {
                     return;
                 }
+
                 for (int iSet = 0; iSet < allDatasets.size(); iSet++) {
                     DataSet oneDataset = allDatasets.elementAt(iSet);
                     if (oneDataset != null) {
@@ -502,15 +496,13 @@ public class Import3DFilesTable extends javax.swing.JFrame {
             // For Name column for now label filenames artificially as 0,1,2...
             hm.put("Name", (double) i);
             // ignore Path column but see if any other meta data defined
-            for (int iCol = 2; iCol < importData3DTable.getColumnCount(); iCol++)
-            {
-               hm.put(defaultTableModel.getColumnName(iCol),
-                   Double.parseDouble(defaultTableModel.getValueAt(i, iCol).toString()));
+            for (int iCol = 2; iCol < importData3DTable.getColumnCount(); iCol++) {
+                hm.put(defaultTableModel.getColumnName(iCol),
+                        Double.parseDouble(defaultTableModel.getValueAt(i, iCol).toString()));
             }
-            
             datasets.get(i).addMetaData(hm);
         }
-      
+
 
         // finally plot the data
         String plotAsFunctionOf = plotAsComboBox.getSelectedItem().toString();
@@ -526,14 +518,13 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
     private void removeRowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRowButtonActionPerformed
 
-        if (defaultTableModel.getColumnCount() - 1 != 0) {
-            defaultTableModel.removeRow(importData3DTable.getSelectedRow());
-            System.out.println(defaultTableModel.getRowCount() - 1);
-            importData3DTable.setRowSelectionInterval(defaultTableModel.getRowCount() - 1, defaultTableModel.getRowCount() - 1);
-        } else {
-            return;
-        }
-
+        int[] rows = importData3DTable.getSelectedRows();
+        
+        if (rows.length > 0) {
+            for (int i = 0; i < rows.length; i++) {
+                defaultTableModel.removeRow(rows[i] - i);
+            }//for
+        }//if
     }//GEN-LAST:event_removeRowButtonActionPerformed
 
     private void removeAllRowsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAllRowsButtonActionPerformed
@@ -582,18 +573,18 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
 
-   /*     JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
+        /*     JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
 
         System.out.println(plotAsComboBox.getSelectedIndex());
         System.out.println(defaultTableModel.getValueAt(0, plotAsComboBox.getSelectedIndex()));
         HashMap<String, Double> hm = new LinkedHashMap<String, Double>();
         if (plotAsComboBox.getSelectedIndex() == 0 || plotAsComboBox.getSelectedIndex() == 1) {
-            System.out.println("xxxxxxxxx");
-            hm.put((String) defaultTableModel.getValueAt(0, 0), 0.0);
+        System.out.println("xxxxxxxxx");
+        hm.put((String) defaultTableModel.getValueAt(0, 0), 0.0);
         } else {
         }
         System.out.println(inFocus.getPowderDataSet().get(0).getMetaData(defaultTableModel.getValueAt(0, 0).toString()));
-    * */
+         * */
 //        System.out.println(inFocus.getPowderDataSet().get(0).getFileName());
 //        inFocus.getPowderDataSet().get(0).addMetaData(null);
     }//GEN-LAST:event_helpButtonActionPerformed
@@ -609,7 +600,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
         }
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addColumn;
     private javax.swing.JButton addColumnButton;
