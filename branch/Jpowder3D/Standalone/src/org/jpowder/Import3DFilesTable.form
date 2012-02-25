@@ -174,6 +174,7 @@
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="//jTable1.getColumnModel().removeColumn(importData3DTable.getColumn(&quot;File&quot;));">
                   <Connection code="defaultTableModel" type="code"/>
                 </Property>
+                <Property name="dragEnabled" type="boolean" value="true"/>
                 <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>

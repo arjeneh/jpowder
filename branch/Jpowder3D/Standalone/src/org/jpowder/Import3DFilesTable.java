@@ -38,10 +38,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DropMode;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 import org.jpowder.InernalFrame.InternalFrameIconifyListener;
@@ -61,7 +63,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     private Vector<String> row = new Vector<String>();
     private static File afile;
     private DataVisibleInChart dataVisibleInChart = new DataVisibleInChart();
-//    private Vector<String> comboBoxList = new Vector<String>();
     private Vector<Vector<String>> tableDataVector = new Vector<Vector<String>>();
     private Vector<String> metaColumnesName = new Vector<String>();
 
@@ -75,9 +76,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
             }
 //        columnNames.add("Index");
         columnNames.add("Name");
-//        columnNames.add("Size");
-//        columnNames.add("Type");
-//        columnNames.add("Date Modified");
         columnNames.add("Path");
 
         metaColumnesName.add("Name");
@@ -97,27 +95,30 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
         initComponents();
 
+        //-- moveable rows 25/02/2012 - KP
+        //importData3DTable.getTableHeader().setReorderingAllowed(false);
+        importData3DTable.setDragEnabled(true);
+        importData3DTable.setDropMode(DropMode.INSERT_ROWS);
+        //importData3DTable.setTransferHandler(new TableRowTransferHandler(importData3DTable));
+        importData3DTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        //importData3DTable.setTransferHandler(new TableTransferHandler());
+        importData3DTable.setTransferHandler(new TestTableTransferHandler());
+        //-- moveable rows 25/02/2012 - KP
+
         importData3DTable.getTableHeader().addMouseListener(new TablePopUpListener(columnHeaderPopMenu));
 
         plotAsComboBox.setModel(new DefaultComboBoxModel(getPlotableColumnNames(columnNames)));
         importData3DTable.getTableHeader().setReorderingAllowed(false);
         importData3DTable.addMouseListener(new TablePopUpListener(rowHeaderPopMenu));
 
-//        firstColumn();
-
         addWindowListener(new WindowAdapter() {
-
             @Override
             public void windowClosing(WindowEvent event) {
-
                 while (defaultTableModel.getRowCount() > 0) {
                     defaultTableModel.removeRow(0);
                 }
-
             }
         });
-
-
     }
 
     /**
@@ -149,7 +150,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
      * adding column to the table.
      */
     public void addColumn() {
-
         JTextField textField = new JTextField();
         Object[] options = {"Yes",
             "No"};
@@ -199,14 +199,8 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 //        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
         for (int i = 0; i < file.length; i++) {
             row = new Vector<String>();
-
-//            row.add(String.valueOf(i));
             row.add(file[i].getName());
-//            row.add(String.valueOf(file[i].length() / 1024) + " KB");
-//            row.add(chooser.getTypeDescription(file[i]));
-//            row.add(dateFormat.format(new Date(file[i].lastModified())));
             row.add(file[i].toString());
-
             defaultTableModel.addRow(row);
         }
     }
@@ -217,19 +211,14 @@ public class Import3DFilesTable extends javax.swing.JFrame {
      */
     public void addaFileToTable(File afile) {
 //        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
-
         row = new Vector<String>();
-
 //        row.add(String.valueOf(defaultTableModel.getRowCount()));
-
         row.add(afile.getName());
 //        row.add(String.valueOf(afile.length() / 1024) + " KB");
 //        row.add(chooser.getTypeDescription(afile));
 //        row.add(dateFormat.format(new Date(afile.lastModified())));
         row.add(afile.toString());
-
         defaultTableModel.addRow(row);
-
     }
 
     /** This method is called from within the constructor to
@@ -293,6 +282,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         importData3DTable.setAutoCreateRowSorter(true);
         importData3DTable.setModel(defaultTableModel);
         //jTable1.getColumnModel().removeColumn(importData3DTable.getColumn("File"));
+        importData3DTable.setDragEnabled(true);
         importData3DTable.setGridColor(new java.awt.Color(255, 255, 255));
         importData3DTable.setSelectionBackground(new java.awt.Color(90, 145, 233));
         importData3DTable.setShowHorizontalLines(false);
@@ -367,7 +357,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
             }
         });
 
-        helpButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        helpButton.setFont(new java.awt.Font("Tahoma", 1, 12));
         helpButton.setText("?");
         helpButton.setFocusPainted(false);
         helpButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
@@ -445,7 +435,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         chooser.setMultiSelectionEnabled(true);
         chooser.showOpenDialog(chooser);
         addFilesToTable(chooser.getSelectedFiles());
-
     }//GEN-LAST:event_importFileButtonActionPerformed
 
     private void plotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotButtonActionPerformed
@@ -490,7 +479,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                 break;
             }
         }
-        //setting meta-data hashmap in dataset
+        //Setting meta-data hashmap in dataset
         for (int i = 0; i < datasets.size(); i++) {
             HashMap<String, Double> hm = new HashMap<String, Double>();
             // For Name column for now label filenames artificially as 0,1,2...
@@ -502,7 +491,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
             }
             datasets.get(i).addMetaData(hm);
         }
-
 
         // finally plot the data
         String plotAsFunctionOf = plotAsComboBox.getSelectedItem().toString();
@@ -519,7 +507,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     private void removeRowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRowButtonActionPerformed
 
         int[] rows = importData3DTable.getSelectedRows();
-        
+
         if (rows.length > 0) {
             for (int i = 0; i < rows.length; i++) {
                 defaultTableModel.removeRow(rows[i] - i);
@@ -531,8 +519,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         while (defaultTableModel.getRowCount() > 0) {
             defaultTableModel.removeRow(0);
         }
-
-
     }//GEN-LAST:event_removeAllRowsButtonActionPerformed
 
     private void addColumnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addColumnButtonActionPerformed
@@ -622,4 +608,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     private javax.swing.JPopupMenu rowHeaderPopMenu;
     private javax.swing.JButton saveMetaFileButton;
     // End of variables declaration//GEN-END:variables
+
+
 }
