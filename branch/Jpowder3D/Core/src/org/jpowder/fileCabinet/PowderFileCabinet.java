@@ -57,10 +57,7 @@ import org.jpowder.util.Stopwatch;
  *      mPowderFileCabinet.registerObserver(this);
  *      mPowderFileCabinet.registerObserver((PowderFileObserver) listModel);
  * 
- * ALL LISTENER HAS TO IMPLEMENT POWDERFILEOBSERVER* 
- * 
- * 
- * 
+ * ALL LISTENER HAS TO IMPLEMENT POWDERFILEOBSERVER*  * 
  */
 public class PowderFileCabinet extends javax.swing.JComponent implements Subject, Serializable {
 
@@ -90,7 +87,6 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
     }
 
     public void notifyObservers() {
-
         java.util.Iterator i = observers.iterator();
         while (i.hasNext()) {
             PowderFileObserver o = (PowderFileObserver) i.next();
@@ -103,15 +99,13 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
     public void addFile(String fileName, DataSet ds) {
         data.put(fileName, ds);
         //dataSet.add(ds);
-
-        //notifyObservers();
+        notifyObservers();
     }
 
     //@param fileName to be deleted from data HashMap.
     public void deleteFile(String fileName) {
         data.remove(fileName);
-
-        //notifyObservers();
+        notifyObservers();
     }
 
     /**
@@ -140,7 +134,6 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
             File selectedFiles[] = fileChooser.getSelectedFiles();
 
             // to time how long it takes to read file
-
 
             // loop over the selected file
             for (int i = 0, n = selectedFiles.length; i < n; i++) {

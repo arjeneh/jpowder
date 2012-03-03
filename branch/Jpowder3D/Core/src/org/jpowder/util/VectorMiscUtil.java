@@ -16,51 +16,98 @@ public class VectorMiscUtil {
     /** 
      * Create XYE dataset for testing purpose.
      * */
+    /**
+     * Create XYE dataset for testing purpose.
+     * */
     public static Vector initXYEData() {
         Vector row1 = new Vector();
-
-        row1.add(3.000);
-        row1.add(171.863);
-        row1.add(14.82657);
+        row1.add(1.000);
+        row1.add(1.863);
+        row1.add(1.82657);
 
         Vector row2 = new Vector();
-        row2.add(3.005);
-        row2.add(163.572);
-        row2.add(14.43149);
+        row2.add(2.005);
+        row2.add(2.572);
+        row2.add(2.43149);
 
         Vector row3 = new Vector();
         row3.add(3.010);
-        row3.add(211.015);
-        row3.add(15.85440);
+        row3.add(3.015);
+        row3.add(3.85440);
+
+        Vector row4 = new Vector();
+        row4.add(4);
+        row4.add(4.5);
+        row4.add(4.6);
+
+        Vector row5 = new Vector();
+        row5.add(5);
+        row5.add(5.5);
+        row5.add(5.6);
+
+        Vector row6 = new Vector();
+        row6.add(6);
+        row6.add(6.5);
+        row6.add(6.6);
+
+        Vector row7 = new Vector();
+        row7.add(7);
+        row7.add(7.5);
+        row7.add(7.6);
 
         Vector data = new Vector();
         data.add(row1);
         data.add(row2);
         data.add(row3);
-
-
+        data.add(row4);
+        data.add(row5);
+        data.add(row6);
+        data.add(row7);
 
         return data;
-
     }
 
     public static Vector initXYData() {
         Vector row1 = new Vector();
-        row1.add(3.000);
+        row1.add(1.000);
         row1.add(171.863);
 
         Vector row2 = new Vector();
-        row2.add(3.005);
+        row2.add(2.005);
         row2.add(163.572);
 
         Vector row3 = new Vector();
         row3.add(3.010);
         row3.add(211.015);
 
+        Vector row4 = new Vector();
+        row4.add(4);
+        row4.add(4.5);
+
+
+        Vector row5 = new Vector();
+        row5.add(5);
+        row5.add(5.5);
+
+
+        Vector row6 = new Vector();
+        row6.add(6);
+        row6.add(6.5);
+
+
+        Vector row7 = new Vector();
+        row7.add(7);
+        row7.add(7.5);
+
+
         Vector data = new Vector();
         data.add(row1);
         data.add(row2);
         data.add(row3);
+        data.add(row4);
+        data.add(row5);
+        data.add(row6);
+        data.add(row7);
         return data;
     }
 
@@ -114,7 +161,7 @@ public class VectorMiscUtil {
             vRow = (Vector) (ori.elementAt(i));
             for (int j = 0; j < vRow.size(); j++) {
                 Double s = (Double) vRow.elementAt(j);
-     
+
             }
             output.add(vRow);
         }
