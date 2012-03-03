@@ -28,11 +28,13 @@
  */
 package org.jpowder;
 
+import org.jpowder.TableHelper.TableTransferHandler;
 import org.jpowder.InernalFrame.JpowderInternalframe3D;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -41,6 +43,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DropMode;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -50,6 +53,7 @@ import org.jpowder.InernalFrame.InternalFrameIconifyListener;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.IO_MetaFile;
 import org.jpowder.fileCabinet.PowderFileCabinet;
+import org.jpowder.util.VectorMiscUtil;
 
 /**
  * A table which contains File names, File paths and meta data of powder
@@ -57,61 +61,57 @@ import org.jpowder.fileCabinet.PowderFileCabinet;
  */
 public class Import3DFilesTable extends javax.swing.JFrame {
 
-    private static DefaultTableModel defaultTableModel;
+    private DefaultTableModel defaultTableModel = null;
     JFileChooser chooser = new JFileChooser(new File("C:/Documents and Settings/qyt21516/Desktop/My Dropbox"));
-    private Vector<String> columnNames = new Vector<String>();
-    private Vector<String> row = new Vector<String>();
-    private static File afile;
+//    private Vector<String> columnNames = new Vector<String>();
+//    private Vector<String> rowsFiles = new Vector<String>();
+    //
     private DataVisibleInChart dataVisibleInChart = new DataVisibleInChart();
-    private Vector<Vector<String>> tableDataVector = new Vector<Vector<String>>();
     private Vector<String> metaColumnesName = new Vector<String>();
 
     /** Creates new form FilesTable */
     public Import3DFilesTable(DataVisibleInChart dvic) {
-
         this.dataVisibleInChart = dvic;
 
-        if (defaultTableModel != null) {
-            defaultTableModel.getDataVector().removeAllElements();//remove all the rows from table
-            }
+//        if (defaultTableModel != null) {
+//            defaultTableModel.getDataVector().removeAllElements();//remove all the rows from table
+//            }
 //        columnNames.add("Index");
-        columnNames.add("Name");
-        columnNames.add("Path");
+        //columnNames.add("Name");
+        //columnNames.add("Path");
 
         metaColumnesName.add("Name");
         metaColumnesName.add("Path");
 
-        defaultTableModel = new DefaultTableModel(row, columnNames) {
-
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                if (column == 1) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        };
+//        defaultTableModel = new DefaultTableModel(rowsFiles, columnNames) {
+//
+//            @Override
+//            public boolean isCellEditable(int row, int column) {
+//                if (column == 1) {
+//                    return false;
+//                } else {
+//                    return true;
+//                }
+//            }
+//        };
 
         initComponents();
 
         //-- moveable rows 25/02/2012 - KP
-        //importData3DTable.getTableHeader().setReorderingAllowed(false);
         importData3DTable.setDragEnabled(true);
         importData3DTable.setDropMode(DropMode.INSERT_ROWS);
-        //importData3DTable.setTransferHandler(new TableRowTransferHandler(importData3DTable));
         importData3DTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        //importData3DTable.setTransferHandler(new TableTransferHandler());
-        importData3DTable.setTransferHandler(new TestTableTransferHandler());
+        //importData3DTable.setTransferHandler(new TableTransferHandler(importData3DTable));
         //-- moveable rows 25/02/2012 - KP
 
         importData3DTable.getTableHeader().addMouseListener(new TablePopUpListener(columnHeaderPopMenu));
 
-        plotAsComboBox.setModel(new DefaultComboBoxModel(getPlotableColumnNames(columnNames)));
+        //plotAsComboBox.setModel(new DefaultComboBoxModel(getPlotableColumnNames(columnNames)));
         importData3DTable.getTableHeader().setReorderingAllowed(false);
         importData3DTable.addMouseListener(new TablePopUpListener(rowHeaderPopMenu));
 
         addWindowListener(new WindowAdapter() {
+
             @Override
             public void windowClosing(WindowEvent event) {
                 while (defaultTableModel.getRowCount() > 0) {
@@ -119,6 +119,71 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                 }
             }
         });
+    }
+
+    //for unit testing purpose  03/03/2012 - KP
+    public Import3DFilesTable() {
+        //System.out.println(System.getProperty("user.home"));
+
+        initComponents();
+        //-- test rows 03/03/2012 - KP
+        //addDummyFiles("C:\\Users\\Toshiba\\Desktop\\ZopDih\\");
+        addDummyData();
+       
+        //-- moveable rows 25/02/2012 - KP
+  }
+
+    private void addDummyData() {
+        Vector data =  VectorMiscUtil.initXYData();
+
+        Vector columns = new Vector();
+        columns.add("Column 1");
+        columns.add("Column 2");
+
+        defaultTableModel = new DefaultTableModel();
+        defaultTableModel.setDataVector(data, columns);
+
+        importData3DTable.getTableHeader().setReorderingAllowed(false);
+        importData3DTable.setDragEnabled(true);
+        importData3DTable.setDropMode(DropMode.INSERT_ROWS);
+        importData3DTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        importData3DTable.setTransferHandler(new TableTransferHandler());
+        importData3DTable.setModel(defaultTableModel);
+
+    }
+
+    //unit test
+    private void addDummyFiles(String path) {
+        //03/03/2012 - KP
+        //addFilesToTable("C:\\Users\\Toshiba\\Desktop\\ZopDih\\");
+        File dir = new File(path);
+        String[] children = dir.list();
+        if (children == null) {
+            // Either dir does not exist or is not a directory
+        } else {
+            for (int i = 0; i < children.length; i++) {
+                // Get filename of file or directory
+                String filename = children[i];
+            }
+        }
+
+        // It is also possible to filter the list of returned files.
+        // This example does not return any files that start with `.'.
+        FilenameFilter filter = new FilenameFilter() {
+
+            @Override
+            public boolean accept(File dir, String name) {
+                return !name.startsWith(".");
+            }
+        };
+        children = dir.list(filter);
+
+        // The list of files can also be retrieved as File objects
+        File[] files = dir.listFiles();
+        // This filter only returns directories
+        files = dir.listFiles();
+        addFilesToTable(files);
+        //03/03/2012 - KP
     }
 
     /**
@@ -198,10 +263,10 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
 //        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
         for (int i = 0; i < file.length; i++) {
-            row = new Vector<String>();
-            row.add(file[i].getName());
-            row.add(file[i].toString());
-            defaultTableModel.addRow(row);
+//            rowsFiles = new Vector<String>();
+//            rowsFiles.add(file[i].getName());
+//            rowsFiles.add(file[i].toString());
+//            defaultTableModel.addRow(rowsFiles);
         }
     }
 
@@ -211,14 +276,14 @@ public class Import3DFilesTable extends javax.swing.JFrame {
      */
     public void addaFileToTable(File afile) {
 //        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
-        row = new Vector<String>();
-//        row.add(String.valueOf(defaultTableModel.getRowCount()));
-        row.add(afile.getName());
-//        row.add(String.valueOf(afile.length() / 1024) + " KB");
-//        row.add(chooser.getTypeDescription(afile));
-//        row.add(dateFormat.format(new Date(afile.lastModified())));
-        row.add(afile.toString());
-        defaultTableModel.addRow(row);
+//        rowsFiles = new Vector<String>();
+////        rowsFiles.add(String.valueOf(defaultTableModel.getRowCount()));
+//        rowsFiles.add(afile.getName());
+////        rowsFiles.add(String.valueOf(afile.length() / 1024) + " KB");
+////        rowsFiles.add(chooser.getTypeDescription(afile));
+////        rowsFiles.add(dateFormat.format(new Date(afile.lastModified())));
+//        rowsFiles.add(afile.toString());
+//        defaultTableModel.addRow(rowsFiles);
     }
 
     /** This method is called from within the constructor to
@@ -237,9 +302,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         rowHeaderPopMenu = new javax.swing.JPopupMenu();
         addRow = new javax.swing.JMenuItem();
         removeRow = new javax.swing.JMenuItem();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        importData3DTable = new javax.swing.JTable();
         plotButton = new javax.swing.JButton();
         removeRowButton = new javax.swing.JButton();
         removeAllRowsButton = new javax.swing.JButton();
@@ -250,6 +312,8 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         plotAsComboBox = new javax.swing.JComboBox();
         helpButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        importData3DTable = new javax.swing.JTable();
 
         addColumn.setText("Add Column");
         addColumn.addActionListener(new java.awt.event.ActionListener() {
@@ -276,29 +340,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Plot Data 3D");
         setIconImage(new ImageIcon(getClass().getResource("/images/JpowderLogo.png")).getImage());
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        importData3DTable.setAutoCreateRowSorter(true);
-        importData3DTable.setModel(defaultTableModel);
-        //jTable1.getColumnModel().removeColumn(importData3DTable.getColumn("File"));
-        importData3DTable.setDragEnabled(true);
-        importData3DTable.setGridColor(new java.awt.Color(255, 255, 255));
-        importData3DTable.setSelectionBackground(new java.awt.Color(90, 145, 233));
-        importData3DTable.setShowHorizontalLines(false);
-        importData3DTable.setShowVerticalLines(false);
-        jScrollPane1.setViewportView(importData3DTable);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
-        );
 
         plotButton.setText("Plot");
         plotButton.addActionListener(new java.awt.event.ActionListener() {
@@ -367,15 +408,28 @@ public class Import3DFilesTable extends javax.swing.JFrame {
             }
         });
 
+        importData3DTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(importData3DTable);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(removeRowButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(removeAllRowsButton)
@@ -385,7 +439,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(plotAsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(importFileButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -416,8 +470,8 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                         .addComponent(addColumnButton))
                     .addComponent(importFileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(plotAsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(removeRowButton)
@@ -540,9 +594,8 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         chooser.showSaveDialog(chooser);
         File file = chooser.getSelectedFile();
 
-
-        IO_MetaFile metaFile = new IO_MetaFile(defaultTableModel, columnNames, row);
-        metaFile.save_MetaFile(file);
+        //IO_MetaFile metaFile = new IO_MetaFile(defaultTableModel, columnNames, rowsFiles);
+        //metaFile.save_MetaFile(file);
     }//GEN-LAST:event_saveMetaFileButtonActionPerformed
 
     private void loadMetaFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadMetaFileButtonActionPerformed
@@ -550,16 +603,16 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         chooser.setMultiSelectionEnabled(false);
         chooser.showOpenDialog(chooser);
         File file = chooser.getSelectedFile();
-        columnNames.clear();
-        IO_MetaFile metaFile = new IO_MetaFile(defaultTableModel, columnNames, row);
-        metaFile.read_MetaFile(file);
+        //columnNames.clear();
+        //IO_MetaFile metaFile = new IO_MetaFile(defaultTableModel, columnNames, rowsFiles);
+        //metaFile.read_MetaFile(file);
 
-        plotAsComboBox.setModel(new DefaultComboBoxModel(getPlotableColumnNames(columnNames)));
+        //plotAsComboBox.setModel(new DefaultComboBoxModel(getPlotableColumnNames(columnNames)));
     }//GEN-LAST:event_loadMetaFileButtonActionPerformed
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
 
-        /*     JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
+        /*JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
 
         System.out.println(plotAsComboBox.getSelectedIndex());
         System.out.println(defaultTableModel.getValueAt(0, plotAsComboBox.getSelectedIndex()));
@@ -586,6 +639,29 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
         }
     }
+
+    //for unit testing purpose  03/03/2012 - KP
+    public static void main(String[] args) {
+        //Schedule a job for the event-dispatching thread:
+        //creating and showing this application's GUI.
+        Import3DFilesTable frame = new Import3DFilesTable();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
+
+    }
+
+    public static void getList(String directory) {
+        File path = new File(directory);
+        String[] list = path.list();
+        String element;
+
+        for (int i = 0; i < list.length; i++) {
+            element = list[i];
+
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addColumn;
     private javax.swing.JButton addColumnButton;
@@ -596,7 +672,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     private javax.swing.JTable importData3DTable;
     private javax.swing.JButton importFileButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton loadMetaFileButton;
     private javax.swing.JComboBox plotAsComboBox;
@@ -608,6 +683,4 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     private javax.swing.JPopupMenu rowHeaderPopMenu;
     private javax.swing.JButton saveMetaFileButton;
     // End of variables declaration//GEN-END:variables
-
-
 }
