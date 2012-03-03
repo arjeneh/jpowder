@@ -49,8 +49,8 @@ public class TableTransferHandler extends StringTransferHandler {
     protected void importString(JComponent c, String str) {
         JTable target = (JTable) c;
         DefaultTableModel model = (DefaultTableModel) target.getModel();
-        //TODO : Note that "+ 1" is for Vector type, if array then remove "+ 1"
-        int index = target.getSelectedRow() + 1;
+        
+        int index = target.getSelectedRow();
         System.out.println("Selected rows are:.." + index);
 
         //Prevent the user from dropping data back on itself.
@@ -83,6 +83,8 @@ public class TableTransferHandler extends StringTransferHandler {
         System.out.println("Add count is:..." + addCount + "..................");
 
         int colCount = target.getColumnCount();
+        System.out.println("Column count is:..." + colCount );
+        
         for (int i = 0; i < values.length && i < colCount; i++) {
             model.insertRow(index++, values[i].split(","));
             System.out.println("Jeep............" + index + "..................");
@@ -101,7 +103,7 @@ public class TableTransferHandler extends StringTransferHandler {
             //need to adjust the rows accordingly, since those
             //after the insertion point have moved.
             if (addCount > 0) {
-                System.out.print("Hello........................................");
+                // System.out.print("Hello........................................");
                 for (int i = 0; i < rows.length; i++) {
                     if (rows[i] > addIndex) {
                         rows[i] += addCount;

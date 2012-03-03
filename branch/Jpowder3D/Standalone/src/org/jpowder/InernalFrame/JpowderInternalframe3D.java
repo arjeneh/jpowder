@@ -26,7 +26,6 @@
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
  */
-
 package org.jpowder.InernalFrame;
 
 import org.jpowder.*;
@@ -40,10 +39,12 @@ import org.jpowder.jfreechart.FilesPlotter3D;
  *
  * Internal Frame 3D
  */
-public class JpowderInternalframe3D extends JpowderInternalframe{
+public class JpowderInternalframe3D extends JpowderInternalframe {
+
     private XYPlot xYPlot;  // hold reference to plot created from dataset in constructor
     private JFreeChart chart;
     private String selectedMetaItem;
+
     /**
      *
      * @param dataVisibleInChartPanel
@@ -51,19 +52,19 @@ public class JpowderInternalframe3D extends JpowderInternalframe{
      */
     public JpowderInternalframe3D(DataVisibleInChart dataVisibleInChartPanel,
             Vector<DataSet> data, String selectedMetaItem) {
-        super(dataVisibleInChartPanel,data);
+        super(dataVisibleInChartPanel, data);
         doStuff(selectedMetaItem);
         xYPlot = this.getXYPlot();
-        chart=FilesPlotter3D.getChart();
+        chart = FilesPlotter3D.getChart();
         this.selectedMetaItem = selectedMetaItem;
-        
+
     }
 
     public static int getnumberOfJpowderInternalframe() {
         return Jpowder.getChartPlotter3D().getAllFrames().length;
     }
 
-    public JFreeChart getChart(){
+    public JFreeChart getChart() {
         return chart;
     }
 }

@@ -41,8 +41,8 @@ public abstract class StringTransferHandler extends TransferHandler {
     public boolean importData(JComponent c, Transferable t) {
         if (canImport(c, t.getTransferDataFlavors())) {
             try {
-                System.out.println("Hello....importData....in ExtendedDnDDemo is called..............");
                 String str = (String) t.getTransferData(DataFlavor.stringFlavor);
+                System.out.println("str is ............." + str);
                 importString(c, str);
                 return true;
             } catch (UnsupportedFlavorException ufe) {
@@ -61,7 +61,7 @@ public abstract class StringTransferHandler extends TransferHandler {
 
     @Override
     public boolean canImport(JComponent c, DataFlavor[] flavors) {
-        System.out.println("canImport");
+        //System.out.println("canImport");
         for (int i = 0; i < flavors.length; i++) {
             if (DataFlavor.stringFlavor.equals(flavors[i])) {
                 return true;

@@ -66,6 +66,13 @@ public class JpowderInternalframe extends JInternalFrame {
      * @param selectedMetaItem For 3D plotting
      */
     protected void doStuff(String selectedMetaItem) {
+        //TODO: if nothing or null then prevent error.
+        String str = selectedMetaItem;
+        System.out.println("Str = " + str);
+        
+        if (str == null && str.isEmpty()) {
+            return;
+        }
         // if 2D
         if (Jpowder.getPlotsTab().getSelectedIndex() == 0) {
             plotMultiCol = DatasetPlotter.createDatasetPlotter(m_data);
