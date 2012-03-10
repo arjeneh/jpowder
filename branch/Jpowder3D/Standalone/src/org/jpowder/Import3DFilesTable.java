@@ -37,6 +37,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -54,6 +55,7 @@ import org.jpowder.InernalFrame.InternalFrameIconifyListener;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.IO_MetaFile;
 import org.jpowder.fileCabinet.PowderFileCabinet;
+import org.jpowder.util.HashMapHelper;
 import org.jpowder.util.VectorMiscUtil;
 
 /**
@@ -62,7 +64,6 @@ import org.jpowder.util.VectorMiscUtil;
  *
  *
  */
-
 public class Import3DFilesTable extends javax.swing.JFrame {
 
     private static DefaultTableModel defaultTableModel;
@@ -77,7 +78,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     private Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
     private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
     private boolean waitCursorIsShowing;
-
 
     /** Creates new form FilesTable */
     public Import3DFilesTable(DataVisibleInChart dvic) {
@@ -559,12 +559,19 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         // finally plot the data
         String plotAsFunctionOf = plotAsComboBox.getSelectedItem().toString();
         //Plot in 3D
-        //JpowderInternalframe3D internalframe = new JpowderInternalframe3D(dataVisibleInChart, datasets, plotAsFunctionOf);
 
         //Plot 3D with extra fileNameAndPath 10/03/2012.
         JpowderInternalframe3D internalframe = new JpowderInternalframe3D(dataVisibleInChart, datasets,
                 plotAsFunctionOf, fileNameAndPathMap);
 
+        //make sure the file name from start - finish is displayed on the title bar.
+        String[] files = HashMapHelper.convertKeyToArray(fileNameAndPathMap);
+        String first = files[0];
+        String last = files[files.length-1];
+
+        internalframe.setTitle(first + " - " + last);
+
+        //
         Jpowder.updateJPowderInternalFrame(internalframe);
         InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
         internalframe.addInternalFrameListener(internalFrameListener);
@@ -572,6 +579,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         this.setVisible(false);
 
     }//GEN-LAST:event_plotButtonActionPerformed
+
 
     private void removeRowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRowButtonActionPerformed
 

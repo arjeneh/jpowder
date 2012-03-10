@@ -143,11 +143,6 @@ public class FilesPlotter extends DatasetPlotter implements Serializable {
         NumberAxis yAxis = new NumberAxis("Intensity");
         yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
-
-
-//         xAxis.setAxisLineVisible(false);
-//        yAxis.setAxisLineVisible(false);
-
         // get a reference to the plot for further customisation...
         JpowderXYLineAndShapeRender renderer1 = new JpowderXYLineAndShapeRender();
         renderer1.setSeriesPaint(0, DefaultSeriesColours.getSeriesColors(0));

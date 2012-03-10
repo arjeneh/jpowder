@@ -45,6 +45,7 @@ import org.jfree.chart.title.PaintScaleLegend;
 import org.jfree.data.xy.DefaultXYZDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
+import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 import org.jpowder.dataset.DataSet;
@@ -141,13 +142,12 @@ public class FilesPlotter3D extends DatasetPlotter {
      */
     public JFreeChart createChart(XYDataset dataset) {
 
-        NumberAxis xAxis = new NumberAxis("X(\u0398)");
+        NumberAxis xAxis = new NumberAxis("2\u0398");
         xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         xAxis.setLowerMargin(0.0);
         xAxis.setUpperMargin(0.0);
         xAxis.setAutoRangeIncludesZero(false);
 
-        //TODO: Suppose to display file names listed from bottom to top (reverse order).
         //NumberAxis yAxis = new NumberAxis("Y");
         //yAxis.setLabel(selectedMetaItem);
         ValueAxis yAxis = new SymbolAxis("Symbol", this.convertKeyToArray(fileNames));
@@ -215,8 +215,6 @@ public class FilesPlotter3D extends DatasetPlotter {
      * @return XYZDataset
      */
     public static XYZDataset createDataset() {
-
-
         DefaultXYZDataset defaultXYZDataset = new DefaultXYZDataset();
         //int xSize = datasets.elementAt(i).size();
         for (int i = 0; i < datasets.size(); i++) {

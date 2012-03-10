@@ -52,7 +52,7 @@ import org.jpowder.dataset.DatasetPlotter;
  */
 public class JpowderInternalframe extends JInternalFrame {
 
-    private static int INTERNALFRAME_WIDTH = 500, INTERNALFRAME_HEIGHT = 300;
+    private static int INTERNALFRAME_WIDTH = 800, INTERNALFRAME_HEIGHT = 500;
     public Stack<JInternalFrame> internalframeStackes = new Stack<JInternalFrame>();
     private Preferences preferences = Preferences.userRoot();
     private Preferences myPrefs = preferences.node("Jpowder/InternalFrame/Dimension");
@@ -131,6 +131,10 @@ public class JpowderInternalframe extends JInternalFrame {
         });
     }
 
+    /**
+     * @param selectedMetaItem For 3D plotting
+     * @param fileNameAndPath For file names displayed on Y axis.
+     */
     protected void doStuff(String selectedMetaItem, HashMap fileNameAndPath) {
         //TODO: if nothing or null then prevent error.
         String str = selectedMetaItem;
@@ -145,7 +149,7 @@ public class JpowderInternalframe extends JInternalFrame {
         }
         // if 3D
         if (Jpowder.getPlotsTab().getSelectedIndex() == 1) {
-            plotMultiCol = DatasetPlotter.createDatasetPlotter(vectorDatasets, selectedMetaItem);
+            //plotMultiCol = DatasetPlotter.createDatasetPlotter(vectorDatasets, selectedMetaItem);
 //            FileNameListModel f = dataVisibleInChartPanel.getListModel();
 //            Iterator i = f.iterator();
 //            while (i.hasNext()) {
