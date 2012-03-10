@@ -47,7 +47,7 @@ import org.jpowder.dataset.DataSet;
  */
 public class DataVisibleInChart extends JPanel {
 
-    public FileNameListModel listModel;
+    private FileNameListModel listModel;
     private JCheckBoxJList checkboxList;
     private javax.swing.JScrollPane file_sp;
     private int SP_WIDTH=270;
@@ -57,7 +57,7 @@ public class DataVisibleInChart extends JPanel {
 
         listModel = new FileNameListModel();
 
-        checkboxList = new JCheckBoxJList(listModel);
+        checkboxList = new JCheckBoxJList(getListModel());
         checkboxList.setLayout(new BorderLayout());
 
         file_sp = new JScrollPane(checkboxList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -74,7 +74,7 @@ public class DataVisibleInChart extends JPanel {
      * clear the selection from the checkboxlist.
      */
     public void clear() {
-        listModel.clear();
+        getListModel().clear();
     }
     /**
      * To inform DataVisibleInChart that a new chart has been highlighted and
@@ -87,11 +87,25 @@ public class DataVisibleInChart extends JPanel {
         clear();
         for (int i = 0; i < dataSets.size(); i++) {
             CheckableFileItem checkableFileItem = new CheckableFileItem(dataSets.elementAt(i).getFileName());
-            listModel.addCheckableFile(checkableFileItem);
+            getListModel().addCheckableFile(checkableFileItem);
 //            checkableFileItem.setSelected(xyplot.getRenderer(i).isSeriesVisible(0));
 
         }
         checkboxList.setm_plot(xyplot);
 
+    }
+
+    /**
+     * @return the listModel
+     */
+    public FileNameListModel getListModel() {
+        return listModel;
+    }
+
+    /**
+     * @param listModel the listModel to set
+     */
+    public void setListModel(FileNameListModel listModel) {
+        this.listModel = listModel;
     }
 }

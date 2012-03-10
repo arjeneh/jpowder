@@ -20,7 +20,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public abstract class KaiTableTransferHandler extends TransferHandler {
 
-    //protected abstract DefaultTableModel exportTableModel(DefaultTableModel tableModel);
 
     protected abstract String exportString(JComponent c);
 

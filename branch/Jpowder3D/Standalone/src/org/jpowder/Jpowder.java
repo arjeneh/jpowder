@@ -203,10 +203,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
         plotAreaInFocus = whichOne;
 
         if (plotAreaInFocus.equals("3D")) {
-            Jpowder.jpowderInternalFrameUpdate(internalFrameInFocus3D);
+            Jpowder.updateJPowderInternalFrame(internalFrameInFocus3D);
         }
         if (plotAreaInFocus.equals("2D")) {
-            Jpowder.jpowderInternalFrameUpdate(internalFrameInFocus2D);
+            Jpowder.updateJPowderInternalFrame(internalFrameInFocus2D);
         }
 
     }
@@ -215,7 +215,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
      *
      * @param internalFrame
      */
-    public static void jpowderInternalFrameUpdate(JpowderInternalframe internalFrame) {
+    public static void updateJPowderInternalFrame(JpowderInternalframe internalFrame) {
 
         if (internalFrame instanceof JpowderInternalframe2D) {
             if (internalFrame != internalFrameInFocus2D) {
@@ -1359,14 +1359,14 @@ public class Jpowder extends JFrame implements DropTargetListener {
 //                internalframe3D = new JpowderInternalframe3D(dataVisibleInChart, datasets);
 //                chartPlotterPane3D.add(internalframe3D);
 //
-//                Jpowder.jpowderInternalFrameUpdate(internalframe3D);
+//                Jpowder.updateJPowderInternalFrame(internalframe3D);
 //                InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
 //                internalframe3D.addInternalFrameListener(internalFrameListener);
             }
             if (plotsTab.getSelectedIndex() == 0) {
                 internalframe = new JpowderInternalframe2D(dataVisibleInChart, datasets);
                 chartPlotterPane2D.add(internalframe);
-                Jpowder.jpowderInternalFrameUpdate(internalframe);
+                Jpowder.updateJPowderInternalFrame(internalframe);
                 InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
                 internalframe.addInternalFrameListener(internalFrameListener);
             }
@@ -1608,7 +1608,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
         // finally plot the data
         JpowderInternalframe2D internalframe = new JpowderInternalframe2D(dataVisibleInChart, datasets);
-//        Jpowder.jpowderInternalFrameUpdate(internalframe);
+//        Jpowder.updateJPowderInternalFrame(internalframe);
 
         InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
 

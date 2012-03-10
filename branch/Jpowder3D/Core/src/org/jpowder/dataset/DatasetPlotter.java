@@ -28,6 +28,7 @@
  */
 package org.jpowder.dataset;
 
+import java.util.HashMap;
 import org.jpowder.jfreechart.FilesPlotter;
 import java.util.Vector;
 import org.jpowder.jfreechart.FilesPlotter3D;
@@ -44,7 +45,6 @@ public abstract class DatasetPlotter {
     }
 
     public DatasetPlotter(Vector<DataSet> d) {
-
     }
 
     public abstract String description();
@@ -58,6 +58,7 @@ public abstract class DatasetPlotter {
      * create DatasetPlotter and store the data that are can then be plotted
      * using the method createPowderChart()
      * @param datasets Contains the data of one or more powder diffraction files
+     * @return 2D graph.
      */
     public static DatasetPlotter createDatasetPlotter(Vector<DataSet> datasets) {
         if (datasets.size() >= 1) {
@@ -72,11 +73,16 @@ public abstract class DatasetPlotter {
      * create DatasetPlotter and store the data that are can then be plotted
      * using the method createPowderChart()
      * @param datasets Contains the data of one or more powder diffraction files
+     * @param meta Contains the data of meta data
+     * @return a 3D graph
      */
     public static DatasetPlotter createDatasetPlotter(Vector<DataSet> datasets, String meta) {
-       return new FilesPlotter3D(datasets, meta);
+        return new FilesPlotter3D(datasets, meta);
     }
 
+    public static DatasetPlotter createDatasetPlotter(Vector<DataSet> datasets, String meta, HashMap file) {
+        return new FilesPlotter3D(datasets, meta, file);
+    }
 
     /**
      * create DatasetPlotter and store the data that are can then be plotted

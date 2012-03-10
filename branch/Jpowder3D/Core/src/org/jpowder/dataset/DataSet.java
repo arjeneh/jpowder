@@ -50,7 +50,7 @@ public abstract class DataSet {
     // holds meta data for the DataSet in pairs
     // of name of meta-data-item, e.g. temperature, and
     // its value
-    private HashMap<String,Double> meta;
+    private HashMap<String, Double> meta;
 
     //@param data: data from a powder diffraction file
     //@param fileName: filename of powder diffraction file.
@@ -120,18 +120,18 @@ public abstract class DataSet {
     public void setXUnit(String xunit) {
         this.xUnit = xunit;
     }
-    
-    public void addMetaData(HashMap<String,Double> meta){
-        this.meta=meta;
 
-    }
-    public double getMetaData(String name){
-
-             double data = meta.get(name);
-             return data;
+    public void addMetaData(HashMap<String, Double> meta) {
+        this.meta = meta;
 
     }
 
+    public double getMetaData(String name) {
+
+        double data = meta.get(name);
+        return data;
+
+    }
 //    public static void main(String[] args) {
 //       DataSet ds = new DataSet() {
 //
@@ -152,7 +152,5 @@ public abstract class DataSet {
 //        System.out.println(getMetaData("B"));
 //
 //    }
-
-
 }
 

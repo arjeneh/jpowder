@@ -767,7 +767,7 @@ setMarkerBuildIn();
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         SeriesColourPicker colourPicker = new SeriesColourPicker();
         colourPickerButton.setSelected(false);
-        Jpowder.jpowderInternalFrameUpdate(inFocus);
+        Jpowder.updateJPowderInternalFrame(inFocus);
     }//GEN-LAST:event_colourPickerButtonActionPerformed
 
     private void MarkerSizeSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_MarkerSizeSpinnerStateChanged

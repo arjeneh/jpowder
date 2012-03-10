@@ -32,10 +32,13 @@ package org.jpowder.jfreechart;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Vector;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.SymbolAxis;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.GrayPaintScale;
 import org.jfree.chart.title.PaintScaleLegend;
@@ -57,6 +60,7 @@ public class FilesPlotter3D extends DatasetPlotter {
     private static JFreeChart chart;
     private static XYPlot plot;
     private static String selectedMetaItem;
+    private static HashMap fileNames;
 
     /**
      * @param d
@@ -68,10 +72,31 @@ public class FilesPlotter3D extends DatasetPlotter {
         selectedMetaItem = meta;
     }
 
+    //to display file names on the Y axis for 3D image.
+    public FilesPlotter3D(Vector<DataSet> d, String meta, HashMap files) {
+        super(d);
+        FilesPlotter3D.datasets = d;
+        selectedMetaItem = meta;
+        fileNames = files;
+    }
+
     public FilesPlotter3D(DataSet d) {
         super(d);
         datasets = new Vector<DataSet>();
         FilesPlotter3D.datasets.addElement(d);
+
+    }
+
+    /*
+    creating chart
+    @param d is a dataset
+    @param fileNames is list of file names to be added on the Y axis
+     * */
+    public FilesPlotter3D(DataSet d, Vector fileNames) {
+        super(d);
+        datasets = new Vector<DataSet>();
+        FilesPlotter3D.datasets.addElement(d);
+        //this.fileNames = fileNames;
 
     }
 
@@ -102,6 +127,13 @@ public class FilesPlotter3D extends DatasetPlotter {
         return chartPanel;
     }
 
+    public String[] convertKeyToArray(HashMap hm) {
+        String[] keys =
+                (String[]) (hm.keySet().toArray(new String[hm.size()]));
+        return keys;
+    }
+    //
+
     /**
      * creating chart
      * @param dataset
@@ -116,9 +148,10 @@ public class FilesPlotter3D extends DatasetPlotter {
         xAxis.setAutoRangeIncludesZero(false);
 
         //TODO: Suppose to display file names listed from bottom to top (reverse order).
-        NumberAxis yAxis = new NumberAxis("Y");
+        //NumberAxis yAxis = new NumberAxis("Y");
         //yAxis.setLabel(selectedMetaItem);
-        yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        ValueAxis yAxis = new SymbolAxis("Symbol", this.convertKeyToArray(fileNames));
+        //yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         yAxis.setLowerMargin(0.0);
         yAxis.setUpperMargin(0.0);
 
@@ -145,8 +178,7 @@ public class FilesPlotter3D extends DatasetPlotter {
         Vector<Double> widthsLow = new Vector<Double>();
         Vector<Double> widthsUpper = new Vector<Double>();
         for (int i = 0; i < datasets.size() - 1; i++) {
-            widthsUpper.add(datasets.get(i + 1).getMetaData(selectedMetaItem)
-                    - datasets.get(i).getMetaData(selectedMetaItem));
+            widthsUpper.add(datasets.get(i + 1).getMetaData(selectedMetaItem) - datasets.get(i).getMetaData(selectedMetaItem));
             widthsLow.add(0.0);
         }
 

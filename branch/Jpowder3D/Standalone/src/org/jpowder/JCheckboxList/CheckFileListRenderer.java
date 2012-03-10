@@ -65,7 +65,7 @@ public class CheckFileListRenderer extends CheckFileRenderer implements ListCell
 
         label.setSelected(true);//hilighting the string
         label.setFocus(hasFocus);
-        //Jpowder.jpowderInternalFrameUpdate(inFocus);
+        //Jpowder.updateJPowderInternalFrame(inFocus);
 
         return this;
     }

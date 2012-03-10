@@ -28,6 +28,8 @@
  */
 package org.jpowder.InernalFrame;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import org.jpowder.*;
 import java.util.Vector;
 import org.jfree.chart.JFreeChart;
@@ -44,6 +46,7 @@ public class JpowderInternalframe3D extends JpowderInternalframe {
     private XYPlot xYPlot;  // hold reference to plot created from dataset in constructor
     private JFreeChart chart;
     private String selectedMetaItem;
+    private HashMap fileNameAndPath;
 
     /**
      *
@@ -52,12 +55,26 @@ public class JpowderInternalframe3D extends JpowderInternalframe {
      */
     public JpowderInternalframe3D(DataVisibleInChart dataVisibleInChartPanel,
             Vector<DataSet> data, String selectedMetaItem) {
+        //
         super(dataVisibleInChartPanel, data);
-        doStuff(selectedMetaItem);
+        this.doStuff(selectedMetaItem);
         xYPlot = this.getXYPlot();
         chart = FilesPlotter3D.getChart();
         this.selectedMetaItem = selectedMetaItem;
+    }
 
+    public JpowderInternalframe3D(DataVisibleInChart dataVisibleInChartPanel,
+            Vector<DataSet> data, String selectedMetaItem, HashMap fileNameAndPath) {
+        //
+        super(dataVisibleInChartPanel, data);
+
+        this.selectedMetaItem = selectedMetaItem;
+        this.fileNameAndPath = fileNameAndPath;
+        //where problem occurred.
+        doStuff(this.selectedMetaItem, this.fileNameAndPath);
+        //where problem occurred.
+        xYPlot = this.getXYPlot();
+        chart = FilesPlotter3D.getChart();
     }
 
     public static int getnumberOfJpowderInternalframe() {

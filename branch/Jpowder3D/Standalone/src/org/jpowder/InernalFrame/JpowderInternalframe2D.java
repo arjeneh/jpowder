@@ -169,7 +169,7 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
     @Override
     public void drop(DropTargetDropEvent dtde) {
 
-        Jpowder.jpowderInternalFrameUpdate(this);
+        Jpowder.updateJPowderInternalFrame(this);
         ArrayList<File> allfiles = new ArrayList<File>();
         ArrayList<String> allfilesName = new ArrayList<String>();
         Transferable transfeable = dtde.getTransferable();
@@ -248,7 +248,7 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
             dataVisibleInChartPanel.newChartInFocus(xYPlot,
                     this.getPowderDataSet());
         }
-        Jpowder.jpowderInternalFrameUpdate(this);
+        Jpowder.updateJPowderInternalFrame(this);
         Jpowder.memoryChecker();
     }
 }

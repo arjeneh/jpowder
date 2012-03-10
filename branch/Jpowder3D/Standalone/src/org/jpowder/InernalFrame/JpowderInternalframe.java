@@ -29,6 +29,8 @@
 package org.jpowder.InernalFrame;
 
 import java.awt.Component;
+import java.util.HashMap;
+import java.util.Iterator;
 import org.jpowder.*;
 import java.util.Stack;
 import java.util.Vector;
@@ -40,6 +42,7 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.plot.XYPlot;
+import org.jpowder.JCheckboxList.FileNameListModel;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
 
@@ -54,10 +57,13 @@ public class JpowderInternalframe extends JInternalFrame {
     private Preferences preferences = Preferences.userRoot();
     private Preferences myPrefs = preferences.node("Jpowder/InternalFrame/Dimension");
     private static final String key1 = "Width", key2 = "Highet";
+    //
     private DataVisibleInChart dataVisibleInChartPanel;
-    private Vector<DataSet> m_data;
-    private XYPlot xYPlot;  // hold reference to plot created from dataset in constructor
+    private Vector<DataSet> vectorDatasets;
+    private XYPlot xYPlot;  // hold reference to plot created from dataset in constructor.
+    //
     protected DatasetPlotter plotMultiCol;
+    //
     private ChartPanel jfreeChartPanel;
     private String name = new String();
 
@@ -68,18 +74,85 @@ public class JpowderInternalframe extends JInternalFrame {
     protected void doStuff(String selectedMetaItem) {
         //TODO: if nothing or null then prevent error.
         String str = selectedMetaItem;
-        System.out.println("Str = " + str);
-        
+        System.out.println("Str of Meta Data Item slected is: " + str);
+
         if (str == null && str.isEmpty()) {
             return;
         }
         // if 2D
         if (Jpowder.getPlotsTab().getSelectedIndex() == 0) {
-            plotMultiCol = DatasetPlotter.createDatasetPlotter(m_data);
+            plotMultiCol = DatasetPlotter.createDatasetPlotter(vectorDatasets);
         }
         // if 3D
         if (Jpowder.getPlotsTab().getSelectedIndex() == 1) {
-            plotMultiCol = DatasetPlotter.createDatasetPlotter(m_data, selectedMetaItem);
+//            FileNameListModel f = dataVisibleInChartPanel.getListModel();
+//            Iterator i = f.iterator();
+//            while (i.hasNext()) {
+//                System.out.println("Files in here: " + i.next());
+//            }
+
+            plotMultiCol = DatasetPlotter.createDatasetPlotter(vectorDatasets, selectedMetaItem);
+        }
+
+        ChartPanel jfreeChartPanels = plotMultiCol.createPowderChart();
+        jfreeChartPanels.add(new JpowderPopupMenu(jfreeChartPanels));
+        this.jfreeChartPanel = jfreeChartPanels;
+
+        xYPlot = jfreeChartPanels.getChart().getXYPlot();
+        this.add(jfreeChartPanels);
+
+        internalframeStackes.push(this);
+        this.setTitle(getNames());
+        this.setVisible(true);
+        this.setClosable(true);
+        this.setMaximizable(true);
+        this.setResizable(true);
+        this.setIconifiable(true);
+        this.setFrameIcon(new ImageIcon(getClass().getResource("/images/JpowderLogo.png")));
+        this.setSize(myPrefs.getInt(key1, Jpowder.getChartPlotter2D().getWidth() / 2),
+                myPrefs.getInt(key2, INTERNALFRAME_HEIGHT));
+        this.setLocation((int) Jpowder.getDropLocationX(), (int) Jpowder.getDropLocationY());
+        SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                select();
+            }
+        });
+
+        addInternalFrameListener(new InternalFrameAdapter() {
+
+            @Override
+            public void internalFrameClosed(InternalFrameEvent e) {
+                myPrefs.putInt(key1, getWidth());
+                myPrefs.putInt(key2, getHeight());
+
+            }
+        });
+    }
+
+    protected void doStuff(String selectedMetaItem, HashMap fileNameAndPath) {
+        //TODO: if nothing or null then prevent error.
+        String str = selectedMetaItem;
+        System.out.println("Str of Meta Data Item slected is: " + str);
+
+        if (str == null && str.isEmpty()) {
+            return;
+        }
+        // if 2D
+        if (Jpowder.getPlotsTab().getSelectedIndex() == 0) {
+            plotMultiCol = DatasetPlotter.createDatasetPlotter(vectorDatasets);
+        }
+        // if 3D
+        if (Jpowder.getPlotsTab().getSelectedIndex() == 1) {
+            plotMultiCol = DatasetPlotter.createDatasetPlotter(vectorDatasets, selectedMetaItem);
+//            FileNameListModel f = dataVisibleInChartPanel.getListModel();
+//            Iterator i = f.iterator();
+//            while (i.hasNext()) {
+//                System.out.println("Files in here: " + i.next());
+//            }
+
+            plotMultiCol = DatasetPlotter.createDatasetPlotter(vectorDatasets, selectedMetaItem, fileNameAndPath);
         }
 
         ChartPanel jfreeChartPanels = plotMultiCol.createPowderChart();
@@ -122,7 +195,7 @@ public class JpowderInternalframe extends JInternalFrame {
     public JpowderInternalframe(DataVisibleInChart dataVisibleInChartPanel, Vector<DataSet> data) {
 
         this.dataVisibleInChartPanel = dataVisibleInChartPanel;
-        m_data = data;
+        vectorDatasets = data;
     }
 
     /**
@@ -136,7 +209,6 @@ public class JpowderInternalframe extends JInternalFrame {
         }
     }
 
-
     public JInternalFrame getFrame() {
         return this;
     }
@@ -147,13 +219,13 @@ public class JpowderInternalframe extends JInternalFrame {
      */
     public String getNames() {
         for (int i = 0; i < xYPlot.getDatasetCount(); i++) {
-            name = m_data.elementAt(0).getFileName();
+            name = vectorDatasets.elementAt(0).getFileName();
         }
         return name;
     }
 
     public String getNames(int i) {
-        return m_data.elementAt(i).getFileName();
+        return vectorDatasets.elementAt(i).getFileName();
     }
 
     /**
@@ -164,14 +236,12 @@ public class JpowderInternalframe extends JInternalFrame {
         return jfreeChartPanel;
     }
 
-
     public XYPlot getXYPlot() {
         return xYPlot;
     }
 
-
     public Vector<DataSet> getPowderDataSet() {
-        return m_data;
+        return vectorDatasets;
     }
 
     /**
@@ -191,10 +261,8 @@ public class JpowderInternalframe extends JInternalFrame {
         return dataVisibleInChartPanel;
     }
 
-
     public Vector<DataSet> addDataset() {
-        return m_data;
+        return vectorDatasets;
     }
-
 }
 

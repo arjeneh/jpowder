@@ -28,6 +28,7 @@
  */
 package org.jpowder;
 
+import java.awt.Cursor;
 import org.jpowder.TableHelper.TableTransferHandler;
 import org.jpowder.InernalFrame.JpowderInternalframe3D;
 import java.awt.event.MouseEvent;
@@ -56,13 +57,12 @@ import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.util.VectorMiscUtil;
 
 /**
- * A table which contains File names, File paths and meta data of powder
+ * A table which contains File names, File filePaths and meta data of powder
  * data files which are going to be plotted in 3D.
  *
  *
  */
 
-// TODO: Convert Double to String after 
 public class Import3DFilesTable extends javax.swing.JFrame {
 
     private static DefaultTableModel defaultTableModel;
@@ -73,6 +73,11 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     private DataVisibleInChart dataVisibleInChart = new DataVisibleInChart();
     private Vector<Vector<String>> tableDataVector = new Vector<Vector<String>>();
     private Vector<String> metaColumnesName = new Vector<String>();
+    // TODO: cursor to display wait status.
+    private Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
+    private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+    private boolean waitCursorIsShowing;
+
 
     /** Creates new form FilesTable */
     public Import3DFilesTable(DataVisibleInChart dvic) {
@@ -81,7 +86,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         if (defaultTableModel != null) {
             defaultTableModel.getDataVector().removeAllElements();//remove all the rows from table
             }
-        //columnNames.add("Index");
+
         columnNames.add("Name");
         columnNames.add("Path");
 
@@ -103,7 +108,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         initComponents();
 
         importData3DTable.setModel(defaultTableModel);
-        
+
         //-- moveable rows 25/02/2012 - KP
         importData3DTable.setDragEnabled(true);
         importData3DTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -112,7 +117,9 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
         importData3DTable.getTableHeader().addMouseListener(new TablePopUpListener(columnHeaderPopMenu));
 
-        //plotAsComboBox.setModel(new DefaultComboBoxModel(getPlotableColumnNames(columnNames)));
+        //-- Combobox model --
+        plotAsComboBox.setModel(new DefaultComboBoxModel(getPlotableColumnNames(columnNames)));
+        //-- Combobox model --
         importData3DTable.getTableHeader().setReorderingAllowed(false);
         importData3DTable.addMouseListener(new TablePopUpListener(rowHeaderPopMenu));
 
@@ -492,30 +499,32 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
     private void plotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotButtonActionPerformed
 
+        //multiple datasets
         Vector<DataSet> datasets = new Vector<DataSet>();
-        // map linking filename and path.
-        // why LinkedHaspMap is used? --Kreecha P.
-        HashMap<String, String> linkedHashMap = new LinkedHashMap<String, String>();
+        // map linking filenames and paths.
+        // LinkedHaspMap is used in the order in which the entries were put into the map
+        HashMap<String, String> fileNameAndPathMap = new LinkedHashMap<String, String>();
         PowderFileCabinet mPowderFileCabinet = new PowderFileCabinet();
         String fileName;
-        String paths;
+        String filePaths;
 
-        // loop over the selected file
+        // loop over selected files
         for (int i = 0, n = defaultTableModel.getRowCount(); i < n; i++) {
             // assume in this loop for now that path the 2nd column
-            linkedHashMap.put(String.valueOf(defaultTableModel.getValueAt(i, 0)),
+            fileNameAndPathMap.put(String.valueOf(defaultTableModel.getValueAt(i, 0)),
                     String.valueOf(defaultTableModel.getValueAt(i, 1)));
 
         }//for
 
-        for (Map.Entry<String, String> entry : linkedHashMap.entrySet()) {
+        for (Map.Entry<String, String> entry : fileNameAndPathMap.entrySet()) {
             fileName = entry.getKey();
-            paths = entry.getValue();
-            System.out.println("File name is: " + fileName + " and Path is: " + paths);
+            filePaths = entry.getValue();
+            System.out.println("File name is: " + fileName + " and Path is: " + filePaths);
 
             //System.out.println(afile);
             if (mPowderFileCabinet.checkAcceptedFileType(fileName)) {
-                Vector<DataSet> allDatasets = PowderFileCabinet.createDataSetFromPowderFile(paths.trim());
+                //This enforces to be in a path only? Is this right?
+                Vector<DataSet> allDatasets = PowderFileCabinet.createDataSetFromPowderFile(filePaths.trim());
                 if (allDatasets == null) {
                     return;
                 }
@@ -528,10 +537,12 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                 }
 
             } else {
+                //TODO: Check this needed why?
                 javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
                 break;
             }
         }
+
         //Setting meta-data hashmap in dataset
         for (int i = 0; i < datasets.size(); i++) {
             HashMap<String, Double> hm = new HashMap<String, Double>();
@@ -547,9 +558,14 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
         // finally plot the data
         String plotAsFunctionOf = plotAsComboBox.getSelectedItem().toString();
+        //Plot in 3D
+        //JpowderInternalframe3D internalframe = new JpowderInternalframe3D(dataVisibleInChart, datasets, plotAsFunctionOf);
+
+        //Plot 3D with extra fileNameAndPath 10/03/2012.
         JpowderInternalframe3D internalframe = new JpowderInternalframe3D(dataVisibleInChart, datasets,
-                plotAsFunctionOf);
-        Jpowder.jpowderInternalFrameUpdate(internalframe);
+                plotAsFunctionOf, fileNameAndPathMap);
+
+        Jpowder.updateJPowderInternalFrame(internalframe);
         InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
         internalframe.addInternalFrameListener(internalFrameListener);
         Jpowder.getChartPlotter3D().add(internalframe);
