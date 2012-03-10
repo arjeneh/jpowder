@@ -59,7 +59,6 @@ public class FilesPlotter3D extends DatasetPlotter {
     private static String selectedMetaItem;
 
     /**
-     *
      * @param d
      * @param meta
      */
@@ -92,7 +91,6 @@ public class FilesPlotter3D extends DatasetPlotter {
             if (datasets.get(i).getFileName().endsWith("gss")) {
                 plot.getDomainAxis().setLabel("TOF");
             }
-
         }
 
         ChartPanel chartPanel = new ChartPanel(chart, true);
@@ -111,25 +109,22 @@ public class FilesPlotter3D extends DatasetPlotter {
      */
     public JFreeChart createChart(XYDataset dataset) {
 
-        NumberAxis xAxis = new NumberAxis("X");
+        NumberAxis xAxis = new NumberAxis("X(\u0398)");
         xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         xAxis.setLowerMargin(0.0);
         xAxis.setUpperMargin(0.0);
         xAxis.setAutoRangeIncludesZero(false);
 
-
+        //TODO: Suppose to display file names listed from bottom to top (reverse order).
         NumberAxis yAxis = new NumberAxis("Y");
+        //yAxis.setLabel(selectedMetaItem);
         yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         yAxis.setLowerMargin(0.0);
         yAxis.setUpperMargin(0.0);
 
-
         NumberAxis zAxis = new NumberAxis("");
-
         JpowderXYBlockRenderer renderer = new JpowderXYBlockRenderer();
-
         renderer.clearSeriesPaints(true);
-
 
         plot = new XYPlot(dataset, xAxis, yAxis, renderer);
         chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
@@ -139,40 +134,38 @@ public class FilesPlotter3D extends DatasetPlotter {
         for (int i = 0; i < plot.getDatasetCount(); i++) {
             maxY = (Double) Collections.max(datasets.elementAt(i).getY());
             minY = (Double) Collections.min(datasets.elementAt(i).getY());
-//            System.out.println("max y" + maxY);
+            // System.out.println("max y" + maxY);
         }
 
         GrayPaintScale lps = new GrayPaintScale(minY, maxY);
-
-
         renderer.setPaintScale(lps);
 
-//        renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
+        //renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
 
         Vector<Double> widthsLow = new Vector<Double>();
         Vector<Double> widthsUpper = new Vector<Double>();
-        for (int i = 0; i < datasets.size()-1; i++) {
-            widthsUpper.add(datasets.get(i+1).getMetaData(selectedMetaItem)
+        for (int i = 0; i < datasets.size() - 1; i++) {
+            widthsUpper.add(datasets.get(i + 1).getMetaData(selectedMetaItem)
                     - datasets.get(i).getMetaData(selectedMetaItem));
             widthsLow.add(0.0);
         }
-        if (datasets.size()-1 > 0)
-          widthsUpper.add(widthsUpper.lastElement());
-        else
-          widthsUpper.add(1.0);
+
+        if (datasets.size() - 1 > 0) {
+            widthsUpper.add(widthsUpper.lastElement());
+        } else {
+            widthsUpper.add(1.0);
+        }
+
         widthsLow.add(0.0);
-
         renderer.setBlockHeight(widthsLow, widthsUpper);
-
         PaintScaleLegend legend = new PaintScaleLegend(lps,
                 zAxis);
-//        legend.setAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
+        //legend.setAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
         legend.setMargin(new RectangleInsets(0, 0, 5, 0));
         legend.setPadding(new RectangleInsets(0, 40, 0, 10));
 
         legend.setStripWidth(10);
         legend.setPosition(RectangleEdge.BOTTOM);
-
         chart.addSubtitle(legend);
 
 //      legend.setFrame(new BlockBorder(Color.red));
