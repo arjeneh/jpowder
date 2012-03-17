@@ -36,6 +36,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -51,7 +52,9 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import org.jpowder.InernalFrame.InternalFrameIconifyListener;
+import org.jpowder.TableHelper.ColumnSorter;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.IO_MetaFile;
 import org.jpowder.fileCabinet.PowderFileCabinet;
@@ -70,9 +73,9 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     JFileChooser chooser = new JFileChooser(new File("C:/Documents and Settings/qyt21516/Desktop/My Dropbox"));
     private Vector<String> columnNames = new Vector<String>();
     private Vector<String> row = new Vector<String>();
-    private static File afile;
+    //private static File afile;
     private DataVisibleInChart dataVisibleInChart = new DataVisibleInChart();
-    private Vector<Vector<String>> tableDataVector = new Vector<Vector<String>>();
+    //private Vector<Vector<String>> tableDataVector = new Vector<Vector<String>>();
     private Vector<String> metaColumnesName = new Vector<String>();
     // TODO: cursor to display wait status.
     private Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
@@ -107,6 +110,11 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
         initComponents();
 
+        //if add this sorter, then cannot move as wished.
+        //TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel> (defaultTableModel);
+        //importData3DTable.setRowSorter(sorter);
+        //
+
         importData3DTable.setModel(defaultTableModel);
 
         //-- moveable rows 25/02/2012 - KP
@@ -115,16 +123,15 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         importData3DTable.setTransferHandler(new TableTransferHandler());
         //-- moveable rows 25/02/2012 - KP
 
-        importData3DTable.getTableHeader().addMouseListener(new TablePopUpListener(columnHeaderPopMenu));
+        //importData3DTable.getTableHeader().addMouseListener(new TablePopUpListener(columnHeaderPopMenu));
 
         //-- Combobox model --
         plotAsComboBox.setModel(new DefaultComboBoxModel(getPlotableColumnNames(columnNames)));
         //-- Combobox model --
-        importData3DTable.getTableHeader().setReorderingAllowed(false);
+        importData3DTable.getTableHeader().setReorderingAllowed(true);
         importData3DTable.addMouseListener(new TablePopUpListener(rowHeaderPopMenu));
 
         addWindowListener(new WindowAdapter() {
-
             @Override
             public void windowClosing(WindowEvent event) {
                 while (defaultTableModel.getRowCount() > 0) {
@@ -134,6 +141,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         });
     }
 
+ 
     //for unit testing purpose  03/03/2012 - KP
     public Import3DFilesTable() {
         //System.out.println(System.getProperty("user.home"));
@@ -567,7 +575,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         //make sure the file name from start - finish is displayed on the title bar.
         String[] files = HashMapHelper.convertKeyToArray(fileNameAndPathMap);
         String first = files[0];
-        String last = files[files.length-1];
+        String last = files[files.length - 1];
 
         internalframe.setTitle(first + " - " + last);
 
@@ -579,7 +587,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         this.setVisible(false);
 
     }//GEN-LAST:event_plotButtonActionPerformed
-
 
     private void removeRowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRowButtonActionPerformed
 

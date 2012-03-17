@@ -85,12 +85,6 @@ public class JpowderInternalframe extends JInternalFrame {
         }
         // if 3D
         if (Jpowder.getPlotsTab().getSelectedIndex() == 1) {
-//            FileNameListModel f = dataVisibleInChartPanel.getListModel();
-//            Iterator i = f.iterator();
-//            while (i.hasNext()) {
-//                System.out.println("Files in here: " + i.next());
-//            }
-
             plotMultiCol = DatasetPlotter.createDatasetPlotter(vectorDatasets, selectedMetaItem);
         }
 
@@ -130,6 +124,7 @@ public class JpowderInternalframe extends JInternalFrame {
             }
         });
     }
+    
 
     /**
      * @param selectedMetaItem For 3D plotting
@@ -149,13 +144,6 @@ public class JpowderInternalframe extends JInternalFrame {
         }
         // if 3D
         if (Jpowder.getPlotsTab().getSelectedIndex() == 1) {
-            //plotMultiCol = DatasetPlotter.createDatasetPlotter(vectorDatasets, selectedMetaItem);
-//            FileNameListModel f = dataVisibleInChartPanel.getListModel();
-//            Iterator i = f.iterator();
-//            while (i.hasNext()) {
-//                System.out.println("Files in here: " + i.next());
-//            }
-
             plotMultiCol = DatasetPlotter.createDatasetPlotter(vectorDatasets, selectedMetaItem, fileNameAndPath);
         }
 

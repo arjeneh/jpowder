@@ -30,7 +30,7 @@ package org.jpowder.Analysis;
 
 import org.jpowder.Jpowder;
 import org.jpowder.chartTools.BlockHeight;
-import org.jpowder.chartTools.ColorBar;
+import org.jpowder.chartTools.ColorBar3D;
 
 /**
  * This class contains all the Jpowder icons 3D.
@@ -38,7 +38,7 @@ import org.jpowder.chartTools.ColorBar;
  */
 public class ToolsIcon3D extends javax.swing.JPanel {
 
-    private ColorBar colorBar =new ColorBar(this);
+    private ColorBar3D colorBar =new ColorBar3D(this);
     private BlockHeight blockHeight= new BlockHeight(this);
 
     private Jpowder jpowder;
@@ -149,7 +149,7 @@ public class ToolsIcon3D extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         jpowder.getToolsTab3D().add(blockHeight, "1");
+        jpowder.getToolsTab3D().add(blockHeight, "1");
         blockHeight.setVisible(true);
         this.setVisible(false);
         Jpowder.jpowderInfoPanelUpdate(blockHeight);

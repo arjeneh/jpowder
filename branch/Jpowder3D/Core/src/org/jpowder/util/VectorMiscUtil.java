@@ -4,8 +4,21 @@
  */
 package org.jpowder.util;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.util.Collections;
+import java.util.StringTokenizer;
 import java.util.Vector;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.jpowder.dataset.DataSet;
+import org.jpowder.dataset.DataSetNoErrors;
+import org.jpowder.dataset.DataSetWithErrors;
+import org.jpowder.fileCabinet.PowderFileCabinet;
 
 /**
  *
@@ -65,6 +78,150 @@ public class VectorMiscUtil {
         data.add(row7);
 
         return data;
+    }
+
+    public static void main(String[] args) {
+        Vector files = VectorMiscUtil.loadFileData("C:\\Users\\Toshiba\\Desktop\\ZopDih");
+
+        Vector<DataSet> datasets = null;
+
+        for (int i = 0, n = files.size(); i < n; i++) {
+            datasets = createDataSetFromPowderFile((String) files.get(i));
+        }
+    }
+
+    public static Vector<DataSet> createDataSetFromPowderFile(String filename) {
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(filename);
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+            javax.swing.JOptionPane.showMessageDialog(null,
+                    "Can't process (1) file " + filename);
+        }
+        return createDataSetFromPowderFile(fis, new File(filename));
+    }
+
+    public static Vector<DataSet> createDataSetFromPowderFile(File aFile) {
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(aFile);
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+            javax.swing.JOptionPane.showMessageDialog(null,
+                    "Can't process (2) file " + aFile.getPath());
+        }
+        return PowderFileCabinet.createDataSetFromPowderFile(fis, aFile);
+    }
+
+    //Vector<Vector<DataSet>>
+    public static Vector loadFileData(String aPath) {
+        Vector dataSets = new Vector();
+
+        String path = aPath;
+        String files;
+        File folder = new File(path);
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                files = listOfFiles[i].getName();
+                dataSets.add(path + "\\" + files);
+                System.out.println(files);
+            }
+        }
+
+        return dataSets;
+    }
+
+    public static DataSet read(FileInputStream fileInputStream, File aFile) {
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        XYSeries series1 = new XYSeries("First");
+
+        String[] digits = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+        String aLine;
+        boolean TOF = false;
+        Vector<Vector<Double>> localData = new Vector<Vector<Double>>();
+
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+            int lineNum = 0;
+
+            while ((aLine = bufferedReader.readLine()) != null) {
+                if (!aLine.isEmpty()) {
+                    aLine = aLine.trim();
+                    boolean validLine = false;
+                    for (int i = 0; i < digits.length && !validLine; i++) {
+                        if (aLine.startsWith(digits[i])) {
+                            validLine = true;
+                        }
+                    }
+
+                    if (validLine) {
+                        lineNum++;
+
+                        Vector<Double> newRow = new Vector<Double>();
+                        StringTokenizer stringTokenizer = new StringTokenizer(aLine);
+                        //
+                        int numToken = stringTokenizer.countTokens();
+                        for (int i = 0; i < numToken; i++) {
+                            String stringToken = stringTokenizer.nextToken();
+                            //System.out.println(stringToken);
+                            newRow.addElement(Double.parseDouble(stringToken));
+                        } //for
+                        if (numToken != 0) {
+                            localData.addElement(newRow);
+                        } else {
+                            break;
+                        }
+//                          }//while
+//                    }//if
+                    }//if
+
+                }//if
+            }//while
+
+            fileInputStream.close();
+            bufferedReader.close();
+
+            DataSet retVal = null;
+
+
+            return retVal;
+
+        } catch (MalformedURLException e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file format.");
+            System.out.println("Malformed URL = " + e);
+            return null;
+        } catch (IOException io) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file format.");
+            System.out.println("IOException throws " + io);
+            return null;
+        } catch (java.lang.NumberFormatException nfe) {
+
+            javax.swing.JOptionPane.showMessageDialog(null, "Invalid file format.");
+            System.out.println("NumberFormatException throws " + nfe);
+            return null;
+        }
+    }
+
+    public static Vector<DataSet> createDataSetFromPowderFile(FileInputStream fis, File aFile) {
+        Vector<DataSet> retval = new Vector<DataSet>();
+        try {
+            if (aFile.getName().endsWith("xye") || aFile.getName().endsWith("xy") || aFile.getName().endsWith("txt")) {
+                retval.addElement(read(fis, aFile));
+                return retval;
+            }
+
+            return null;
+        } catch (Exception ex) {
+            System.out.println(ex);
+            javax.swing.JOptionPane.showMessageDialog(null,
+                    "Can't process (3) file " + aFile.getPath());
+        }
+        return null;
     }
 
     public static Vector initXYData() {

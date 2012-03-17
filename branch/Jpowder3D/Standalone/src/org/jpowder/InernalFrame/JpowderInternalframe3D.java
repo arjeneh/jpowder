@@ -63,6 +63,9 @@ public class JpowderInternalframe3D extends JpowderInternalframe {
         this.selectedMetaItem = selectedMetaItem;
     }
 
+    /*
+     * @param
+     * */
     public JpowderInternalframe3D(DataVisibleInChart dataVisibleInChartPanel,
             Vector<DataSet> data, String selectedMetaItem, HashMap fileNameAndPath) {
         //
@@ -70,7 +73,7 @@ public class JpowderInternalframe3D extends JpowderInternalframe {
 
         this.selectedMetaItem = selectedMetaItem;
         this.fileNameAndPath = fileNameAndPath;
-        //where problem occurred.
+        //where problem occurred goes to JpowderInternalframe.doStuff().
         doStuff(this.selectedMetaItem, this.fileNameAndPath);
         //where problem occurred.
         xYPlot = this.getXYPlot();

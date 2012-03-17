@@ -32,7 +32,7 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
     /**
      * The block width (defaults to 1.0).
      */
-    private double blockWidth = 1.0;
+    private double blockWidth = 0.4;
     /**
      * The block height (defaults to 1.0).
      */

@@ -97,13 +97,6 @@ public class FilesPlotter extends DatasetPlotter implements Serializable {
             if (datasets.get(i).getFileName().endsWith("gss")) {
                 plot.getDomainAxis().setLabel("TOF");
             }
-
-//            if(datasets.get(i).getFileName().endsWith("gss")&&datasets.get(i).getFileName().endsWith("")){
-//            JOptionPane.showMessageDialog(null,
-//            "Really u r dump.",
-//            "warning",
-//             JOptionPane.WARNING_MESSAGE);
-//            }
         }
         // create panel from chart and set some panel attributes
         ChartPanel chartPanel = new ChartPanel(chart, true);
@@ -164,9 +157,6 @@ public class FilesPlotter extends DatasetPlotter implements Serializable {
         } else {
             plot = new XYPlot(new JpowderInternvalXYDataset((DataSetWithErrors) datasets.elementAt(0)),
                     xAxis, yAxis, renderer2);
-
-
-
         }
 
         for (int i = 1; i < datasets.size(); i++) {
@@ -175,17 +165,10 @@ public class FilesPlotter extends DatasetPlotter implements Serializable {
             JpowderXYErrorRender renderer4 = new JpowderXYErrorRender();
             renderer4.setSeriesPaint(0, DefaultSeriesColours.getSeriesColors(i));
 
-//            NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-//            rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-
-
             if (datasets.elementAt(i) instanceof DataSetNoErrors) {
-
                 plot.setDataset(i, new JpowderXYDataset(datasets.elementAt(i)));
-
                 plot.setRenderer(i, renderer3);
             } else {
-
                 plot.setDataset(i, new JpowderInternvalXYDataset((DataSetWithErrors) datasets.elementAt(i)));
                 plot.setRenderer(i, renderer4);
             }

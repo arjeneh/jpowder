@@ -25,13 +25,7 @@ public class JpowderXYZDataset extends AbstractXYZDataset {
     private Vector<Double> x;
     private Vector<Double> y;
     private Vector<Double> z;
-//    private double[][] data;
-//
-//    public JpowderXYZDataset(double[][] data) {
-//        this.data = data;
-//
-//
-//    }
+
     public JpowderXYZDataset(DataSet dataset) {
 
         this.x = dataset.getX();
@@ -89,7 +83,7 @@ public class JpowderXYZDataset extends AbstractXYZDataset {
     private static JFreeChart createXYZChart() {
 
         NumberAxis xAxis = new NumberAxis("x Axis");
-        NumberAxis yAxis = new NumberAxis("x Axis");
+        NumberAxis yAxis = new NumberAxis("Y Axis");
 
         Vector<Double> x = new Vector<Double>();
         Vector<Double> y = new Vector<Double>();
@@ -121,8 +115,6 @@ public class JpowderXYZDataset extends AbstractXYZDataset {
         XYPlot plot = new XYPlot(xyzset, xAxis, yAxis, null);
 
         XYBlockRenderer r = new XYBlockRenderer();
-
-
         GrayPaintScale ps = new GrayPaintScale(0, 0.8);
         r.setBlockHeight(1.0f);
         r.setBlockWidth(1.0f);
