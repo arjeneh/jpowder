@@ -48,7 +48,6 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.data.xy.XYZDataset;
-import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 import org.jpowder.dataset.DataSet;
@@ -78,7 +77,12 @@ public class FilesPlotter3D extends DatasetPlotter {
         selectedMetaItem = meta;
     }
 
-    //to display file names on the Y axis for 3D image.
+        /**
+     * @param d
+     * @param meta
+     *  @param files to display file names on the Y axis for 3D image.
+     */
+   
     public FilesPlotter3D(Vector<DataSet> d, String meta, HashMap files) {
         super(d);
         FilesPlotter3D.datasets = d;
@@ -148,7 +152,7 @@ public class FilesPlotter3D extends DatasetPlotter {
         xAxis.setAutoRangeIncludesZero(false);
 
         //display file names on the Y axis instead of 0..n.
-        ValueAxis yAxis = new SymbolAxis("Symbol", HashMapHelper.convertKeyToArray(fileNames));
+        ValueAxis yAxis = new SymbolAxis("", HashMapHelper.convertKeyToArray(fileNames));
         yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         yAxis.setLowerMargin(0.0);
         yAxis.setUpperMargin(0.0);
@@ -180,8 +184,6 @@ public class FilesPlotter3D extends DatasetPlotter {
         GrayPaintScale lps = new GrayPaintScale(minY, maxY);
         renderer.setPaintScale(lps);
 
-        //renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
-
         Vector<Double> widthsLow = new Vector<Double>();
         Vector<Double> widthsUpper = new Vector<Double>();
         for (int i = 0; i < datasets.size() - 1; i++) {
@@ -205,7 +207,7 @@ public class FilesPlotter3D extends DatasetPlotter {
         legend.setPadding(new RectangleInsets(0, 40, 0, 10));
 
         legend.setStripWidth(10);
-        legend.setPosition(RectangleEdge.BOTTOM);
+        legend.setPosition(RectangleEdge.RIGHT);
         chart.addSubtitle(legend);
 
 //      legend.setFrame(new BlockBorder(Color.red));
@@ -227,7 +229,7 @@ public class FilesPlotter3D extends DatasetPlotter {
         System.out.println(" ----------- XYZDataset createDataset() -------- ");
 
         DefaultXYZDataset defaultXYZDataset = new DefaultXYZDataset();
-        //int xSize = datasets.elementAt(i).size();
+
         for (int i = 0; i < datasets.size(); i++) {
 
             double[][] data = new double[3][datasets.elementAt(i).getX().size()];
@@ -238,6 +240,7 @@ public class FilesPlotter3D extends DatasetPlotter {
                 data[2][j] = (Double) datasets.elementAt(i).getY().get(j);//Colour
 
             }
+
             defaultXYZDataset.addSeries("Serie " + i, data);
         }
 
@@ -259,6 +262,7 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         //JFreeChart chart = createChart(XYDataset dataset)
         JFreeChart charter = createChart2(createDataset2());
+        //JFreeChart charter = createChart2((XYDataset) files);
 
         ChartFrame frame = new ChartFrame("XYZ Test", charter);
         frame.pack();

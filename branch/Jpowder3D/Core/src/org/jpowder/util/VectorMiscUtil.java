@@ -188,7 +188,6 @@ public class VectorMiscUtil {
 
             DataSet retVal = null;
 
-
             return retVal;
 
         } catch (MalformedURLException e) {

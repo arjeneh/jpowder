@@ -147,19 +147,18 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
 
                 lStopwatch.reset();
 
-                for (int iDataset = 0; iDataset < datasets.size(); iDataset++)
-                {
+                for (int iDataset = 0; iDataset < datasets.size(); iDataset++) {
                     DataSet oneDataset = datasets.elementAt(iDataset);
-                  // is it really necessary to get the file extension here since
-                  // you should not have been allowed to a file with one of the
-                  // extensions as defined in ACCEPTED_FILE_TYPE in the first place
-                  if (checkAcceptedFileType(this.getLastUpdateFileName())) {
-                      if (oneDataset != null) {
-                          this.addFile(this.getLastUpdateFileName(), oneDataset);
-                      }
-                  } else {
-                      javax.swing.JOptionPane.showMessageDialog(null, "File extension not recognised.");
-                  }//acceptable end if extension matched
+                    // is it really necessary to get the file extension here since
+                    // you should not have been allowed to a file with one of the
+                    // extensions as defined in ACCEPTED_FILE_TYPE in the first place
+                    if (checkAcceptedFileType(this.getLastUpdateFileName())) {
+                        if (oneDataset != null) {
+                            this.addFile(this.getLastUpdateFileName(), oneDataset);
+                        }
+                    } else {
+                        javax.swing.JOptionPane.showMessageDialog(null, "File extension not recognised.");
+                    }//acceptable end if extension matched
                 }
             }//for
 
@@ -178,28 +177,26 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         try {
             fis = new FileInputStream(filename);
 
-            } catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println(ex);
-                 javax.swing.JOptionPane.showMessageDialog(null, 
-                         "Can't process (1) file " + filename);
+            javax.swing.JOptionPane.showMessageDialog(null,
+                    "Can't process (1) file " + filename);
         }
         return PowderFileCabinet.createDataSetFromPowderFile(fis, new File(filename));
     }
-
 
     public static Vector<DataSet> createDataSetFromPowderFile(File aFile) {
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(aFile);
 
-            } catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println(ex);
-                 javax.swing.JOptionPane.showMessageDialog(null, 
-                         "Can't process (2) file " + aFile.getPath());
+            javax.swing.JOptionPane.showMessageDialog(null,
+                    "Can't process (2) file " + aFile.getPath());
         }
         return PowderFileCabinet.createDataSetFromPowderFile(fis, aFile);
     }
-
 
     /**
      * Create a dataset object from a powder file. It appears to be necessary
@@ -223,13 +220,13 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
                 retval.addElement(Cif_Reader.read(fis, aFile));
                 return retval;
             }
-             if (aFile.getName().endsWith("gss")) {
+            if (aFile.getName().endsWith("gss")) {
                 //retval.addElement(GSAS_Reader.read(aFile));
                 //return retval;
 //                 return GSAS_FXYE_Reader.read(aFile);
-                    return GSAS_FormatChecker.read(fis, aFile);
+                return GSAS_FormatChecker.read(fis, aFile);
             }
-               if (aFile.getName().endsWith("")) {
+            if (aFile.getName().endsWith("")) {
                 retval.addElement(XYandXYE_Reader.read(fis, aFile));
                 return retval;
             }
@@ -237,12 +234,11 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
             return null;
         } catch (Exception ex) {
             System.out.println(ex);
-                 javax.swing.JOptionPane.showMessageDialog(null, 
-                         "Can't process (3) file " + aFile.getPath());
-        } 
+            javax.swing.JOptionPane.showMessageDialog(null,
+                    "Can't process (3) file " + aFile.getPath());
+        }
         return null;
     }
-
 
     /**
      * Checking whether file type is allowed
@@ -281,18 +277,19 @@ public class PowderFileCabinet extends javax.swing.JComponent implements Subject
         return m_file;
     }
 
-//  public static void main(String args[]) {
-//    PowderFileCabinet pdc = new PowderFileCabinet();
-//
-//    javax.swing.JFrame frame = new javax.swing.JFrame("PowderFileCabinet Sample");
-//    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-//    frame.add(pdc, java.awt.BorderLayout.NORTH);
-//    frame.setSize(300, 100);
-//    frame.setVisible(true);
-//
-//    pdc.loadFiles();
-//  }
+    public static void main(String args[]) {
+        PowderFileCabinet pdc = new PowderFileCabinet();
+
+        javax.swing.JFrame frame = new javax.swing.JFrame("PowderFileCabinet Sample");
+        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        frame.add(pdc, java.awt.BorderLayout.NORTH);
+        frame.setSize(300, 100);
+        frame.setVisible(true);
+
+        pdc.loadFiles();
+    }
     //@return the last file inserted.
+
     public String getLastUpdateFileName() {
         return lastUpdateFileName;
     }

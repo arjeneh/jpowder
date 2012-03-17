@@ -52,7 +52,7 @@ import org.jpowder.dataset.DatasetPlotter;
  */
 public class JpowderInternalframe extends JInternalFrame {
 
-    private static int INTERNALFRAME_WIDTH = 800, INTERNALFRAME_HEIGHT = 500;
+    private static int INTERNALFRAME_WIDTH = 400, INTERNALFRAME_HEIGHT = 200;
     public Stack<JInternalFrame> internalframeStackes = new Stack<JInternalFrame>();
     private Preferences preferences = Preferences.userRoot();
     private Preferences myPrefs = preferences.node("Jpowder/InternalFrame/Dimension");
