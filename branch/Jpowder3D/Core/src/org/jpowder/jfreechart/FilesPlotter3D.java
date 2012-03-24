@@ -161,6 +161,27 @@ public class FilesPlotter3D extends DatasetPlotter {
         NumberAxis zAxis = new NumberAxis("");
         //below could be another possible error of JpowderXYBlockRenderer.
         JpowderXYBlockRenderer renderer = new JpowderXYBlockRenderer();
+        // If any data available, set for now, the block-width equal to the
+        // spacing between the first to x-values of the first series in dataset.
+        // When the x-values, as may typically be the case, are
+        // equally spaced this will work, since it will mean that
+        // the width of each block will exactly match the spacing between 
+        // data point and there will be no overlap between the blocks. Overlap
+        // been blocks as we have seen causes side effects such as the lines
+        // do to appear at the correct x-values
+        // Note as I am writing this comment I realize me may have a more
+        // serious problem - perhaps. The above will not work when the x-values
+        // are not equally spaced in a dataset, and I am not sure how easy it
+        // is to set different width for each data point, when the x-values
+        // are not equally spaced. If the widths are too large we get the
+        // side effect we have already seen. If the widths are too small we
+        // will get funny looking plots with white areas between the data points
+        if ( dataset.getSeriesCount() >= 1 )
+        {
+            double width1stDataPoint = dataset.getXValue(0, 1)-dataset.getXValue(0, 0);
+            renderer.setBlockWidth(width1stDataPoint);
+        }
+
         renderer.clearSeriesPaints(true);
 
         // my trial on 17/03/2012
