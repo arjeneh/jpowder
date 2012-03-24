@@ -766,6 +766,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
             this.renderer = renderer;
         }
 
+        @Override
         public void mousePressed(MouseEvent e) {
             int col = header.columnAtPoint(e.getPoint());
             int sortCol = header.getTable().convertColumnIndexToModel(col);
