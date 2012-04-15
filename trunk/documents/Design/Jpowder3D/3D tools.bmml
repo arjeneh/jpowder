@@ -5,22 +5,22 @@
     <control controlID="2" controlTypeID="com.balsamiq.mockups::Image" x="378" y="267" w="-1" h="-1" measuredW="77" measuredH="79" zOrder="2" locked="false" isInGroup="-1"/>
     <control controlID="3" controlTypeID="com.balsamiq.mockups::Image" x="247" y="268" w="-1" h="-1" measuredW="77" measuredH="79" zOrder="3" locked="false" isInGroup="-1"/>
     <control controlID="4" controlTypeID="com.balsamiq.mockups::Image" x="378" y="133" w="-1" h="-1" measuredW="77" measuredH="79" zOrder="4" locked="false" isInGroup="-1"/>
-    <control controlID="5" controlTypeID="com.balsamiq.mockups::Label" x="247" y="221" w="-1" h="-1" measuredW="48" measuredH="25" zOrder="5" locked="false" isInGroup="-1">
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::Label" x="247" y="221" w="-1" h="-1" measuredW="54" measuredH="21" zOrder="5" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Colours</text>
+        <text>Colorbar</text>
       </controlProperties>
     </control>
-    <control controlID="6" controlTypeID="com.balsamiq.mockups::Label" x="378" y="360" w="-1" h="-1" measuredW="113" measuredH="25" zOrder="6" locked="false" isInGroup="-1">
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Label" x="378" y="360" w="-1" h="-1" measuredW="100" measuredH="21" zOrder="6" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Transform%20x-axis</text>
       </controlProperties>
     </control>
-    <control controlID="7" controlTypeID="com.balsamiq.mockups::Label" x="247" y="361" w="-1" h="-1" measuredW="65" measuredH="25" zOrder="7" locked="false" isInGroup="-1">
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Label" x="247" y="361" w="-1" h="-1" measuredW="65" measuredH="21" zOrder="7" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Smoothing</text>
       </controlProperties>
     </control>
-    <control controlID="8" controlTypeID="com.balsamiq.mockups::Label" x="378" y="220" w="-1" h="-1" measuredW="92" measuredH="25" zOrder="8" locked="false" isInGroup="-1">
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::Label" x="378" y="220" w="-1" h="-1" measuredW="79" measuredH="21" zOrder="8" locked="false" isInGroup="-1">
       <controlProperties>
         <text>y-axis%20display</text>
       </controlProperties>
@@ -32,7 +32,7 @@
     </control>
     <control controlID="10" controlTypeID="com.balsamiq.mockups::StickyNote" x="21" y="106" w="204" h="123" measuredW="109" measuredH="123" zOrder="10" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Allow%20users%20to%20select%20%0Adifferent%20plotting%20colours</text>
+        <text>Allow%20users%20to%20select%20%0Adifferent%20plotting%20colours%0Aand%20adjust%20to%20position%20of%0Athe%20colorbar</text>
       </controlProperties>
     </control>
     <control controlID="11" controlTypeID="com.balsamiq.mockups::StickyNote" x="0" y="244" w="246" h="141" measuredW="109" measuredH="123" zOrder="11" locked="false" isInGroup="-1">
@@ -46,7 +46,7 @@
       </controlProperties>
     </control>
     <control controlID="13" controlTypeID="com.balsamiq.mockups::Image" x="247" y="414" w="-1" h="-1" measuredW="77" measuredH="79" zOrder="13" locked="false" isInGroup="-1"/>
-    <control controlID="14" controlTypeID="com.balsamiq.mockups::Label" x="247" y="508" w="-1" h="-1" measuredW="61" measuredH="25" zOrder="14" locked="false" isInGroup="-1">
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::Label" x="247" y="508" w="-1" h="-1" measuredW="57" measuredH="21" zOrder="14" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Annotate</text>
       </controlProperties>
@@ -56,7 +56,7 @@
         <text>Allow%20users%20to%20add%20arrows%20%0Aect%20to%20chart</text>
       </controlProperties>
     </control>
-    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="139" y="24" w="291" h="40" measuredW="244" measuredH="40" zOrder="16" locked="false" isInGroup="-1">
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="139" y="24" w="291" h="40" measuredW="222" measuredH="33" zOrder="16" locked="false" isInGroup="-1">
       <controlProperties>
         <bold>true</bold>
         <size>24</size>
