@@ -66,6 +66,7 @@ public class FilesPlotter3D extends DatasetPlotter {
     private static XYPlot plot;
     private static String selectedMetaItem;
     private static HashMap fileNames;
+    private boolean isMetaNameEqualName = false;
 
     /**
      * @param d
@@ -77,24 +78,27 @@ public class FilesPlotter3D extends DatasetPlotter {
         selectedMetaItem = meta;
     }
 
-        /**
+    /**
      * @param d
      * @param meta
-     *  @param files to display file names on the Y axis for 3D image.
+     * @param files to display file names on the Y axis for 3D image.
      */
-   
     public FilesPlotter3D(Vector<DataSet> d, String meta, HashMap files) {
         super(d);
         FilesPlotter3D.datasets = d;
         selectedMetaItem = meta;
         fileNames = files;
+        //selectedColumn.toString().equalsIgnoreCase(ignoreColumnName)
+        if (selectedMetaItem.equalsIgnoreCase("name")) {
+            isMetaNameEqualName = true;
+            System.out.println("Plot using Name metaData in the constructor()");
+        }
     }
 
     public FilesPlotter3D(DataSet d) {
         super(d);
         datasets = new Vector<DataSet>();
         FilesPlotter3D.datasets.addElement(d);
-
     }
 
     /*
@@ -136,8 +140,6 @@ public class FilesPlotter3D extends DatasetPlotter {
         return chartPanel;
     }
 
-    // TODO: 1) He may use wrong dataset, it should have been XYZDataset???
-    // TODO: 2) where is his Z value???
     /**
      * creating chart
      * @param dataset
@@ -151,12 +153,26 @@ public class FilesPlotter3D extends DatasetPlotter {
         xAxis.setUpperMargin(0.0);
         xAxis.setAutoRangeIncludesZero(false);
 
-        //display file names on the Y axis instead of 0..n.
-        ValueAxis yAxis = new SymbolAxis("", HashMapHelper.convertKeyToArray(fileNames));
-        yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        yAxis.setLowerMargin(0.0);
-        yAxis.setUpperMargin(0.0);
-        //yAxis.setAutoRange(true); --does not work
+        ValueAxis yAxis;
+
+        //if the metaname is equal Name. 21/04/2012
+        if (isMetaNameEqualName) {
+            //display file names on the Y axis instead of 0..n.
+            yAxis = new SymbolAxis("", HashMapHelper.convertKeyToArray(fileNames));
+            yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+            yAxis.setLowerMargin(0.0);
+            yAxis.setUpperMargin(0.0);
+            System.out.println("Plot using Name metaData");
+            //else display metaname and values
+        } else {
+            yAxis = new NumberAxis(selectedMetaItem);
+            yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+            yAxis.setLowerMargin(0.0);
+            yAxis.setUpperMargin(0.0);
+            System.out.println("Plot Non-Name metaData");
+        }
+
+        //end if the metaname is equal Name. 21/04/2012
 
         NumberAxis zAxis = new NumberAxis("");
         //below could be another possible error of JpowderXYBlockRenderer.
@@ -191,7 +207,7 @@ public class FilesPlotter3D extends DatasetPlotter {
         plot.setDomainGridlinePaint(Color.white);
         plot.setRangeGridlinePaint(Color.white);
         // my trial on 17/03/2012
-        
+
         chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
         double maxY = 0;
         double minY = 0;
