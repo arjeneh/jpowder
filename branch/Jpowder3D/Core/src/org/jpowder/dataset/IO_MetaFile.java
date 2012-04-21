@@ -47,29 +47,38 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
+
+
 import org.xml.sax.SAXException;
 
 /**
  *
- * this class is for reading and writing data the 3d plot table into
+ * This class is for reading and writing data the 3d plot table into
  * a xml file.
  */
 public class IO_MetaFile {
+
+
 
     private DefaultTableModel defaultTableModel;
     private Vector<String> columnNames = new Vector<String>();
     private Vector<String> row = new Vector<String>();
 
-    public IO_MetaFile(DefaultTableModel defaultTableModel,
-            Vector<String> columnNames, Vector<String> row) {
+    public IO_MetaFile(DefaultTableModel defaultTableModel, Vector<String> columnNames, Vector<String> row) {
         this.defaultTableModel = defaultTableModel;
         this.columnNames = columnNames;
         this.row = row;
 
+//        for (int i = 0; i < this.defaultTableModel.getRowCount(); i++) {
+//            //  clear rows.
+//            this.defaultTableModel.removeRow(i);
+//        }
 
-
-
+        System.out.println("Columns are: " + defaultTableModel.getColumnCount());
     }
+
+ 
 
     /**
      * Reads the Xml, first check the if it does contain this key word
@@ -86,27 +95,32 @@ public class IO_MetaFile {
             // normalize text representation
             doc.getDocumentElement().normalize();
 
-
             if (!doc.getDocumentElement().getNodeName().contains("JpowderMetaFile")) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Invalid XML file.");
                 return;
             }
+
+            //clear rows and columns
+            //this.defaultTableModel.removeRow(row);
+
             NodeList listOfColumns = doc.getElementsByTagName("Columns");
             int totalColumns = listOfColumns.getLength();
-//            System.out.println("Total no of Columns : " + totalColumns);
+            //TODO : 7/04/2012
+            //parse ',' again.
+            //String string = getValue(el).substring(getValue(el).indexOf("["), getValue(el).indexOf("]")).replace("[", "");
 
+            //String str[] = string.split(",");
 
+            System.out.println("Total no of Columns of XML file : " + totalColumns);
 
             NodeList listOfRow = doc.getElementsByTagName("Row");
             int totalRow = listOfRow.getLength();
-            System.out.println("Total no of Rows : " + totalRow);
+            System.out.println("Total no of Rows of XML file : " + totalRow);
 
             for (int i = 0; i < totalColumns; i++) {
                 Node column = listOfColumns.item(i);
-
                 if (column.getNodeType() == Node.ELEMENT_NODE) {
                     Element el = (Element) column;
-
                     String string = getValue(el).substring(getValue(el).indexOf("["), getValue(el).indexOf("]")).replace("[", "");
 
                     String str[] = string.split(",");
@@ -115,9 +129,7 @@ public class IO_MetaFile {
 //                        System.out.println(s);
 //                        columnNames.add(s);
                         defaultTableModel.addColumn(s.trim());
-
                     }
-
                 }
             }
             for (int i = 0; i < totalRow; i++) {
@@ -127,18 +139,11 @@ public class IO_MetaFile {
                     Element el = (Element) rows;
                     String stringRow = getValue(el).substring(getValue(el).indexOf("["), getValue(el).indexOf("]")).replace("[", "");
                     String str[] = stringRow.split(",");
-
 //                    for (String s : str) {
 //                     System.out.println(s);
                     defaultTableModel.addRow(str);
-//                    }
-//
-//                    defaultTableModel.addRow(row);
-
                 }
             }
-
-
         } catch (SAXException ex) {
             Logger.getLogger(IO_MetaFile.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -194,7 +199,7 @@ public class IO_MetaFile {
             Logger.getLogger(IO_MetaFile.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(IO_MetaFile.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
 //            System.out.println("FINALLLLLLLLLLLLLLLLLLLLLLLY");
             return;
         }

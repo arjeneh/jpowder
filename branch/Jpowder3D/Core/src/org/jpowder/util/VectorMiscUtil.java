@@ -223,6 +223,54 @@ public class VectorMiscUtil {
         return null;
     }
 
+    /*
+     * for unit testing purposes
+     * */
+
+     public static Vector initFilePaths() {
+        Vector row1 = new Vector();
+        row1.add("zopdih_dehy_RampNo1_1");
+        row1.add(171.863);
+
+        Vector row2 = new Vector();
+        row2.add("zopdih_dehy_RampNo1_13");
+        row2.add(163.572);
+
+        Vector row3 = new Vector();
+        row3.add("zopdih_dehy_RampNo1_11");
+        row3.add(211.015);
+
+        Vector row4 = new Vector();
+        row4.add("zopdih_dehy_RampNo1_2");
+        row4.add(4.5);
+
+
+        Vector row5 = new Vector();
+        row5.add(5);
+        row5.add(5.5);
+
+
+        Vector row6 = new Vector();
+        row6.add(6);
+        row6.add(6.5);
+
+
+        Vector row7 = new Vector();
+        row7.add(7);
+        row7.add(7.5);
+
+
+        Vector data = new Vector();
+        data.add(row1);
+        data.add(row2);
+        data.add(row3);
+        data.add(row4);
+        data.add(row5);
+        data.add(row6);
+        data.add(row7);
+        return data;
+    }
+
     public static Vector initXYData() {
         Vector row1 = new Vector();
         row1.add(1.000);
