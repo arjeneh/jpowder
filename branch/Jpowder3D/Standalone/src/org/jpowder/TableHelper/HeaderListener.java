@@ -14,8 +14,9 @@ import javax.swing.table.JTableHeader;
  */
 public class HeaderListener extends MouseAdapter {
 
-    JTableHeader header;
-    SortButtonRenderer renderer;
+    private JTableHeader header;
+    private SortButtonRenderer renderer;
+    private String ignoreColumnName = null;
 
     public HeaderListener(JTableHeader header, SortButtonRenderer renderer) {
         this.header = header;
@@ -30,7 +31,8 @@ public class HeaderListener extends MouseAdapter {
         Object selectedColumn = header.getColumnModel().getColumn(col).getHeaderValue();
 
         System.out.println("String name is: " + selectedColumn.toString());
-        if (selectedColumn.toString().equalsIgnoreCase("path")) {
+        //if (selectedColumn.toString().equalsIgnoreCase("path")) {
+        if (selectedColumn.toString().equalsIgnoreCase(ignoreColumnName)) {
             System.out.println(" ---- EQUAL -------- ");
             return;
         }
@@ -59,5 +61,19 @@ public class HeaderListener extends MouseAdapter {
         int col = header.columnAtPoint(e.getPoint());
         renderer.setPressedColumn(-1);                // clear
         header.repaint();
+    }
+
+    /**
+     * @return the ignoreColumnName
+     */
+    public String getIgnoreColumnName() {
+        return ignoreColumnName;
+    }
+
+    /**
+     * @param ignoreColumnName the ignoreColumnName to set
+     */
+    public void setIgnoreColumnName(String ignoreColumnName) {
+        this.ignoreColumnName = ignoreColumnName;
     }
 }
