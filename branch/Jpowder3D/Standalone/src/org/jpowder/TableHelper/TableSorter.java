@@ -63,7 +63,8 @@ public class TableSorter {
             } else if (type == Boolean.class) {
                 return compare((Boolean) o1, (Boolean) o2);
             } else {
-                return ((String) o1).compareTo((String) o2);
+                return ((String) o1).compareTo((String) o2);//error when compare java.lang.Double cannot be cast to java.lang.String
+
             }
         }
     }

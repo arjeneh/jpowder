@@ -28,8 +28,6 @@
  */
 package org.jpowder;
 
-import java.awt.Cursor;
-import java.awt.event.MouseAdapter;
 import org.jpowder.TableHelper.TableTransferHandler;
 import org.jpowder.InernalFrame.JpowderInternalframe3D;
 import java.awt.event.MouseEvent;
@@ -43,7 +41,6 @@ import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -51,12 +48,15 @@ import javax.swing.event.InternalFrameListener;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import org.jpowder.InernalFrame.InternalFrameIconifyListener;
+import org.jpowder.MetaFile.IO_MetaFile;
+import org.jpowder.TableHelper.HeaderListener;
 import org.jpowder.TableHelper.SortButtonRenderer;
 import org.jpowder.TableHelper.SortableTableModel;
 import org.jpowder.dataset.DataSet;
-import org.jpowder.dataset.IO_MetaFile;
+//import org.jpowder.dataset.IO_MetaFile;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.util.HashMapHelper;
+import org.jpowder.util.StringUtil;
 
 /**
  * A table which contains File names, File filePaths and meta data of powder
@@ -74,13 +74,14 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     //private Vector<Vector<String>> tableDataVector = new Vector<Vector<String>>();
     private Vector<String> metaColumnesName = new Vector<String>();
     // TODO: cursor to display wait status.
-    private Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
-    private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
-    private boolean waitCursorIsShowing;
+//    private Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
+//    private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+//    private boolean waitCursorIsShowing;
     // Sortable file in NaturalOrder.
     private static SortableTableModel stm;
-    private TableColumnModel model;
+    private TableColumnModel tableColumnModel;
     private SortButtonRenderer renderer;
+    private HeaderListener headerListener;
 
     /** Creates new form FilesTable */
     public Import3DFilesTable(DataVisibleInChart dvic) {
@@ -99,170 +100,96 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         initComponents();
 
         //attempt 24 March 2012.
-        stm = new SortableTableModel(row, columnNames) {
+//        stm = new SortableTableModel(row, columnNames) {
+//
+//            @Override
+//            public Class getColumnClass(int col) {
+//                switch (col) {
+//                    case 0:
+//                        return String.class;
+//                    case 1:
+//                        return String.class;
+//                    case 2:
+//                        return String.class;
+////                    case 3:
+////                        return Boolean.class;
+//                    default:
+//                        return Object.class;
+//                }
+//            }
+//
+//            @Override
+//            public boolean isCellEditable(int row, int col) {
+////                switch (col) {
+////                    case 1:
+////                        return false;
+////                    default:
+////                        return true;
+////                }
+//
+//                if (col == 0 || col == 1) {
+//                    return false;
+//                } else {
+//                    return true;
+//                }
+//            }
+//
+//            @Override
+//            public void setValueAt(Object obj, int row, int col) {
+//                switch (col) {
+//                    case 2:
+//                        super.setValueAt(new String(obj.toString()), row, col);
+//                        return;
+//                    default:
+//                        super.setValueAt(obj, row, col);
+//                        return;
+//                }
+//            }
+//        };
 
-            @Override
-            public Class getColumnClass(int col) {
-                switch (col) {
-                    case 0:
-                        return String.class;
-                    case 1:
-                        return String.class;
-                    case 2:
-                        return String.class;
-//                    case 3:
-//                        return Boolean.class;
-                    default:
-                        return Object.class;
-                }
-            }
+         stm = new SortableTableModel(row, columnNames);
 
-            @Override
-            public boolean isCellEditable(int row, int col) {
-                switch (col) {
-                    case 1:
-                        return false;
-                    default:
-                        return true;
-                }
-            }
-
-            @Override
-            public void setValueAt(Object obj, int row, int col) {
-                switch (col) {
-                    case 2:
-                        super.setValueAt(new Integer(obj.toString()), row, col);
-                        return;
-                    default:
-                        super.setValueAt(obj, row, col);
-                        return;
-                }
-            }
-        };
         importData3DTable.setModel(stm);
-
+        // Renderer button to sort naturally.
+        // Add to the column model.
         renderer = new SortButtonRenderer();
-
-        model = importData3DTable.getColumnModel();
-
+        tableColumnModel = importData3DTable.getColumnModel();
         for (int i = 0; i < columnNames.size(); i++) {
             //  set renderer to the column.
-            model.getColumn(i).setHeaderRenderer(renderer);
+            tableColumnModel.getColumn(i).setHeaderRenderer(renderer);
         }
 
         JTableHeader header = importData3DTable.getTableHeader();
         //assign the mouse listener to the column header.
-        header.addMouseListener(new HeaderListener(header, renderer));
+        headerListener = new HeaderListener(header, renderer);
+        //header.addMouseListener(new HeaderListener(header, renderer));
+        header.addMouseListener(headerListener);
 
         //-- moveable rows 25/02/2012 - KP
         importData3DTable.setDragEnabled(true);
         importData3DTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         importData3DTable.setTransferHandler(new TableTransferHandler());
-        //-- moveable rows 25/02/2012 - KP
 
-        //-- Combobox model --
-        plotAsComboBox.setModel(new DefaultComboBoxModel(getPlotableColumnNames(columnNames)));
-        //-- Combobox model --
         importData3DTable.getTableHeader().setReorderingAllowed(true);
         importData3DTable.addMouseListener(new TablePopUpListener(rowHeaderPopMenu));
+        //-- moveable rows 25/02/2012 - KP
+
+        //-- ComboboxModel --
+        plotAsComboBox.setModel(new DefaultComboBoxModel(getPlotableColumnNames(columnNames)));
 
         addWindowListener(new WindowAdapter() {
-
             @Override
             public void windowClosing(WindowEvent event) {
-                while (stm.getRowCount() > 0) {
-                    stm.removeRow(0);
-                }
+                stm.setRowCount(0);
+//                while (stm.getRowCount() > 0) {
+//                    stm.removeRow(0);
+//                }
             }
         });
+
     }
 
-    //for unit testing purpose  03/03/2012 - KP
-    public Import3DFilesTable() {
-        //System.out.println(System.getProperty("user.home"));
-
-        initComponents();
-        //-- test rows 03/03/2012 - KP
-        //addDummyFiles("C:\\Users\\Toshiba\\Desktop\\ZopDih\\");
-        addDummyData();
-
-        //-- moveable rows 25/02/2012 - KP
-    }
-
-    public void addDummyData() {
-
-        String[] headerStr = {"File", "Path"};
-        String[][] data = {{"zopdih_dehy_RampNo1_1", "Path 1"}, {"zopdih_dehy_RampNo1_13", "Path"},
-            {"zopdih_dehy_RampNo1_11", "A"}, {"zopdih_dehy_RampNo1_2", "B"}, {"foo", "C"}, {"bar", "E"}};
-
-        stm = new SortableTableModel(data, headerStr) {
-
-            @Override
-            public Class getColumnClass(int col) {
-                switch (col) {
-                    case 0:
-                        return String.class;
-                    case 1:
-                        return String.class;
-                    case 2:
-                        return String.class;
-//                    case 3:
-//                        return Boolean.class;
-                    default:
-                        return Object.class;
-                }
-            }
-
-            @Override
-            public boolean isCellEditable(int row, int col) {
-                switch (col) {
-                    case 1:
-                        return false;
-                    default:
-                        return true;
-                }
-            }
-
-            @Override
-            public void setValueAt(Object obj, int row, int col) {
-                switch (col) {
-                    case 2:
-                        super.setValueAt(new Integer(obj.toString()), row, col);
-                        return;
-                    default:
-                        super.setValueAt(obj, row, col);
-                        return;
-                }
-            }
-        };
-        SortButtonRenderer renderer = new SortButtonRenderer();
-
-        model = importData3DTable.getColumnModel();
-        importData3DTable.setModel(stm);
-
-        int n = headerStr.length;
-        System.out.println("Size is : " + n + " ------------ ");
-
-        for (int i = 0; i < n; i++) {
-            //  set renderer to the column.
-            model.getColumn(i).setHeaderRenderer(renderer);
-        }
-
-        JTableHeader header = importData3DTable.getTableHeader();
-        //assign the mouse listener to the column header.
-        header.addMouseListener(new HeaderListener(header, renderer));
-
-        //-- moveable rows 25/02/2012 - KP
-        importData3DTable.setDragEnabled(true);
-        importData3DTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        importData3DTable.setTransferHandler(new TableTransferHandler());
-        //-- moveable rows 25/02/2012 - KP
-
-        //-- Combobox model --
-        plotAsComboBox.setModel(new DefaultComboBoxModel(getPlotableColumnNames(columnNames)));
-        //-- Combobox model --
-        importData3DTable.getTableHeader().setReorderingAllowed(true);
-        //importData3DTable.addMouseListener(new TablePopUpListener(rowHeaderPopMenu));
+    public void handleTableSort(){
 
     }
 
@@ -271,7 +198,8 @@ public class Import3DFilesTable extends javax.swing.JFrame {
      */
     private Vector<String> getPlotableColumnNames(Vector<String> names) {
         Vector<String> retVal = new Vector<String>();
-        for (int i = 0; i < names.size(); i++) {
+        for (int i = 0; i <
+                names.size(); i++) {
             String bob = names.get(i);
             if (bob.trim().equalsIgnoreCase("Path")) {
             } else {
@@ -293,6 +221,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
     /**
      * adding column to the table.
+     * TODO: set the textinput field to be focused.
      */
     public void addColumn() {
         JTextField textField = new JTextField();
@@ -307,20 +236,38 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                 options, //the titles of buttons
                 options[0]); //default button title
         if (n == 0) {
+
+            Double defaultMetaColumnValue = 0.00;
+
             if (!textField.getText().isEmpty()) {
-                stm.addColumn(textField.getText());
-                metaColumnesName.add(textField.getText());
+                //update column name to DefaultTable model.
+                int rows = importData3DTable.getRowCount();
+                Double[] values = new Double[rows];
+
+                for (int j = 0; j < rows; j++) {
+                    values[j] = defaultMetaColumnValue++;
+                }
+
+                String capFirstCharString = StringUtil.capitalize(textField.getText());
+
+                // Make first character Uppercase.
+                stm.addColumn(capFirstCharString, values);
+                // update Name to ComboBox model.
+                plotAsComboBox.addItem(capFirstCharString);
+                // set renderer to the lastest added column.
+                for (int i = 0; i < columnNames.size(); i++) {
+                    //  set renderer to the column.
+                    tableColumnModel.getColumn(i).setHeaderRenderer(renderer);
+                }
+                metaColumnesName.add(capFirstCharString);
             } else {
                 JOptionPane.showMessageDialog(null, "Please enter column's name.");
                 addColumn();
             }
-
         } else {
             return;
         }
 
-        importData3DTable.moveColumn(importData3DTable.getColumnCount() - 1,
-                (importData3DTable.getColumnCount() + 2) - importData3DTable.getColumnCount());
     }
 
     /**
@@ -344,6 +291,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
             row.add(file[i].toString());
             stm.addRow(row);
         }
+
     }
 
     /**
@@ -351,15 +299,9 @@ public class Import3DFilesTable extends javax.swing.JFrame {
      * @param afile
      */
     public void addaFileToTable(File afile) {
-//        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
         row = new Vector<String>();
-//        rowsFiles.add(String.valueOf(defaultTableModel.getRowCount()));
         row.add(afile.getName());
-//        rowsFiles.add(String.valueOf(afile.length() / 1024) + " KB");
-//        rowsFiles.add(chooser.getTypeDescription(afile));
-//        rowsFiles.add(dateFormat.format(new Date(afile.lastModified())));
         row.add(afile.toString());
-        //defaultTableModel.addRow(row);
         stm.addRow(row);
     }
 
@@ -574,10 +516,12 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         HashMap<String, String> fileNameAndPathMap = new LinkedHashMap<String, String>();
         PowderFileCabinet mPowderFileCabinet = new PowderFileCabinet();
         String fileName;
+
         String filePaths;
 
         // loop over selected files
-        for (int i = 0, n = stm.getRowCount(); i < n; i++) {
+        for (int i = 0, n = stm.getRowCount(); i <
+                n; i++) {
             // assume in this loop for now that path the 2nd column
             fileNameAndPathMap.put(String.valueOf(stm.getValueAt(i, 0)),
                     String.valueOf(stm.getValueAt(i, 1)));
@@ -586,7 +530,8 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
         for (Map.Entry<String, String> entry : fileNameAndPathMap.entrySet()) {
             fileName = entry.getKey();
-            filePaths = entry.getValue();
+            filePaths =
+                    entry.getValue();
             System.out.println("File name is: " + fileName + " and Path is: " + filePaths);
 
             //System.out.println(afile);
@@ -597,7 +542,8 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                     return;
                 }
 
-                for (int iSet = 0; iSet < allDatasets.size(); iSet++) {
+                for (int iSet = 0; iSet <
+                        allDatasets.size(); iSet++) {
                     DataSet oneDataset = allDatasets.elementAt(iSet);
                     if (oneDataset != null) {
                         datasets.add(oneDataset);
@@ -617,10 +563,8 @@ public class Import3DFilesTable extends javax.swing.JFrame {
             // For Name column for now label filenames artificially as 0,1,2...
             hm.put("Name", (double) i);
             // ignore Path column but see if any other meta data defined
-
             for (int iCol = 2; iCol < importData3DTable.getColumnCount(); iCol++) {
-                hm.put(stm.getColumnName(iCol),
-                        Double.parseDouble(stm.getValueAt(i, iCol).toString()));
+                hm.put(stm.getColumnName(iCol), Double.parseDouble(stm.getValueAt(i, iCol).toString()));
             }
             datasets.get(i).addMetaData(hm);
         }
@@ -654,10 +598,12 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         int[] rows = importData3DTable.getSelectedRows();
 
         if (rows.length > 0) {
-            for (int i = 0; i < rows.length; i++) {
+            for (int i = 0; i <
+                    rows.length; i++) {
                 //defaultTableModel.removeRow(rows[i] - i);
                 stm.removeRow(rows[i] - i);
             }//for
+
         }//if
     }//GEN-LAST:event_removeRowButtonActionPerformed
 
@@ -697,9 +643,11 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         chooser.showOpenDialog(chooser);
         File file = chooser.getSelectedFile();
 
-        IO_MetaFile metaFile = new IO_MetaFile(stm, columnNames, row);
+        //IO_MetaFile metaFile = new IO_MetaFile(stm, columnNames, row);
+        IO_MetaFile metaFile = new IO_MetaFile(importData3DTable, columnNames, row);
         metaFile.read_MetaFile(file);
 
+        // TODO: We need to set or clear plotAsComboBox, and add structure of the file to the models.
         plotAsComboBox.setModel(new DefaultComboBoxModel(getPlotableColumnNames(columnNames)));
     }//GEN-LAST:event_loadMetaFileButtonActionPerformed
 
@@ -729,7 +677,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         if (e.isPopupTrigger()) {
             columnHeaderPopMenu.show(e.getComponent(), e.getX(),
                     e.getY());
-
         }
     }
 
@@ -737,12 +684,11 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
-        Import3DFilesTable frame = new Import3DFilesTable();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-
+//        Import3DFilesTable frame = new Import3DFilesTable();
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        //Display the window.
+//        frame.pack();
+//        frame.setVisible(true);
     }
 
     public static void getList(String directory) {
@@ -750,48 +696,12 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         String[] list = path.list();
         String element;
 
-        for (int i = 0; i < list.length; i++) {
+        for (int i = 0; i <
+                list.length; i++) {
             element = list[i];
 
         }
-    }
 
-    class HeaderListener extends MouseAdapter {
-
-        JTableHeader header;
-        SortButtonRenderer renderer;
-
-        HeaderListener(JTableHeader header, SortButtonRenderer renderer) {
-            this.header = header;
-            this.renderer = renderer;
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            int col = header.columnAtPoint(e.getPoint());
-            int sortCol = header.getTable().convertColumnIndexToModel(col);
-            renderer.setPressedColumn(col);
-            renderer.setSelectedColumn(col);
-            header.repaint();
-
-            if (header.getTable().isEditing()) {
-                header.getTable().getCellEditor().stopCellEditing();
-            }
-
-            boolean isAscent;
-            if (SortButtonRenderer.DOWN == renderer.getState(col)) {
-                isAscent = true;
-            } else {
-                isAscent = false;
-            }
-            ((SortableTableModel) header.getTable().getModel()).sortByColumn(sortCol, isAscent);
-        }
-
-        public void mouseReleased(MouseEvent e) {
-            int col = header.columnAtPoint(e.getPoint());
-            renderer.setPressedColumn(-1);                // clear
-            header.repaint();
-        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addColumn;
