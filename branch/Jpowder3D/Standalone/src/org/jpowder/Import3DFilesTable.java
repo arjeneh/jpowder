@@ -162,6 +162,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         JTableHeader header = importData3DTable.getTableHeader();
         //assign the mouse listener to the column header.
         headerListener = new HeaderListener(header, renderer);
+        headerListener.setIgnoreColumnName("path");
         //header.addMouseListener(new HeaderListener(header, renderer));
         header.addMouseListener(headerListener);
 
@@ -225,8 +226,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
      */
     public void addColumn() {
         JTextField textField = new JTextField();
-        Object[] options = {"Yes",
-            "No"};
+        Object[] options = {"Yes", "No"};
         int n = JOptionPane.showOptionDialog(null,
                 textField,
                 "Set Column Name",
@@ -237,21 +237,25 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                 options[0]); //default button title
         if (n == 0) {
 
-            Double defaultMetaColumnValue = 0.00;
+            Double defaultMetaColumnValue = 0.0;
 
             if (!textField.getText().isEmpty()) {
                 //update column name to DefaultTable model.
                 int rows = importData3DTable.getRowCount();
-                Double[] values = new Double[rows];
+                //Double[] values = new Double[rows];
+                String[] valueString = new String[rows];
 
                 for (int j = 0; j < rows; j++) {
-                    values[j] = defaultMetaColumnValue++;
+                    defaultMetaColumnValue++;
+                    valueString[j] = defaultMetaColumnValue.toString();
                 }
 
                 String capFirstCharString = StringUtil.capitalize(textField.getText());
 
                 // Make first character Uppercase.
-                stm.addColumn(capFirstCharString, values);
+                //TODO: addColumn to TableModel and it does not get Double Class.
+                //It becomes
+                stm.addColumn(capFirstCharString, valueString);
                 // update Name to ComboBox model.
                 plotAsComboBox.addItem(capFirstCharString);
                 // set renderer to the lastest added column.
@@ -649,6 +653,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
         // TODO: We need to set or clear plotAsComboBox, and add structure of the file to the models.
         plotAsComboBox.setModel(new DefaultComboBoxModel(getPlotableColumnNames(columnNames)));
+        // TODO: Deselect the file selected in the left panel.
     }//GEN-LAST:event_loadMetaFileButtonActionPerformed
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed

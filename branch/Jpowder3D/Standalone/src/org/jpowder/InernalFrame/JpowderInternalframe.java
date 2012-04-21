@@ -144,6 +144,7 @@ public class JpowderInternalframe extends JInternalFrame {
         }
         // if 3D
         if (Jpowder.getPlotsTab().getSelectedIndex() == 1) {
+            //plot by name as a default.
             plotMultiCol = DatasetPlotter.createDatasetPlotter(vectorDatasets, selectedMetaItem, fileNameAndPath);
         }
 
