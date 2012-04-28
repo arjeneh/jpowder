@@ -7,6 +7,7 @@ package org.jpowder.TableHelper;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.xml.stream.events.StartDocument;
 
 /**
  *
@@ -22,7 +23,7 @@ public class TableTransferHandler extends StringTransferHandler {
     protected String exportString(JComponent c) {
         JTable table = (JTable) c;
         rows = table.getSelectedRows();
-        System.out.println("In exportString, selected rows are: " + rows.length);
+        System.out.println("In exportString(), selected rows are: " + rows.length);
         int colCount = table.getColumnCount();
 
         StringBuffer buff = new StringBuffer();
@@ -30,9 +31,10 @@ public class TableTransferHandler extends StringTransferHandler {
         for (int i = 0; i < rows.length; i++) {
             for (int j = 0; j < colCount; j++) {
                 Object val = table.getValueAt(rows[i], j);
-                System.out.println("I am type" + val.getClass().getName());
+                System.out.println("In exportString(), I am type " + val.getClass().getName());
 
                 buff.append(val == null ? "" : val.toString());
+                System.out.println("In exportString(), my value is: " + val.toString());
                 if (j != colCount - 1) {
                     buff.append(",");
                 }
@@ -42,6 +44,9 @@ public class TableTransferHandler extends StringTransferHandler {
             }
         }
 
+        System.out.println("In exportString(), done value is: " + buff.toString());
+        System.out.println("Finished In exportString() ..............................................................................................................................");
+
         return buff.toString();
     }
 
@@ -49,9 +54,20 @@ public class TableTransferHandler extends StringTransferHandler {
     protected void importString(JComponent c, String str) {
         JTable target = (JTable) c;
         DefaultTableModel model = (DefaultTableModel) target.getModel();
+
+        int index = target.getSelectedRow();//model index.
+        System.out.println("In importString(), selected rows are:.." + index);
+
+        System.out.println("selectedRowCount=" + target.getSelectedRowCount());
+
+        int index2 = target.convertRowIndexToModel(index);
+        System.out.println("In importString(), target.convertRowIndexToModel are:.." + index2);
+//        if (index != -1) {
+//            index = target.convertRowIndexToModel(index);
+//            //String value = (String) model.getValueAt(rowIndex, columnIndex);
+//        }
+
         
-        int index = target.getSelectedRow();
-        System.out.println("Selected rows are:.." + index);
 
         //Prevent the user from dropping data back on itself.
         //For example, if the user is moving rows #4,#5,#6 and #7 and
@@ -64,7 +80,7 @@ public class TableTransferHandler extends StringTransferHandler {
         }
 
         int max = model.getRowCount();
-        System.out.println("How many row count....." + max + "..................");
+        System.out.println("In importString(), row count is: ...." + max);
 
         if (index < 0) {
             index = max;
@@ -76,21 +92,25 @@ public class TableTransferHandler extends StringTransferHandler {
         }
 
         addIndex = index;
-        System.out.println("Add index is:..." + addIndex + "..................");
+        System.out.println("In importString(), Add index is:..." + addIndex);
 
         String[] values = str.split("\n");
+        System.out.println("In importString(), String[] values are:..." + values);
         addCount = values.length;
-        System.out.println("Add count is:..." + addCount + "..................");
+        System.out.println("In importString(), Count column is:..." + addCount);
 
         int colCount = target.getColumnCount();
-        System.out.println("Column count is:..." + colCount );
-        
+        //System.out.println("In importString(), Column count is:..." + colCount );
+
         for (int i = 0; i < values.length && i < colCount; i++) {
             model.insertRow(index++, values[i].split(","));
-            System.out.println("Jeep............" + index + "..................");
+            // System.gc();
+            // MoveRow attempt.
+            //model.moveRow(start, end, to);
+            System.out.println("In importString(), Insert to row index......" + index + "..................");
         }
 
-        System.out.println("Hello..importString() is called in ExtendedDnDDemo..................");
+        System.out.println("Finished in importString() ..........................");
     }
 
     @Override
@@ -110,6 +130,7 @@ public class TableTransferHandler extends StringTransferHandler {
                     }
                 }
             }
+
             for (int i = rows.length - 1; i >= 0; i--) {
                 model.removeRow(rows[i]);
             }
@@ -117,5 +138,7 @@ public class TableTransferHandler extends StringTransferHandler {
         rows = null;
         addCount = 0;
         addIndex = -1;
+
+        System.out.print("Finished cleanup() ........................................");
     }
 }

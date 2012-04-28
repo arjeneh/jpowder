@@ -52,6 +52,7 @@ public class NaturalOrderComparator implements Comparator
     }
 
     //uses CharAt() as well.
+    @Override
     public int compare(Object o1, Object o2)
     {
         String a = o1.toString();

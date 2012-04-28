@@ -33,7 +33,7 @@ public abstract class StringTransferHandler extends TransferHandler {
 
     @Override
     public int getSourceActions(JComponent c) {
-        System.out.println("Hello......................C..................");
+        System.out.println("getSourceActions....................");
         return COPY_OR_MOVE;
     }
 
@@ -42,7 +42,7 @@ public abstract class StringTransferHandler extends TransferHandler {
         if (canImport(c, t.getTransferDataFlavors())) {
             try {
                 String str = (String) t.getTransferData(DataFlavor.stringFlavor);
-                System.out.println("str is ............." + str);
+                System.out.println("str imported is ............." + str);
                 importString(c, str);
                 return true;
             } catch (UnsupportedFlavorException ufe) {

@@ -1,9 +1,10 @@
 package org.jpowder.TableHelper;
 
-import java.util.*;
+import java.util.Date;
 
 /**
  * @version 1.0 02/25/99
+ * This class is used to sort Table content as String in a Natural Order.
  */
 public class TableSorter {
 
@@ -48,26 +49,29 @@ public class TableSorter {
         } else if (o2 == null) {
             return 1;
         } else {
-
-            Class type = model.getColumnClass(column);
-            if (type.getSuperclass() == Number.class) {
-                return compare((Number) o1, (Number) o2);
-            } else if (type == String.class) {
-                //test natural order.
-                return compare((String) o1, (String) o2);
-                //original normal compare String.
-                //return ((String) o1).compareTo((String) o2);
-            } else if (type == Date.class) {
-                return compare((Date) o1, (Date) o2);
-            } else if (type == Double.class) {
-                //fix Double sorting 21/04/2012
-                return compare((Double) o1, (Double) o2);
-            } else if (type == Boolean.class) {
-                return compare((Boolean) o1, (Boolean) o2);
-            } else {
-                //error when compare java.lang.Double cannot be cast to java.lang.String 20/03/2012
-                return ((String) o1).compareTo((String) o2);
-            }
+//            Class type = model.getColumnClass(column);
+//            if (type.getSuperclass() == Number.class) {
+//                return compare((Number) o1, (Number) o2);
+//            } else if (type == String.class) {
+//                //test natural order.
+//                //return compare((String) o1, (String) o2);
+//                //original normal compare String.
+//                return ((String) o1).compareTo((String) o2);
+//            } else if (type == Date.class) {
+//                return compare((Date) o1, (Date) o2);
+//            } else if (type == Double.class) {
+//                //fix Double sorting 21/04/2012
+//                return compare((Double) o1, (Double) o2);
+//            } else if (type == Boolean.class) {
+//                return compare((Boolean) o1, (Boolean) o2);
+//            } else {
+//                //error when compare java.lang.Double cannot be cast to java.lang.String 20/03/2012
+//                return ((String) o1).compareTo((String) o2);
+//            }
+            //Natural order starts.
+            //return compareNatural( o1, o2);
+            //return ((String) o1).compareTo((String) o2);
+            return compareNatural(o1, o2);
         }
     }
 
@@ -107,8 +111,8 @@ public class TableSorter {
         }
     }
 
-    // this is used to compare string in natural order. CharAt() as well.
-    public int compare(Object o1, Object o2) {
+    // This is used to compare string in natural order. CharAt() as well.
+    public int compareNatural(Object o1, Object o2) {
         String a = o1.toString();
         String b = o2.toString();
 

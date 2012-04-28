@@ -9,7 +9,6 @@ import javax.swing.table.*;
 import org.jpowder.util.StringUtil;
 
 // TODO: Implement ComboboxModel so Combobox can use not just Table.
-
 public class SortableTableModel extends DefaultTableModel implements ComboBoxModel {
 
     private int[] indexes;
@@ -42,8 +41,7 @@ public class SortableTableModel extends DefaultTableModel implements ComboBoxMod
 
     // additional method to remove Column of the model.
     public void removeColumn(int columnIndex) {
-        for (int r = 0; r <
-                this.getRowCount(); r++) {
+        for (int r = 0; r < this.getRowCount(); r++) {
             Vector row = (Vector) dataVector.elementAt(r);
             row.removeElementAt(columnIndex);
         }
@@ -52,8 +50,7 @@ public class SortableTableModel extends DefaultTableModel implements ComboBoxMod
     }
 
     @Override
-    public Object getValueAt(
-            int row, int col) {
+    public Object getValueAt(int row, int col) {
         int rowIndex = row;
         if (getIndexes() != null) {
             rowIndex = getIndexes()[row];
@@ -68,6 +65,7 @@ public class SortableTableModel extends DefaultTableModel implements ComboBoxMod
             rowIndex = getIndexes()[row];
         }
         super.setValueAt(value, rowIndex, col);
+        fireTableDataChanged();
     }
 
     public void sortByColumn(int column, boolean isAscent) {
@@ -80,7 +78,7 @@ public class SortableTableModel extends DefaultTableModel implements ComboBoxMod
 
 //    @Override
 //    public int getColumnCount() {
-//        return super.getColumnCount() + 1; // add 1 column with the calculated values
+//        return super.getColumnCount() + 1; // add 1 column with the calculated values, if needed.
 //    }
 //    @Override
 //    public String getColumnName(int column) {
@@ -98,7 +96,6 @@ public class SortableTableModel extends DefaultTableModel implements ComboBoxMod
 //        //sorter.sort(column, isAscent);
 //        fireTableDataChanged();
 //    }
-
     public int[] getIndexes() {
         int n = getRowCount();
         if (indexes != null) {
@@ -108,8 +105,7 @@ public class SortableTableModel extends DefaultTableModel implements ComboBoxMod
 
         }
         indexes = new int[n];
-        for (int i = 0; i <
-                n; i++) {
+        for (int i = 0; i < n; i++) {
             indexes[i] = i;
         }
 
@@ -181,7 +177,18 @@ public class SortableTableModel extends DefaultTableModel implements ComboBoxMod
     public void setComboBoxModel(ComboBoxModel comboBoxModel) {
         this.comboBoxModel = comboBoxModel;
     }
-    
+
+    public void betterMoveRow(int start, int end, int dest) {
+        int count = end - start;
+        if (count <= 0) {
+            return;
+        }
+        if (dest > start) {
+            dest = Math.max(start, dest - count);
+        }
+        end--;
+        this.moveRow(start, end, dest);
+    }
 //    @Override
 //    public Class<?> getColumnClass(int columnIndex) {
 //        if (columnIndex == Filters.DOWNLOADED_COLUMN || columnIndex == Filters.SEEN_COLUMN) {
