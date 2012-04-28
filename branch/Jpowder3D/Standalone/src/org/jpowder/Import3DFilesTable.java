@@ -50,6 +50,7 @@ import javax.swing.table.TableColumnModel;
 import org.jpowder.InernalFrame.InternalFrameIconifyListener;
 import org.jpowder.MetaFile.IO_MetaFile;
 import org.jpowder.TableHelper.HeaderListener;
+import org.jpowder.TableHelper.ListRowHeader;
 import org.jpowder.TableHelper.SortButtonRenderer;
 import org.jpowder.TableHelper.SortableTableModel;
 import org.jpowder.dataset.DataSet;
@@ -147,7 +148,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 //            }
 //        };
 
-         stm = new SortableTableModel(row, columnNames);
+        stm = new SortableTableModel(row, columnNames);
 
         importData3DTable.setModel(stm);
         // Renderer button to sort naturally.
@@ -172,8 +173,9 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         importData3DTable.setTransferHandler(new TableTransferHandler());
 
         importData3DTable.getTableHeader().setReorderingAllowed(true);
-        importData3DTable.addMouseListener(new TablePopUpListener(rowHeaderPopMenu));
+        //importData3DTable.addMouseListener(new TablePopUpListener(rowHeaderPopMenu));
         //-- moveable rows 25/02/2012 - KP
+        ListRowHeader listRow = new ListRowHeader(importData3DTable);
 
         //-- ComboboxModel --
         plotAsComboBox.setModel(new DefaultComboBoxModel(getPlotableColumnNames(columnNames)));
@@ -319,12 +321,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        columnHeaderPopMenu = new javax.swing.JPopupMenu();
-        addColumn = new javax.swing.JMenuItem();
-        removeColumn = new javax.swing.JMenuItem();
-        rowHeaderPopMenu = new javax.swing.JPopupMenu();
-        addRow = new javax.swing.JMenuItem();
-        removeRow = new javax.swing.JMenuItem();
         plotButton = new javax.swing.JButton();
         removeRowButton = new javax.swing.JButton();
         removeAllRowsButton = new javax.swing.JButton();
@@ -337,28 +333,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         helpButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         importData3DTable = new javax.swing.JTable();
-
-        addColumn.setText("Add Column");
-        addColumn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addColumnActionPerformed(evt);
-            }
-        });
-        columnHeaderPopMenu.add(addColumn);
-
-        removeColumn.setText("Remove Column");
-        removeColumn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeColumnActionPerformed(evt);
-            }
-        });
-        columnHeaderPopMenu.add(removeColumn);
-
-        addRow.setText("Add Row");
-        rowHeaderPopMenu.add(addRow);
-
-        removeRow.setText("Remove Row");
-        rowHeaderPopMenu.add(removeRow);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Plot Data 3D");
@@ -622,15 +596,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         addColumn();
     }//GEN-LAST:event_addColumnButtonActionPerformed
 
-    private void addColumnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addColumnActionPerformed
-        addColumn();
-    }//GEN-LAST:event_addColumnActionPerformed
-
-    private void removeColumnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeColumnActionPerformed
-        importData3DTable.removeColumn(importData3DTable.getColumnModel().getColumn(importData3DTable.getSelectedColumn()));
-        System.out.println(importData3DTable.getSelectedColumn());
-    }//GEN-LAST:event_removeColumnActionPerformed
-
     private void saveMetaFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMetaFileButtonActionPerformed
 
         chooser.setMultiSelectionEnabled(false);
@@ -678,13 +643,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_plotAsComboBoxActionPerformed
 
-    private void showPopup(MouseEvent e) {
-        if (e.isPopupTrigger()) {
-            columnHeaderPopMenu.show(e.getComponent(), e.getX(),
-                    e.getY());
-        }
-    }
-
     //for unit testing purpose  03/03/2012 - KP
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
@@ -709,11 +667,8 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem addColumn;
     private javax.swing.JButton addColumnButton;
-    private javax.swing.JMenuItem addRow;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JPopupMenu columnHeaderPopMenu;
     private javax.swing.JButton helpButton;
     private javax.swing.JTable importData3DTable;
     private javax.swing.JButton importFileButton;
@@ -723,10 +678,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     private javax.swing.JComboBox plotAsComboBox;
     private javax.swing.JButton plotButton;
     private javax.swing.JButton removeAllRowsButton;
-    private javax.swing.JMenuItem removeColumn;
-    private javax.swing.JMenuItem removeRow;
     private javax.swing.JButton removeRowButton;
-    private javax.swing.JPopupMenu rowHeaderPopMenu;
     private javax.swing.JButton saveMetaFileButton;
     // End of variables declaration//GEN-END:variables
 }

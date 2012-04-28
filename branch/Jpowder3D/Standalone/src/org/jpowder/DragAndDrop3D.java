@@ -86,12 +86,9 @@ public class DragAndDrop3D implements DropTargetListener {
                     java.util.List<File> list = (java.util.List) transfeable.getTransferData(flavors[i]);
 
                     for (int j = 0; j < list.size(); j++) {
-
                         filesTable.addaFileToTable(list.get(j));
-//                        System.out.println(file[j].getName());
-
+                        System.out.println("Accpetable file being drop named: " + list.get(j).getName());
                     }
-
                 } catch (UnsupportedFlavorException ex) {
                     Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
@@ -101,7 +98,6 @@ public class DragAndDrop3D implements DropTargetListener {
 
                 try {
                     // populate allFilenames
-
                     String fileName = (String) transfeable.getTransferData(DataFlavor.stringFlavor);
 
                     String[] array = fileName.split("\n");
@@ -109,7 +105,8 @@ public class DragAndDrop3D implements DropTargetListener {
                     for (int j = 0; j < n; j++) {
 
                         File files = new File(array[j]);
-
+                        //this below line is the IMport3DFilesTable.
+                        System.out.println("File being drop named: " + files.getName());
                         filesTable.addaFileToTable(files);
 
                     }
