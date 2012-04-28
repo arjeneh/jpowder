@@ -40,6 +40,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.SymbolAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.data.Range;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.GrayPaintScale;
 import org.jfree.chart.title.PaintScaleLegend;
@@ -147,8 +148,16 @@ public class FilesPlotter3D extends DatasetPlotter {
      */
     public JFreeChart createChart(XYDataset dataset) {
 
+        // for convenience here retrieve the meta data
+        // for each dataset to plot against
+        Vector<Double> metaValues;
+        metaValues = new Vector<Double>();
+        for (int i = 0; i < datasets.size(); i++) {
+            metaValues.add(datasets.get(i).getMetaData(selectedMetaItem));
+        }
+
+
         NumberAxis xAxis = new NumberAxis("2\u0398");
-        //xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         xAxis.setLowerMargin(0.0);
         xAxis.setUpperMargin(0.0);
         xAxis.setAutoRangeIncludesZero(false);
@@ -166,16 +175,30 @@ public class FilesPlotter3D extends DatasetPlotter {
             //else display metaname and values
         } else {
             yAxis = new NumberAxis(selectedMetaItem);
-            yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+            //yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
             yAxis.setLowerMargin(0.0);
             yAxis.setUpperMargin(0.0);
+
+            // trying to fix the range of the f'ing y-axis
+            // The values 0.1 and 0.4 are here used for debugging only
+            // The problem I have is that I can't get the plot to fix
+            // the y-axis between in the example below from 0.1 to 0.4
+            // Basically when this works I need to fix the range to match
+            // example the lower value of lowest block to the highest value
+            // of the highest block
+            yAxis.setRange(0.1,0.4);
+            yAxis.setLowerBound(0.1);
+            yAxis.setUpperBound(0.4);
+            Range fisse = yAxis.getRange();
+            double lb = fisse.getLowerBound();
+            double ub = fisse.getUpperBound();
             System.out.println("Plot Non-Name metaData");
         }
 
         //end if the metaname is equal Name. 21/04/2012
 
-        NumberAxis zAxis = new NumberAxis("");
-        //below could be another possible error of JpowderXYBlockRenderer.
+        // Setup the block renderer
+
         JpowderXYBlockRenderer renderer = new JpowderXYBlockRenderer();
         // If any data available, set for now, the block-width equal to the
         // spacing between the first to x-values of the first series in dataset.
@@ -198,30 +221,8 @@ public class FilesPlotter3D extends DatasetPlotter {
             renderer.setBlockWidth(width1stDataPoint);
         }
 
-        renderer.clearSeriesPaints(true);
-
-        // my trial on 17/03/2012
-        plot = new XYPlot(dataset, xAxis, yAxis, renderer);
-        plot.setBackgroundPaint(Color.lightGray);
-        plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
-        plot.setDomainGridlinePaint(Color.white);
-        plot.setRangeGridlinePaint(Color.white);
-        // my trial on 17/03/2012
-
-        chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
-
-        // Find the min and max y value and use these values
-        // to set the colour scale
-        double maxY = 0;
-        double minY = 0;
-        for (int i = 0; i < plot.getDatasetCount(); i++) {
-            maxY = (Double) Collections.max(datasets.elementAt(i).getY());
-            minY = (Double) Collections.min(datasets.elementAt(i).getY());
-        }
-        GrayPaintScale lps = new GrayPaintScale(minY, maxY);
-        renderer.setPaintScale(lps);
-
-        // set the default height of each dataset
+        // set the default block height of each dataset
+        
         Vector<Double> widthsLow = new Vector<Double>();
         Vector<Double> widthsUpper = new Vector<Double>();
         for (int i = 0; i < datasets.size() - 1; i++) {
@@ -239,16 +240,45 @@ public class FilesPlotter3D extends DatasetPlotter {
         widthsLow.add(0.0);
         renderer.setBlockHeight(widthsLow, widthsUpper);
         //renderer.setBlockHeight(1.0);
-        //change zAxis to yAxis, but it shows on the block.
-        PaintScaleLegend legend = new PaintScaleLegend(lps, zAxis);
-        ////legend.setAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
+
+
+        // don't know what this one is for?
+        renderer.clearSeriesPaints(true);
+
+        // my trial on 17/03/2012
+        plot = new XYPlot(dataset, xAxis, yAxis, renderer);
+        plot.setBackgroundPaint(Color.lightGray);
+        plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
+        plot.setDomainGridlinePaint(Color.white);
+        plot.setRangeGridlinePaint(Color.white);
+        // my trial on 17/03/2012
+
+        chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
+
+        // Find the min and max y value and use these values
+        // to set the colour scale
+
+        double maxY = 0;
+        double minY = 0;
+        for (int i = 0; i < plot.getDatasetCount(); i++) {
+            maxY = (Double) Collections.max(datasets.elementAt(i).getY());
+            minY = (Double) Collections.min(datasets.elementAt(i).getY());
+        }
+        GrayPaintScale colourScale = new GrayPaintScale(minY, maxY);
+        renderer.setPaintScale(colourScale);
+        
+        // Setup and add colorbar to chart
+
+        NumberAxis zAxis = new NumberAxis("");
+        PaintScaleLegend legend = new PaintScaleLegend(colourScale, zAxis);
+        //legend.setAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
         legend.setMargin(new RectangleInsets(0, 0, 5, 0));
         legend.setPadding(new RectangleInsets(0, 40, 0, 10));
         legend.setPadding(new RectangleInsets(0, 40, 0, 10));
-
         legend.setStripWidth(10);
         legend.setPosition(RectangleEdge.RIGHT);
         chart.addSubtitle(legend);
+
 
 //      legend.setFrame(new BlockBorder(Color.red));
         chart.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000, Color.BLACK, true));
@@ -280,10 +310,8 @@ public class FilesPlotter3D extends DatasetPlotter {
                 data[2][j] = (Double) datasets.elementAt(i).getY().get(j);//Colour
 
             }
-
             defaultXYZDataset.addSeries("Serie " + i, data);
         }
-
 
         return defaultXYZDataset;
     }
@@ -341,8 +369,8 @@ public class FilesPlotter3D extends DatasetPlotter {
             // System.out.println("max y" + maxY);
         }
 
-        GrayPaintScale lps = new GrayPaintScale(minY, maxY);
-        renderer.setPaintScale(lps);
+        GrayPaintScale colourScale = new GrayPaintScale(minY, maxY);
+        renderer.setPaintScale(colourScale);
 
         //renderer.setBlockAnchor(RectangleAnchor.BOTTOM);
 
@@ -361,7 +389,7 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         widthsLow.add(0.0);
         renderer.setBlockHeight(widthsLow, widthsUpper);
-        PaintScaleLegend legend = new PaintScaleLegend(lps,
+        PaintScaleLegend legend = new PaintScaleLegend(colourScale,
                 zAxis);
         ////legend.setAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
         legend.setMargin(new RectangleInsets(0, 0, 5, 0));
