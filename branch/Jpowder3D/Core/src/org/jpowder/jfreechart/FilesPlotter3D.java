@@ -209,22 +209,24 @@ public class FilesPlotter3D extends DatasetPlotter {
         // my trial on 17/03/2012
 
         chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
+
+        // Find the min and max y value and use these values
+        // to set the colour scale
         double maxY = 0;
         double minY = 0;
-
         for (int i = 0; i < plot.getDatasetCount(); i++) {
             maxY = (Double) Collections.max(datasets.elementAt(i).getY());
             minY = (Double) Collections.min(datasets.elementAt(i).getY());
-            // System.out.println("max y" + maxY);
         }
-
         GrayPaintScale lps = new GrayPaintScale(minY, maxY);
         renderer.setPaintScale(lps);
 
+        // set the default height of each dataset
         Vector<Double> widthsLow = new Vector<Double>();
         Vector<Double> widthsUpper = new Vector<Double>();
         for (int i = 0; i < datasets.size() - 1; i++) {
-            widthsUpper.add(datasets.get(i + 1).getMetaData(selectedMetaItem) - datasets.get(i).getMetaData(selectedMetaItem));
+            widthsUpper.add(datasets.get(i + 1).getMetaData(selectedMetaItem) 
+                    - datasets.get(i).getMetaData(selectedMetaItem));
             widthsLow.add(0.0);
         }
 
@@ -236,6 +238,7 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         widthsLow.add(0.0);
         renderer.setBlockHeight(widthsLow, widthsUpper);
+        //renderer.setBlockHeight(1.0);
         //change zAxis to yAxis, but it shows on the block.
         PaintScaleLegend legend = new PaintScaleLegend(lps, zAxis);
         ////legend.setAxisLocation(AxisLocation.BOTTOM_OR_LEFT);

@@ -30,7 +30,7 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
         implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
 
     /**
-     * The block width (defaults to 1.0).
+     * Default block width
      */
     private double blockWidth = 0.005;
     /**
@@ -90,10 +90,10 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
     }
 
     /**
-     * Sets the width of the blocks used to represent each data item and
-     * sends a {@link RendererChangeEvent} to all registered listeners.
+     * Sets the height of the blocks used to represent each data item
      *
-     * @param width  the new width, in data/axis units (must be > 0.0).
+     * @param low
+     * @param upper
      *
      * @see #getBlockWidth()
      */
@@ -322,8 +322,6 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
             z = ((XYZDataset) dataset).getZValue(series, item);
         }
 
- 
-
         Paint p = this.paintScale.getPaint(z);
         double xx0 = domainAxis.valueToJava2D(x + this.xOffset, dataArea,
                 plot.getDomainAxisEdge());
@@ -343,8 +341,7 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
         } else {
             block = new Rectangle2D.Double(Math.min(xx0, xx1),
                     Math.min(yy0, yy1), Math.abs(xx1 - xx0),
-                    Math.abs(yy1 - yy0)+120);
-             
+                    Math.abs(yy1 - yy0));
         }
         g2.setPaint(p);
         g2.fill(block);
@@ -355,9 +352,6 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
         if (entities != null) {
             addEntity(entities, block, dataset, series, item, 0.0, 0.0);
         }
-//        setBlockHeight(y);
-
-
     }
 
     /**
