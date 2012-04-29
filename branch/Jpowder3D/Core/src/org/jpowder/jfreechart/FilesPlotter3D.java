@@ -22,6 +22,7 @@
  * Kasem Bundit University.
  *
  * Author(s):  Kreecha Puphaiboon, Computer Science Department, Kasem Bundit University
+ *             M Arjeneh, ISIS, Rutherford Appleton Laboratory
  *             Anders Marvardsen, ISIS, Rutherford Appleton Laboratory
  *
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
