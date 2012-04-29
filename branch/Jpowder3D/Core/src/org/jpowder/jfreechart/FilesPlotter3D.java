@@ -21,7 +21,7 @@
  * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
  * Kasem Bundit University.
  *
- * Author(s):  M Arjeneh, ISIS, Rutherford Appleton Laboratory
+ * Author(s):  Kreecha Puphaiboon, Computer Science Department, Kasem Bundit University
  *             Anders Marvardsen, ISIS, Rutherford Appleton Laboratory
  *
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
@@ -147,7 +147,6 @@ public class FilesPlotter3D extends DatasetPlotter {
      * @return
      */
     public JFreeChart createChart(XYDataset dataset) {
-
         // for convenience here retrieve the meta data
         // for each dataset to plot against
         Vector<Double> metaValues;
@@ -156,13 +155,12 @@ public class FilesPlotter3D extends DatasetPlotter {
             metaValues.add(datasets.get(i).getMetaData(selectedMetaItem));
         }
 
-
         NumberAxis xAxis = new NumberAxis("2\u0398");
         xAxis.setLowerMargin(0.0);
         xAxis.setUpperMargin(0.0);
         xAxis.setAutoRangeIncludesZero(false);
 
-        ValueAxis yAxis;
+        final ValueAxis yAxis; //KP 29/04/2012 to make Anders hardcode to work.
 
         //if the metaname is equal Name. 21/04/2012
         if (isMetaNameEqualName) {
@@ -178,6 +176,7 @@ public class FilesPlotter3D extends DatasetPlotter {
             //yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
             yAxis.setLowerMargin(0.0);
             yAxis.setUpperMargin(0.0);
+            //yAxis.setAutoRange(false);//setAutoRangeIncludesZero(false);
 
             // trying to fix the range of the f'ing y-axis
             // The values 0.1 and 0.4 are here used for debugging only
@@ -189,10 +188,11 @@ public class FilesPlotter3D extends DatasetPlotter {
             yAxis.setRange(0.1,0.4);
             yAxis.setLowerBound(0.1);
             yAxis.setUpperBound(0.4);
+            
             Range fisse = yAxis.getRange();
             double lb = fisse.getLowerBound();
             double ub = fisse.getUpperBound();
-            System.out.println("Plot Non-Name metaData");
+            System.out.println("Plot Non-Name metaData using LowerBound = " + lb + " and UpperBound = " + ub);
         }
 
         //end if the metaname is equal Name. 21/04/2012
@@ -225,6 +225,7 @@ public class FilesPlotter3D extends DatasetPlotter {
         
         Vector<Double> widthsLow = new Vector<Double>();
         Vector<Double> widthsUpper = new Vector<Double>();
+
         for (int i = 0; i < datasets.size() - 1; i++) {
             widthsUpper.add(datasets.get(i + 1).getMetaData(selectedMetaItem) 
                     - datasets.get(i).getMetaData(selectedMetaItem));
