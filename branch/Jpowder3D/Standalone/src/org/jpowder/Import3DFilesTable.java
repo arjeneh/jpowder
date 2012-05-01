@@ -28,23 +28,33 @@
  */
 package org.jpowder;
 
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.dnd.DnDConstants;
 import org.jpowder.TableHelper.TableTransferHandler;
 import org.jpowder.InernalFrame.JpowderInternalframe3D;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.TransferHandler;
 import javax.swing.event.InternalFrameListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import org.jpowder.InernalFrame.InternalFrameIconifyListener;
@@ -79,7 +89,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 //    private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
 //    private boolean waitCursorIsShowing;
     // Sortable file in NaturalOrder.
-    private static SortableTableModel stm;
+    private SortableTableModel stm;
     private TableColumnModel tableColumnModel;
     private SortButtonRenderer renderer;
     private HeaderListener headerListener;
@@ -149,7 +159,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 //        };
 
         stm = new SortableTableModel(row, columnNames);
-
         importData3DTable.setModel(stm);
         // Renderer button to sort naturally.
         // Add to the column model.
@@ -168,31 +177,134 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         header.addMouseListener(headerListener);
 
         //-- moveable rows 25/02/2012 - KP
+        //importData3DTable.setDragEnabled(true);
+        //importData3DTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        //importData3DTable.setTransferHandler(new TableTransferHandler());
+
+        //KP 28 April second try to reordering rows.
         importData3DTable.setDragEnabled(true);
         importData3DTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        importData3DTable.setTransferHandler(new TableTransferHandler());
+        //TODO: KP This reorder
+        importData3DTable.setTransferHandler(new TransferHandler() {
+
+            private int sourceRow;
+            private int destination;
+
+            @Override
+            public int getSourceActions(JComponent c) {
+                return DnDConstants.ACTION_COPY_OR_MOVE;
+            }
+
+            @Override
+            public Transferable createTransferable(JComponent comp) {
+                final JTable table = (JTable) comp;
+                int row = table.getSelectedRow();
+                sourceRow = row;
+                //int col = table.getSelectedColumn();
+                //System.out.println("In  createTransferable() (), selected rows are:.." + row + " and column is: " + col + " ... ");
+
+                //TODO: this should be the array of row with String[] array.
+                //KP 01/05/2012..
+                StringBuffer buff = new StringBuffer();
+                System.out.println("In createTransferable(), selected row is: " + sourceRow);
+                int colCount = table.getColumnCount();
+
+                for (int j = 0; j < colCount; j++) {
+                    Object val = table.getModel().getValueAt(sourceRow, j);
+                    //System.out.println("In NewTry(), I am type " + val.getClass().getName());
+
+                    buff.append(val == null ? "" : val.toString());
+                    //System.out.println("In NewTry(), my value is: " + val.toString());
+                    if (j != colCount - 1) {
+                        buff.append(",");
+                    }
+                }
+                System.out.println("In NewTry(), done value is: " + buff.toString());
+                StringSelection transferable = new StringSelection(buff.toString());
+                //KP 01/05/2012..
+
+                //Make it blank, if wanted.
+                //table.getModel().setValueAt(null, row, col);
+                return transferable;
+            }
+
+            @Override
+            public boolean importData(TransferSupport support) {
+                if (!support.isDrop()) {
+                    return false;
+                }
+                if (!canImport(support)) {
+                    return false;
+                }
+
+                final JTable table = (JTable) support.getComponent();
+                final DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+
+                JTable.DropLocation dl = (JTable.DropLocation) support.getDropLocation();
+
+                int dropRow = dl.getRow();
+                int col = dl.getColumn();
+                destination = dropRow;
+                System.out.println("In importData(), dropped rows are:.." + destination + " and column is: " + col + " ... ");
+
+                String data;
+                try {
+                    data = (String) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
+                    System.out.println("Data in importData() is:.." + data);
+
+                    int colCount = tableModel.getColumnCount();
+                    StringBuffer dataInDest = new StringBuffer();
+                    //append strings in the row.
+                    for (int j = 0; j < colCount; j++) {
+                        Object val = table.getModel().getValueAt(destination, j);
+                        dataInDest.append(val == null ? "" : val.toString());
+
+                        if (j != colCount - 1) {
+                            dataInDest.append(",");
+                        }
+                    }
+                    System.out.println("In importData(), data in destination is: " + dataInDest.toString());
+                } catch (UnsupportedFlavorException e) {
+                    return false;
+                } catch (IOException e) {
+                    return false;
+                }
+
+                tableModel.moveRow(sourceRow, sourceRow, destination);
+                
+                //tableModel.setValueAt(data, dropRow, col);
+
+                return true;
+            }
+
+            @Override
+            public boolean canImport(TransferHandler.TransferSupport info) {
+                if (!info.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                    return false;
+                }
+
+                return true;
+            }
+        });
 
         importData3DTable.getTableHeader().setReorderingAllowed(true);
+        //importData3DTable.setAutoCreateColumnsFromModel(false);
         //importData3DTable.addMouseListener(new TablePopUpListener(rowHeaderPopMenu));
         //-- moveable rows 25/02/2012 - KP
+
+        //KP 28 April 2012
         ListRowHeader listRow = new ListRowHeader(importData3DTable);
 
         //-- ComboboxModel --
         plotAsComboBox.setModel(new DefaultComboBoxModel(getPlotableColumnNames(columnNames)));
 
         addWindowListener(new WindowAdapter() {
+
             @Override
             public void windowClosing(WindowEvent event) {
                 stm.setRowCount(0);
-//                while (stm.getRowCount() > 0) {
-//                    stm.removeRow(0);
-//                }
             }
         });
-
-    }
-
-    public void handleTableSort(){
 
     }
 
@@ -332,7 +444,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         plotAsComboBox = new javax.swing.JComboBox();
         helpButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        importData3DTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Plot Data 3D");
@@ -670,7 +781,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     private javax.swing.JButton addColumnButton;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton helpButton;
-    private javax.swing.JTable importData3DTable;
+    private final javax.swing.JTable importData3DTable = new javax.swing.JTable();
     private javax.swing.JButton importFileButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
