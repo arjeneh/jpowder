@@ -325,7 +325,7 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
         Paint p = this.paintScale.getPaint(z);
         double xx0 = domainAxis.valueToJava2D(x + this.xOffset, dataArea,
                 plot.getDomainAxisEdge());
-        double yy0 = rangeAxis.valueToJava2D(y + this.yOffset, dataArea,
+        double yy0 = rangeAxis.valueToJava2D(y - this.blockHeightLower.get(series) + this.yOffset, dataArea,
                 plot.getRangeAxisEdge());
         double xx1 = domainAxis.valueToJava2D(x + this.blockWidth +
                 this.xOffset, dataArea, plot.getDomainAxisEdge());

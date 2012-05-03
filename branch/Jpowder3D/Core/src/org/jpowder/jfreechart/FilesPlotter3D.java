@@ -124,9 +124,6 @@ public class FilesPlotter3D extends DatasetPlotter {
     public ChartPanel createPowderChart() {
         chart = createChart(createDataset());
 
-        plot.setDomainPannable(true);
-        plot.setRangePannable(true);
-
         for (int i = 0; i < plot.getDatasetCount(); i++) {
             if (datasets.get(i).getFileName().endsWith("gss")) {
                 plot.getDomainAxis().setLabel("TOF");
@@ -138,7 +135,6 @@ public class FilesPlotter3D extends DatasetPlotter {
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
         chartPanel.addChartMouseListener(new PowderChartMouseObserver(chartPanel));
-        chartPanel.restoreAutoBounds();
         return chartPanel;
     }
 
@@ -148,55 +144,41 @@ public class FilesPlotter3D extends DatasetPlotter {
      * @return
      */
     public JFreeChart createChart(XYDataset dataset) {
-        // for convenience here retrieve the meta data
-        // for each dataset to plot against
+
+        // Setup the values which will determine the block height values
+        // These will be based on the meta data values and how the blocks
+        // is centered around each meta data value
+        // first read in the meta data
+
         Vector<Double> metaValues;
         metaValues = new Vector<Double>();
         for (int i = 0; i < datasets.size(); i++) {
             metaValues.add(datasets.get(i).getMetaData(selectedMetaItem));
         }
 
-        NumberAxis xAxis = new NumberAxis("2\u0398");
-        xAxis.setLowerMargin(0.0);
-        xAxis.setUpperMargin(0.0);
-        xAxis.setAutoRangeIncludesZero(false);
+        // then creating the lower and upper values for each block height
 
-        final ValueAxis yAxis; //KP 29/04/2012 to make Anders hardcode to work.
-
-        //if the metaname is equal Name. 21/04/2012
-        if (isMetaNameEqualName) {
-            //display file names on the Y axis instead of 0..n.
-            yAxis = new SymbolAxis("", HashMapHelper.convertKeyToArray(fileNames));
-            yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-            yAxis.setLowerMargin(0.0);
-            yAxis.setUpperMargin(0.0);
-            System.out.println("Plot using Name metaData");
-            //else display metaname and values
-        } else {
-            yAxis = new NumberAxis(selectedMetaItem);
-            //yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-            yAxis.setLowerMargin(0.0);
-            yAxis.setUpperMargin(0.0);
-            //yAxis.setAutoRange(false);//setAutoRangeIncludesZero(false);
-
-            // trying to fix the range of the f'ing y-axis
-            // The values 0.1 and 0.4 are here used for debugging only
-            // The problem I have is that I can't get the plot to fix
-            // the y-axis between in the example below from 0.1 to 0.4
-            // Basically when this works I need to fix the range to match
-            // example the lower value of lowest block to the highest value
-            // of the highest block
-            yAxis.setRange(0.1,0.4);
-            yAxis.setLowerBound(0.1);
-            yAxis.setUpperBound(0.4);
-            
-            Range fisse = yAxis.getRange();
-            double lb = fisse.getLowerBound();
-            double ub = fisse.getUpperBound();
-            System.out.println("Plot Non-Name metaData using LowerBound = " + lb + " and UpperBound = " + ub);
+        Vector<Double> widthsLow = new Vector<Double>();
+        Vector<Double> widthsUpper = new Vector<Double>();
+        if (datasets.size() == 1) {
+            // for the special case of just one dataset we simply for now
+            // just position the block +- 0.5 around the meta value
+            widthsLow.add(0.5);
+            widthsUpper.add(0.5);
         }
-
-        //end if the metaname is equal Name. 21/04/2012
+        else
+        {
+            // aim to have meta data value centered somewhere near-ish to the centre of block
+            widthsLow.add((metaValues.elementAt(1)-metaValues.elementAt(0))/2.0);
+            widthsUpper.add((metaValues.elementAt(1)-metaValues.elementAt(0))/2.0);
+            int numDataset = datasets.size();
+            for (int i = 1; i < numDataset - 1; i++) {
+                widthsLow.add((metaValues.elementAt(i)-metaValues.elementAt(i-1))/2.0);
+                widthsUpper.add((metaValues.elementAt(i+1)-metaValues.elementAt(i))/2.0);
+            }
+            widthsLow.add((metaValues.elementAt(numDataset-1)-metaValues.elementAt(numDataset-2))/2.0);
+            widthsUpper.add((metaValues.elementAt(numDataset-1)-metaValues.elementAt(numDataset-2))/2.0);
+        }
 
         // Setup the block renderer
 
@@ -221,38 +203,50 @@ public class FilesPlotter3D extends DatasetPlotter {
             double width1stDataPoint = dataset.getXValue(0, 1)-dataset.getXValue(0, 0);
             renderer.setBlockWidth(width1stDataPoint);
         }
-
-        // set the default block height of each dataset
-        
-        Vector<Double> widthsLow = new Vector<Double>();
-        Vector<Double> widthsUpper = new Vector<Double>();
-
-        for (int i = 0; i < datasets.size() - 1; i++) {
-            widthsUpper.add(datasets.get(i + 1).getMetaData(selectedMetaItem) 
-                    - datasets.get(i).getMetaData(selectedMetaItem));
-            widthsLow.add(0.0);
-        }
-
-        if (datasets.size() - 1 > 0) {
-            widthsUpper.add(widthsUpper.lastElement());
-        } else {
-            widthsUpper.add(1.0);
-        }
-
-        widthsLow.add(0.0);
         renderer.setBlockHeight(widthsLow, widthsUpper);
-        //renderer.setBlockHeight(1.0);
 
 
         // don't know what this one is for?
         renderer.clearSeriesPaints(true);
 
-        // my trial on 17/03/2012
+
+        // set up the x-axis
+
+        NumberAxis xAxis = new NumberAxis("2\u0398");
+        xAxis.setLowerMargin(0.0);
+        xAxis.setUpperMargin(0.0);
+        xAxis.setAutoRangeIncludesZero(false);
+
+
+        // set up the y-axis
+        // Importantly setup the y-axis so that it matches the block heights
+        // specified above
+
+        final ValueAxis yAxis; 
+
+        //if the metaname is equal Name. 21/04/2012
+        if (isMetaNameEqualName) {
+            //display file names on the Y axis instead of 0..n.
+            yAxis = new SymbolAxis("", HashMapHelper.convertKeyToArray(fileNames));
+            yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+            yAxis.setRange(metaValues.firstElement()-widthsLow.firstElement(),
+                    metaValues.lastElement()+widthsUpper.lastElement());
+            System.out.println("Plot using Name metaData");
+            //else display metaname and values
+        } else {
+            //yAxis = new NumberAxis(selectedMetaItem);
+            yAxis = new SymbolAxis(selectedMetaItem,HashMapHelper.convertKeyToArray(fileNames));
+            yAxis.setRange(metaValues.firstElement()-widthsLow.firstElement(),
+                    metaValues.lastElement()+widthsUpper.lastElement());
+        }
+
+
         plot = new XYPlot(dataset, xAxis, yAxis, renderer);
         plot.setBackgroundPaint(Color.lightGray);
         plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
         plot.setDomainGridlinePaint(Color.white);
         plot.setRangeGridlinePaint(Color.white);
+        plot.getRangeAxis().setAutoRange(false);
         // my trial on 17/03/2012
 
         chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
@@ -285,6 +279,8 @@ public class FilesPlotter3D extends DatasetPlotter {
 //      legend.setFrame(new BlockBorder(Color.red));
         chart.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000, Color.BLACK, true));
         legend.setBackgroundPaint(chart.getBackgroundPaint());
+
+
         return chart;
     }
 
@@ -307,9 +303,9 @@ public class FilesPlotter3D extends DatasetPlotter {
             double[][] data = new double[3][datasets.elementAt(i).getX().size()];
             for (int j = 0; j < datasets.elementAt(i).getX().size(); j++) {
 
-                data[0][j] = (Double) datasets.elementAt(i).getX().get(j);//x
-                data[1][j] = datasets.get(i).getMetaData(selectedMetaItem);//x by file number..
-                data[2][j] = (Double) datasets.elementAt(i).getY().get(j);//Colour
+                data[0][j] = (Double) datasets.elementAt(i).getX().get(j);  // x
+                data[1][j] = datasets.get(i).getMetaData(selectedMetaItem); // y (meta value, including possible file-number)
+                data[2][j] = (Double) datasets.elementAt(i).getY().get(j);  // Colour
 
             }
             defaultXYZDataset.addSeries("Serie " + i, data);
