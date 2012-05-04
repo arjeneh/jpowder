@@ -234,8 +234,7 @@ public class FilesPlotter3D extends DatasetPlotter {
             System.out.println("Plot using Name metaData");
             //else display metaname and values
         } else {
-            //yAxis = new NumberAxis(selectedMetaItem);
-            yAxis = new SymbolAxis(selectedMetaItem,HashMapHelper.convertKeyToArray(fileNames));
+            yAxis = new NumberAxis(selectedMetaItem);
             yAxis.setRange(metaValues.firstElement()-widthsLow.firstElement(),
                     metaValues.lastElement()+widthsUpper.lastElement());
         }
