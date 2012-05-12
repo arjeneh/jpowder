@@ -167,9 +167,7 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
             row[0] = inFocus.getPowderDataSet().elementAt(i).getFileName();
             row[1] = "" + inFocus.getPowderDataSet().elementAt(i).getWaveLength();
 
-
             dataSetAndWaveLength[i] = row;
-
         }
         return dataSetAndWaveLength;
     }
@@ -298,14 +296,20 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
     private void stopAllCellEditing() {
         for (int i = 0; i < dataTable.getRowCount(); i++) {
             for (int j = 0; j < dataTable.getColumnCount(); j++) {
-                javax.swing.table.TableCellEditor editor = dataTable.getCellEditor(i, j);
-                editor.stopCellEditing();
+                //javax.swing.table.TableCellEditor editor = dataTable.getCellEditor(i, j);
+                //editor.stopCellEditing();
+                //12 May 2012: KP fixed issue 68 Instead of Null Pointer error message
+                //We provide user with a Message window with text "Please enter value for Wavelength"
+                if (dataTable.getCellEditor() != null) {
+                    dataTable.getCellEditor().stopCellEditing();
+                }
+
             }
         }
     }
 
     private void stopAllCellEditingGstable() {
-        for (int i = 0; i <gsastable.getRowCount(); i++) {
+        for (int i = 0; i < gsastable.getRowCount(); i++) {
             for (int j = 0; j < gsastable.getColumnCount(); j++) {
                 javax.swing.table.TableCellEditor editor = gsastable.getCellEditor(i, j);
                 editor.stopCellEditing();
@@ -506,7 +510,7 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
 
 
         if (bragsPanel.isVisible()) {
-       
+
 
 //        for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
 //            if (inFocus.getPowderDataSet().get(i).getFileName().endsWith("gss")) {
@@ -515,11 +519,11 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
 //            }
 //
 //        }
-         
+
             stopAllCellEditing();
             String x = "2\u03D1";//unicode 2thetha
             dataTable.clearSelection();
- 
+
             if (unitComboBox1.getSelectedItem().toString().equals("2Ө") &&
                     unitComboBox2.getSelectedItem().toString().equals("2Ө")) {
                 return;
@@ -617,12 +621,12 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
                             unitComboBox2.getSelectedItem().toString().equals("d")) {
                         inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(newXDspacing, j);
                         inFocus.getXYPlot().getDomainAxis().setLabel("d [Å]");
-                       
+
 
                     }
                     if (unitComboBox1.getSelectedItem().toString().equals("d") &&
                             unitComboBox2.getSelectedItem().toString().equals("TOF")) {
-                          inFocus.getXYPlot().getDomainAxis().setLabel("TOF");
+                        inFocus.getXYPlot().getDomainAxis().setLabel("TOF");
                         inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(newXTOF, j);
 
                     }
