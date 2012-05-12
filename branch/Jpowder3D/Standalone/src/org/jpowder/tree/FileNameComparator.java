@@ -26,12 +26,12 @@
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
  */
-
 package org.jpowder.tree;
 
 import java.io.File;
 import java.text.Collator;
 import java.util.Comparator;
+import org.jpowder.util.NaturalOrderComparator;
 
 /**
  *
@@ -39,23 +39,29 @@ import java.util.Comparator;
  */
 public class FileNameComparator implements Comparator {
 
+    private NaturalOrderComparator nc;
+
+    @Override
     public int compare(Object o1, Object o2) {
-        File a = (File)o1;
-        File b = (File)o2;
+        File a = (File) o1;
+        File b = (File) o2;
 
         Collator collator = Collator.getInstance();
-            if (a.isDirectory() && b.isFile()) return -1;
-            else if (a.isFile() && b.isDirectory()) return +1;
+        if (a.isDirectory() && b.isFile()) {
+            return -1;
+        } else if (a.isFile() && b.isDirectory()) {
+            return +1;
+        }
 
-            int result = collator.compare(a.getName(), b.getName());
+        nc = new NaturalOrderComparator();
+        int result = nc.compare(a.getName(), b.getName());
+        //int result = collator.compare(a.getName(), b.getName());
 
-
-
-            if (result != 0) return result;
-
-            result = collator.compare(
-                    a.getAbsolutePath(), b.getAbsolutePath());
+        if (result != 0) {
             return result;
-    }
+        }
 
+        result = collator.compare(a.getAbsolutePath(), b.getAbsolutePath());
+        return result;
+    }
 }

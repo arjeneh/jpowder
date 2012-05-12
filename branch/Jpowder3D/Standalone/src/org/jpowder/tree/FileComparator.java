@@ -47,6 +47,7 @@ public class FileComparator implements Comparator {
         comparator = new FileNameComparator();
     }
 
+    @Override
     public int compare(Object o1, Object o2) {
 
         // Get the file of the objct value.
