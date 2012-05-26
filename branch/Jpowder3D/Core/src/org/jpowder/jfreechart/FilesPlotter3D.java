@@ -201,6 +201,10 @@ public class FilesPlotter3D extends DatasetPlotter {
         if ( dataset.getSeriesCount() >= 1 )
         {
             double width1stDataPoint = dataset.getXValue(0, 1)-dataset.getXValue(0, 0);
+            if (width1stDataPoint<=0.0){
+                 width1stDataPoint = 1.0;
+            }
+
             renderer.setBlockWidth(width1stDataPoint);
         }
         renderer.setBlockHeight(widthsLow, widthsUpper);
@@ -278,8 +282,6 @@ public class FilesPlotter3D extends DatasetPlotter {
 //      legend.setFrame(new BlockBorder(Color.red));
         chart.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000, Color.BLACK, true));
         legend.setBackgroundPaint(chart.getBackgroundPaint());
-
-
         return chart;
     }
 

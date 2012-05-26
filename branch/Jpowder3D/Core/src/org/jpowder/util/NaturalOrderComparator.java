@@ -176,10 +176,13 @@ public class NaturalOrderComparator implements Comparator
 
     public static void main(String[] args)
     {
-        String[] strings = new String[] { "1-2", "1-02", "1-20", "10-20", "fred", "jane", "pic01",
-            "pic2", "pic02", "pic02a", "pic3", "pic4", "pic 4 else", "pic 5", "pic05", "pic 5",
-            "pic 5 something", "pic 6", "pic   7", "pic100", "pic100a", "pic120", "pic121",
-            "pic02000", "tom", "x2-g8", "x2-y7", "x2-y08", "x8-y8" };
+//        String[] strings = new String[] { "1-2", "1-02", "1-20", "10-20", "fred", "jane", "pic01",
+//            "pic2", "pic02", "pic02a", "pic3", "pic4", "pic 4 else", "pic 5", "pic05", "pic 5",
+//            "pic 5 something", "pic 6", "pic   7", "pic100", "pic100a", "pic120", "pic121",
+//            "pic02000", "tom", "x2-g8", "x2-y7", "x2-y08", "x8-y8", "1", "0", "0.0" };
+
+        String[] strings = new String[] { "zopdih_dehy_RampNo1_17", "zopdih_dehy_RampNo1_18", "zopdih_dehy_RampNo1_19",
+        "zopdih_dehy_RampNo1_20", "zopdih_dehy_RampNo1_1", "zopdih_dehy_RampNo1_2" };
 
         List orig = Arrays.asList(strings);
         System.out.println("Original: " + orig);
@@ -191,5 +194,12 @@ public class NaturalOrderComparator implements Comparator
         Collections.sort(scrambled, new NaturalOrderComparator());
 
         System.out.println("Sorted: " + scrambled);
+        Collections.sort(scrambled, Collections.reverseOrder());
+
+        System.out.println("Reverse Sorted: " + scrambled);
+
+
+
+
     }
 }

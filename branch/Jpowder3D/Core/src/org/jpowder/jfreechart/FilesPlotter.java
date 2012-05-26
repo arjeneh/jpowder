@@ -50,6 +50,8 @@ import org.jfree.ui.RectangleInsets;
  * Implements DatasetPlotter interface. Creates chart container data from
  * one or more powder diffraction files.
  *
+ * Kreecha Puphaiboon, Computer Science Department, Kasem Bundit University
+ *
  */
 public class FilesPlotter extends DatasetPlotter implements Serializable {
 

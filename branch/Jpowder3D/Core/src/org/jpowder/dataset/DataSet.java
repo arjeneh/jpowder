@@ -40,7 +40,7 @@ import org.jpowder.util.VectorMiscUtil;
 public abstract class DataSet {
 
     private Vector<Double> x;
-    private String xUnit = "2θ"; // other units "TOF" etc
+    private String xUnit = "2\u03D1"; // other units "TOF" etc
     private Vector<Double> y;
     private String fileName;
     private double waveLength;
@@ -51,6 +51,7 @@ public abstract class DataSet {
     // of name of meta-data-item, e.g. temperature, and
     // its value
     private HashMap<String, Double> meta;
+    //private HashMap<String, String> metaString;
 
     //@param data: data from a powder diffraction file
     //@param fileName: filename of powder diffraction file.
@@ -127,11 +128,10 @@ public abstract class DataSet {
     }
 
     public double getMetaData(String name) {
-
         double data = meta.get(name);
         return data;
-
     }
+
 //    public static void main(String[] args) {
 //       DataSet ds = new DataSet() {
 //

@@ -21,7 +21,8 @@
  * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
  * Kasem Bundit University.
  *
- * Author(s):  Anders Marvardsen, ISIS, Rutherford Appleton Laboratory
+ * Author(s):  Kreecha Puphaiboon, Computer Science Department, Kasem Bundit University
+                Anders Marvardsen, ISIS, Rutherford Appleton Laboratory
  *             M Arjeneh, ISIS, Rutherford Appleton Laboratory
  *                   
  *
