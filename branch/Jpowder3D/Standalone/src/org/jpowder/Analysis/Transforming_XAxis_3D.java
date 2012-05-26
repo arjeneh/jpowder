@@ -28,18 +28,36 @@
  */
 package org.jpowder.Analysis;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.Collections;
+import java.util.Vector;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.data.xy.XYDataset;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
-import org.jpowder.InernalFrame.JpowderInternalframe2D;
+import org.jpowder.InernalFrame.JpowderInternalframe3D;
+import org.jpowder.TableHelper.TableCellUpdatedListener;
+import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.GSASInstrument_Reader;
+import org.jpowder.util.VectorMiscUtil;
 
 /**
  * this class is for converting the values of x axis from 2ө to d using the
@@ -49,9 +67,9 @@ import org.jpowder.dataset.GSASInstrument_Reader;
  * planes.
  *
  */
-public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel {
+public class Transforming_XAxis_3D extends javax.swing.JPanel implements InfoPanel {
 
-    private ToolsIcon2D toolsIcon;
+    private ToolsIcon3D toolsIcon;
     private String[][] dataSetAndWaveLength;
     private String[][] gSASData;
     private double newWaveLength;
@@ -60,36 +78,95 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
     private DefaultTableModel dataSetWaveLengthTableModel;
     private DefaultTableModel gsasTableModel;
 //    private GSASTable gSASTable = new GSASTable();
+    private Action action;
+    private JTextField textBox = new JTextField();
 
-    /** Creates new form BraggsLow */
-    public Transforming_XAxis(ToolsIcon2D analysisIcon) {
+    public Transforming_XAxis_3D() {
         initComponents();
-        this.toolsIcon = analysisIcon;
+
+        Vector files = VectorMiscUtil.initXYData();
+        Vector col = new Vector();
+        col.add("Plot(s)");
+        col.add("Wavelength");
+
+        dataSetWaveLengthTableModel = new DefaultTableModel(files, col);
+        dataTable.setModel(dataSetWaveLengthTableModel);
+
+//        TableColumn soprtColumn = mainDataTable.getColumnModel().getColumn(1);
+//        sop//mainDataTable.setModel(defaultTableModel);
+//
+//        TableColumn soprtrtColumn.setCellEditor(new DefaultCellEditor(textBox));
+//        mainDataTable.setCellSelectionEnabled(true);
+//        textBox.addKeyListener(new KeyAdapter() {
+//
+//            @Override
+//            public void keyTyped(KeyEvent e) {
+//                if (!Character.isDigit(e.getKeyChar()) && e.getKeyChar() != KeyEvent.VK_BACK_SPACE) {
+//                    textBox.setEditable(false);
+//                    textBox.setBackground(Color.WHITE);
+//                    JOptionPane.showMessageDialog(null, "String Type Entry Not Allowed");
+//
+//                } else {
+//                    textBox.setEditable(true);
+//                }
+//            }
+//        });
+
+
     }
 
-    //InfoPanel overridden with Update()
+    /** Creates new form BraggsLow */
+    public Transforming_XAxis_3D(ToolsIcon3D analysisIcon) {
+        initComponents();
+        this.toolsIcon = analysisIcon;
+
+      dataSetWaveLengthTableModel = new DefaultTableModel(null, columnsName) {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if (column == 0) {
+                    return false;
+                } else {
+                    return true;
+                }
+
+            }
+        };
+
+        dataTable.setModel(dataSetWaveLengthTableModel);
+
+        action = new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TableCellUpdatedListener tcl = (TableCellUpdatedListener) e.getSource();
+//                System.out.println("Row   : " + tcl.getRow()+ "Column: " + tcl.getColumn()
+//                + tcl.getOldValue()  + tcl.getNewValue());
+
+                for (int row = 0; row < dataSetWaveLengthTableModel.getRowCount(); row++) {
+                    dataSetWaveLengthTableModel.setValueAt(Double.parseDouble((String) tcl.getNewValue()), row, 1);
+                }//for
+            }//action
+        };
+        TableCellUpdatedListener tcl = new TableCellUpdatedListener(dataTable, action);
+    }
+
     @Override
     public void update() {
+        System.out.println("Update is called from Transforming_XAxis_3D.java");
+        JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
 
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-        //if 0 then clear data of models:
-        //dtm1 = DataSetAndWaveLength
-        //dtm2 = GSASData()
-        //the number on the Y axis is correct?
-        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
+        if (JpowderInternalframe3D.getnumberOfJpowderInternalframe() == 0) {
             //setComponentEnable();
             if (dataSetWaveLengthTableModel != null) {
                 dataSetWaveLengthTableModel.getDataVector().removeAllElements();//remove all the rows from table
                 gsasTableModel.getDataVector().removeAllElements();
             }
-
             return;
         }
 
-        //inFocus is JpowderInternalframe2D 
-        for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
+        for (int i = 0; i <  inFocus.getXYPlot().getDatasetCount(); i++) {
             if (inFocus.getPowderDataSet().get(i).getXUnit().equals("2θ")) {
-                //what is bragsPanel??
                 bragsPanel.setVisible(true);
                 tablePanel.add(bragsPanel);
                 gsaspanel.setVisible(false);
@@ -98,7 +175,6 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
 
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             if (inFocus.getPowderDataSet().get(i).getXUnit().equals("TOF")) {
-
                 gsaspanel.setVisible(true);
                 tablePanel.add(gsaspanel);
                 bragsPanel.setVisible(false);
@@ -106,7 +182,6 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
             }
         }
 
-        //columnsNameGSAS = "Plot(s)", "DifC", "DifA", "Zero"
         gsasTableModel = new DefaultTableModel(getGSASData(), columnsNameGSAS) {
 
             @Override
@@ -116,10 +191,10 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
                 } else {
                     return true;
                 }
+
             }
         };
 
-        //columnsName = "Plot(s)", "Wavelength"
         dataSetWaveLengthTableModel = new DefaultTableModel(getDataSetAndWaveLength(), columnsName) {
 
             @Override
@@ -129,11 +204,10 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
                 } else {
                     return true;
                 }
+
             }
         };
 
-
-        //why gsasTable has to be created at the same time with Dataset and wavelength?
         dataTable.setModel(dataSetWaveLengthTableModel);
         gsastable.setModel(gsasTableModel);
         setSizeOfColumn();
@@ -144,11 +218,61 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
         dataTable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableRenderer());
         gsastable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableRenderer());
 
-        //dataTable.setEditingColumn(1);
+//        dataTable.setEditingColumn(1);
         //printing the data in the tables
-        //printStringArray(getDataSetAndWaveLength());
+//        printStringArray(getDataSetAndWaveLength());
 
         requestMessage();
+    }
+
+    public static void main(String[] args) {
+        JFrame f = new JFrame("Transform Example");
+        f.getContentPane().add(new Transforming_XAxis_3D(), BorderLayout.CENTER);
+        f.setSize(400, 400);
+        f.setVisible(true);
+        f.addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+    }
+
+    public void updateTableModel(Vector<Vector> rows, Vector cols) {
+        if (dataSetWaveLengthTableModel == null) {
+            System.out.println("--------------------------- dataSetWaveLengthTableModel is still null------------------------------------");
+        }
+
+        try {
+            dataSetWaveLengthTableModel.getDataVector().removeAllElements();
+            dataSetWaveLengthTableModel.setDataVector(rows, cols);
+
+            TableColumn soprtColumn = dataTable.getColumnModel().getColumn(1);
+            soprtColumn.setCellEditor(new DefaultCellEditor(textBox));
+            dataTable.setCellSelectionEnabled(true);
+            textBox.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    if (!Character.isDigit(e.getKeyChar()) && e.getKeyChar() != KeyEvent.VK_BACK_SPACE) {
+                        textBox.setEditable(false);
+                        textBox.setBackground(Color.WHITE);
+                        JOptionPane.showMessageDialog(null, "String Type Entry Not Allowed");
+
+                    } else {
+                        textBox.setEditable(true);
+                    }
+                }
+            });
+
+            dataTable.setModel(dataSetWaveLengthTableModel);
+            tablePanel.add(bragsPanel);
+
+        } catch (NullPointerException e) {
+            // probably don't bother doing clean up
+        } finally {
+            // carry on as if nothing went wrong
+        }
     }
 
     /**
@@ -157,8 +281,7 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
      * @return dataSetAndWaveLength
      */
     public String[][] getDataSetAndWaveLength() {
-
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+        JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
         int size = inFocus.getXYPlot().getDatasetCount();
         dataSetAndWaveLength = new String[size][2];
         for (int i = 0; i < size; i++) {
@@ -169,14 +292,18 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
 
             dataSetAndWaveLength[i] = row;
         }
+
+        printStringArray(dataSetAndWaveLength);
         return dataSetAndWaveLength;
     }
 
     public String[][] getGSASData() {
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+        JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
         int size = inFocus.getXYPlot().getDatasetCount();
-        gSASData = new String[size][4];
-        for (int i = 0; i < size; i++) {
+        gSASData =
+                new String[size][4];
+        for (int i = 0; i <
+                size; i++) {
 
             String[] row = new String[4];
             row[0] = inFocus.getPowderDataSet().elementAt(i).getFileName();
@@ -191,8 +318,10 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
                 row[2] = "";
                 row[3] = "";
             }
+
             gSASData[i] = row;
         }
+
         return gSASData;
     }
 
@@ -202,10 +331,12 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
      */
     public void printStringArray(String[][] printArray) {
 
-        for (int i = 0; i < printArray.length; i++) {
-            for (int j = 0; j < printArray[i].length; j++) {
+        for (int i = 0; i <
+                printArray.length; i++) {
+            for (int j = 0; j <
+                    printArray[i].length; j++) {
                 if (j == 0) {
-                    System.out.print(printArray[i][j]);
+                    System.out.print("Print string array " + printArray[i][j]);
                 } else {
                 }
             }
@@ -216,12 +347,14 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
      * Adding a message to table to ask user to add a value for the wave length.
      */
     public void requestMessage() {
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-        for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
+        JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
+        for (int i = 0; i <
+                inFocus.getXYPlot().getDatasetCount(); i++) {
             if (!inFocus.getPowderDataSet().get(i).getFileName().endsWith(".cif")) {
                 if (dataSetWaveLengthTableModel.getValueAt(i, 1).equals("0.0")) {
                     dataSetWaveLengthTableModel.setValueAt("", i, 1);
                 }
+
             }
         }
     }
@@ -240,7 +373,7 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
     }
 
     public void setDomainAxis() {
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+        JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
         NumberAxis numberAxis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
         numberAxis.setRange(0, 1);
     }
@@ -248,12 +381,15 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
     public void resetXaxis() {
         double maxX = 0;
         double minX = 0;
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-        for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
+        JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
+        for (int i = 0; i <
+                inFocus.getXYPlot().getDatasetCount(); i++) {
             maxX = (Double) Collections.max(inFocus.getPowderDataSet().elementAt(i).getX());
-            minX = (Double) Collections.min(inFocus.getPowderDataSet().elementAt(i).getX());
+            minX =
+                    (Double) Collections.min(inFocus.getPowderDataSet().elementAt(i).getX());
 //            System.out.println("max y" + maxY);
         }
+
         NumberAxis axis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
         axis.setLowerBound(minX);
         axis.setUpperBound(maxX);
@@ -263,11 +399,11 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
         inFocus.getChart().setNotify(true);
     }
 
-    //usage when xAxis is labeled "TOF" and combobox selected
     public void comboboxSelection() {
         Object obj = unitComboBox1.getSelectedItem(); // item1
         unitComboBox1.setSelectedItem("TOF");
-        obj = unitComboBox1.getSelectedItem();
+        obj =
+                unitComboBox1.getSelectedItem();
     }
 
     public void setColumn(String[] columns) {
@@ -278,6 +414,7 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
         return columnsName;
     }
 
+    //not know Miraj attention.
     public static JTable getBragstable() {
         return dataTable;
     }
@@ -301,16 +438,22 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
     }
 
     private void stopAllCellEditingGstable() {
-        for (int i = 0; i < gsastable.getRowCount(); i++) {
-            for (int j = 0; j < gsastable.getColumnCount(); j++) {
-                //javax.swing.table.TableCellEditor editor = gsastable.getCellEditor(i, j);
-                //editor.stopCellEditing();
-                //19 May 2012: KP fixed issue 68 Instead of Null Pointer error message
-                //We provide user with a Message window with text "Please enter value for Wavelength"
-                if (gsastable.getCellEditor() != null) {
-                    gsastable.getCellEditor().stopCellEditing();
-                }
+        for (int i = 0; i <
+                gsastable.getRowCount(); i++) {
+            for (int j = 0; j <
+                    gsastable.getColumnCount(); j++) {
+                javax.swing.table.TableCellEditor editor = gsastable.getCellEditor(i, j);
+                editor.stopCellEditing();
             }
+
+        }
+    }
+
+    private class EnterAction extends AbstractAction {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Number");
         }
     }
 
@@ -417,7 +560,7 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
         unitComboBox2.setFont(new java.awt.Font("Tahoma", 0, 14));
         unitComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "d", "2Ө", "TOF" }));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14));
         jLabel3.setText("---->");
 
         applyButton.setText("Apply");
@@ -499,96 +642,79 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
      * @param evt
      */
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-        if (JpowderInternalframe2D.getnumberOfJpowderInternalframe() == 0) {
+        JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
+        //get filename
+        Vector<DataSet> vec = inFocus.getPowderDataSet();
+        for (int i = 0; i < vec.size(); i++) {
+            DataSet ds = vec.get(i);
+            System.out.println("in applyButtonActionPerformed, what in it is: " + ds.getFileName());
+        }
+
+        if (JpowderInternalframe3D.getnumberOfJpowderInternalframe() == 0) {
             applyButton.setSelected(false);
             return;
         }
 
+        //normal window not GSAS file.
         if (bragsPanel.isVisible()) {
-
             stopAllCellEditing();
             String x = "2\u03D1";//unicode 2thetha
             dataTable.clearSelection();
 
-            if (unitComboBox1.getSelectedItem().toString().equals("2Ө") &&
-                    unitComboBox2.getSelectedItem().toString().equals("2Ө")) {
-                return;
-            }
-            if (unitComboBox1.getSelectedItem().toString().equals("d") &&
-                    unitComboBox2.getSelectedItem().toString().equals("d")) {
-                return;
-            }
+            String item1 = unitComboBox1.getSelectedItem().toString();
+            String item2 = unitComboBox2.getSelectedItem().toString();
 
-
-
-            if (inFocus.getXYPlot().getDomainAxis().getLabel().equals("d [Å]") &&
-                    unitComboBox1.getSelectedItem().toString().equals("2Ө")) {
-                javax.swing.JOptionPane.showMessageDialog(null, "The unit is already in  d [Å].");
+            //if selected combos are same unit then return.
+            if (item1.equals(item2)) {
+                javax.swing.JOptionPane.showMessageDialog(null, "The two units selected are the same.");
                 return;
             }
 
+            //not sure AM intention on this.
             if (inFocus.getXYPlot().getDomainAxis().getLabel().equals(x.toUpperCase()) &&
                     unitComboBox1.getSelectedItem().toString().equals("d")) {
                 javax.swing.JOptionPane.showMessageDialog(null, "The unit is already in 2Ө.");
                 return;
+
             }
-            // testing if all wavelenghts have been set
+            
             int seriescount = inFocus.getXYPlot().getDatasetCount();
-            System.out.print("there are:  " + seriescount + " series.");
-
+            
             for (int i = 0; i < seriescount; i++) {
-                try {
-                    //double waveLength = Double.parseDouble(dataTable.getValueAt(i, 1).toString());
-                    if (dataTable.getValueAt(i, 1).equals("Value")) {
-                        javax.swing.JOptionPane.showMessageDialog(null, "Please enter value for Wavelength.");
-                        return;
-                    }
-                } catch (NumberFormatException e) {
-                    javax.swing.JOptionPane.showMessageDialog(null, "Please enter value for Wavelength.");
-                    return;
-                }
-            }
+                // x values
+                inFocus.getPowderDataSet().elementAt(i).getX();
+                XYDataset xyDataset = inFocus.getXYPlot().getDataset(i);
+                System.out.println("In 3d " + inFocus.getPowderDataSet().elementAt(i).getFileName());
 
-
-            for (int i = 0; i < seriescount; i++) {
-//            try {
-                //inFocus.getPowderDataSet().elementAt(i).getX();//KP removed 19 May
-                XYDataset ds = inFocus.getXYPlot().getDataset(i);
-
-                for (int j = 0; j < ds.getItemCount(i); j++) {
-
+                for (int j = 0; j < xyDataset.getItemCount(i); j++) {
                     Double X = (Double) inFocus.getPowderDataSet().elementAt(i).getX().get(j);
                     double waveLength = Double.parseDouble(dataTable.getValueAt(i, 1).toString());
                     double spacing = waveLength / (2 * Math.sin(Math.toRadians(X / 2)));
                     double theta = Math.toDegrees(Math.asin((waveLength / (2 * X)))) * 2;
 
-                    System.out.println(" value of X = " + X + " wavelength = " +
-                           " wave legth = " + waveLength +
+                    System.out.println("Value of X = " + X + " wavelength = " + " wave legth = " + waveLength +
                            " spacing = " + spacing +
                            " theta = " + theta);
 
-                    if (unitComboBox1.getSelectedItem().toString().equals("2Ө") &&
-                            unitComboBox2.getSelectedItem().toString().equals("d")) {
+                    if (item1.equals("2Ө") && item2.equals("d")) {
                         inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(spacing, j);
                         inFocus.getXYPlot().getDomainAxis().setLabel("d [Å]");
                         setDomainAxis();
                     }
 
-
-                    if (unitComboBox1.getSelectedItem().toString().equals("d") &&
-                            unitComboBox2.getSelectedItem().toString().equals("2Ө")) {
+                    if (item1.equals("d") && item2.equals("2Ө")) {
                         inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(theta, j);
                         inFocus.getXYPlot().getDomainAxis().setLabel(x.toUpperCase());
                         setDomainAxis();
-                    }
-                }
-            }
+                    }//if
+                }//for y
+            }//for x
         }
 
 
+        /*gsaspanel
+         */
         if (gsaspanel.isVisible()) {
-
             stopAllCellEditingGstable();
             for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
 
@@ -596,11 +722,11 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
                 XYDataset ds = inFocus.getXYPlot().getDataset(i);
 
                 for (int j = 0; j < ds.getItemCount(i); j++) {
-
                     Double X = (Double) inFocus.getPowderDataSet().elementAt(i).getX().get(j);
                     if (inFocus.getPowderDataSet().get(i).getGSAS_Instrument() == null) {
                         return;
                     }
+
                     double newXDspacing = inFocus.getPowderDataSet().get(i).getGSAS_Instrument().toDspacing(X);
                     double newXTOF = inFocus.getPowderDataSet().get(i).getGSAS_Instrument().toTOF(X);
 
@@ -608,21 +734,18 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
                             unitComboBox2.getSelectedItem().toString().equals("d")) {
                         inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(newXDspacing, j);
                         inFocus.getXYPlot().getDomainAxis().setLabel("d [Å]");
-
-
                     }
+
                     if (unitComboBox1.getSelectedItem().toString().equals("d") &&
                             unitComboBox2.getSelectedItem().toString().equals("TOF")) {
                         inFocus.getXYPlot().getDomainAxis().setLabel("TOF");
                         inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(newXTOF, j);
-
                     }
                 }
             }
 
             resetXaxis();
         }
-
 
         inFocus.getChartPanel().restoreAutoBounds();
         inFocus.getChart().setNotify(true);
@@ -631,15 +754,17 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         JFileChooser chooser = new JFileChooser();
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
+        JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
         chooser.setMultiSelectionEnabled(false);
         int returnVal = chooser.showOpenDialog(null);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
+
             gsasTableModel.getDataVector().removeAllElements();
             File file = chooser.getSelectedFile();
             GSASInstrument_Reader.read(inFocus.getPowderDataSet(), file);
-            gsasTableModel = new DefaultTableModel(getGSASData(), columnsNameGSAS);
+            gsasTableModel =
+                    new DefaultTableModel(getGSASData(), columnsNameGSAS);
             gsastable.setModel(gsasTableModel);
             gsastable.getColumn(dataTable.getColumnName(0)).setCellRenderer(new TableRenderer());
         } else {

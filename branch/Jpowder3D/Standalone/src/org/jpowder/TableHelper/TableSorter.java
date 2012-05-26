@@ -19,6 +19,14 @@ public class TableSorter {
         int n = model.getRowCount();
         int[] indexes = model.getIndexes();
 
+        //for debugging.
+        for (int i = 0; i < n; i++) {
+            indexes[i] = i;
+            System.out.println("...........In sort() TableSorter, " +
+                   "index " + i + " data are: " + model.getValueAt(i, 0).toString() + "...........");
+        }
+        //for debugging.
+
         for (int i = 0; i < n - 1; i++) {
             int k = i;
             for (int j = i + 1; j < n; j++) {
@@ -42,6 +50,7 @@ public class TableSorter {
     public int compare(int column, int row1, int row2) {
         Object o1 = model.getValueAt(row1, column);
         Object o2 = model.getValueAt(row2, column);
+
         if (o1 == null && o2 == null) {
             return 0;
         } else if (o1 == null) {
@@ -68,6 +77,7 @@ public class TableSorter {
 //                //error when compare java.lang.Double cannot be cast to java.lang.String 20/03/2012
 //                return ((String) o1).compareTo((String) o2);
 //            }
+
             //Natural order starts.
             //return compareNatural( o1, o2);
             //return ((String) o1).compareTo((String) o2);

@@ -123,19 +123,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
                     new PlotsTabButton(plotsTab));
         }
     }
-//    @Override
-//    public void paint(Graphics g) {
-//            Graphics2D g2 = (Graphics2D) g;
-//                  Rectangle bounds = getBounds();
-//
-//      // Set Paint for filling Shape
-//       GradientPaint gradientPaint = new GradientPaint(75, 75, Color.BLACK, 95, 95,
-//        Color.gray, true);
-//      g2.setPaint(gradientPaint);
-//      g2.fillRect(0, 0, bounds.width, bounds.height);
-////       g2.fill(e);
-//
-//    }
+
 
     /**
      *

@@ -87,4 +87,18 @@ public class JpowderInternalframe3D extends JpowderInternalframe {
     public JFreeChart getChart() {
         return chart;
     }
+
+    /**
+     * @return the fileNameAndPath
+     */
+    public HashMap getFileNameAndPath() {
+        return fileNameAndPath;
+    }
+
+    /**
+     * @param fileNameAndPath the fileNameAndPath to set
+     */
+    public void setFileNameAndPath(HashMap fileNameAndPath) {
+        this.fileNameAndPath = fileNameAndPath;
+    }
 }

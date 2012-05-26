@@ -47,16 +47,12 @@ public class TableListenerBraggsLaw implements TableModelListener {
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         int size = inFocus.getXYPlot().getDatasetCount();
 
-        for (int i = 0; i < size; i++) {
-    
-                if (!Transforming_XAxis.getBragstable().getValueAt(i, 1).equals("")) {
+        for (int i = 0; i < size; i++) {   
+               if (!Transforming_XAxis.getBragstable().getValueAt(i, 1).equals("")) {
                     newWaveLength = Double.parseDouble(Transforming_XAxis.getBragstable().getModel().
                             getValueAt(i, 1).toString());
                     inFocus.getPowderDataSet().get(i).setWaveLength(newWaveLength);
-
                 }
-            
-
         }
     }
 }

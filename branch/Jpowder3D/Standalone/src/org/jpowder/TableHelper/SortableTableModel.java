@@ -11,7 +11,7 @@ import org.jpowder.util.StringUtil;
 // TODO: Implement ComboboxModel so Combobox can use not just Table.
 public class SortableTableModel extends DefaultTableModel implements ComboBoxModel {
 
-    private int[] indexes;
+    private int[] indexes = null;
     private TableSorter sorter;
     private ComboBoxModel comboBoxModel;
 
@@ -68,48 +68,32 @@ public class SortableTableModel extends DefaultTableModel implements ComboBoxMod
         fireTableDataChanged();
     }
 
+    // TODO: This should sort or reorder the model right away after click.
     public void sortByColumn(int column, boolean isAscent) {
-        if (getSorter() == null) {
-            setSorter(new TableSorter(this));
+        if (sorter == null) {
+            sorter = new TableSorter(this);
         }
-        getSorter().sort(column, isAscent);
+        sorter.sort(column, isAscent);
         fireTableDataChanged();
+
     }
 
-//    @Override
-//    public int getColumnCount() {
-//        return super.getColumnCount() + 1; // add 1 column with the calculated values, if needed.
-//    }
-//    @Override
-//    public String getColumnName(int column) {
-////        if (column == getColumnCount() - 1) // last column
-////        {
-////            return "Calculated value"; // or whatever you want
-////        }
-//        return super.getColumnName(column);
-//    }
-//    @Override
-//    public void addColumn(Object columnName) {
-//        if (sorter == null) {
-//            sorter = new TableSorter(this);
-//        }
-//        //sorter.sort(column, isAscent);
-//        fireTableDataChanged();
-//    }
     public int[] getIndexes() {
-        int n = getRowCount();
-        if (indexes != null) {
-            if (indexes.length == n) {
-                return indexes;
+        int n = this.getRowCount();
+        if (this.indexes != null) {
+            if (this.indexes.length == n) {
+                return this.indexes;
             }
-
         }
-        indexes = new int[n];
+
+        this.indexes = new int[n];
         for (int i = 0; i < n; i++) {
-            indexes[i] = i;
+            this.indexes[i] = i;
+//            System.out.println("In getIndexes() SortableTableModel, index " + i
+//                   + " data are: " + this.getValueAt(i, 0).toString());
         }
 
-        return indexes;
+        return this.indexes;
     }
 
     /**

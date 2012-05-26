@@ -21,13 +21,15 @@
  * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
  * Kasem Bundit University.
  *
- * Author(s):  M Arjeneh, ISIS, Rutherford Appleton Laboratory
+ * Author(s):  Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
+M Arjeneh, ISIS, Rutherford Appleton Laboratory
  *
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
  */
 package org.jpowder;
 
+import java.awt.Cursor;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
@@ -52,11 +54,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import org.jpowder.InernalFrame.InternalFrameIconifyListener;
 import org.jpowder.MetaFile.IO_MetaFile;
 import org.jpowder.TableHelper.HeaderListener;
@@ -67,6 +72,7 @@ import org.jpowder.dataset.DataSet;
 //import org.jpowder.dataset.IO_MetaFile;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.util.HashMapHelper;
+import org.jpowder.util.NaturalOrderComparator;
 import org.jpowder.util.StringUtil;
 
 /**
@@ -84,15 +90,11 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     private DataVisibleInChart dataVisibleInChart = new DataVisibleInChart();
     //private Vector<Vector<String>> tableDataVector = new Vector<Vector<String>>();
     private Vector<String> metaColumnesName = new Vector<String>();
-    // TODO: cursor to display wait status.
-//    private Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
-//    private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
-//    private boolean waitCursorIsShowing;
-    // Sortable file in NaturalOrder.
-    private SortableTableModel stm;
+    private Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
+    private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+    private SortableTableModel stm; // Sortable file in NaturalOrder.
     private TableColumnModel tableColumnModel;
-    private SortButtonRenderer renderer;
-    private HeaderListener headerListener;
+    private TableRowSorter<TableModel> sorter;
 
     /** Creates new form FilesTable */
     public Import3DFilesTable(DataVisibleInChart dvic) {
@@ -110,76 +112,13 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
         initComponents();
 
-        //attempt 24 March 2012.
-//        stm = new SortableTableModel(row, columnNames) {
-//
-//            @Override
-//            public Class getColumnClass(int col) {
-//                switch (col) {
-//                    case 0:
-//                        return String.class;
-//                    case 1:
-//                        return String.class;
-//                    case 2:
-//                        return String.class;
-////                    case 3:
-////                        return Boolean.class;
-//                    default:
-//                        return Object.class;
-//                }
-//            }
-//
-//            @Override
-//            public boolean isCellEditable(int row, int col) {
-////                switch (col) {
-////                    case 1:
-////                        return false;
-////                    default:
-////                        return true;
-////                }
-//
-//                if (col == 0 || col == 1) {
-//                    return false;
-//                } else {
-//                    return true;
-//                }
-//            }
-//
-//            @Override
-//            public void setValueAt(Object obj, int row, int col) {
-//                switch (col) {
-//                    case 2:
-//                        super.setValueAt(new String(obj.toString()), row, col);
-//                        return;
-//                    default:
-//                        super.setValueAt(obj, row, col);
-//                        return;
-//                }
-//            }
-//        };
-
         stm = new SortableTableModel(row, columnNames);
         importData3DTable.setModel(stm);
-        // Renderer button to sort naturally.
-        // Add to the column model.
-        renderer = new SortButtonRenderer();
-        tableColumnModel = importData3DTable.getColumnModel();
-        for (int i = 0; i < columnNames.size(); i++) {
-            //  set renderer to the column.
-            tableColumnModel.getColumn(i).setHeaderRenderer(renderer);
-        }
 
-        JTableHeader header = importData3DTable.getTableHeader();
-        //assign the mouse listener to the column header.
-        headerListener = new HeaderListener(header, renderer);
-        headerListener.setIgnoreColumnName("path");
-        //header.addMouseListener(new HeaderListener(header, renderer));
-        header.addMouseListener(headerListener);
-
-        //-- moveable rows 25/02/2012 - KP
-        //importData3DTable.setDragEnabled(true);
-        //importData3DTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        //importData3DTable.setTransferHandler(new TableTransferHandler());
+        sorter = new TableRowSorter<TableModel>(stm);
+        sorter.setComparator(0, new NaturalOrderComparator());
+        sorter.sort();
+        importData3DTable.setRowSorter(sorter);
 
         //KP 28 April second try to reordering rows.
         importData3DTable.setDragEnabled(true);
@@ -199,19 +138,16 @@ public class Import3DFilesTable extends javax.swing.JFrame {
             public Transferable createTransferable(JComponent comp) {
                 final JTable table = (JTable) comp;
                 int row = table.getSelectedRow();
-                sourceRow = row;
-                //int col = table.getSelectedColumn();
-                //System.out.println("In  createTransferable() (), selected rows are:.." + row + " and column is: " + col + " ... ");
+                //converter.
+                int selection = table.convertRowIndexToModel(row);
+                sourceRow = selection;
 
-                //TODO: this should be the array of row with String[] array.
-                //KP 01/05/2012..
                 StringBuffer buff = new StringBuffer();
                 System.out.println("In createTransferable(), selected row is: " + sourceRow);
                 int colCount = table.getColumnCount();
 
                 for (int j = 0; j < colCount; j++) {
-                    Object val = table.getModel().getValueAt(sourceRow, j);
-                    //System.out.println("In NewTry(), I am type " + val.getClass().getName());
+                    Object val = stm.getValueAt(sourceRow, j);
 
                     buff.append(val == null ? "" : val.toString());
                     //System.out.println("In NewTry(), my value is: " + val.toString());
@@ -219,12 +155,11 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                         buff.append(",");
                     }
                 }
-                System.out.println("In NewTry(), done value is: " + buff.toString());
+
                 StringSelection transferable = new StringSelection(buff.toString());
                 //KP 01/05/2012..
-
                 //Make it blank, if wanted.
-                //table.getModel().setValueAt(null, row, col);
+                //table.getModel().setValueAt(null, sourceRow, 0);
                 return transferable;
             }
 
@@ -237,26 +172,29 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                     return false;
                 }
 
-                final JTable table = (JTable) support.getComponent();
-                final DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+                JTable table = (JTable) support.getComponent();
+                DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 
                 JTable.DropLocation dl = (JTable.DropLocation) support.getDropLocation();
 
                 int dropRow = dl.getRow();
+                int selection = table.convertRowIndexToModel(dropRow);
                 int col = dl.getColumn();
-                destination = dropRow;
-                System.out.println("In importData(), dropped rows are:.." + destination + " and column is: " + col + " ... ");
+                destination = selection;
+
+                System.out.println("In importData(), dropped rows are:.." + destination + " ... ");
 
                 String data;
                 try {
                     data = (String) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
-                    System.out.println("Data in importData() is:.." + data);
+                    System.out.println("In importData(), data is:.." + data);
 
-                    int colCount = tableModel.getColumnCount();
+                    int colCount = stm.getColumnCount();
                     StringBuffer dataInDest = new StringBuffer();
                     //append strings in the row.
                     for (int j = 0; j < colCount; j++) {
-                        Object val = table.getModel().getValueAt(destination, j);
+                        //Object val = table.getModel().getValueAt(destination, j);
+                        Object val = stm.getValueAt(destination, j);
                         dataInDest.append(val == null ? "" : val.toString());
 
                         if (j != colCount - 1) {
@@ -270,10 +208,10 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                     return false;
                 }
 
-                tableModel.moveRow(sourceRow, sourceRow, destination);
-                
+                //Swap rows.
+                stm.moveRow(sourceRow, sourceRow, destination);
+                //TODO: KP needs to revise index in SortTableModel.
                 //tableModel.setValueAt(data, dropRow, col);
-
                 return true;
             }
 
@@ -282,6 +220,8 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                 if (!info.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                     return false;
                 }
+                info.setShowDropLocation(true);
+
 
                 return true;
             }
@@ -299,13 +239,11 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         plotAsComboBox.setModel(new DefaultComboBoxModel(getPlotableColumnNames(columnNames)));
 
         addWindowListener(new WindowAdapter() {
-
             @Override
             public void windowClosing(WindowEvent event) {
                 stm.setRowCount(0);
             }
         });
-
     }
 
     /**
@@ -336,19 +274,20 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
     /**
      * adding column to the table.
-     * TODO: set the textinput field to be focused.
      */
     public void addColumn() {
         JTextField textField = new JTextField();
         Object[] options = {"Yes", "No"};
-        int n = JOptionPane.showOptionDialog(null,
+        int n = JOptionPane.showOptionDialog(this,
+                ///null,
                 textField,
                 "Set Column Name",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.DEFAULT_OPTION,
                 null, //do not use a custom Icon
                 options, //the titles of buttons
-                options[0]); //default button title
+                "i");
+                //options[0]); //default button title
         if (n == 0) {
 
             Double defaultMetaColumnValue = 0.0;
@@ -374,8 +313,9 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                 plotAsComboBox.addItem(capFirstCharString);
                 // set renderer to the lastest added column.
                 for (int i = 0; i < columnNames.size(); i++) {
-                    //  set renderer to the column.
-                    tableColumnModel.getColumn(i).setHeaderRenderer(renderer);
+                    //set renderer to the column.
+                    //tableColumnModel.getColumn(i).setHeaderRenderer(renderer);
+                    sorter.setComparator(i, new NaturalOrderComparator());
                 }
                 metaColumnesName.add(capFirstCharString);
             } else {
@@ -444,6 +384,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         plotAsComboBox = new javax.swing.JComboBox();
         helpButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
+        statusText = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Plot Data 3D");
@@ -538,7 +479,9 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                         .addComponent(removeRowButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(removeAllRowsButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(statusText, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(plotButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)
@@ -582,7 +525,8 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                     .addComponent(removeRowButton)
                     .addComponent(removeAllRowsButton)
                     .addComponent(plotButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(statusText))
                 .addContainerGap())
         );
 
@@ -598,87 +542,115 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
     private void plotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotButtonActionPerformed
 
-        //multiple datasets
-        Vector<DataSet> datasets = new Vector<DataSet>();
-        // map linking filenames and paths.
-        // LinkedHaspMap is used in the order in which the entries were put into the map
-        HashMap<String, String> fileNameAndPathMap = new LinkedHashMap<String, String>();
-        PowderFileCabinet mPowderFileCabinet = new PowderFileCabinet();
-        String fileName;
+        setCursor(waitCursor);
+        statusText.setText("Plot is working . . . ");
+        plotButton.setEnabled(false);
+        // We're going to do something that takes a long time, so we spin off a
+        // thread and update the display when we're done.
+        Thread worker = new Thread() {
 
-        String filePaths;
+            @Override
+            public void run() {
+                // Something that takes a long time. In real life, this might be a DB
+                // query, remote method invocation, etc.
+                try {
+                    //multiple datasets
+                    Vector<DataSet> datasets = new Vector<DataSet>();
+                    // map linking filenames and paths.
+                    // LinkedHaspMap is used in the order in which the entries were put into the map
+                    HashMap<String, String> fileNameAndPathMap = new LinkedHashMap<String, String>();
+                    PowderFileCabinet mPowderFileCabinet = new PowderFileCabinet();
+                    String fileName;
 
-        // loop over selected files
-        for (int i = 0, n = stm.getRowCount(); i <
-                n; i++) {
-            // assume in this loop for now that path the 2nd column
-            fileNameAndPathMap.put(String.valueOf(stm.getValueAt(i, 0)),
-                    String.valueOf(stm.getValueAt(i, 1)));
+                    String filePaths;
 
-        }//for
+                    // loop over selected files
+                    for (int i = 0, n = stm.getRowCount(); i <
+                            n; i++) {
+                        // assume in this loop for now that path the 2nd column
+                        fileNameAndPathMap.put(String.valueOf(stm.getValueAt(i, 0)),
+                                String.valueOf(stm.getValueAt(i, 1)));
 
-        for (Map.Entry<String, String> entry : fileNameAndPathMap.entrySet()) {
-            fileName = entry.getKey();
-            filePaths =
-                    entry.getValue();
-            System.out.println("File name is: " + fileName + " and Path is: " + filePaths);
+                    }//for
 
-            //System.out.println(afile);
-            if (mPowderFileCabinet.checkAcceptedFileType(fileName)) {
-                //This enforces to be in a path only? Is this right?
-                Vector<DataSet> allDatasets = PowderFileCabinet.createDataSetFromPowderFile(filePaths.trim());
-                if (allDatasets == null) {
-                    return;
-                }
+                    for (Map.Entry<String, String> entry : fileNameAndPathMap.entrySet()) {
+                        fileName = entry.getKey();
+                        filePaths =
+                                entry.getValue();
+                        System.out.println("File name is: " + fileName + " and Path is: " + filePaths);
 
-                for (int iSet = 0; iSet <
-                        allDatasets.size(); iSet++) {
-                    DataSet oneDataset = allDatasets.elementAt(iSet);
-                    if (oneDataset != null) {
-                        datasets.add(oneDataset);
+                        //System.out.println(afile);
+                        if (mPowderFileCabinet.checkAcceptedFileType(fileName)) {
+                            //This enforces to be in a path only? Is this right?
+                            Vector<DataSet> allDatasets = PowderFileCabinet.createDataSetFromPowderFile(filePaths.trim());
+                            if (allDatasets == null) {
+                                return;
+                            }
+
+                            for (int iSet = 0; iSet < allDatasets.size(); iSet++) {
+                                DataSet oneDataset = allDatasets.elementAt(iSet);
+                                if (oneDataset != null) {
+                                    datasets.add(oneDataset);
+                                }
+                            }
+
+                        } else {
+                            //TODO: Check this needed why?
+                            javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
+                            break;
+                        }
                     }
+
+                    //Setting meta-data hashmap in dataset
+                    for (int i = 0; i < datasets.size(); i++) {
+                        HashMap<String, Double> hm = new HashMap<String, Double>();
+                        // For Name column for now label filenames artificially as 0,1,2...
+                        hm.put("Name", (double) i);
+                        // ignore Path column but see if any other meta data defined
+                        for (int iCol = 2; iCol < importData3DTable.getColumnCount(); iCol++) {
+                            hm.put(stm.getColumnName(iCol), Double.parseDouble(stm.getValueAt(i, iCol).toString()));
+                        }
+                        datasets.get(i).addMetaData(hm);
+                    }
+
+                    // finally plot the data
+                    String plotAsFunctionOf = plotAsComboBox.getSelectedItem().toString();
+                    //Plot in 3D
+
+                    //Plot 3D with extra fileNameAndPath 10/03/2012.
+                    JpowderInternalframe3D internalframe = new JpowderInternalframe3D(dataVisibleInChart, datasets,
+                            plotAsFunctionOf, fileNameAndPathMap);
+
+                    //make sure the file name from start - finish is displayed on the title bar.
+                    String[] files = HashMapHelper.convertKeyToArray(fileNameAndPathMap);
+                    String first = files[0];
+                    String last = files[files.length - 1];
+
+                    internalframe.setTitle(first + " - " + last);
+
+                    //
+                    Jpowder.updateJPowderInternalFrame(internalframe);
+                    InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
+                    internalframe.addInternalFrameListener(internalFrameListener);
+                    Jpowder.getChartPlotter3D().add(internalframe);
+                    
+
+                    Thread.sleep(5000);
+                } catch (InterruptedException ex) {
                 }
-
-            } else {
-                //TODO: Check this needed why?
-                javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
-                break;
+                // Report the result using invokeLater( ).
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        statusText.setText("Ready");
+                        plotButton.setEnabled(true);
+                        setVisible(false);
+                        setCursor(defaultCursor);
+                    }
+                });
             }
-        }
-
-        //Setting meta-data hashmap in dataset
-        for (int i = 0; i < datasets.size(); i++) {
-            HashMap<String, Double> hm = new HashMap<String, Double>();
-            // For Name column for now label filenames artificially as 0,1,2...
-            hm.put("Name", (double) i);
-            // ignore Path column but see if any other meta data defined
-            for (int iCol = 2; iCol < importData3DTable.getColumnCount(); iCol++) {
-                hm.put(stm.getColumnName(iCol), Double.parseDouble(stm.getValueAt(i, iCol).toString()));
-            }
-            datasets.get(i).addMetaData(hm);
-        }
-
-        // finally plot the data
-        String plotAsFunctionOf = plotAsComboBox.getSelectedItem().toString();
-        //Plot in 3D
-
-        //Plot 3D with extra fileNameAndPath 10/03/2012.
-        JpowderInternalframe3D internalframe = new JpowderInternalframe3D(dataVisibleInChart, datasets,
-                plotAsFunctionOf, fileNameAndPathMap);
-
-        //make sure the file name from start - finish is displayed on the title bar.
-        String[] files = HashMapHelper.convertKeyToArray(fileNameAndPathMap);
-        String first = files[0];
-        String last = files[files.length - 1];
-
-        internalframe.setTitle(first + " - " + last);
-
-        //
-        Jpowder.updateJPowderInternalFrame(internalframe);
-        InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
-        internalframe.addInternalFrameListener(internalFrameListener);
-        Jpowder.getChartPlotter3D().add(internalframe);
-        this.setVisible(false);
+        };
+        worker.start(); // So we don't hold up the dispatch thread
 
     }//GEN-LAST:event_plotButtonActionPerformed
 
@@ -791,5 +763,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     private javax.swing.JButton removeAllRowsButton;
     private javax.swing.JButton removeRowButton;
     private javax.swing.JButton saveMetaFileButton;
+    private javax.swing.JLabel statusText;
     // End of variables declaration//GEN-END:variables
 }

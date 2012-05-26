@@ -7,7 +7,6 @@ package org.jpowder.TableHelper;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.xml.stream.events.StartDocument;
 
 /**
  *
@@ -52,8 +51,11 @@ public class TableTransferHandler extends StringTransferHandler {
 
     @Override
     protected void importString(JComponent c, String str) {
+
         JTable target = (JTable) c;
         DefaultTableModel model = (DefaultTableModel) target.getModel();
+        //JTable.DropLocation dl = (JTable.DropLocation) support.getDropLocation();
+
 
         int index = target.getSelectedRow();//model index.
         System.out.println("In importString(), selected rows are:.." + index);
@@ -66,8 +68,6 @@ public class TableTransferHandler extends StringTransferHandler {
 //            index = target.convertRowIndexToModel(index);
 //            //String value = (String) model.getValueAt(rowIndex, columnIndex);
 //        }
-
-        
 
         //Prevent the user from dropping data back on itself.
         //For example, if the user is moving rows #4,#5,#6 and #7 and

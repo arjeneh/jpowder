@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.jpowder.TableHelper;
 
 import java.awt.datatransfer.DataFlavor;
@@ -11,6 +10,7 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import javax.swing.JComponent;
+import javax.swing.JTable;
 import javax.swing.TransferHandler;
 
 /**
@@ -37,9 +37,44 @@ public abstract class StringTransferHandler extends TransferHandler {
         return COPY_OR_MOVE;
     }
 
+//    @Override
+//    public boolean importData(TransferSupport support) {
+//        if (!support.isDrop()) {
+//            return false;
+//        }
+//
+//        if (!canImport(support)) {
+//            return false;
+//        }
+//
+//        JTable table = (JTable) support.getComponent();
+//        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+//
+//        JTable.DropLocation dl = (JTable.DropLocation) support.getDropLocation();
+//        int row = dl.getRow();
+//        int col = dl.getColumn();
+//
+//        String data;
+//        try {
+//            data = (String) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
+//        } catch (UnsupportedFlavorException e) {
+//            return false;
+//        } catch (IOException e) {
+//            return false;
+//        }
+//
+//        tableModel.setValueAt(data, row, col);
+//        return true;
+//    }
+
     @Override
     public boolean importData(JComponent c, Transferable t) {
-        if (canImport(c, t.getTransferDataFlavors())) {
+        JTable target = (JTable) c;
+  
+        //JTable.DropLocation dl = (JTable.DropLocation) t..getDropLocation();
+
+        if
+         (canImport(c, t.getTransferDataFlavors())) {
             try {
                 String str = (String) t.getTransferData(DataFlavor.stringFlavor);
                 System.out.println("str imported is ............." + str);
