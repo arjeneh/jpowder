@@ -6,6 +6,7 @@ package org.jpowder.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -52,5 +53,15 @@ public class StringUtil {
         ArrayList list = createStringList(array);
         list.remove(index);
         return convertToStringArray(list);
+    }
+
+    public static String[] getSplit(String str, String chr) {
+        Pattern p = Pattern.compile(chr, Pattern.LITERAL);
+        String[] temp = p.split(str);
+
+        for (int i = 0; i < temp.length; i++) {
+            System.out.println(temp[i]);
+        }
+        return temp;
     }
 }

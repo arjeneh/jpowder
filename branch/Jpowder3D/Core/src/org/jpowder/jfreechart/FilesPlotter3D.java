@@ -209,18 +209,15 @@ public class FilesPlotter3D extends DatasetPlotter {
         }
         renderer.setBlockHeight(widthsLow, widthsUpper);
 
-
         // don't know what this one is for?
         renderer.clearSeriesPaints(true);
 
 
         // set up the x-axis
-
         NumberAxis xAxis = new NumberAxis("2\u0398");
         xAxis.setLowerMargin(0.0);
         xAxis.setUpperMargin(0.0);
         xAxis.setAutoRangeIncludesZero(false);
-
 
         // set up the y-axis
         // Importantly setup the y-axis so that it matches the block heights
@@ -267,7 +264,6 @@ public class FilesPlotter3D extends DatasetPlotter {
         renderer.setPaintScale(colourScale);
         
         // Setup and add colorbar to chart
-
         NumberAxis zAxis = new NumberAxis("");
         PaintScaleLegend legend = new PaintScaleLegend(colourScale, zAxis);
         //legend.setAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
@@ -278,8 +274,6 @@ public class FilesPlotter3D extends DatasetPlotter {
         legend.setPosition(RectangleEdge.RIGHT);
         chart.addSubtitle(legend);
 
-
-//      legend.setFrame(new BlockBorder(Color.red));
         chart.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000, Color.BLACK, true));
         legend.setBackgroundPaint(chart.getBackgroundPaint());
         return chart;

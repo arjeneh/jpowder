@@ -132,15 +132,15 @@ public abstract class DataSet {
         return data;
     }
 
-//    public static void main(String[] args) {
-//       DataSet ds = new DataSet() {
-//
-//            @Override
-//            public String description() {
-//                throw new UnsupportedOperationException("Not supported yet.");
-//            }
-//        };
-//    }
+    public static void main(String[] args) {
+       DataSet ds = new DataSet(new Vector(), "hello") {
+
+            @Override
+            public String description() {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        };
+    }
 //
 //    public DataSet() {
 //        HashMap<String, Double> hm = new HashMap<String, Double>();

@@ -28,10 +28,16 @@
  */
 package org.jpowder.jfreechart;
 
+import java.awt.Point;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.ui.RectangleEdge;
 
 /**
  * This class support the click of the mouse on the chart so it brings up a Frame 
@@ -46,34 +52,59 @@ public class PowderChartMouseObserver implements ChartMouseListener {
     }
 
     public PowderChartMouseObserver(ChartPanel cp) {
-
         chartPanel = cp;
-        //chartPanel.add
-
     }
 
     public void chartMouseMoved(ChartMouseEvent chartMouseEvent) {
     }
 
     public void chartMouseClicked(ChartMouseEvent chartMouseEvent) {
+
+        // TODO Add annotation, how can i use Popup to get mouse location as in mouse clicked?
+
+        // TODO Add a popup with x/y co-ordination.
+
+        if (chartMouseEvent.getTrigger().getClickCount() == 1) {
+            int mouseX = chartMouseEvent.getTrigger().getX();
+            int mouseY = chartMouseEvent.getTrigger().getY();
+            //System.out.println("In class: " + this.getClass().getName() + " Co-ordination x = " + mouseX + ", y = " + mouseY);
+
+            //System.out.println("In class: " + this.getClass().getName() + " ChartPanel name is " + chartPanel.getName() + "  ***************") ;
+
+            Point2D p = chartPanel.translateScreenToJava2D(new Point(mouseX, mouseY));
+            XYPlot plot = (XYPlot) chartPanel.getChart().getPlot();
+            Rectangle2D plotArea = chartPanel.getScreenDataArea();
+            ValueAxis domainAxis = plot.getDomainAxis();
+            RectangleEdge domainAxisEdge = plot.getDomainAxisEdge();
+            ValueAxis rangeAxis = plot.getRangeAxis();
+            RectangleEdge rangeAxisEdge = plot.getRangeAxisEdge();
+
+            double chartX = domainAxis.java2DToValue(p.getX(), plotArea, domainAxisEdge);
+            double chartY = rangeAxis.java2DToValue(p.getY(), plotArea, rangeAxisEdge);
+            //System.out.println("In class: " + this.getClass().getName() + " Value of dataset in the Chart: x = " + chartX + ", y = " + chartY);
+
+            EditAnnotationFrame enf = EditAnnotationFrame.getInstance();
+            enf.addAnnotation(mouseX, mouseY, chartX, chartY, chartPanel.getName());
+            enf.setLocation(mouseX, mouseY);
+            enf.setVisible(true);
+        }//end if 1 click
+
         if (chartMouseEvent.getTrigger().getClickCount() == 2) {
             try {
                 //----------Copy the chart-------------------
                 final JFreeChart plot_copy = (JFreeChart) chartMouseEvent.getChart().clone();
-
 
                 //Thread safe by seperating it in case editing and modification.
                 java.awt.EventQueue.invokeLater(new Runnable() {
 
                     public void run() {
                         EditChartFrame editChartFrame = new EditChartFrame(plot_copy);
-                      
                     }
                 });
             } catch (Exception ex) {
                 ex.printStackTrace();
             }//end catch
-        }//end if
+        }//end if 2 click
     }//end chartMouseClicked
 }//end ChartMouseObserver
 

@@ -102,12 +102,10 @@ public class FilesPlotter extends DatasetPlotter implements Serializable {
         }
         // create panel from chart and set some panel attributes
         ChartPanel chartPanel = new ChartPanel(chart, true);
-
-//    chartPanel.setMaximumSize(new java.awt.Dimension(300, 300));
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
 
-//        chartPanel.add(new JpowderPopupMenu(chartPanel));
+        //chartPanel.add(new JpowderPopupMenu(chartPanel));
         //User click and it brings up a new Frame for editing the chart.
         chartPanel.addChartMouseListener(new PowderChartMouseObserver(chartPanel));
         return chartPanel;
