@@ -1,17 +1,40 @@
-
-/*
- * ColorBar.java
+/* ===========================================================
+ * This file is part of Jpowder, see <http://www.jpowder.org/>
+ * ===========================================================
  *
- * Created on Jul 28, 2010, 3:54:44 PM
+ * Jpowder is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jpowder is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ---------
+ * AnnotationPanel.java
+ *
+ * Created on June 28, 2012, 3:54:44 PM
+ * ---------
+ * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
+ * Kasem Bundit University.
+ *
+ * Author(s):  Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
+ * Created on 30-Jun-2012, 13:16:21
+ *
+ * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
+ *
  */
+
 package org.jpowder.chartTools;
 
-import Annotation.IMapObserver;
-import Annotation.IMapSubject;
-import java.awt.Color;
-import java.util.HashMap;
+import org.jpowder.Annotation.IMapObserver;
+import org.jpowder.Annotation.IMapSubject;
 import java.util.Map;
-import org.jfree.chart.ChartPanel;
 import org.jpowder.Analysis.ToolsIcon2D;
 import org.jpowder.Analysis.ToolsIcon3D;
 import org.jpowder.InernalFrame.JpowderInternalframe2D;
@@ -35,11 +58,8 @@ public class AnnotationPanel extends javax.swing.JPanel implements InfoPanel, IM
         initComponents();
         annoTxt.setVisible(false);
         jLabel2.setVisible(false);
-
         this.toolsIcon2D = toolsIcon2D;
-
         annoTxt.setText(strThere + eaf.getAnnoNumber());
-        // TODO adds observer to EditAnnotationFrame by using reference.
         annoMap = eaf.getAnnoMap();
         eaf.addObserver(this);
     }
@@ -54,6 +74,10 @@ public class AnnotationPanel extends javax.swing.JPanel implements InfoPanel, IM
     public void update() {
     }
 
+    /**
+     * whenever the Map is upadted this class will be alerted.
+     * @param o
+     */
     @Override
     public void updateMap(IMapSubject o) {
         annoMap = o.getStatusUpdate();
@@ -176,10 +200,6 @@ public class AnnotationPanel extends javax.swing.JPanel implements InfoPanel, IM
 
         String activeFrameName = inFocus.getChartPanel().getName();
         inFocus.showAnnotation(activeFrameName);
-
-        // TODO: Load Ballontip according to the number found.
-        // add to the x,y co-ordination on the inFocus and +- offset.
-
     }//GEN-LAST:event_showRadioButtonActionPerformed
 
     private void hideRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hideRadioButtonActionPerformed

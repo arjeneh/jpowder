@@ -24,6 +24,8 @@
  * Author(s):  M Arjeneh, ISIS, Rutherford Appleton Laboratory
  *             Anders Marvardsen, ISIS, Rutherford Appleton Laboratory
  *             Dan Badham, ISIS, Rutherford Appleton Laboratory
+ * @author     Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
+ * @version 2. Support for Annotation in showAnnotation(final String frameName).
  *
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
@@ -59,7 +61,6 @@ import org.jfree.chart.plot.XYPlot;
 import org.jpowder.chartTools.BalloonFrame;
 import org.jpowder.jfreechart.EditAnnotationFrame;
 import org.jpowder.jfreechart.PointAnno;
-//import org.jpowder.jfreechart.EditAnnotationFrame.PointAnno;
 
 /**
  *
@@ -78,8 +79,6 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
     private NumberAxis xAxis;
     private NumberAxis yAxis;
     private JFreeChart chart;
-    //
-    //private BalloonFrame balloonPanel = new BalloonFrame();
 
     /**
      *
@@ -108,8 +107,7 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
      * show balloons that have comments of each ones within the dataset.
      */
     public void showAnnotation(final String frameName) {
-
-        //        if (this.balloonTips == null) {
+//        if (this.balloonTips == null) {
 //            return;
 //        } else {
         Map<Integer, PointAnno> annoMap = EditAnnotationFrame.getInstance().getAnnoMap();
@@ -149,7 +147,6 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
             bf.setLocation(oldX + newX, oldY + newY);
         }//for
         //}//if
-
     }
 
     /**
