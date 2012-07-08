@@ -21,8 +21,9 @@
  * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
  * Kasem Bundit University.
  *
- * Author(s):  Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
- *
+ * @author  Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
+ * @version 2 support for Annotation when click once.
+ * 
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
  */
@@ -59,10 +60,6 @@ public class PowderChartMouseObserver implements ChartMouseListener {
     }
 
     public void chartMouseClicked(ChartMouseEvent chartMouseEvent) {
-
-        // TODO Add annotation, how can i use Popup to get mouse location as in mouse clicked?
-
-        // TODO Add a popup with x/y co-ordination.
 
         if (chartMouseEvent.getTrigger().getClickCount() == 1) {
             int mouseX = chartMouseEvent.getTrigger().getX();

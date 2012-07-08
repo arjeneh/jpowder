@@ -1,17 +1,36 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * EditAnnotationFrame.java
+/* ===========================================================
+ * This file is part of Jpowder, see <http://www.jpowder.org/>
+ * ===========================================================
  *
+ * Jpowder is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jpowder is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ---------
+ * EditAnnotationFrame.java
  * Created on 02-Jun-2012, 11:09:08
+ * ---------
+ * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
+ * Kasem Bundit University.
+ *
+ * @author  Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
+ * 
+ * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
+ *
  */
 package org.jpowder.jfreechart;
 
-import Annotation.IMapObserver;
-import Annotation.IMapSubject;
+import org.jpowder.Annotation.IMapObserver;
+import org.jpowder.Annotation.IMapSubject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,12 +38,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.swing.JOptionPane;
 import org.jpowder.util.HashMapHelper;
 import org.jpowder.util.StringUtil;
 
 /**
  * Singleton Class for handling comments/remarks for the dataset within the JPowderFrame.
- * @author Toshiba
+ * @author Kreecha Puphaiboon
+ *
  */
 public class EditAnnotationFrame extends javax.swing.JFrame implements IMapSubject {
 
@@ -38,10 +59,11 @@ public class EditAnnotationFrame extends javax.swing.JFrame implements IMapSubje
     private Map<Integer, PointAnno> synMap = Collections.synchronizedMap(annoMap);
     //Observers
     private List observers = Collections.synchronizedList(new ArrayList());
-    // Name/Title of the Frame
+    // Default Name/Title of the Frame
     private static final String title = "Annotation number: ";
-
+    // Lock for Synchronization
     private static final Object classLock = EditAnnotationFrame.class;
+
     /**
      *
      * @return
@@ -64,6 +86,7 @@ public class EditAnnotationFrame extends javax.swing.JFrame implements IMapSubje
 
     /**
      * Singleton private constructor.
+     *
      * @param mouseX
      * @param mouseY
      * @param ValueX
@@ -83,9 +106,6 @@ public class EditAnnotationFrame extends javax.swing.JFrame implements IMapSubje
         commentTextArea.setText("Value of X is: " + this.valueX + " , Value of Y is: " + this.valueY);
         //annoMap.put(annoNumber, new PointAnno(this.valueX, this.valueY));
         synMap.put(annoNumber, new PointAnno(this.valueX, this.valueY));
-        // TODO notify the number of Annotation in the Map to all listeners.
-        //if AnnoPanel is not null, then addObserver?
-
     }
 
     /**
@@ -101,10 +121,8 @@ public class EditAnnotationFrame extends javax.swing.JFrame implements IMapSubje
         setTitle(title + annoNumber);
         PointAnno pa = new PointAnno(annoNumber, mouseX, mouseY, ValueX, ValueY, internalFrameName);
         synMap.put(annoNumber, pa);
-
         getCommentTextArea().setText("Name: " + annoNumber + ", Mouse X: " + pa.getMouseX() + ", Mouse Y " + pa.getMouseY() +
                 ", Value of X is: " + pa.getX() + " , Value of Y is: " + pa.getY() + ", frame name is: " + pa.getInternalFrameName());
-
     }
 
     @Override
@@ -147,6 +165,9 @@ public class EditAnnotationFrame extends javax.swing.JFrame implements IMapSubje
         notifyObservers();
     }
 
+    /**
+     * Model Subject of the observer.
+     */
     public void notifyObservers() {
         Iterator i = observers.iterator();
         while (i.hasNext()) {
@@ -188,13 +209,14 @@ public class EditAnnotationFrame extends javax.swing.JFrame implements IMapSubje
 
     /**
      * Use for displaying the screen for editing PointAnnotation. It is called by
-     * BalloonFrame.java when user clicks edit
-     * @param pa
+     * BalloonFrame.java when user clicks edit.
+     *
+     * @param pa Annotation to be passed to.
      */
     public void showAnnotation(PointAnno pa) {
-        HashMapHelper.getKeyByValue(synMap, pa);
+        //HashMapHelper.getKeyByValue(synMap, pa);
         boolean bFound = synMap.containsValue(pa);
-        
+
         System.out.println("found tru/false: " + bFound + " pa name is: " +
                 pa.getPointName() + " and Comment is: " + pa.getComment());
 
@@ -203,12 +225,15 @@ public class EditAnnotationFrame extends javax.swing.JFrame implements IMapSubje
         PointAnno point = synMap.get(HashMapHelper.getKeyByValue(synMap, pa));
 
         this.getCommentTextArea().setText(point.getComment());
+        this.setTitle(title + pa.getPointName());
         this.setVisible(true);
     }
 
     /**
-     * <P>Here, the contents of a specific commentery annotation is deleted off the HashMap
+     * Here, the contents of a specific commentery annotation is deleted off the HashMap
+     * @param a the key to be deleted.
      */
+
     public void removeAnnotation(Integer a) {
         synMap.remove(a);
         notifyObservers();
@@ -218,20 +243,37 @@ public class EditAnnotationFrame extends javax.swing.JFrame implements IMapSubje
      * @return the annoMap
      */
     public Map getAnnoMap() {
-        return synMap;
+        synchronized (classLock) {
+            return synMap;
+        }
     }
 
     /**
-     * <P>Here, the contents of a PointAnno is returned.
+     * <p> the PointAnno is returned according to its ID (name integer type)
+     * @param intName
+     * @return
      */
-    public PointAnno findValue(int Name) {
-        for (Object o : annoMap.entrySet()) {
-            Map.Entry entry = (Map.Entry) o;
+    public PointAnno findByValue(int intName) {
+//        for (Object o : annoMap.entrySet()) {
+//            Map.Entry entry = (Map.Entry) o;
+//
+//            if (entry.getKey().equals(intName)) {
+//                return (PointAnno) entry.getValue();
+//            }
+//        }
+//        return null;
+        //Map<Integer, PointAnno> annoMap = EditAnnotationFrame.getInstance().getAnnoMap();
+        Set set = synMap.entrySet(); // Get an iterator
+        Iterator it = set.iterator();
 
-            if (entry.getKey().equals(Name)) {
-                return (PointAnno) entry.getValue();
-            }
-        }
+        // Display elements
+        while (it.hasNext()) {
+            Map.Entry me = (Map.Entry) it.next();
+            PointAnno p = (PointAnno) me.getValue();
+            if (p.getPointName() == intName) {
+                return p;
+            }//if match
+        }//while
         return null;
     }
 
@@ -320,18 +362,19 @@ public class EditAnnotationFrame extends javax.swing.JFrame implements IMapSubje
 
     private void okButtoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtoneActionPerformed
 
-        //search for the name of PointAnno.
-        //need to insert some name to the PointAnno when loading wihtout being seen.
+        // TODO: After clicking OK then it should update the content on BalloonFrame too.
 
-        //find Annotation by the tile ID from HashMap - wrong. Can not do.
+        //Find Annotation by the tile ID from HashMap - wrong. Can not do.
         String[] titleParse = StringUtil.getSplit(this.getTitle(), ":");
         String idStr = titleParse[titleParse.length - 1];
-        System.out.println("ID is: " + idStr);
+        //System.out.println("ID is: " + idStr);
 
         PointAnno pa = synMap.get(Integer.parseInt(idStr.trim()));
 
         //Save any change to the text and close the wondow.
         if (pa == null) {
+            JOptionPane.showMessageDialog(this,"Annotation number: " + pa.getPointName() + " is null");
+
             System.out.println("PointAnno is null");
             this.dispose();
             return;
@@ -340,7 +383,6 @@ public class EditAnnotationFrame extends javax.swing.JFrame implements IMapSubje
         pa.setComment(getCommentTextArea().getText());
         notifyObservers(); //printAllAnno();
         this.dispose();
-        //
     }//GEN-LAST:event_okButtoneActionPerformed
 
     /**
@@ -402,6 +444,7 @@ public class EditAnnotationFrame extends javax.swing.JFrame implements IMapSubje
      */
     public void setMap(Map map) {
         this.synMap = map;
+        notifyObservers();
     }
 
     public void setStatusUpdate(Map state) {
@@ -409,6 +452,3 @@ public class EditAnnotationFrame extends javax.swing.JFrame implements IMapSubje
         notifyObservers();
     }
 }
-
-
-
