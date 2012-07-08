@@ -543,7 +543,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     private void plotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotButtonActionPerformed
 
         setCursor(waitCursor);
-        statusText.setText("Plot is working . . . ");
+        statusText.setText("Plotting . . . ");
         plotButton.setEnabled(false);
         // We're going to do something that takes a long time, so we spin off a
         // thread and update the display when we're done.
@@ -560,13 +560,10 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                     // LinkedHaspMap is used in the order in which the entries were put into the map
                     HashMap<String, String> fileNameAndPathMap = new LinkedHashMap<String, String>();
                     PowderFileCabinet mPowderFileCabinet = new PowderFileCabinet();
-                    String fileName;
-
-                    String filePaths;
+                    String fileName, filePaths;
 
                     // loop over selected files
-                    for (int i = 0, n = stm.getRowCount(); i <
-                            n; i++) {
+                    for (int i = 0, n = stm.getRowCount(); i <  n; i++) {
                         // assume in this loop for now that path the 2nd column
                         fileNameAndPathMap.put(String.valueOf(stm.getValueAt(i, 0)),
                                 String.valueOf(stm.getValueAt(i, 1)));
@@ -618,8 +615,8 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                     //Plot in 3D
 
                     //Plot 3D with extra fileNameAndPath 10/03/2012.
-                    JpowderInternalframe3D internalframe = new JpowderInternalframe3D(dataVisibleInChart, datasets,
-                            plotAsFunctionOf, fileNameAndPathMap);
+                    JpowderInternalframe3D internalframe = new JpowderInternalframe3D(
+                            dataVisibleInChart, datasets, plotAsFunctionOf, fileNameAndPathMap);
 
                     //make sure the file name from start - finish is displayed on the title bar.
                     String[] files = HashMapHelper.convertKeyToArray(fileNameAndPathMap);

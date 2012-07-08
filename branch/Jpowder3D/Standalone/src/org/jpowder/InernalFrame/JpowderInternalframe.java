@@ -28,9 +28,12 @@
  */
 package org.jpowder.InernalFrame;
 
+
 import java.awt.Component;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import org.jpowder.*;
 import java.util.Stack;
 import java.util.Vector;
@@ -40,11 +43,13 @@ import javax.swing.JInternalFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.plot.XYPlot;
-import org.jpowder.JCheckboxList.FileNameListModel;
+import org.jpowder.chartTools.BalloonFrame;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
+import org.jpowder.util.NaturalOrderComparator;
 
 /**
  * Super class which contains all the common methods and fields
@@ -64,8 +69,12 @@ public class JpowderInternalframe extends JInternalFrame {
     //
     protected DatasetPlotter plotMultiCol;
     //
-    private ChartPanel jfreeChartPanel;
-    private String name = new String();
+    protected ChartPanel jfreeChartPanel;
+    
+    //Balloontip to be used with BalloonFrame.java for editing and deleting Annotation
+    //in JpowderInternalframe2D/3D frames.
+    protected ArrayList<BalloonFrame> balloonTips = new ArrayList<BalloonFrame>();//this should not be new but for testing 23/06/2012
+//    protected BalloonAnnotation balloonPanel = new BalloonAnnotation();
 
     /**
      * ....
@@ -91,6 +100,8 @@ public class JpowderInternalframe extends JInternalFrame {
         ChartPanel jfreeChartPanels = plotMultiCol.createPowderChart();
         jfreeChartPanels.add(new JpowderPopupMenu(jfreeChartPanels));
         this.jfreeChartPanel = jfreeChartPanels;
+        //need to add name for the chart panel, so it can be a reference to Annotation later.
+        this.jfreeChartPanel.setName(getNames());
 
         xYPlot = jfreeChartPanels.getChart().getXYPlot();
         this.add(jfreeChartPanels);
@@ -124,7 +135,6 @@ public class JpowderInternalframe extends JInternalFrame {
             }
         });
     }
-    
 
     /**
      * @param selectedMetaItem For 3D plotting
@@ -151,6 +161,8 @@ public class JpowderInternalframe extends JInternalFrame {
         ChartPanel jfreeChartPanels = plotMultiCol.createPowderChart();
         jfreeChartPanels.add(new JpowderPopupMenu(jfreeChartPanels));
         this.jfreeChartPanel = jfreeChartPanels;
+         //need to add name for the chart panel, so it can be a reference to Annotation later.
+        this.jfreeChartPanel.setName(getNames());
 
         xYPlot = jfreeChartPanels.getChart().getXYPlot();
         this.add(jfreeChartPanels);
@@ -166,6 +178,7 @@ public class JpowderInternalframe extends JInternalFrame {
         this.setSize(myPrefs.getInt(key1, Jpowder.getChartPlotter2D().getWidth() / 2),
                 myPrefs.getInt(key2, INTERNALFRAME_HEIGHT));
         this.setLocation((int) Jpowder.getDropLocationX(), (int) Jpowder.getDropLocationY());
+
         SwingUtilities.invokeLater(new Runnable() {
 
             @Override
@@ -184,6 +197,10 @@ public class JpowderInternalframe extends JInternalFrame {
             }
         });
     }
+
+//    protected void showAnnotation(String frameName ){
+//
+//    }
 
     public JpowderInternalframe(DataVisibleInChart dataVisibleInChartPanel, Vector<DataSet> data) {
 
@@ -211,13 +228,31 @@ public class JpowderInternalframe extends JInternalFrame {
      * @return returning the name of files added.
      */
     public String getNames() {
-        for (int i = 0; i < xYPlot.getDatasetCount(); i++) {
-            name = vectorDatasets.elementAt(0).getFileName();
+        String god = "";
+
+        // if one file
+        int i = vectorDatasets.size();
+
+        if (i <= 1) {
+            god = vectorDatasets.firstElement().getFileName();
+        } else {
+
+            List<String> list = new ArrayList<String>();
+            for (int index = 0; index < vectorDatasets.size(); index++) {
+                list.add(vectorDatasets.get(index).getFileName());
+            }
+
+            Collections.sort(list, new NaturalOrderComparator());
+            //if more than one file
+            String first = list.get(0);
+            String last = list.get(list.size() - 1);
+
+            god = first + " - " + last;
         }
-        return name;
+        return god;
     }
 
-    public String getNames(int i) {
+    public String getNames( int i) {
         return vectorDatasets.elementAt(i).getFileName();
     }
 
@@ -243,7 +278,7 @@ public class JpowderInternalframe extends JInternalFrame {
      * @return super.add(comp)
      */
     @Override
-    public Component add(Component comp) {
+    public Component add( Component comp) {
         return super.add(comp);
     }
 

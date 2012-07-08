@@ -30,6 +30,7 @@
  */
 package org.jpowder.InernalFrame;
 
+import java.awt.Point;
 import org.jpowder.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -46,6 +47,7 @@ import java.util.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.jfree.chart.JFreeChart;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.jfreechart.FilesPlotter;
@@ -54,6 +56,10 @@ import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.XYPlot;
+import org.jpowder.chartTools.BalloonFrame;
+import org.jpowder.jfreechart.EditAnnotationFrame;
+import org.jpowder.jfreechart.PointAnno;
+//import org.jpowder.jfreechart.EditAnnotationFrame.PointAnno;
 
 /**
  *
@@ -72,6 +78,8 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
     private NumberAxis xAxis;
     private NumberAxis yAxis;
     private JFreeChart chart;
+    //
+    //private BalloonFrame balloonPanel = new BalloonFrame();
 
     /**
      *
@@ -89,9 +97,59 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
 
     }
 
-
     public static int getnumberOfJpowderInternalframe() {
         return Jpowder.getChartPlotter2D().getAllFrames().length;
+    }
+
+    /**
+     *
+     * @param frameName the annotation for datasets in the framename only will be displayed.
+     *
+     * show balloons that have comments of each ones within the dataset.
+     */
+    public void showAnnotation(final String frameName) {
+
+        //        if (this.balloonTips == null) {
+//            return;
+//        } else {
+        Map<Integer, PointAnno> annoMap = EditAnnotationFrame.getInstance().getAnnoMap();
+        ArrayList<PointAnno> listAnno = new ArrayList<PointAnno>();
+
+        Set set = annoMap.entrySet(); // Get an iterator
+        Iterator it = set.iterator();
+        //System.out.println("---------------------------------------------------");
+
+        // Display elements
+        while (it.hasNext()) {
+            Map.Entry me = (Map.Entry) it.next();
+            // System.out.print(me.getKey() + ": "); // System.out.println(" hey " + me.getValue());
+            PointAnno p = (PointAnno) me.getValue();
+
+            if (p.getInternalFrameName().equals(frameName)) {
+                listAnno.add(p);
+                //System.out.println("--------matching added -----------");
+            }//if match
+        }//while
+
+        //System.out.println("---------------------------------------------------");
+
+        for (int i = 0; i < listAnno.size(); i++) {
+            Point p = this.getLocation();
+            int oldX = p.x;
+            int oldY = p.y;
+
+            PointAnno pa = listAnno.get(i);
+            int newX = pa.getMouseX();
+            int newY = pa.getMouseY();
+
+            BalloonFrame bf = new BalloonFrame(pa);
+            //bf.setUndecorated(true);
+            //bf.pack();
+            bf.setVisible(true);
+            bf.setLocation(oldX + newX, oldY + newY);
+        }//for
+        //}//if
+
     }
 
     /**
@@ -115,10 +173,8 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
     }
 
     public List<Marker> getPeakRangeMarker() {
-
         return peakRangeMarker;
     }
-
 
     public List<Marker> getPeakDomainMarker() {
         return peakDomainMarker;
@@ -189,10 +245,7 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
                         String fileName = file.getName().toLowerCase();
                         allfiles.add(file);
                         allfilesName.add(fileName);
-
                     }
-
-
                 } catch (UnsupportedFlavorException ex) {
                     Logger.getLogger(Jpowder.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
@@ -243,10 +296,8 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
             }
         }
         if (numGoodFilenames > 0) {
-            FilesPlotter.addDataToJpowderInternalFrame(xYPlot,
-                    toPass);
-            dataVisibleInChartPanel.newChartInFocus(xYPlot,
-                    this.getPowderDataSet());
+            FilesPlotter.addDataToJpowderInternalFrame(xYPlot, toPass);
+            dataVisibleInChartPanel.newChartInFocus(xYPlot, this.getPowderDataSet());
         }
         Jpowder.updateJPowderInternalFrame(this);
         Jpowder.memoryChecker();

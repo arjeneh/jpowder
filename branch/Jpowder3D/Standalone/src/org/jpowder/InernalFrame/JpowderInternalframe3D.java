@@ -73,9 +73,8 @@ public class JpowderInternalframe3D extends JpowderInternalframe {
 
         this.selectedMetaItem = selectedMetaItem;
         this.fileNameAndPath = fileNameAndPath;
-        //where problem occurred goes to JpowderInternalframe.doStuff().
         doStuff(this.selectedMetaItem, this.fileNameAndPath);
-        //where problem occurred.
+
         xYPlot = this.getXYPlot();
         chart = FilesPlotter3D.getChart();
     }

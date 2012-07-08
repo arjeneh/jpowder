@@ -28,6 +28,7 @@
  */
 package org.jpowder;
 
+import org.jfree.chart.ChartMouseEvent;
 import org.jpowder.InernalFrame.JpowderInternalframe2D;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -38,8 +39,10 @@ import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfTemplate;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -57,47 +60,48 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import org.jfree.chart.ChartColor;
+import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.ui.ExtensionFileFilter;
+import org.jfree.ui.RectangleEdge;
+import org.jpowder.jfreechart.EditAnnotationFrame;
 
 /**
  * This class creates some new popupMenu and also modifies some of the
  * JFreeChart default menu options
  */
-public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
+public class JpowderPopupMenu extends JPopupMenu implements ActionListener, ChartMouseListener {
 
     private JFreeChart chart;
     private JPopupMenu popupMenu;
     private ChartPanel chartPanel;
     private XYPlot plot;  // used to pick up whether 2D or 3D plot
     private double X = -1;
-        /** The resourceBundle for the localization. */
+    /** The resourceBundle for the localization. */
     protected static ResourceBundle localizationResources =
             ResourceBundle.getBundle("org/jpowder/JpowderPopUpMenu");
     //    protected static ResourceBundle localizationResources =
     //        ResourceBundle.getBundle("org/jpowder/JpowderPopUpMenuDanish");
-    
     public static final String PDF_CAMAND = "PDF";
     public static final String PDFForPublicatio_CAMAND = "PDFForPublication";
     public static final String JPOWDER_APPLET_CAMAND = "JPOWDER_APPLET";
     public static final String PRINT_FOR_PUBLICATION_CAMAND = "PRINT_FOR_PUBLICATION";
+    public static final String ADD_ANNOTATION_CAMAND = "ADD_ANNOTATION";
     private JMenu saveAs, printAs, zoomIn, zoomOut;
-    private JMenuItem menuItem;
+    private JMenuItem menuItem, addAnnotation;
     /** A flag that controls whether or not file extensions are enforced. */
     private boolean enforceFileExtensions = true;
- 
 
     public JpowderPopupMenu(final ChartPanel chartPanel) {
-
         popupMenu = new JPopupMenu();
         this.chartPanel = chartPanel;
         chart = this.chartPanel.getChart();
         chartPanel.setPopupMenu(popupMenu);
         initComponents();
         this.plot = (XYPlot) chart.getPlot();
-
     }
 
     public boolean isEnforceFileExtensions() {
@@ -115,6 +119,24 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         if (command.equals(ChartPanel.PROPERTIES_COMMAND)) {
             chartPanel.doEditChartProperties();
 
+        } else if (command.equals(ADD_ANNOTATION_CAMAND)) {
+//            int mouseX = chartMouseEvent.getTrigger().getX();
+//            int mouseY = chartMouseEvent.getTrigger().getY();
+//            System.out.println("Co-ordination x = " + mouseX + ", y = " + mouseY);
+//            Point2D p = chartPanel.translateScreenToJava2D(new Point(mouseX, mouseY));
+//            XYPlot plot = (XYPlot) chartPanel.getChart().getPlot();
+//            Rectangle2D plotArea = chartPanel.getScreenDataArea();
+//            ValueAxis domainAxis = plot.getDomainAxis();
+//            RectangleEdge domainAxisEdge = plot.getDomainAxisEdge();
+//            ValueAxis rangeAxis = plot.getRangeAxis();
+//            RectangleEdge rangeAxisEdge = plot.getRangeAxisEdge();
+//
+//            double chartX = domainAxis.java2DToValue(p.getX(), plotArea, domainAxisEdge);
+//            double chartY = rangeAxis.java2DToValue(p.getY(), plotArea, rangeAxisEdge);
+//            System.out.println("Value of dataset in the Chart: x = " + chartX + ", y = " + chartY);
+//
+//            EditAnnotationFrame enf = new EditAnnotationFrame(mouseX, mouseY, chartX, chartY);
+//            enf.setVisible(true);
         } else if (command.equals(ChartPanel.COPY_COMMAND)) {
             chartPanel.doCopy();
         } else if (command.equals(ChartPanel.SAVE_COMMAND)) {
@@ -126,8 +148,6 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         } else if (command.equals(ChartPanel.PRINT_COMMAND)) {
             JpowderPrint jpowderPrint = new JpowderPrint(chartPanel);
             jpowderPrint.basicPrint();
-
-
         } else if (command.equals(ChartPanel.ZOOM_IN_BOTH_COMMAND)) {
             chartPanel.zoomInBoth(X, X);
         } else if (command.equals(ChartPanel.ZOOM_IN_DOMAIN_COMMAND)) {
@@ -147,7 +167,7 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         } else if (command.equals(ChartPanel.ZOOM_RESET_RANGE_COMMAND)) {
             chartPanel.restoreAutoRangeBounds();
         } else if (command.equals(PRINT_FOR_PUBLICATION_CAMAND)) {
-              JpowderPrint jpowderPrint = new JpowderPrint(chartPanel);
+            JpowderPrint jpowderPrint = new JpowderPrint(chartPanel);
             jpowderPrint.printForPublication();
         } else if (command.equals(JPOWDER_APPLET_CAMAND)) {
             saveAsJpowderApplet();
@@ -168,18 +188,17 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
      */
     public void initComponents() {
 
+        popupMenu.add(addAnnotation = new JMenuItem(localizationResources.getString("Add_Anno")));
 
+        popupMenu.addSeparator();
         popupMenu.add(menuItem = new JMenuItem(localizationResources.getString("Properties...")));
         menuItem.setActionCommand(ChartPanel.PROPERTIES_COMMAND);
         menuItem.addActionListener(this);
         popupMenu.addSeparator();
 
-
         popupMenu.add(menuItem = new JMenuItem(localizationResources.getString("Copy")));
         menuItem.setActionCommand(ChartPanel.COPY_COMMAND);
         menuItem.addActionListener(this);
-
-
 
         popupMenu.add(saveAs = new JMenu(localizationResources.getString("Save_as...")));
         saveAs.add(menuItem = new JMenuItem(localizationResources.getString("Applet_Files")));
@@ -195,7 +214,6 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         menuItem.setActionCommand(PDFForPublicatio_CAMAND);
         menuItem.addActionListener(this);
 
-
         popupMenu.addSeparator();
         popupMenu.add(printAs = new JMenu(localizationResources.getString("Print_as...")));
         printAs.add(menuItem = new JMenuItem(localizationResources.getString("Print_Normal")));
@@ -204,9 +222,6 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         printAs.add(menuItem = new JMenuItem(localizationResources.getString("Print_Publication")));
         menuItem.setActionCommand(PRINT_FOR_PUBLICATION_CAMAND);
         menuItem.addActionListener(this);
-
-
-
 
         popupMenu.addSeparator();
         popupMenu.add(zoomIn = new JMenu(localizationResources.getString("Zoom_In")));
@@ -234,7 +249,6 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
         zoomOut.add(menuItem = new JMenuItem(localizationResources.getString("Range_Axis")));
         menuItem.setActionCommand(ChartPanel.ZOOM_OUT_RANGE_COMMAND);
         menuItem.addActionListener(this);
-
 
 //        popupMenu.add(autoRange = new JMenu("Auto Range"));
 //        autoRange.add(menuItem = new JMenuItem("Both Axes"));
@@ -427,5 +441,31 @@ public class JpowderPopupMenu extends JPopupMenu implements ActionListener {
             System.err.println(de.getMessage());
         }
         document.close();
+    }
+
+    @Override
+    public void chartMouseClicked(ChartMouseEvent chartMouseEvent) {
+        int mouseX = chartMouseEvent.getTrigger().getX();
+        int mouseY = chartMouseEvent.getTrigger().getY();
+        System.out.println("Co-ordination x = " + mouseX + ", y = " + mouseY);
+        Point2D p = chartPanel.translateScreenToJava2D(new Point(mouseX, mouseY));
+        XYPlot plot = (XYPlot) chartPanel.getChart().getPlot();
+        Rectangle2D plotArea = chartPanel.getScreenDataArea();
+        ValueAxis domainAxis = plot.getDomainAxis();
+        RectangleEdge domainAxisEdge = plot.getDomainAxisEdge();
+        ValueAxis rangeAxis = plot.getRangeAxis();
+        RectangleEdge rangeAxisEdge = plot.getRangeAxisEdge();
+
+        double chartX = domainAxis.java2DToValue(p.getX(), plotArea, domainAxisEdge);
+        double chartY = rangeAxis.java2DToValue(p.getY(), plotArea, rangeAxisEdge);
+        System.out.println("Value of dataset in the Chart: x = " + chartX + ", y = " + chartY);
+
+//        EditAnnotationFrame enf = new EditAnnotationFrame(mouseX, mouseY, chartX, chartY);
+//        enf.setVisible(true);
+    }
+
+    @Override
+    public void chartMouseMoved(ChartMouseEvent arg0) {
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 }

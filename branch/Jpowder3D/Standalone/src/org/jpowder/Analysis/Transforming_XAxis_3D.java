@@ -126,11 +126,15 @@ public class Transforming_XAxis_3D extends javax.swing.JPanel implements InfoPan
             }//actionPerformed
         };//AbstractAction
         TableCellUpdatedListener tcl = new TableCellUpdatedListener(dataTable, action);
+
+        TableColumn column = dataTable.getColumnModel().getColumn(0);
+        column.setPreferredWidth(400);
+
     }
 
     @Override
     public void update() {
-        System.out.println("Update is called from Transforming_XAxis_3D.java");
+        System.out.println("Update is called from" + this.getClass().getName());
         JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
 
         if (JpowderInternalframe3D.getnumberOfJpowderInternalframe() == 0) {
@@ -187,7 +191,7 @@ public class Transforming_XAxis_3D extends javax.swing.JPanel implements InfoPan
 
         dataTable.setModel(dataSetWaveLengthTableModel);
         gsastable.setModel(gsasTableModel);
-        setSizeOfColumn();
+        setSizeOfColumn(300);
 
         dataSetWaveLengthTableModel.addTableModelListener(new TableListenerBraggsLaw());
         gsasTableModel.addTableModelListener(new TableListenerGSAS(gsastable));
@@ -336,11 +340,11 @@ public class Transforming_XAxis_3D extends javax.swing.JPanel implements InfoPan
      * sets the size of the first column of the table which it holds the
      * file names.
      */
-    public void setSizeOfColumn() {
+    public void setSizeOfColumn(int size) {
         //seting the column width
         TableColumn column = dataTable.getColumnModel().getColumn(0);
 
-        int width = 220;
+        int width = size;
         column.setPreferredWidth(width);
         gsastable.getColumnModel().getColumn(0).setPreferredWidth(width);
     }
@@ -446,7 +450,7 @@ public class Transforming_XAxis_3D extends javax.swing.JPanel implements InfoPan
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
-        dataTable.setFont(new java.awt.Font("Tahoma", 0, 12));
+        dataTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         dataTable.setToolTipText("Fill The Empty WaveLength Rows");
         jScrollPane3.setViewportView(dataTable);
 
@@ -608,7 +612,7 @@ public class Transforming_XAxis_3D extends javax.swing.JPanel implements InfoPan
         JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
         //get filename
         Vector<DataSet> vecDataInFrame = inFocus.getPowderDataSet();
-        int vecIntDataInFrameSize =  vecDataInFrame.size();
+        int vecIntDataInFrameSize = vecDataInFrame.size();
 
         for (int i = 0; i < vecIntDataInFrameSize; i++) {
             DataSet ds = vecDataInFrame.get(i);
