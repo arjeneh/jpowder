@@ -3,7 +3,7 @@
 
 =Jpowder: a Java-based program for the display and examination of powder diffraction data.=
 
-*Anders J.Markvardsen,^a*^ Kreecha Puphaiboon,^b^ Mohammad Arjeneh,^a,c^ Kenneth Shankland,^d^ Hannah L. Guest,^a^ Thomas A. Griffin,^a^ Daniel R. Badham^a^ and Damian W. Flannery^a^. 
+*Anders J.Markvardsen,^a*^ Kreecha Puphaiboon,^b^ Mohammad Arjeneh,^a,c^ Kenneth Shankland,^d^ Hannah L. Guest,^a^ Thomas A. Griffin,^a^ Daniel R. Badham^a^ and Damian W. Flannery^a^.*
 
 ^a^STFC Rutherford Appleton Laboratory, Didcot, Oxforshire OX11 0QX, UK, ^b^Kasem Bundit University, Bangkok, Thailand, ^c^City Univercity of London, Northampton Square, London EC1V 0HB, and ^d^University of Reading, Whiteknights, PO Box 217, Reading, Berkshire RG6 6AH, UK. Correspondence e-mail: anders.markvardsen@stfc.ac.uk
 
