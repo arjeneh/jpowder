@@ -3,4 +3,4 @@
 
 =Jpowder: a Java-based program for the display and examination of powder diffraction data.=
 
-*The ability to display and inspect powder diffraction data quickly and efficiently is a central part of the data analysis process. Whilst many computer programs are capable of displaying powder data, their focus is typically on advanced operations such as structure solution or Rietveld refinement.*
+*The ability to display and inspect powder diffraction data quickly and efficiently is a central part of the data analysis process. Whilst many computer programs are capable of displaying powder data, their focus is typically on advanced operations such as structure solution or Rietveld refinement. This article describes a lightweight software package, _Jpowder_, whose focus is fast and convenient visualization and comparison of powder data sets in a variety of formats from computers with network access. _Jpowder_ is written in Java and uses its associated Web Start technology to allow 'single-click deployment' from a web page, [http://www.jpowder.org]. _Jpowder_ is open source, free and available for use by anyone.*
