@@ -17,4 +17,8 @@ _Jpowder_ uses both the Jva Web Start and Java applet technologies. Java Web Sta
 
 Using the same codebase, a limited range of _Jpowder_ functionality has been exposed in the form of a Java applet - a self-contained Java component that is embedded within a standard HTML web page. This provides an even more convenient mechanism to present data in an interactive style on the web.
 
-The Java programming language has been used by many scientists to develop applications that offer excellent performance and portability, and some notable Java-based programs in the field of crystallography and molecular display include _Jmol_ (2008), _MAUD_ (Lutterotti & Bertolotti, 2003), _JCrystal_ (2010) and _Kiosk_ (2010). The _Jmol_ applet has been 
+The Java programming language has been used by many scientists to develop applications that offer excellent performance and portability, and some notable Java-based programs in the field of crystallography and molecular display include _Jmol_ (2008), _MAUD_ (Lutterotti & Bertolotti, 2003), _JCrystal_ (2010) and _Kiosk_ (2010). The _Jmol_ applet has been widely adopted for the interactive display of molecules on the web. The applet version of _Jpowder_ aims to do the same for powder diffraction data.
+
+==2. _Jpowder_ overview==
+
+_Jpowder_ is optimized for visual inspection of powder data. Data files can be dragged into _Jpowder_ from the desktop or by using the _Jpowder_ Explorer window (Fig. 1) When the Explorer window is 
