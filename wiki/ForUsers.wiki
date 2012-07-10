@@ -23,19 +23,6 @@ The Java programming language has been used by many scientists to develop applic
 
 _Jpowder_ is optimized for visual inspection of powder data. Data files can be dragged into _Jpowder_ from the desktop or by using the _Jpowder_ Explorer window (Fig. 1). 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 http://jpowder.googlecode.com/svn/wiki/pictures/Figure1JpowderExplorer.PNG
 =====*Figure 1*=====
 When the Explorer window is used, multiple files from multiple folders can be selected simultaneously. 
