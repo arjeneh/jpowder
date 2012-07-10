@@ -67,3 +67,12 @@ This tool currently only provides a description of the default zoom and pan func
 
 ====3.6.5. _x_-axis transform.====
 This tool uses supplied wavelength information to convert 2θ into _d_ spacings and _vice versa_. It assumes that the data were collected at constant wavelength and there fore currently does not support time-of-flight data.
+
+===4. Software and hardware environment===
+_Jpowder_ will run on any PC that supports a Java Runtime Environment (JRE). Specifically, version 1.6 or higher is required for the version of _Jpowder_ described in this paper; however, if a JRE version older than 1.6 (_i.e._ older than 11 December 2006) is installed on the local machine, the user is directed to the JRE update web page.
+
+By default, Java Web Start applications run in a restricted environment, known as a sandbox - meaning they cannot access local files or the network. _Jpowder_ provides functionality that goes beyond that allowed in the sandbox by signing the application's JAR files; this means that the user will need to accept a digitally signed certificate upon first installation, as depicted in fig. 3. This model enables Java Web Start applications to be installed by the end-user in an environment without administrative permissions, such as a university department where students have roaming accounts.
+
+_Jpowder_ versions can be updated for all users worldwide simply by providing an updated JAR file on the web server. On each user's computer, Java Web Starter checks the web server for updates when the application runs. Resources are cached locally, for improved performance, but this also confers the advantage that they can function independently during any network/internet outages.
+
+The code is licensed under GNU General Public License version 3.
