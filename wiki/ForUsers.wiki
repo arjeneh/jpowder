@@ -81,3 +81,6 @@ The code is licensed under GNU General Public License version 3.
 _Jpowder_ is downloadable from [http://www.jpowder.org] and the user wiki is available at [http://www.jpowder.org/wiki]. The source code is available to download from [http://code.google.com/p/jpowder] and bugs can be reported _via_ [http://code.google.com/p/jpowder/issues]. The _Jpowder_ discussion group at [http://groups.google.com/group/jpowder] provides a forum for the discussion of _Jpowder_-related issues, such as feature requests.
 
 KP gratefully acknowledges the support of the Department of Computer Science at Kasem Bandit University. AJM is grateful to STFC, who provided the funding for MA. The authors are very grateful to Srikanth Nagella, Harriott Nowell and Norman Shankland for useful discussions, suggestions and extensive program testing. _Jpowder_ uses the open source libraries JFreeChart ([http://www.jfree.org/jfreechart]), JXLayer ([http://jxlayer.dev.java.net]) and we would like to thank the developers of these excellent libraries for making their software available.
+
+===References===
+Altomare, A., Camalli, M., Cuocci, C., Giacovazzo, C., Moliterni, A. & Rizzi, R. (2009). _J. Appl. Cryst._ *42*, 1197-1202.
