@@ -63,3 +63,7 @@ The _y_ data of a plot can be scaled by simple multiplication and division opera
 This tool is complementary to the chart properties window and is used to change the appearance of plots in a chart. For example, it allows users to change features such as marker types, plot colour and axis tick spacing.
 
 ====3.6.4. Zoom and pan.====
+This tool currently only provides a description of the default zoom and pan functionality of _Jpowder_ and is serving as a placeholder for the addition of more functionality.
+
+====3.6.5. _x_-axis transform.====
+This tool uses supplied wavelength information to convert 2θ into _d_ spacings and _vice versa_. It assumes that the data were collected at constant wavelength and there fore currently does not support time-of-flight data.
