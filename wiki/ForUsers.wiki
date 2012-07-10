@@ -58,3 +58,8 @@ This allows the user to select the location of peaks. These are stored in a peak
 
 ====3.6.2. Rescale and move.====
 The _y_ data of a plot can be scaled by simple multiplication and division operations, or adjusted by the addition or subtraction of a constant value. These simple operations are provided to help the user compare plots collected under different conditions more easily.
+
+====3.6.3. Appearance.====
+This tool is complementary to the chart properties window and is used to change the appearance of plots in a chart. For example, it allows users to change features such as marker types, plot colour and axis tick spacing.
+
+====3.6.4. Zoom and pan.====
