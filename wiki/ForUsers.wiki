@@ -96,8 +96,7 @@ _Highscore_ (2010). {http://www.panalytical.com}.
 _JCrystal_ (2010). {http://jcrystal.com/}.
 _Jmol_ (2008). _Jmol: an Open-Source Java Viewer for Chemical Structures in 3D_,
 {_http://www.jmol.org}.
-_Kiosk_ (2010). {http://www.rcsb.org/pdb/static.do?p=education_discussion/
-educational_resources/index.html#kiosk}.
+_Kiosk_ (2010). {http://www.rcsb.org/pdb/static.do?p=education_discussion/educational_resources/index.html#kiosk}.
 Larson, A. C. & Von Dreele, R. B. (1994). GSAS. Report LAUR 86-748. Los
 Alamos National Laboratory, New Mexico, USA.
 Lutterotti, L. & Bortolotti, M. (2003). _IUCr Commission on Crystallographic
