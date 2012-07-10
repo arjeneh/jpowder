@@ -21,9 +21,7 @@ The Java programming language has been used by many scientists to develop applic
 
 ==2. _Jpowder_ overview==
 
-_Jpowder_ is optimized for visual inspection of powder data. Data files can be dragged into _Jpowder_ from the desktop or by using the _Jpowder_ Explorer window (Fig. 1).
-http://code.google.com/p/jpowder/source/browse/wiki/pictures/Figure%201%20Jpowder%20explorer.PNG
-When the Explorer window is used, multiple files from multiple folders can be selected simultaneously. 
+_Jpowder_ is optimized for visual inspection of powder data. Data files can be dragged into _Jpowder_ from the desktop or by using the _Jpowder_ Explorer window (Fig. 1). When the Explorer window is used, multiple files from multiple folders can be selected simultaneously. 
 The data are visualized as plots in charts, also reffered to as plot windows. Plots may be manipulated using the mouse or a number of shortcut keys. In addition, variousetools are available to aid plot comparison, for example, by moving, rescaling and changing the appearance of plots. Charts can be exported in variouse ways, including using the 'PDF' for publication option. _Jpowder_ also includes tools for basic data analysis tasks, including, for example, selecting peaks to a peak list, which can subsequently be exported to an indexing program such as _DICVOL_ (Boultif & Louër, 2004), and a tool for switching _x_ axes between 2θ and _d_ spacing to aid comparison of data sets collected at different wavelengths. Charts can be saved to disk in '_Jpowder_-applet format' (a serialized object), which can susequently be loaded into the applet version of _Jpowder_. This feature can be used to publish powder data not only as static images but also as interactive applets that offer the same manipulation options as a _Jpowder_ chart; see, for example, [http://www.jpowder.org/JpowderApplet.html].
 
 ==3. Program description==
