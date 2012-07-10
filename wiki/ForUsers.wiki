@@ -24,7 +24,7 @@ The Java programming language has been used by many scientists to develop applic
 _Jpowder_ is optimized for visual inspection of powder data. Data files can be dragged into _Jpowder_ from the desktop or by using the _Jpowder_ Explorer window (Fig. 1) When the Explorer window is used, multiple files from multiple folders can be selected simultaneously. 
 The data are visualized as plots in charts, also reffered to as plot windows. Plots may be manipulated using the mouse or a number of shortcut keys. In addition, variousetools are available to aid plot comparison, for example, by moving, rescaling and changing the appearance of plots. Charts can be exported in variouse ways, including using the 'PDF' for publication option. _Jpowder_ also includes tools for basic data analysis tasks, including, for example, selecting peaks to a peak list, which can subsequently be exported to an indexing program such as _DICVOL_ (Boultif & Louër, 2004), and a tool for switching _x_ axes between 2θ and _d_ spacing to aid comparison of data sets collected at different wavelengths. Charts can be saved to disk in '_Jpowder_-applet format' (a serialized object), which can susequently be loaded into the applet version of _Jpowder_. This feature can be used to publish powder data not only as static images but also as interactive applets that offer the same manipulation options as a _Jpowder_ chart; see, for example, [http://www.jpowder.org/JpowderApplet.html].
 
-==3. Program Description==
+==3. Program description==
 ===3.1. Supported file formats===
 The following file formats are supported for this version of _Jpowder:_
  * XY format (.xy). Two-column ASCII format, where the data in the first column are assumed to be the diffraction angle in 2θ and those in the second column are X-ray or neutron counts.
@@ -32,4 +32,16 @@ The following file formats are supported for this version of _Jpowder:_
  * CIF format. The crystallographic information file format is described in detail at [http://www.iucr.org/resources/cif].
  * ISIS _GSAS_ format. At the STFC ISIS Facility (Rutherford Appleton Laboratory, Oxford, UK), _GSAS_ is frequently used to refine structures against time-of-flight neutron powder data. The current version of _Jpowder_ requires such data to be in what the _GSAS_ manual refers to as 'RALF/FXYE format'. When reading such a time-of-flight .gss file, the _x_ values are assumed to be given in units of microseconds.
 
-_Jpowder_ will attempt
+_Jpowder_ will attempt to read files with extensions .gss and .cif as ISIS _GSAS_ format and CIF format files, respectively. For files with any other extensions, _Jpowder_ will attempt to read the file in XY or XYE format. All data are assumed to be constant-wanelength data with the exception of data using the ISIS _GSAS_ format. The _Jpowder_ code is open source and structured in such a way that it is straightforward for anyone used to Java programming to extend the list of supported file types.
+
+===3.2. Plotting data===
+_Jpowder_ supports three methods for opening files:
+ # by the standard 'File' menu approach, which permits the selection of one or more files from a single folder.
+ # by dragging-and-dropping one or more files from a single folder (including the desktop) onto the Plot Area of _Jpowder_.
+ # by dragging-and-dropping one or more selected files from one or more folders using the _Jpowder_ Explorer window. 
+Note that when multiple files are opened simultaneously, they do so in a single _Jpowder_ chart. Furthermore, when a file is dropped onto an existing chart, an additional Plot is created within the chart.
+
+===3.3. Visually exploring a chart===
+When multiple plots are displayed in a single chart, the 'Plot(s) Visible In Chart' panel is used to select which plots are visible at any given time. The mouse  can be used to adjust the displayed region as follows: left click, hold down and drag to the right and down to zoom in on a region (a semi-transparent rectangle highlights the area to be zoomed); left click, hold down and drag to the left to restore the default view; left click, hold down and drag whilst holding down the Ctrl key to move plots. A list of shortcut keys is presented in Table 1.
+
+===3.4. Preparing a figure for publication in a scientific journal===
