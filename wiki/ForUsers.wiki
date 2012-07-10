@@ -82,6 +82,9 @@ _Jpowder_ will run on any PC that supports a Java Runtime Environment (JRE). Spe
 
 By default, Java Web Start applications run in a restricted environment, known as a sandbox - meaning they cannot access local files or the network. _Jpowder_ provides functionality that goes beyond that allowed in the sandbox by signing the application's JAR files; this means that the user will need to accept a digitally signed certificate upon first installation, as depicted in fig. 3. This model enables Java Web Start applications to be installed by the end-user in an environment without administrative permissions, such as a university department where students have roaming accounts.
 
+http://jpowder.googlecode.com/svn/wiki/pictures/DownloadScreenJpowder.JPG
+=====Figure 3: _Jpowder_ certificate warning.=====
+
 _Jpowder_ versions can be updated for all users worldwide simply by providing an updated JAR file on the web server. On each user's computer, Java Web Starter checks the web server for updates when the application runs. Resources are cached locally, for improved performance, but this also confers the advantage that they can function independently during any network/internet outages.
 
 The code is licensed under GNU General Public License version 3.
