@@ -48,6 +48,8 @@ Note that when multiple files are opened simultaneously, they do so in a single 
 ===3.3. Visually exploring a chart===
 When multiple plots are displayed in a single chart, the 'Plot(s) Visible In Chart' panel is used to select which plots are visible at any given time. The mouse  can be used to adjust the displayed region as follows: left click, hold down and drag to the right and down to zoom in on a region (a semi-transparent rectangle highlights the area to be zoomed); left click, hold down and drag to the left to restore the default view; left click, hold down and drag whilst holding down the Ctrl key to move plots. A list of shortcut keys is presented in Table 1.
 
+http://jpowder.googlecode.com/svn/wiki/pictures/TableOfShortcutsJpowder.JPG
+=====Table 1: A list of available keyboard shortcuts in _Jpowder_=====
 ===3.4. Preparing a figure for publication in a scientific journal===
 A chart may be saved as a PDF file or an image (PNG) file or copied to the clipboard. In addition, a chart can be saved as a 'PDF for Publication' file, where the background colour is temporarily changed to white while the chart is saved to the selected format. Changing of the background colour can also be done manually using the 'Properties' window, which can be accessed either from the main 'Edit' menu or by right-clicking over the chart.
 
