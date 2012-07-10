@@ -84,3 +84,26 @@ KP gratefully acknowledges the support of the Department of Computer Science at 
 
 ===References===
 Altomare, A., Camalli, M., Cuocci, C., Giacovazzo, C., Moliterni, A. & Rizzi, R. (2009). _J. Appl. Cryst._ *42*, 1197-1202.
+Boultif, A. & Louër, D.(2004)._J.Appl. Cryst._ *37*, 724-731.
+Coelho, A. A. (2003). TOPAS _User Manual._ Version 3.1. Bruker AXS GmbH,
+Karlsruhe, Germany.
+David, W. I. F., Shankland, K., van de Streek, J., Pidcock, E., Motherwell,
+W. D. S. & Cole, J. C. (2006). _J. Appl. Cryst._ *39*, 910–915.
+Dong, C. (1999). _J. Appl. Cryst._ *32*, 838.
+_EVA_ (2010). {http://www.bruker-axs.de/eva_software.html}.
+Favre-Nicolin, V. & C ˇ erny´, R. (2002)._ J. Appl. Cryst._ *35*, 734–743.
+_Highscore_ (2010). {http://www.panalytical.com}.
+_JCrystal_ (2010). {http://jcrystal.com/}.
+_Jmol_ (2008). _Jmol: an Open-Source Java Viewer for Chemical Structures in 3D_,
+{_http://www.jmol.org}.
+_Kiosk_ (2010). {http://www.rcsb.org/pdb/static.do?p=education_discussion/
+educational_resources/index.html#kiosk}.
+Larson, A. C. & Von Dreele, R. B. (1994). GSAS. Report LAUR 86-748. Los
+Alamos National Laboratory, New Mexico, USA.
+Lutterotti, L. & Bortolotti, M. (2003). _IUCr Commission on Crystallographic
+Computing Newsletter_, No. 1, pp. 43–50.
+Petricek, V., Dusek, M. & Palatinus, L. (2006). JANA_2006_. Institute of Physics,
+Prague, Czech Republic.
+_Powder3D_ (2008). {http://www.fkf.mpg.de/xray/html/powder3d.html}.
+Putz, H., Scho¨ n, J. C. & Jansen, M. (1999)._ J. Appl. Cryst._ *32*, 864–870.
+Rodriguez-Carvajal, J. (1993). _Physica B_, *192*, 55–69.
