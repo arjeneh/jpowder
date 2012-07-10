@@ -101,7 +101,7 @@ Larson, A. C. & Von Dreele, R. B. (1994). GSAS. Report LAUR 86-748. Los
 Alamos National Laboratory, New Mexico, USA.
 Lutterotti, L. & Bortolotti, M. (2003). _IUCr Commission on Crystallographic
 Computing Newsletter_, No. 1, pp. 43–50.
-Petricek, V., Dusek, M. & Palatinus, L. (2006). JANA_2006_. Institute of Physics,
+Petricek, V., Dusek, M. & Palatinus, L. (2006). _JANA2006_. Institute of Physics,
 Prague, Czech Republic.
 _Powder3D_ (2008). {http://www.fkf.mpg.de/xray/html/powder3d.html}.
 Putz, H., Scho¨ n, J. C. & Jansen, M. (1999)._ J. Appl. Cryst._ *32*, 864–870.
