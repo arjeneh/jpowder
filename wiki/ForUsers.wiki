@@ -49,3 +49,12 @@ A chart may be saved as a PDF file or an image (PNG) file or copied to the clipb
 
 ===3.5. Preparing an interactive figure for web publication===
 A chart may also be saved as a '_Jpowder_ applet format' file. This file can be subsequently imported into an applet version of _Jpowder_ in oreder to display the data on a web page in a form that has the same 'look-and-feel' and functionality as a _Jpowder_ chart. Full details of how to use this feature are give at [http://www.jpowder.org/JpowderApplet.html].
+
+===3.6. _Jpowder_ Tools===
+Upon clicking the Tools tab of _Jpowder_, the user is presented with several options (see Fig. 2) for interacting with, or changing the display of, plots in _Jpowder_, and these are summarized below.
+
+====3.6.1. Peak selection.====
+This allows the user to select the location of peaks. These are stored in a peak list which can be copied to the clipboard and subsequently utilized in indexing programs such as _DICVOL_.
+
+====3.6.2. Rescale and move.====
+The _y_ data of a plot can be scaled by simple multiplication and division operations, or adjusted by the addition or subtraction of a constant value. These simple operations are provided to help the user compare plots collected under different conditions more easily.
