@@ -29,4 +29,7 @@ The data are visualized as plots in charts, also reffered to as plot windows. Pl
 The following file formats are supported for this version of _Jpowder:_
  * XY format (.xy). Two-column ASCII format, where the data in the first column are assumed to be the diffraction angle in 2θ and those in the second column are X-ray or neutron counts.
  * XYE format (.xye). As for XY format, but with an additional column listing the estimated standard deviations for the counts. This format also supports the use of a single real number, specifying a wavelength, as the first line of the file.
- * CIF format.
+ * CIF format. The crystallographic information file format is described in detail at [http://www.iucr.org/resources/cif].
+ * ISIS _GSAS_ format. At the STFC ISIS Facility (Rutherford Appleton Laboratory, Oxford, UK), _GSAS_ is frequently used to refine structures against time-of-flight neutron powder data. The current version of _Jpowder_ requires such data to be in what the _GSAS_ manual refers to as 'RALF/FXYE format'. When reading such a time-of-flight .gss file, the _x_ values are assumed to be given in units of microseconds.
+
+_Jpowder_ will attempt
