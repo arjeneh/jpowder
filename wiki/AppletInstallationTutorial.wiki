@@ -1,0 +1,18 @@
+#summary How to install an Applet on your webpage.
+#labels Applet-Deploy
+
+== Introduction ==
+
+This page will tell you how to install a Jpowder Applet displaying one piece of data on your html page. In this, you will need to use DropBox, but there is already an account set up specifically for this reason. This tutorial will walk you through the code required to install the applet, as well as how to add a file to the Dropbox public folder.
+
+= Dropbox =
+
+[https://www.dropbox.com]
+
+So that users can install single file Jpowder applets to their webpage as easily as possible, a DropBox account has been set up for users to add their files to. This will enable the data to publish over the internet without the user requiring a server.
+
+Dropbox is a filesharing website. Usually using Dropbox would require each user to have an account and store their own files themselves, but because we want all of these files to be available, one account will be made available to every user. The account:
+
+E-mail: Applet@Jpowder.org
+
+Password: JpowderApplet
