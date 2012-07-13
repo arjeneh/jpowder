@@ -3,11 +3,14 @@
 
 == Introduction ==
 
-This page will tell you how to install a Jpowder Applet displaying one piece of data on your html page. In this, you will need to use DropBox, but there is already an account set up specifically for this reason. This tutorial will walk you through the code required to install the applet, as well as how to add a file to the Dropbox public folder.
+This page will tell you how to install a Jpowder Applet displaying one piece of data on your html page. In this, you will need to use Dropbox, but there is already an account set up specifically for this reason. This tutorial will walk you through the code required to install the applet, as well as how to add a file to the Dropbox public folder. For this tutorial, all data files need to be saved as a .ser file. To save a file as .ser, right click the graph in Jpowder, and click save as Jpowder-Applet format (as illustrated below.)
+[http://jpowder.googlecode.com/svn/wiki/pictures/demo_save_applet_format.PNG]
 
 = Dropbox =
 
 [https://www.dropbox.com]
+
+Note: Dropbox does NOT need installing, everything to do with dropbox can be done through the browser.
 
 So that users can install single file Jpowder applets to their webpage as easily as possible, a DropBox account has been set up for users to add their files to. This will enable the data to publish over the internet without the user requiring a server.
 
@@ -16,3 +19,20 @@ Dropbox is a filesharing website. Usually using Dropbox would require each user 
 E-mail: Applet@Jpowder.org
 
 Password: !JpowderApplet
+
+This will send you to the account. All data should be stored in the public file, so it is accessible. The Dropbox public folder looks like this:
+[http://jpowder.googlecode.com/svn/wiki/pictures/DropboxPublic2.png]
+
+The JpowderApplet.jar is the most important file there, as it contains the code which actually runs the applet.
+[http://jpowder.googlecode.com/svn/wiki/pictures/DropboxPublicJar.png]
+The other two files are the data files. These run through the applet, so require the .jar file to run properly.
+
+= The Code =
+
+[http://jpowder.googlecode.com/svn/wiki/pictures/AppletCode.png]
+This is the code that should be typed out exactly like it is here into the code in the area it is wanted.
+
+A more detailed diagram (Below) dissecting the code and explaining simply what needs changing from each line.
+[http://jpowder.googlecode.com/svn/wiki/pictures/AppletCodedetails.png]
+
+
