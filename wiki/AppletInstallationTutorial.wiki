@@ -27,6 +27,8 @@ The JpowderApplet.jar is the most important file there, as it contains the code 
 [http://jpowder.googlecode.com/svn/wiki/pictures/DropboxPublicJar.png]
 The other two files are the data files. These run through the applet, so require the .jar file to run properly.
 
+To add your data file to dropbox, simply drag and drop into the dropbox window on your browser. This will then upload the file directly to dropbox, and it is then ready to use!
+
 = The Code =
 
 [http://jpowder.googlecode.com/svn/wiki/pictures/AppletCode.png]
@@ -34,5 +36,3 @@ This is the code that should be typed out exactly like it is here into the code 
 
 A more detailed diagram (Below) dissecting the code and explaining simply what needs changing from each line.
 [http://jpowder.googlecode.com/svn/wiki/pictures/AppletCodedetails.png]
-
-
