@@ -270,13 +270,14 @@ public class fileExplorer9 extends javax.swing.JFrame {
         thirdSet = fileName.substring(breakPoint2int, breakPoint3int);
         jLabel9.setText(thirdSet);
         }
-                else {
-            JOptionPane.showMessageDialog(rootPane, "Warning, Break point larger than file name.");
-        }
-        
+
+        if (endOfText > breakPoint3int) {
         forthSet = fileName.substring(breakPoint3int, endOfText);
         jLabel11.setText(forthSet);
-
+        }
+        else {
+            JOptionPane.showMessageDialog(rootPane, "Warning, Break point larger than file name.");
+        }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
