@@ -198,7 +198,6 @@ public class fileExplorer9 extends javax.swing.JFrame {
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(3, 3, 3)
@@ -228,6 +227,7 @@ public class fileExplorer9 extends javax.swing.JFrame {
            if(returnVal == JFileChooser.APPROVE_OPTION) {
                fileName = fd.getSelectedFile().getName();
                jComboBox3.addItem(fileName);
+
                
            }
    }//GEN-LAST:event_jButton1ActionPerformed
@@ -248,6 +248,7 @@ public class fileExplorer9 extends javax.swing.JFrame {
     }//GEN-LAST:event_chosenBreakPoint3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        fileName = jComboBox3.getSelectedItem().toString();
         Object breakPoint1 = chosenBreakPoint1.getSelectedItem();
         int breakPoint1int = Integer.parseInt(""+breakPoint1);
         Object breakPoint2 = chosenBreakPoint2.getSelectedItem();
@@ -255,20 +256,28 @@ public class fileExplorer9 extends javax.swing.JFrame {
         Object breakPoint3 = chosenBreakPoint3.getSelectedItem();
         int breakPoint3int = Integer.parseInt(""+breakPoint3);
         int endOfText = fileName.length();
-        System.out.println(endOfText);
         if (fileName.length() > breakPoint1int) {
         firstSet = fileName.substring(0, breakPoint1int);
         jLabel7.setText(firstSet);
         }
-        else {
-        jDialog1.setVisible(true);
-        }
+
+        if (fileName.length() > breakPoint2int) {
         secondSet = fileName.substring(breakPoint1int, breakPoint2int);
         jLabel8.setText(secondSet);
+        }
+
+        if (fileName.length() > breakPoint3int) {
         thirdSet = fileName.substring(breakPoint2int, breakPoint3int);
         jLabel9.setText(thirdSet);
+        }
+                else {
+            JOptionPane.showMessageDialog(rootPane, "Warning, Break point larger than file name.");
+        }
+        
         forthSet = fileName.substring(breakPoint3int, endOfText);
         jLabel11.setText(forthSet);
+
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
