@@ -1,5 +1,5 @@
+#summary How to use Jpowder.
 #labels Featured
-#How to use Jpowder.
 
 =Jpowder: a Java-based program for the display and examination of powder diffraction data.=
 
