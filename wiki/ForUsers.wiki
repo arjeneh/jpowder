@@ -1,5 +1,5 @@
-#summary One-sentence summary of this page.
 #labels Featured
+#How to use Jpowder.
 
 =Jpowder: a Java-based program for the display and examination of powder diffraction data.=
 
