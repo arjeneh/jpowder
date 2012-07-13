@@ -36,3 +36,5 @@ This is the code that should be typed out exactly like it is here into the code 
 
 A more detailed diagram (Below) dissecting the code and explaining simply what needs changing from each line.
 [http://jpowder.googlecode.com/svn/wiki/pictures/AppletCodedetails.png]
+
+Once this code is added, run the webpage to test if it works. Happy Jpowdering!
