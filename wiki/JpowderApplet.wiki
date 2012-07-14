@@ -1,4 +1,5 @@
 #summary Creating E-learning content with Jpowder.
+#labels Featured
 
 = Introduction =
 For a demonstration of how to use !JpowderApplet to create interactive web content see http://www.jpowder.org/JpowderApplet.html.
