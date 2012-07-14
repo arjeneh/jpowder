@@ -3,6 +3,8 @@
 = Introduction =
 For a demonstration of how to use !JpowderApplet to create interactive web content see http://www.jpowder.org/JpowderApplet.html.
 
+The demonstration below require that you access to server where you can upload files. If you don't have access to such a server in your department then on [AppletInstallationTutorial] it is demonstrated how to use an Internet fileshare.
+
 This page explain how to create such content.
 
   # Load data into Jpowder. Optionally adjust how the data are displayed until the region or features of interest of the data are highlighted. 
