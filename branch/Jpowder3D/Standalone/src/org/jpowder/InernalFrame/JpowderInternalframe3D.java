@@ -28,14 +28,22 @@
  */
 package org.jpowder.InernalFrame;
 
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 import org.jpowder.*;
 import java.util.Vector;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
+import org.jpowder.Annotation.BalloonFrame;
 import org.jpowder.dataset.DataSet;
+import org.jpowder.jfreechart.EditAnnotationFrame;
 import org.jpowder.jfreechart.FilesPlotter3D;
+import org.jpowder.jfreechart.PointAnno;
 
 /**
  *
@@ -85,6 +93,55 @@ public class JpowderInternalframe3D extends JpowderInternalframe {
 
     public JFreeChart getChart() {
         return chart;
+    }
+
+       /**
+     *
+     * @param frameName the annotation for datasets in the framename only will be displayed.
+     *
+     * show balloons that have comments of each ones within the dataset.
+     */
+    public void showAnnotation(final String frameName) {
+//        if (this.balloonTips == null) {
+//            return;
+//        } else {
+        Map<Integer, PointAnno> annoMap = EditAnnotationFrame.getInstance().getAnnoMap();
+        ArrayList<PointAnno> listAnno = new ArrayList<PointAnno>();
+
+        Set set = annoMap.entrySet(); // Get an iterator
+        Iterator it = set.iterator();
+        //System.out.println("---------------------------------------------------");
+
+        // Display elements
+        while (it.hasNext()) {
+            Map.Entry me = (Map.Entry) it.next();
+            // System.out.print(me.getKey() + ": "); // System.out.println(" hey " + me.getValue());
+            PointAnno p = (PointAnno) me.getValue();
+
+            if (p.getInternalFrameName().equals(frameName)) {
+                listAnno.add(p);
+                //System.out.println("--------matching added -----------");
+            }//if match
+        }//while
+
+        //System.out.println("---------------------------------------------------");
+
+        for (int i = 0; i < listAnno.size(); i++) {
+            Point p = this.getLocation();
+            int oldX = p.x;
+            int oldY = p.y;
+
+            PointAnno pa = listAnno.get(i);
+            int newX = pa.getMouseX();
+            int newY = pa.getMouseY();
+
+            BalloonFrame bf = new BalloonFrame(pa);
+            //bf.setUndecorated(true);
+            //bf.pack();
+            bf.setVisible(true);
+            bf.setLocation(oldX + newX, oldY + newY);
+        }//for
+        //}//if
     }
 
     /**

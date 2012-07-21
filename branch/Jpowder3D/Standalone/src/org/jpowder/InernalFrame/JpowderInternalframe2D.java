@@ -58,7 +58,7 @@ import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.XYPlot;
-import org.jpowder.chartTools.BalloonFrame;
+import org.jpowder.Annotation.BalloonFrame;
 import org.jpowder.jfreechart.EditAnnotationFrame;
 import org.jpowder.jfreechart.PointAnno;
 

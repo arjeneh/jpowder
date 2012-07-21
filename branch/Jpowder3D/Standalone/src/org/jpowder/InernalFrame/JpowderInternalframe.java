@@ -46,7 +46,7 @@ import javax.swing.event.InternalFrameEvent;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.plot.XYPlot;
-import org.jpowder.chartTools.BalloonFrame;
+import org.jpowder.Annotation.BalloonFrame;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
 import org.jpowder.util.NaturalOrderComparator;

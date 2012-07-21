@@ -29,15 +29,16 @@
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
  */
-
 package org.jpowder.chartTools;
 
 import org.jpowder.Annotation.IMapObserver;
 import org.jpowder.Annotation.IMapSubject;
 import java.util.Map;
+import javax.swing.JOptionPane;
 import org.jpowder.Analysis.ToolsIcon2D;
 import org.jpowder.Analysis.ToolsIcon3D;
 import org.jpowder.InernalFrame.JpowderInternalframe2D;
+import org.jpowder.InernalFrame.JpowderInternalframe3D;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 import org.jpowder.jfreechart.EditAnnotationFrame;
@@ -193,13 +194,37 @@ public class AnnotationPanel extends javax.swing.JPanel implements InfoPanel, IM
 }//GEN-LAST:event_backButtonActionPerformed
 
     private void showRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showRadioButtonActionPerformed
+        // TODO: Should handle null pointer.
+        //2D
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-        annoTxt.setVisible(true);
-        jLabel2.setVisible(true);
-        annoTxt.setText(strThere + EditAnnotationFrame.getInstance().getCurrentAnnoMapSize());
+        try {
+            annoTxt.setVisible(true);
+            jLabel2.setVisible(true);
+            annoTxt.setText(strThere + EditAnnotationFrame.getInstance().getCurrentAnnoMapSize());
 
-        String activeFrameName = inFocus.getChartPanel().getName();
-        inFocus.showAnnotation(activeFrameName);
+            String activeFrameName = inFocus.getChartPanel().getName();
+            inFocus.showAnnotation(activeFrameName);
+        } catch (NullPointerException e) {
+            System.out.println("inFocus 2D returned null");
+            JOptionPane.showMessageDialog( null, "There is no file plotted yet." );
+        }
+
+        //3D
+        JpowderInternalframe3D in3DFocus = Jpowder.internalFrameInFocus3D;
+        try {
+            annoTxt.setVisible(true);
+            jLabel2.setVisible(true);
+            annoTxt.setText(strThere + EditAnnotationFrame.getInstance().getCurrentAnnoMapSize());
+
+            String activeFrameName = in3DFocus.getChartPanel().getName();
+            in3DFocus.showAnnotation(activeFrameName);
+        } catch (NullPointerException e) {
+            System.out.println("inFocus 2D returned null");
+            JOptionPane.showMessageDialog( null, "There is no file plotted yet." );
+        }
+
+        //System.out.println("Nul or not " + inFocus);
+
     }//GEN-LAST:event_showRadioButtonActionPerformed
 
     private void hideRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hideRadioButtonActionPerformed

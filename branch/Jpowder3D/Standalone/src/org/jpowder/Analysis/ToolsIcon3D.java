@@ -32,6 +32,7 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 import org.jpowder.InernalFrame.JpowderInternalframe3D;
 import org.jpowder.Jpowder;
+import org.jpowder.chartTools.AnnotationPanel;
 import org.jpowder.chartTools.BlockHeight;
 import org.jpowder.chartTools.ColorBar3D;
 import org.jpowder.dataset.DataSet;
@@ -46,6 +47,7 @@ public class ToolsIcon3D extends javax.swing.JPanel {
     private BlockHeight blockHeight = new BlockHeight(this);
     private Transforming_XAxis_3D braggsLow3D = new Transforming_XAxis_3D(this);
     private Jpowder jpowder;
+    private AnnotationPanel annoPanel = new AnnotationPanel(this);
 
     /** Creates new form ToolsIcon3D */
     public ToolsIcon3D(Jpowder jpowder) {
@@ -62,34 +64,34 @@ public class ToolsIcon3D extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        colourBarButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        yAxisButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        smoothingButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         changeXAxisButton = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
+        annotationButton = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 204, 255));
 
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        colourBarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                colourBarButtonActionPerformed(evt);
             }
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14));
         jLabel1.setText("3D tools testing..........");
 
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        yAxisButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                yAxisButtonActionPerformed(evt);
             }
         });
 
@@ -105,9 +107,9 @@ public class ToolsIcon3D extends javax.swing.JPanel {
 
         jLabel4.setText("No be decided");
 
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        smoothingButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                smoothingButtonActionPerformed(evt);
             }
         });
 
@@ -121,9 +123,9 @@ public class ToolsIcon3D extends javax.swing.JPanel {
 
         jLabel6.setText("Transform X-Axis");
 
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        annotationButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                annotationButtonActionPerformed(evt);
             }
         });
 
@@ -139,7 +141,7 @@ public class ToolsIcon3D extends javax.swing.JPanel {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(smoothingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel5)))
@@ -160,10 +162,10 @@ public class ToolsIcon3D extends javax.swing.JPanel {
                                         .addGap(43, 43, 43))))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(annotationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(colourBarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -171,7 +173,7 @@ public class ToolsIcon3D extends javax.swing.JPanel {
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(yAxisButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
@@ -182,9 +184,9 @@ public class ToolsIcon3D extends javax.swing.JPanel {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(colourBarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(yAxisButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -192,7 +194,7 @@ public class ToolsIcon3D extends javax.swing.JPanel {
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(smoothingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(changeXAxisButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(11, 11, 11)
@@ -200,34 +202,34 @@ public class ToolsIcon3D extends javax.swing.JPanel {
                             .addComponent(jLabel6)
                             .addComponent(jLabel5)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(annotationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(11, 11, 11)
                         .addComponent(jLabel7)))
                 .addContainerGap(138, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void colourBarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colourBarButtonActionPerformed
         jpowder.getToolsTab3D().add(colorBar, "1");
         colorBar.setVisible(true);
         this.setVisible(false);
         Jpowder.jpowderInfoPanelUpdate(colorBar);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_colourBarButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void yAxisButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yAxisButtonActionPerformed
         jpowder.getToolsTab3D().add(blockHeight, "1");
         blockHeight.setVisible(true);
         this.setVisible(false);
         Jpowder.jpowderInfoPanelUpdate(blockHeight);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_yAxisButtonActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void smoothingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smoothingButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_smoothingButtonActionPerformed
 
     private void changeXAxisButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeXAxisButtonActionPerformed
         // TODO add your handling code here:
@@ -264,16 +266,26 @@ public class ToolsIcon3D extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_changeXAxisButtonActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+       /**
+     * @return the annoPanel
+     */
+    public AnnotationPanel getAnnoPanel() {
+        return annoPanel;
+    }
+    
+    private void annotationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annotationButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+        jpowder.getToolsTab3D().add(getAnnoPanel(), "1");
+        annoPanel.setVisible(true);
+        this.setVisible(false);
+
+        Jpowder.jpowderInfoPanelUpdate(annoPanel);
+    }//GEN-LAST:event_annotationButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton annotationButton;
     private javax.swing.JButton changeXAxisButton;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton colourBarButton;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -281,5 +293,7 @@ public class ToolsIcon3D extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JButton smoothingButton;
+    private javax.swing.JButton yAxisButton;
     // End of variables declaration//GEN-END:variables
 }
