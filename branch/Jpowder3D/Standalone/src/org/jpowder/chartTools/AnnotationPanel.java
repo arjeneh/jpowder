@@ -195,35 +195,35 @@ public class AnnotationPanel extends javax.swing.JPanel implements InfoPanel, IM
 
     private void showRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showRadioButtonActionPerformed
         // TODO: Should handle null pointer.
-        //2D
+        //2D is in Focused.
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-        try {
+        JpowderInternalframe3D in3DFocus = Jpowder.internalFrameInFocus3D;
+
+        if (inFocus != null) {
+            //try {
             annoTxt.setVisible(true);
             jLabel2.setVisible(true);
             annoTxt.setText(strThere + EditAnnotationFrame.getInstance().getCurrentAnnoMapSize());
 
             String activeFrameName = inFocus.getChartPanel().getName();
             inFocus.showAnnotation(activeFrameName);
-        } catch (NullPointerException e) {
-            System.out.println("inFocus 2D returned null");
-            JOptionPane.showMessageDialog( null, "There is no file plotted yet." );
-        }
+            //} catch (NullPointerException e) {
+            //System.out.println("inFocus 2D returned null");
+            //}
 
-        //3D
-        JpowderInternalframe3D in3DFocus = Jpowder.internalFrameInFocus3D;
-        try {
+        } else if (in3DFocus != null) {
+            //3D is in Focused.
             annoTxt.setVisible(true);
             jLabel2.setVisible(true);
             annoTxt.setText(strThere + EditAnnotationFrame.getInstance().getCurrentAnnoMapSize());
 
             String activeFrameName = in3DFocus.getChartPanel().getName();
             in3DFocus.showAnnotation(activeFrameName);
-        } catch (NullPointerException e) {
-            System.out.println("inFocus 2D returned null");
-            JOptionPane.showMessageDialog( null, "There is no file plotted yet." );
+
+        } else {
+            JOptionPane.showMessageDialog(null, "There is no file plotted yet.");
         }
 
-        //System.out.println("Nul or not " + inFocus);
 
     }//GEN-LAST:event_showRadioButtonActionPerformed
 
