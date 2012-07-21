@@ -70,25 +70,25 @@ public class HashMapHelper {
         return null;
     }
 
-    public static void main(String[] args) {
-
-        HashMap<Integer, Human> newMap = new HashMap<Integer, Human>();
-
-        Human one = new Human("1");
-        Human two = new Human("2");
-        Human three = new Human("3");
-        Human four = new Human("4");
-        Human five = new Human("5") ;
-        Human six = new Human("6");
-
-        newMap.put(1, one);
-        newMap.put(2, two);
-        newMap.put(3, three);
-        newMap.put(4, four);
-        newMap.put(5, five);
-        newMap.put(6, six);
-
-        System.out.println(getKeyByValue(newMap, five));
-
-    }
+//    public static void main(String[] args) {
+//
+//        HashMap<Integer, Human> newMap = new HashMap<Integer, Human>();
+//
+//        Human one = new Human("1");
+//        Human two = new Human("2");
+//        Human three = new Human("3");
+//        Human four = new Human("4");
+//        Human five = new Human("5") ;
+//        Human six = new Human("6");
+//
+//        newMap.put(1, one);
+//        newMap.put(2, two);
+//        newMap.put(3, three);
+//        newMap.put(4, four);
+//        newMap.put(5, five);
+//        newMap.put(6, six);
+//
+//        System.out.println(getKeyByValue(newMap, five));
+//
+//    }
 }

@@ -1,13 +1,37 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/* ===========================================================
+ * This file is part of Jpowder, see <http://www.jpowder.org/>
+ * ===========================================================
+ *
+ * Jpowder is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jpowder is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ---------
+ * BalloonFrame.java
+ * ---------
+ * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
+ * Kasem Bundit University.
+ *
+ * Author(s):  Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
+ * Created on 30-Jun-2012, 13:16:21
+ *
+ * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
+ *
  */
 package org.jpowder.jfreechart;
 
-/**
- *
- * @author Toshiba
- */
+import org.jpowder.Annotation.BalloonFrame;
+
+
 public class PointAnno {
 
     private int pointName;
@@ -15,6 +39,7 @@ public class PointAnno {
     private String internalFrameName;
     private String comment;
     private double x, y;
+    private BalloonFrame ballonFrame;
 
     public PointAnno(double x_value, double y_value) {
         this.x = x_value;
@@ -66,6 +91,11 @@ public class PointAnno {
      */
     public void setComment(String comment) {
         this.comment = comment;
+        //display the data to the BalloonFrame.
+        if (this.ballonFrame != null){
+            ballonFrame.setCommentText(this.comment);
+        }
+                
     }
 
     /**
@@ -174,5 +204,19 @@ public class PointAnno {
      */
     public void setY(double y) {
         this.y = y;
+    }
+
+    /**
+     * @return the ballonFrame
+     */
+    public BalloonFrame getBallonFrame() {
+        return ballonFrame;
+    }
+
+    /**
+     * @param ballonFrame the ballonFrame to set
+     */
+    public void setBallonFrame(BalloonFrame ballonFrame) {
+        this.ballonFrame = ballonFrame;
     }
 }

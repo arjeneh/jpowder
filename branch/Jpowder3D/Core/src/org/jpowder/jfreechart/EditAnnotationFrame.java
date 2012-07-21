@@ -361,13 +361,9 @@ public class EditAnnotationFrame extends javax.swing.JFrame implements IMapSubje
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void okButtoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtoneActionPerformed
-
-        // TODO: After clicking OK then it should update the content on BalloonFrame too.
-
         //Find Annotation by the tile ID from HashMap - wrong. Can not do.
         String[] titleParse = StringUtil.getSplit(this.getTitle(), ":");
         String idStr = titleParse[titleParse.length - 1];
-        //System.out.println("ID is: " + idStr);
 
         PointAnno pa = synMap.get(Integer.parseInt(idStr.trim()));
 
