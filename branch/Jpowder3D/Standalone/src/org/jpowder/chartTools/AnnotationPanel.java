@@ -223,15 +223,18 @@ public class AnnotationPanel extends javax.swing.JPanel implements InfoPanel, IM
         } else {
             JOptionPane.showMessageDialog(null, "There is no file plotted yet.");
         }
-
-
     }//GEN-LAST:event_showRadioButtonActionPerformed
 
     private void hideRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hideRadioButtonActionPerformed
+
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-        annoTxt.setVisible(false);
-        jLabel2.setVisible(false);
-        //inFocus.getChart().getSubtitle(0).setPosition(RectangleEdge.BOTTOM);
+        JpowderInternalframe3D in3DFocus = Jpowder.internalFrameInFocus3D;
+
+        if (inFocus != null ||  in3DFocus!= null ) {
+            annoTxt.setVisible(false);
+            jLabel2.setVisible(false);
+            //inFocus.getChart().getSubtitle(0).setPosition(RectangleEdge.BOTTOM);
+        }
     }//GEN-LAST:event_hideRadioButtonActionPerformed
 
     private void annoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annoTxtActionPerformed
