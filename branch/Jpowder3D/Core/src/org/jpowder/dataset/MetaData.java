@@ -24,6 +24,24 @@ public class MetaData<T> {
         this.value = id;
     }
 
+    /**
+     * Intended only for debugging.
+     *
+     * <P>Here, the contents of every field are placed into the result, with
+     * one field per line.
+     */
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        String NEW_LINE = System.getProperty("line.separator");
+
+        result.append(this.getClass().getName() + " Object {" + NEW_LINE);
+        result.append(" value: " + this.getValue() + NEW_LINE);
+        result.append("}");
+
+        return result.toString();
+    }
+
     public static void main(String[] args) {
         MetaData<String> mString = new MetaData<String>("Pressure");
         mString.setValue("LOW");
