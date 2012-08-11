@@ -166,11 +166,6 @@ public class FilesPlotter3D extends DatasetPlotter {
             metaValues.add(datasets.get(i).getMetaData(selectedMetaItem));
         }
 
-        // then creating the lower and upper values for each block height
-        Vector<Double> widthsLow = new Vector<Double>();
-        Vector<Double> widthsUpper = new Vector<Double>();
-
-
         // set up the x-axis
         NumberAxis xAxis = new NumberAxis("2\u0398");
         xAxis.setLowerMargin(0.0);
@@ -183,6 +178,10 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         final ValueAxis yAxis;
 
+        // Create the lower and upper values for each block height
+        Vector<Double> blockHeigthPos_low = new Vector<Double>();
+        Vector<Double> blockHeigthPos_upper = new Vector<Double>();
+
         //if the metaname is equal Name. 21/04/2012
         if (isMetaNameEqualName) {
             //display file names on the Y axis instead of 0..n.
@@ -192,13 +191,13 @@ public class FilesPlotter3D extends DatasetPlotter {
             // set width of each dataset, i.e. in fact it height (y-axis width)
             int numDataset = datasets.size();
             for (int i = 1; i <= numDataset; i++) {
-                widthsLow.add(i-0.5);
-                widthsUpper.add(i+0.5);
+                blockHeigthPos_low.add(i-0.5);
+                blockHeigthPos_upper.add(i+0.5);
             }
 
             yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-            yAxis.setRange(0 - widthsLow.firstElement(),
-                    metaValues.size()-1 + widthsUpper.lastElement());
+            yAxis.setRange(0 - blockHeigthPos_low.firstElement(),
+                    metaValues.size()-1 + blockHeigthPos_upper.lastElement());
             System.out.println("Plot using Name metaData");
             //else display metaname and values
         } else {
@@ -206,24 +205,24 @@ public class FilesPlotter3D extends DatasetPlotter {
             if (datasets.size() == 1) {
                 // for the special case of just one dataset we simply for now
                 // just position the block +- 0.5 around the meta value
-                widthsLow.add(0.5);
-                widthsUpper.add(0.5);
+                blockHeigthPos_low.add(0.5);
+                blockHeigthPos_upper.add(0.5);
             } else {
             // aim to have meta data value centered somewhere near-ish to the centre of block
-            widthsLow.add((metaValues.elementAt(1) - metaValues.elementAt(0)) / 2.0);
-            widthsUpper.add((metaValues.elementAt(1) - metaValues.elementAt(0)) / 2.0);
+            blockHeigthPos_low.add((metaValues.elementAt(1) - metaValues.elementAt(0)) / 2.0);
+            blockHeigthPos_upper.add((metaValues.elementAt(1) - metaValues.elementAt(0)) / 2.0);
             int numDataset = datasets.size();
             for (int i = 1; i < numDataset - 1; i++) {
-                widthsLow.add((metaValues.elementAt(i) - metaValues.elementAt(i - 1)) / 2.0);
-                widthsUpper.add((metaValues.elementAt(i + 1) - metaValues.elementAt(i)) / 2.0);
+                blockHeigthPos_low.add((metaValues.elementAt(i) - metaValues.elementAt(i - 1)) / 2.0);
+                blockHeigthPos_upper.add((metaValues.elementAt(i + 1) - metaValues.elementAt(i)) / 2.0);
             }
-                widthsLow.add((metaValues.elementAt(numDataset - 1) - metaValues.elementAt(numDataset - 2)) / 2.0);
-                widthsUpper.add((metaValues.elementAt(numDataset - 1) - metaValues.elementAt(numDataset - 2)) / 2.0);
+                blockHeigthPos_low.add((metaValues.elementAt(numDataset - 1) - metaValues.elementAt(numDataset - 2)) / 2.0);
+                blockHeigthPos_upper.add((metaValues.elementAt(numDataset - 1) - metaValues.elementAt(numDataset - 2)) / 2.0);
             }
 
             yAxis = new NumberAxis(selectedMetaItem);
-            yAxis.setRange(metaValues.firstElement() - widthsLow.firstElement(),
-                    metaValues.lastElement() + widthsUpper.lastElement());
+            yAxis.setRange(metaValues.firstElement() - blockHeigthPos_low.firstElement(),
+                    metaValues.lastElement() + blockHeigthPos_upper.lastElement());
         }
 
         // Setup the block renderer
@@ -250,7 +249,7 @@ public class FilesPlotter3D extends DatasetPlotter {
             }
             renderer.setBlockWidth(width1stDataPoint);
         }
-        renderer.setBlockHeight(widthsLow, widthsUpper);
+        renderer.setBlockHeight(blockHeigthPos_low, blockHeigthPos_upper);
         // don't know what this one is for?
         renderer.clearSeriesPaints(true);
 
