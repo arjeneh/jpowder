@@ -80,9 +80,9 @@ public abstract class DatasetPlotter {
         return new FilesPlotter3D(datasets, meta);
     }
 
-    public static DatasetPlotter createDatasetPlotter(Vector<DataSet> datasets, String meta, HashMap file) {
-        return new FilesPlotter3D(datasets, meta, file);
-    }
+//    public static DatasetPlotter createDatasetPlotter(Vector<DataSet> datasets, String meta, HashMap file) {
+//        return new FilesPlotter3D(datasets, meta, file);
+//    }
 
     /**
      * create DatasetPlotter and store the data that are can then be plotted

@@ -67,7 +67,8 @@ public class FilesPlotter3D extends DatasetPlotter {
     private static JFreeChart chart;
     private static XYPlot plot;
     private static String selectedMetaItem;
-    private static HashMap fileNames;
+    //private static HashMap fileNames;
+    private static Vector<String> fileNames = new Vector<String>();
     private boolean isMetaNameEqualName = false;
 
     /**
@@ -78,6 +79,11 @@ public class FilesPlotter3D extends DatasetPlotter {
         super(d);
         FilesPlotter3D.datasets = d;
         selectedMetaItem = meta;
+        System.out.println("in " + this.getClass().getName() + " DataSet is: " + datasets.toString());
+
+        for (int i = 0; i < FilesPlotter3D.datasets.size(); i++) {
+            fileNames.add(FilesPlotter3D.datasets.get(i).getFileName());
+        }
     }
 
     /**
@@ -85,17 +91,17 @@ public class FilesPlotter3D extends DatasetPlotter {
      * @param meta
      * @param files to display file names on the Y axis for 3D image.
      */
-    public FilesPlotter3D(Vector<DataSet> d, String meta, HashMap files) {
-        super(d);
-        FilesPlotter3D.datasets = d;
-        selectedMetaItem = meta;
-        fileNames = files;
-        //selectedColumn.toString().equalsIgnoreCase(ignoreColumnName)
-        if (selectedMetaItem.equalsIgnoreCase("name")) {
-            isMetaNameEqualName = true;
-            System.out.println("Plot using Name metaData in the constructor()");
-        }
-    }
+//    public FilesPlotter3D(Vector<DataSet> d, String meta, HashMap files) {
+//        super(d);
+//        FilesPlotter3D.datasets = d;
+//        selectedMetaItem = meta;
+//        fileNames = files;
+//        //selectedColumn.toString().equalsIgnoreCase(ignoreColumnName)
+//        if (selectedMetaItem.equalsIgnoreCase("name")) {
+//            isMetaNameEqualName = true;
+//            System.out.println("Plot using Name metaData in the constructor()");
+//        }
+//    }
 
     public FilesPlotter3D(DataSet d) {
         super(d);
@@ -165,19 +171,17 @@ public class FilesPlotter3D extends DatasetPlotter {
             // just position the block +- 0.5 around the meta value
             widthsLow.add(0.5);
             widthsUpper.add(0.5);
-        }
-        else
-        {
+        } else {
             // aim to have meta data value centered somewhere near-ish to the centre of block
-            widthsLow.add((metaValues.elementAt(1)-metaValues.elementAt(0))/2.0);
-            widthsUpper.add((metaValues.elementAt(1)-metaValues.elementAt(0))/2.0);
+            widthsLow.add((metaValues.elementAt(1) - metaValues.elementAt(0)) / 2.0);
+            widthsUpper.add((metaValues.elementAt(1) - metaValues.elementAt(0)) / 2.0);
             int numDataset = datasets.size();
             for (int i = 1; i < numDataset - 1; i++) {
-                widthsLow.add((metaValues.elementAt(i)-metaValues.elementAt(i-1))/2.0);
-                widthsUpper.add((metaValues.elementAt(i+1)-metaValues.elementAt(i))/2.0);
+                widthsLow.add((metaValues.elementAt(i) - metaValues.elementAt(i - 1)) / 2.0);
+                widthsUpper.add((metaValues.elementAt(i + 1) - metaValues.elementAt(i)) / 2.0);
             }
-            widthsLow.add((metaValues.elementAt(numDataset-1)-metaValues.elementAt(numDataset-2))/2.0);
-            widthsUpper.add((metaValues.elementAt(numDataset-1)-metaValues.elementAt(numDataset-2))/2.0);
+            widthsLow.add((metaValues.elementAt(numDataset - 1) - metaValues.elementAt(numDataset - 2)) / 2.0);
+            widthsUpper.add((metaValues.elementAt(numDataset - 1) - metaValues.elementAt(numDataset - 2)) / 2.0);
         }
 
         // Setup the block renderer
@@ -198,11 +202,10 @@ public class FilesPlotter3D extends DatasetPlotter {
         // are not equally spaced. If the widths are too large we get the
         // side effect we have already seen. If the widths are too small we
         // will get funny looking plots with white areas between the data points
-        if ( dataset.getSeriesCount() >= 1 )
-        {
-            double width1stDataPoint = dataset.getXValue(0, 1)-dataset.getXValue(0, 0);
-            if (width1stDataPoint<=0.0){
-                 width1stDataPoint = 1.0;
+        if (dataset.getSeriesCount() >= 1) {
+            double width1stDataPoint = dataset.getXValue(0, 1) - dataset.getXValue(0, 0);
+            if (width1stDataPoint <= 0.0) {
+                width1stDataPoint = 1.0;
             }
 
             renderer.setBlockWidth(width1stDataPoint);
@@ -223,21 +226,24 @@ public class FilesPlotter3D extends DatasetPlotter {
         // Importantly setup the y-axis so that it matches the block heights
         // specified above
 
-        final ValueAxis yAxis; 
+        final ValueAxis yAxis;
 
         //if the metaname is equal Name. 21/04/2012
         if (isMetaNameEqualName) {
             //display file names on the Y axis instead of 0..n.
-            yAxis = new SymbolAxis("", HashMapHelper.convertKeyToArray(fileNames));
+            //yAxis = new SymbolAxis("", HashMapHelper.convertKeyToArray(fileNames));
+            String[] strings = fileNames.toArray(new String[fileNames.size()]);
+            yAxis = new SymbolAxis("", strings);
+
             yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-            yAxis.setRange(metaValues.firstElement()-widthsLow.firstElement(),
-                    metaValues.lastElement()+widthsUpper.lastElement());
+            yAxis.setRange(metaValues.firstElement() - widthsLow.firstElement(),
+                    metaValues.lastElement() + widthsUpper.lastElement());
             System.out.println("Plot using Name metaData");
             //else display metaname and values
         } else {
             yAxis = new NumberAxis(selectedMetaItem);
-            yAxis.setRange(metaValues.firstElement()-widthsLow.firstElement(),
-                    metaValues.lastElement()+widthsUpper.lastElement());
+            yAxis.setRange(metaValues.firstElement() - widthsLow.firstElement(),
+                    metaValues.lastElement() + widthsUpper.lastElement());
         }
 
 
@@ -246,7 +252,7 @@ public class FilesPlotter3D extends DatasetPlotter {
         plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
         plot.setDomainGridlinePaint(Color.white);
         plot.setRangeGridlinePaint(Color.white);
-        plot.getRangeAxis().setAutoRange(false);
+        plot.getRangeAxis().setAutoRange(true);
         // my trial on 17/03/2012
 
         chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
@@ -262,7 +268,7 @@ public class FilesPlotter3D extends DatasetPlotter {
         }
         GrayPaintScale colourScale = new GrayPaintScale(minY, maxY);
         renderer.setPaintScale(colourScale);
-        
+
         // Setup and add colorbar to chart
         NumberAxis zAxis = new NumberAxis("");
         PaintScaleLegend legend = new PaintScaleLegend(colourScale, zAxis);
@@ -341,7 +347,8 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         //NumberAxis yAxis = new NumberAxis("Y");
         //yAxis.setLabel(selectedMetaItem);
-        ValueAxis yAxis = new SymbolAxis("Symbol", HashMapHelper.convertKeyToArray(fileNames));
+        //ValueAxis yAxis = new SymbolAxis("Symbol", HashMapHelper.convertKeyToArray(fileNames));
+         ValueAxis yAxis = new SymbolAxis("Symbol", (String[]) fileNames.toArray());
         //yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         yAxis.setLowerMargin(0.0);
         yAxis.setUpperMargin(0.0);

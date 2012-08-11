@@ -129,11 +129,36 @@ public abstract class DataSet {
 
     public double getMetaData(String name) {
         double data = meta.get(name);
+        System.out.println("in " + this.getClass().getName() + " Meta data is: " + meta +
+                " under name = " + name + " and data = " + data);
         return data;
     }
 
+    /**
+     * Intended only for debugging.
+     *
+     * <P>Here, the contents of every field are placed into the result, with
+     * one field per line.
+     */
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        String NEW_LINE = System.getProperty("line.separator");
+
+        result.append(this.getClass().getName() + " Object {" + NEW_LINE);
+        result.append(" X value: " + this.x + NEW_LINE);
+        result.append(" Y value: " + this.y + NEW_LINE);
+        result.append(" Z value: " + this.z + NEW_LINE);
+        result.append(" Filename: " + this.fileName + NEW_LINE);
+        result.append(" Wavelength: " + this.waveLength + NEW_LINE);
+        result.append(" HashMap: " + this.meta + NEW_LINE);
+        result.append("}");
+
+        return result.toString();
+    }
+
     public static void main(String[] args) {
-       DataSet ds = new DataSet(new Vector(), "hello") {
+        DataSet ds = new DataSet(new Vector(), "hello") {
 
             @Override
             public String description() {
