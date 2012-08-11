@@ -33,7 +33,6 @@ package org.jpowder.jfreechart;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Vector;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
@@ -41,7 +40,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.SymbolAxis;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.data.Range;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.GrayPaintScale;
 import org.jfree.chart.title.PaintScaleLegend;
@@ -54,7 +52,7 @@ import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
-import org.jpowder.util.HashMapHelper;
+import org.jpowder.dataset.MetaData;
 import org.jpowder.util.VectorMiscUtil;
 
 /**
@@ -83,6 +81,11 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         for (int i = 0; i < FilesPlotter3D.datasets.size(); i++) {
             fileNames.add(FilesPlotter3D.datasets.get(i).getFileName());
+        }
+
+         if (selectedMetaItem.equalsIgnoreCase("name")) {
+            isMetaNameEqualName = true;
+            System.out.println("Plot using Name metaData in the constructor()");
         }
     }
 
@@ -156,14 +159,14 @@ public class FilesPlotter3D extends DatasetPlotter {
         // is centered around each meta data value
         // first read in the meta data
 
-        Vector<Double> metaValues;
-        metaValues = new Vector<Double>();
+        Vector<Double> metaValues = new Vector<Double>();
+        //Vector<MetaData> metaValues = new Vector<MetaData>();
         for (int i = 0; i < datasets.size(); i++) {
+            //if String then default or get what value ..????
             metaValues.add(datasets.get(i).getMetaData(selectedMetaItem));
         }
 
         // then creating the lower and upper values for each block height
-
         Vector<Double> widthsLow = new Vector<Double>();
         Vector<Double> widthsUpper = new Vector<Double>();
         if (datasets.size() == 1) {
@@ -175,11 +178,14 @@ public class FilesPlotter3D extends DatasetPlotter {
             // aim to have meta data value centered somewhere near-ish to the centre of block
             widthsLow.add((metaValues.elementAt(1) - metaValues.elementAt(0)) / 2.0);
             widthsUpper.add((metaValues.elementAt(1) - metaValues.elementAt(0)) / 2.0);
+
             int numDataset = datasets.size();
+
             for (int i = 1; i < numDataset - 1; i++) {
                 widthsLow.add((metaValues.elementAt(i) - metaValues.elementAt(i - 1)) / 2.0);
                 widthsUpper.add((metaValues.elementAt(i + 1) - metaValues.elementAt(i)) / 2.0);
             }
+
             widthsLow.add((metaValues.elementAt(numDataset - 1) - metaValues.elementAt(numDataset - 2)) / 2.0);
             widthsUpper.add((metaValues.elementAt(numDataset - 1) - metaValues.elementAt(numDataset - 2)) / 2.0);
         }
