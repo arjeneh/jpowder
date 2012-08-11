@@ -175,10 +175,9 @@ public class FilesPlotter3D extends DatasetPlotter {
         // set up the y-axis
         // Importantly setup the y-axis so that it matches the block heights
         // specified above
-
         final ValueAxis yAxis;
 
-        // Create the lower and upper values for each block height
+        // Create the lower and upper values for each dataset block height
         Vector<Double> blockHeigthPos_low = new Vector<Double>();
         Vector<Double> blockHeigthPos_upper = new Vector<Double>();
 
