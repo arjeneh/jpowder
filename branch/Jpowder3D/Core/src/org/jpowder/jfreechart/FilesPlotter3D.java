@@ -169,57 +169,6 @@ public class FilesPlotter3D extends DatasetPlotter {
         // then creating the lower and upper values for each block height
         Vector<Double> widthsLow = new Vector<Double>();
         Vector<Double> widthsUpper = new Vector<Double>();
-        if (datasets.size() == 1) {
-            // for the special case of just one dataset we simply for now
-            // just position the block +- 0.5 around the meta value
-            widthsLow.add(0.5);
-            widthsUpper.add(0.5);
-        } else {
-            // aim to have meta data value centered somewhere near-ish to the centre of block
-            widthsLow.add((metaValues.elementAt(1) - metaValues.elementAt(0)) / 2.0);
-            widthsUpper.add((metaValues.elementAt(1) - metaValues.elementAt(0)) / 2.0);
-
-            int numDataset = datasets.size();
-
-            for (int i = 1; i < numDataset - 1; i++) {
-                widthsLow.add((metaValues.elementAt(i) - metaValues.elementAt(i - 1)) / 2.0);
-                widthsUpper.add((metaValues.elementAt(i + 1) - metaValues.elementAt(i)) / 2.0);
-            }
-
-            widthsLow.add((metaValues.elementAt(numDataset - 1) - metaValues.elementAt(numDataset - 2)) / 2.0);
-            widthsUpper.add((metaValues.elementAt(numDataset - 1) - metaValues.elementAt(numDataset - 2)) / 2.0);
-        }
-
-        // Setup the block renderer
-
-        JpowderXYBlockRenderer renderer = new JpowderXYBlockRenderer();
-        // If any data available, set for now, the block-width equal to the
-        // spacing between the first to x-values of the first series in dataset.
-        // When the x-values, as may typically be the case, are
-        // equally spaced this will work, since it will mean that
-        // the width of each block will exactly match the spacing between 
-        // data point and there will be no overlap between the blocks. Overlap
-        // been blocks as we have seen causes side effects such as the lines
-        // do to appear at the correct x-values
-        // Note as I am writing this comment I realize me may have a more
-        // serious problem - perhaps. The above will not work when the x-values
-        // are not equally spaced in a dataset, and I am not sure how easy it
-        // is to set different width for each data point, when the x-values
-        // are not equally spaced. If the widths are too large we get the
-        // side effect we have already seen. If the widths are too small we
-        // will get funny looking plots with white areas between the data points
-        if (dataset.getSeriesCount() >= 1) {
-            double width1stDataPoint = dataset.getXValue(0, 1) - dataset.getXValue(0, 0);
-            if (width1stDataPoint <= 0.0) {
-                width1stDataPoint = 1.0;
-            }
-
-            renderer.setBlockWidth(width1stDataPoint);
-        }
-        renderer.setBlockHeight(widthsLow, widthsUpper);
-
-        // don't know what this one is for?
-        renderer.clearSeriesPaints(true);
 
 
         // set up the x-axis
@@ -240,6 +189,12 @@ public class FilesPlotter3D extends DatasetPlotter {
             //yAxis = new SymbolAxis("", HashMapHelper.convertKeyToArray(fileNames));
             String[] strings = fileNames.toArray(new String[fileNames.size()]);
             yAxis = new SymbolAxis("", strings);
+            // set width of each dataset, i.e. in fact it height (y-axis width)
+            int numDataset = datasets.size();
+            for (int i = 1; i <= numDataset; i++) {
+                widthsLow.add(i-0.5);
+                widthsUpper.add(i+0.5);
+            }
 
             yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
             yAxis.setRange(0 - widthsLow.firstElement(),
@@ -247,11 +202,57 @@ public class FilesPlotter3D extends DatasetPlotter {
             System.out.println("Plot using Name metaData");
             //else display metaname and values
         } else {
+
+            if (datasets.size() == 1) {
+                // for the special case of just one dataset we simply for now
+                // just position the block +- 0.5 around the meta value
+                widthsLow.add(0.5);
+                widthsUpper.add(0.5);
+            } else {
+            // aim to have meta data value centered somewhere near-ish to the centre of block
+            widthsLow.add((metaValues.elementAt(1) - metaValues.elementAt(0)) / 2.0);
+            widthsUpper.add((metaValues.elementAt(1) - metaValues.elementAt(0)) / 2.0);
+            int numDataset = datasets.size();
+            for (int i = 1; i < numDataset - 1; i++) {
+                widthsLow.add((metaValues.elementAt(i) - metaValues.elementAt(i - 1)) / 2.0);
+                widthsUpper.add((metaValues.elementAt(i + 1) - metaValues.elementAt(i)) / 2.0);
+            }
+                widthsLow.add((metaValues.elementAt(numDataset - 1) - metaValues.elementAt(numDataset - 2)) / 2.0);
+                widthsUpper.add((metaValues.elementAt(numDataset - 1) - metaValues.elementAt(numDataset - 2)) / 2.0);
+            }
+
             yAxis = new NumberAxis(selectedMetaItem);
             yAxis.setRange(metaValues.firstElement() - widthsLow.firstElement(),
                     metaValues.lastElement() + widthsUpper.lastElement());
         }
 
+        // Setup the block renderer
+        JpowderXYBlockRenderer renderer = new JpowderXYBlockRenderer();
+        // If any data available, set for now, the block-width equal to the
+        // spacing between the first to x-values of the first series in dataset.
+        // When the x-values, as may typically be the case, are
+        // equally spaced this will work, since it will mean that
+        // the width of each block will exactly match the spacing between
+        // data point and there will be no overlap between the blocks. Overlap
+        // been blocks as we have seen causes side effects such as the lines
+        // do to appear at the correct x-values
+        // Note as I am writing this comment I realize me may have a more
+        // serious problem - perhaps. The above will not work when the x-values
+        // are not equally spaced in a dataset, and I am not sure how easy it
+        // is to set different width for each data point, when the x-values
+        // are not equally spaced. If the widths are too large we get the
+        // side effect we have already seen. If the widths are too small we
+        // will get funny looking plots with white areas between the data points
+        if (dataset.getSeriesCount() >= 1) {
+            double width1stDataPoint = dataset.getXValue(0, 1) - dataset.getXValue(0, 0);
+            if (width1stDataPoint <= 0.0) {
+                width1stDataPoint = 1.0;
+            }
+            renderer.setBlockWidth(width1stDataPoint);
+        }
+        renderer.setBlockHeight(widthsLow, widthsUpper);
+        // don't know what this one is for?
+        renderer.clearSeriesPaints(true);
 
         plot = new XYPlot(dataset, xAxis, yAxis, renderer);
         plot.setBackgroundPaint(Color.lightGray);
