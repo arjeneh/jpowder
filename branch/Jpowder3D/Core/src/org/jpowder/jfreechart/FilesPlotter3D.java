@@ -236,8 +236,8 @@ public class FilesPlotter3D extends DatasetPlotter {
             yAxis = new SymbolAxis("", strings);
 
             yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-            yAxis.setRange(metaValues.firstElement() - widthsLow.firstElement(),
-                    metaValues.lastElement() + widthsUpper.lastElement());
+            yAxis.setRange(0 - widthsLow.firstElement(),
+                    metaValues.size()-1 + widthsUpper.lastElement());
             System.out.println("Plot using Name metaData");
             //else display metaname and values
         } else {
