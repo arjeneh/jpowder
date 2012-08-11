@@ -50,7 +50,7 @@ public abstract class DataSet {
     // holds meta data for the DataSet in pairs
     // of name of meta-data-item, e.g. temperature, and
     // its value
-    private HashMap<String, Double> meta;
+    private HashMap<String, MetaData> meta;
     //private HashMap<String, String> metaString;
 
     //@param data: data from a powder diffraction file
@@ -122,13 +122,13 @@ public abstract class DataSet {
         this.xUnit = xunit;
     }
 
-    public void addMetaData(HashMap<String, Double> meta) {
+    public void addMetaData(HashMap<String, MetaData> meta) {
         this.meta = meta;
 
     }
 
-    public double getMetaData(String name) {
-        double data = meta.get(name);
+    public MetaData getMetaData(String name) {
+        MetaData data = meta.get(name);
         System.out.println("in " + this.getClass().getName() + " Meta data is: " + meta +
                 " under name = " + name + " and data = " + data);
         return data;

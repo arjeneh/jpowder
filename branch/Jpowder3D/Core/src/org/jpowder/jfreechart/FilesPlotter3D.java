@@ -159,12 +159,19 @@ public class FilesPlotter3D extends DatasetPlotter {
         // is centered around each meta data value
         // first read in the meta data
 
-        Vector<Double> metaValues = new Vector<Double>();
-        //Vector<MetaData> metaValues = new Vector<MetaData>();
-        for (int i = 0; i < datasets.size(); i++) {
-            //if String then default or get what value ..????
+        boolean isMetaDataString = false;
+        int numDataset = datasets.size();
+        Vector<MetaData> metaValues = new Vector<MetaData>();
+        for (int i = 0; i < numDataset; i++) {
             metaValues.add(datasets.get(i).getMetaData(selectedMetaItem));
         }
+        for (int i = 0; i < numDataset; i++) {
+            if ( metaValues.elementAt(i).getValue() instanceof String )
+            {
+                 isMetaDataString = true;
+            }
+        }
+
 
         // set up the x-axis
         NumberAxis xAxis = new NumberAxis("2\u0398");
@@ -178,50 +185,66 @@ public class FilesPlotter3D extends DatasetPlotter {
         final ValueAxis yAxis;
 
         // Create the lower and upper values for each dataset block height
-        Vector<Double> blockHeigthPos_low = new Vector<Double>();
-        Vector<Double> blockHeigthPos_upper = new Vector<Double>();
+        Vector<Double> blockHeigth_lower = new Vector<Double>();
+        Vector<Double> blockHeigth_upper = new Vector<Double>();
 
         //if the metaname is equal Name. 21/04/2012
-        if (isMetaNameEqualName) {
+        if (isMetaDataString) {
             //display file names on the Y axis instead of 0..n.
             //yAxis = new SymbolAxis("", HashMapHelper.convertKeyToArray(fileNames));
-            String[] strings = fileNames.toArray(new String[fileNames.size()]);
+            String[] strings = new String[numDataset];
+            for (int i = 0; i < numDataset; i++) {
+                strings[i] = metaValues.elementAt(i).getValue().toString();
+            }
+
             yAxis = new SymbolAxis("", strings);
             // set width of each dataset, i.e. in fact it height (y-axis width)
-            int numDataset = datasets.size();
-            for (int i = 1; i <= numDataset; i++) {
-                blockHeigthPos_low.add(i-0.5);
-                blockHeigthPos_upper.add(i+0.5);
+
+            // here dataset block height selected such data each y-axis label
+            // will be at the centre of a dataset block height
+            for (int i = 0; i < numDataset; i++) {
+                blockHeigth_lower.add(0.5);
+                blockHeigth_upper.add(0.5);
             }
 
             yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-            yAxis.setRange(0 - blockHeigthPos_low.firstElement(),
-                    metaValues.size()-1 + blockHeigthPos_upper.lastElement());
+            yAxis.setRange(0 - blockHeigth_lower.firstElement(),
+                    numDataset-1 + blockHeigth_upper.lastElement());
             System.out.println("Plot using Name metaData");
             //else display metaname and values
         } else {
-
-            if (datasets.size() == 1) {
+            Vector<Double> metaDouble = new Vector<Double>();
+            for (int i = 0; i < numDataset; i++) {
+                metaDouble.add((Double) metaValues.elementAt(i).getValue());
+            }
+            if (numDataset == 1) {
                 // for the special case of just one dataset we simply for now
                 // just position the block +- 0.5 around the meta value
-                blockHeigthPos_low.add(0.5);
-                blockHeigthPos_upper.add(0.5);
-            } else {
-            // aim to have meta data value centered somewhere near-ish to the centre of block
-            blockHeigthPos_low.add((metaValues.elementAt(1) - metaValues.elementAt(0)) / 2.0);
-            blockHeigthPos_upper.add((metaValues.elementAt(1) - metaValues.elementAt(0)) / 2.0);
-            int numDataset = datasets.size();
-            for (int i = 1; i < numDataset - 1; i++) {
-                blockHeigthPos_low.add((metaValues.elementAt(i) - metaValues.elementAt(i - 1)) / 2.0);
-                blockHeigthPos_upper.add((metaValues.elementAt(i + 1) - metaValues.elementAt(i)) / 2.0);
-            }
-                blockHeigthPos_low.add((metaValues.elementAt(numDataset - 1) - metaValues.elementAt(numDataset - 2)) / 2.0);
-                blockHeigthPos_upper.add((metaValues.elementAt(numDataset - 1) - metaValues.elementAt(numDataset - 2)) / 2.0);
+                blockHeigth_lower.add(0.5);
+                blockHeigth_upper.add(0.5);
+            } 
+            else {
+                // aim to have meta data value centered somewhere near-ish to the centre of block
+                // other suggestions welcome here
+                blockHeigth_lower.add((metaDouble.elementAt(1) - metaDouble.elementAt(0)) / 2.0);
+                blockHeigth_upper.add((metaDouble.elementAt(1) - metaDouble.elementAt(0)) / 2.0);
+                for (int i = 1; i < numDataset - 1; i++) {
+                    blockHeigth_lower.add((metaDouble.elementAt(i) - metaDouble.elementAt(i - 1)) / 2.0);
+                    blockHeigth_upper.add((metaDouble.elementAt(i + 1) - metaDouble.elementAt(i)) / 2.0);
+                }
+                blockHeigth_lower.add((metaDouble.elementAt(numDataset - 1) - metaDouble.elementAt(numDataset - 2)) / 2.0);
+                blockHeigth_upper.add((metaDouble.elementAt(numDataset - 1) - metaDouble.elementAt(numDataset - 2)) / 2.0);
             }
 
             yAxis = new NumberAxis(selectedMetaItem);
-            yAxis.setRange(metaValues.firstElement() - blockHeigthPos_low.firstElement(),
-                    metaValues.lastElement() + blockHeigthPos_upper.lastElement());
+            // try to fix the actual y-axis range to the correct length, although
+            // would autorange work - not sure - setting it manual you would think
+            // it the safest option
+            // the below for some change reason current has stopped actually
+            // setting the values specified..... which may be due to autorange
+            // being called somewhere else?
+            yAxis.setRange(metaDouble.firstElement() - blockHeigth_lower.firstElement(),
+                    metaDouble.lastElement() + blockHeigth_upper.lastElement());
         }
 
         // Setup the block renderer
@@ -248,7 +271,7 @@ public class FilesPlotter3D extends DatasetPlotter {
             }
             renderer.setBlockWidth(width1stDataPoint);
         }
-        renderer.setBlockHeight(blockHeigthPos_low, blockHeigthPos_upper);
+        renderer.setBlockHeight(blockHeigth_lower, blockHeigth_upper);
         // don't know what this one is for?
         renderer.clearSeriesPaints(true);
 
@@ -304,13 +327,31 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         DefaultXYZDataset defaultXYZDataset = new DefaultXYZDataset();
 
+        boolean isMetaDataString = false;
+        int numDataset = datasets.size();
+        Vector<MetaData> metaValues = new Vector<MetaData>();
+        for (int i = 0; i < numDataset; i++) {
+            metaValues.add(datasets.get(i).getMetaData(selectedMetaItem));
+        }
+        for (int i = 0; i < numDataset; i++) {
+            if ( metaValues.elementAt(i).getValue() instanceof String )
+            {
+                 isMetaDataString = true;
+            }
+        }
+
         for (int i = 0; i < datasets.size(); i++) {
 
             double[][] data = new double[3][datasets.elementAt(i).getX().size()];
             for (int j = 0; j < datasets.elementAt(i).getX().size(); j++) {
 
                 data[0][j] = (Double) datasets.elementAt(i).getX().get(j);  // x
-                data[1][j] = datasets.get(i).getMetaData(selectedMetaItem); // y (meta value, including possible file-number)
+                MetaData meta = datasets.get(i).getMetaData(selectedMetaItem);
+                if ( isMetaDataString )
+                  data[1][j] = (double) i; // y (meta value, including possible file-number)
+                else
+                  data[1][j] = (Double) meta.getValue(); // y (meta value, including possible file-number)
+
                 data[2][j] = (Double) datasets.elementAt(i).getY().get(j);  // Colour
 
             }
@@ -382,7 +423,7 @@ public class FilesPlotter3D extends DatasetPlotter {
         Vector<Double> widthsLow = new Vector<Double>();
         Vector<Double> widthsUpper = new Vector<Double>();
         for (int i = 0; i < datasets.size() - 1; i++) {
-            widthsUpper.add(datasets.get(i + 1).getMetaData(selectedMetaItem) - datasets.get(i).getMetaData(selectedMetaItem));
+            //widthsUpper.add(datasets.get(i + 1).getMetaData(selectedMetaItem) - datasets.get(i).getMetaData(selectedMetaItem));
             widthsLow.add(0.0);
         }
 

@@ -74,6 +74,7 @@ import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.util.HashMapHelper;
 import org.jpowder.util.NaturalOrderComparator;
 import org.jpowder.util.StringUtil;
+import org.jpowder.dataset.MetaData;
 
 /**
  * A table which contains File names, File filePaths and meta data of powder
@@ -600,12 +601,16 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
                     //Setting meta-data hashmap in dataset
                     for (int i = 0; i < datasets.size(); i++) {
-                        HashMap<String, Double> hm = new HashMap<String, Double>();
-                        // For Name column for now label filenames artificially as 0,1,2...
-                        hm.put("Name", (double) i);
+                        HashMap<String, MetaData> hm = new HashMap<String, MetaData>();
+                        hm.put("Name", new MetaData<String>(stm.getValueAt(i, 0).toString()));
                         // ignore Path column but see if any other meta data defined
                         for (int iCol = 2; iCol < importData3DTable.getColumnCount(); iCol++) {
-                            hm.put(stm.getColumnName(iCol), Double.parseDouble(stm.getValueAt(i, iCol).toString()));
+                            try {
+                                Double metaD = Double.parseDouble(stm.getValueAt(i, iCol).toString());
+                                hm.put(stm.getColumnName(iCol), new MetaData<Double>(metaD));
+                            } catch (NumberFormatException e) {
+                                hm.put(stm.getColumnName(iCol), new MetaData<String>(stm.getValueAt(i, iCol).toString()));
+                            }
                         }
                         datasets.get(i).addMetaData(hm);
                     }

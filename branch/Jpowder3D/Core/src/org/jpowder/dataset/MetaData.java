@@ -50,7 +50,10 @@ public class MetaData<T> {
 
         MetaData<Integer> mInteger = new MetaData<Integer>(1);
         mInteger.setValue(2);
-        System.out.printf("Value after setting value: %d%n", mInteger.getValue());
+        MetaData fisse = mInteger;
+        Integer uu = (Integer) fisse.getValue();
+        System.out.printf("Value after setting value: %d%n", fisse.getValue());
+        System.out.printf("Value after setting value: %s%n", fisse.getValue().getClass().getName());
         //output:  id after setting id: 2
     }
 }
