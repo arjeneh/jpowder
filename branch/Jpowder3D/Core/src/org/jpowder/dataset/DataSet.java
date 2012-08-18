@@ -48,13 +48,14 @@ public abstract class DataSet {
     private boolean isTOF = false;
     private Vector<Double> z;
     // holds meta data for the DataSet in pairs
-    // of name of meta-data-item, e.g. temperature, and
-    // its value
+    // of name of meta-data-item, e.g. temperature, and its value.
     private HashMap<String, MetaData> meta;
-    //private HashMap<String, String> metaString;
 
-    //@param data: data from a powder diffraction file
-    //@param fileName: filename of powder diffraction file.
+    /**
+     * 
+     * @param data, data from a powder diffraction file
+     * @param filename,  filename of powder diffraction file
+     */
     public DataSet(Vector<Vector> data, String filename) {
         this.fileName = filename;
 

@@ -65,7 +65,6 @@ public class FilesPlotter3D extends DatasetPlotter {
     private static JFreeChart chart;
     private static XYPlot plot;
     private static String selectedMetaItem;
-    //private static HashMap fileNames;
     private static Vector<String> fileNames = new Vector<String>();
     private boolean isMetaNameEqualName = false;
 
@@ -89,23 +88,6 @@ public class FilesPlotter3D extends DatasetPlotter {
         }
     }
 
-    /**
-     * @param d
-     * @param meta
-     * @param files to display file names on the Y axis for 3D image.
-     */
-//    public FilesPlotter3D(Vector<DataSet> d, String meta, HashMap files) {
-//        super(d);
-//        FilesPlotter3D.datasets = d;
-//        selectedMetaItem = meta;
-//        fileNames = files;
-//        //selectedColumn.toString().equalsIgnoreCase(ignoreColumnName)
-//        if (selectedMetaItem.equalsIgnoreCase("name")) {
-//            isMetaNameEqualName = true;
-//            System.out.println("Plot using Name metaData in the constructor()");
-//        }
-//    }
-
     public FilesPlotter3D(DataSet d) {
         super(d);
         datasets = new Vector<DataSet>();
@@ -121,7 +103,6 @@ public class FilesPlotter3D extends DatasetPlotter {
         super(d);
         datasets = new Vector<DataSet>();
         FilesPlotter3D.datasets.addElement(d);
-        //this.fileNames = fileNames;
     }
 
     @Override
@@ -161,17 +142,19 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         boolean isMetaDataString = false;
         int numDataset = datasets.size();
+
         Vector<MetaData> metaValues = new Vector<MetaData>();
+
         for (int i = 0; i < numDataset; i++) {
             metaValues.add(datasets.get(i).getMetaData(selectedMetaItem));
         }
+        //KP - this can be in above logic.
         for (int i = 0; i < numDataset; i++) {
             if ( metaValues.elementAt(i).getValue() instanceof String )
             {
                  isMetaDataString = true;
             }
         }
-
 
         // set up the x-axis
         NumberAxis xAxis = new NumberAxis("2\u0398");
@@ -185,8 +168,8 @@ public class FilesPlotter3D extends DatasetPlotter {
         final ValueAxis yAxis;
 
         // Create the lower and upper values for each dataset block height
-        Vector<Double> blockHeigth_lower = new Vector<Double>();
-        Vector<Double> blockHeigth_upper = new Vector<Double>();
+        Vector<Double> blockHeigth_minus = new Vector<Double>();
+        Vector<Double> blockHeigth_plus = new Vector<Double>();
 
         //if the metaname is equal Name. 21/04/2012
         if (isMetaDataString) {
@@ -203,13 +186,13 @@ public class FilesPlotter3D extends DatasetPlotter {
             // here dataset block height selected such data each y-axis label
             // will be at the centre of a dataset block height
             for (int i = 0; i < numDataset; i++) {
-                blockHeigth_lower.add(0.5);
-                blockHeigth_upper.add(0.5);
+                blockHeigth_minus.add(0.5);
+                blockHeigth_plus.add(0.5);
             }
 
             yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-            yAxis.setRange(0 - blockHeigth_lower.firstElement(),
-                    numDataset-1 + blockHeigth_upper.lastElement());
+            yAxis.setRange(0 - blockHeigth_minus.firstElement(),
+                    numDataset-1 + blockHeigth_plus.lastElement());
             System.out.println("Plot using Name metaData");
             //else display metaname and values
         } else {
@@ -217,23 +200,24 @@ public class FilesPlotter3D extends DatasetPlotter {
             for (int i = 0; i < numDataset; i++) {
                 metaDouble.add((Double) metaValues.elementAt(i).getValue());
             }
+
             if (numDataset == 1) {
                 // for the special case of just one dataset we simply for now
                 // just position the block +- 0.5 around the meta value
-                blockHeigth_lower.add(0.5);
-                blockHeigth_upper.add(0.5);
+                blockHeigth_minus.add(0.5);
+                blockHeigth_plus.add(0.5);
             } 
             else {
                 // aim to have meta data value centered somewhere near-ish to the centre of block
                 // other suggestions welcome here
-                blockHeigth_lower.add((metaDouble.elementAt(1) - metaDouble.elementAt(0)) / 2.0);
-                blockHeigth_upper.add((metaDouble.elementAt(1) - metaDouble.elementAt(0)) / 2.0);
+                blockHeigth_minus.add((metaDouble.elementAt(1) - metaDouble.elementAt(0)) / 2.0);
+                blockHeigth_plus.add((metaDouble.elementAt(1) - metaDouble.elementAt(0)) / 2.0);
                 for (int i = 1; i < numDataset - 1; i++) {
-                    blockHeigth_lower.add((metaDouble.elementAt(i) - metaDouble.elementAt(i - 1)) / 2.0);
-                    blockHeigth_upper.add((metaDouble.elementAt(i + 1) - metaDouble.elementAt(i)) / 2.0);
+                    blockHeigth_minus.add((metaDouble.elementAt(i) - metaDouble.elementAt(i - 1)) / 2.0);
+                    blockHeigth_plus.add((metaDouble.elementAt(i + 1) - metaDouble.elementAt(i)) / 2.0);
                 }
-                blockHeigth_lower.add((metaDouble.elementAt(numDataset - 1) - metaDouble.elementAt(numDataset - 2)) / 2.0);
-                blockHeigth_upper.add((metaDouble.elementAt(numDataset - 1) - metaDouble.elementAt(numDataset - 2)) / 2.0);
+                blockHeigth_minus.add((metaDouble.elementAt(numDataset - 1) - metaDouble.elementAt(numDataset - 2)) / 2.0);
+                blockHeigth_plus.add((metaDouble.elementAt(numDataset - 1) - metaDouble.elementAt(numDataset - 2)) / 2.0);
             }
 
             yAxis = new NumberAxis(selectedMetaItem);
@@ -243,8 +227,9 @@ public class FilesPlotter3D extends DatasetPlotter {
             // the below for some change reason current has stopped actually
             // setting the values specified..... which may be due to autorange
             // being called somewhere else?
-            yAxis.setRange(metaDouble.firstElement() - blockHeigth_lower.firstElement(),
-                    metaDouble.lastElement() + blockHeigth_upper.lastElement());
+
+            yAxis.setRange(metaDouble.firstElement() - blockHeigth_minus.firstElement(),
+                    metaDouble.lastElement() + blockHeigth_plus.lastElement());
         }
 
         // Setup the block renderer
@@ -271,7 +256,7 @@ public class FilesPlotter3D extends DatasetPlotter {
             }
             renderer.setBlockWidth(width1stDataPoint);
         }
-        renderer.setBlockHeight(blockHeigth_lower, blockHeigth_upper);
+        renderer.setBlockHeight(blockHeigth_minus, blockHeigth_plus);
         // don't know what this one is for?
         renderer.clearSeriesPaints(true);
 
@@ -280,9 +265,8 @@ public class FilesPlotter3D extends DatasetPlotter {
         plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
         plot.setDomainGridlinePaint(Color.white);
         plot.setRangeGridlinePaint(Color.white);
-        plot.getRangeAxis().setAutoRange(true);
-        // my trial on 17/03/2012
-
+        //plot.getRangeAxis().setAutoRange(true); -- comment out by KP 18/08/2012 to plot properly.
+       
         chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
 
         // Find the min and max y value and use these values
