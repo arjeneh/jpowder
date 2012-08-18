@@ -22,7 +22,7 @@
  * Kasem Bundit University.
  *
  * Author(s):  Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
-M Arjeneh, ISIS, Rutherford Appleton Laboratory
+ *              M Arjeneh, ISIS, Rutherford Appleton Laboratory
  *
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
@@ -35,9 +35,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
-import org.jpowder.TableHelper.TableTransferHandler;
 import org.jpowder.InernalFrame.JpowderInternalframe3D;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -58,18 +56,14 @@ import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import org.jpowder.InernalFrame.InternalFrameIconifyListener;
 import org.jpowder.MetaFile.IO_MetaFile;
-import org.jpowder.TableHelper.HeaderListener;
 import org.jpowder.TableHelper.ListRowHeader;
-import org.jpowder.TableHelper.SortButtonRenderer;
 import org.jpowder.TableHelper.SortableTableModel;
 import org.jpowder.dataset.DataSet;
-//import org.jpowder.dataset.IO_MetaFile;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 import org.jpowder.util.HashMapHelper;
 import org.jpowder.util.NaturalOrderComparator;
@@ -87,9 +81,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     JFileChooser chooser = new JFileChooser(new File("C:/Documents and Settings/qyt21516/Desktop/My Dropbox"));
     private Vector<String> columnNames = new Vector<String>();
     private Vector<String> row = new Vector<String>();
-    //private static File afile;
     private DataVisibleInChart dataVisibleInChart = new DataVisibleInChart();
-    //private Vector<Vector<String>> tableDataVector = new Vector<Vector<String>>();
     private Vector<String> metaColumnesName = new Vector<String>();
     private Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
     private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
@@ -240,6 +232,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         plotAsComboBox.setModel(new DefaultComboBoxModel(getPlotableColumnNames(columnNames)));
 
         addWindowListener(new WindowAdapter() {
+
             @Override
             public void windowClosing(WindowEvent event) {
                 stm.setRowCount(0);
@@ -288,7 +281,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                 null, //do not use a custom Icon
                 options, //the titles of buttons
                 "i");
-                //options[0]); //default button title
+        //options[0]); //default button title
         if (n == 0) {
 
             Double defaultMetaColumnValue = 0.0;
@@ -564,7 +557,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                     String fileName, filePaths;
 
                     // loop over selected files
-                    for (int i = 0, n = stm.getRowCount(); i <  n; i++) {
+                    for (int i = 0, n = stm.getRowCount(); i < n; i++) {
                         // assume in this loop for now that path the 2nd column
                         fileNameAndPathMap.put(String.valueOf(stm.getValueAt(i, 0)),
                                 String.valueOf(stm.getValueAt(i, 1)));
@@ -573,8 +566,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
                     for (Map.Entry<String, String> entry : fileNameAndPathMap.entrySet()) {
                         fileName = entry.getKey();
-                        filePaths =
-                                entry.getValue();
+                        filePaths = entry.getValue();
                         System.out.println("File name is: " + fileName + " and Path is: " + filePaths);
 
                         //System.out.println(afile);
@@ -593,7 +585,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                             }
 
                         } else {
-                            //TODO: Check this needed why?
+                            //alert it is not an acsii file.
                             javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
                             break;
                         }
@@ -635,13 +627,13 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                     InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
                     internalframe.addInternalFrameListener(internalFrameListener);
                     Jpowder.getChartPlotter3D().add(internalframe);
-                    
 
                     Thread.sleep(5000);
                 } catch (InterruptedException ex) {
                 }
                 // Report the result using invokeLater( ).
                 SwingUtilities.invokeLater(new Runnable() {
+
                     @Override
                     public void run() {
                         statusText.setText("Ready");

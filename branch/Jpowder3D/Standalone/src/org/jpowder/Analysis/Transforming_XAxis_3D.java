@@ -616,7 +616,7 @@ public class Transforming_XAxis_3D extends javax.swing.JPanel implements InfoPan
 
         for (int i = 0; i < vecIntDataInFrameSize; i++) {
             DataSet ds = vecDataInFrame.get(i);
-            System.out.println("in applyButtonActionPerformed, what in it is: " + ds.getFileName());
+            System.out.println("in " + this.getClass().getName() + "file is : " + ds.getFileName());
         }
 
         if (JpowderInternalframe3D.getnumberOfJpowderInternalframe() == 0) {
@@ -652,15 +652,17 @@ public class Transforming_XAxis_3D extends javax.swing.JPanel implements InfoPan
                 String fileName = xyDataset.getFileName();
 
                 int numItems = xyDataset.getX().size();
-                System.out.println("File name is: " + fileName + " and has: " + numItems + " items.");
+                System.out.println("in " + this.getClass().getName() + " file name is: " + fileName +
+                        " and has: " + numItems + " items.");
                 //itemcount
                 for (int j = 0; j < numItems; j++) {
                     Double X = (Double) inFocus.getPowderDataSet().elementAt(i).getX().get(j);
+
                     double waveLength = Double.parseDouble(dataTable.getValueAt(i, 1).toString());
                     double spacing = waveLength / (2 * Math.sin(Math.toRadians(X / 2)));
                     double theta = Math.toDegrees(Math.asin((waveLength / (2 * X)))) * 2;
 
-                    System.out.println("Value of X = " + X + " wavelength = " + waveLength +
+                    System.out.println("in " + this.getClass().getName() + "Value of X = " + X + " wavelength = " + waveLength +
                             " spacing = " + spacing + " theta = " + theta);
 
                     if (item1.equals("2Ө") && item2.equals("d")) {
@@ -674,7 +676,7 @@ public class Transforming_XAxis_3D extends javax.swing.JPanel implements InfoPan
                         inFocus.getXYPlot().getDomainAxis().setLabel(x.toUpperCase());
                         setDomainAxis();
                     }//if 2Ө
-                    }//for item
+                }//for item
             }//for series
         }//if bragPanel is seen.
 

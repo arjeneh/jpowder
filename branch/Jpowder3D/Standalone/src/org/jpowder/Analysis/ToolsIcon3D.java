@@ -247,7 +247,7 @@ public class ToolsIcon3D extends javax.swing.JPanel {
                 row.add(ds.getFileName());
                 row.add(0.0);
                 fileNames.add(row);
-                System.out.println("What in it is: " + ds.getFileName());
+                System.out.println("in " + this.getClass().getName() + " file in it is: " + ds.getFileName());
             }
 
             Vector colName = new Vector();

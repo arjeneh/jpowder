@@ -1,34 +1,96 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
+/* ===========================================================
+ * This file is part of Jpowder, see <http://www.jpowder.org/>
+ * ===========================================================
+ *
+ * Jpowder is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jpowder is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ---------
  * BlockHeight.java
+ * ---------
+ * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
+ * Kasem Bundit University.
+ *
+ * Author(s):  Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
+ *              M Arjeneh, ISIS, Rutherford Appleton Laboratory
+ *
+ * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
+ *
  *
  * Created on Sep 16, 2010, 11:26:01 AM
  */
-
 package org.jpowder.chartTools;
 
+import java.awt.BorderLayout;
+import javax.swing.JFrame;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import org.jfree.ui.RectangleEdge;
 import org.jpowder.Analysis.ToolsIcon3D;
+import org.jpowder.InernalFrame.JpowderInternalframe3D;
 import org.jpowder.InfoPanel;
+import org.jpowder.Jpowder;
 
-/**
- *
- * @author Arjeneh
- */
-public class BlockHeight extends javax.swing.JPanel implements InfoPanel{
+public class BlockHeight extends javax.swing.JPanel implements InfoPanel {
 
     private ToolsIcon3D toolsIcon3D;
+
     /** Creates new form BlockHeight */
     public BlockHeight(ToolsIcon3D toolsIcon3D) {
         initComponents();
-        this.toolsIcon3D=toolsIcon3D;
+        this.toolsIcon3D = toolsIcon3D;
+        hieghtSlider.addChangeListener(new HeightChangeAction());
     }
- @Override
+
+    /** Creates new form BlockHeight */
+    public BlockHeight() {
+        initComponents();
+        hieghtSlider.addChangeListener(new HeightChangeAction());
+    }
+
+    @Override
     public void update() {
-       
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                JFrame frame = new JFrame("Slider Frame");
+                BlockHeight bh = new BlockHeight();
+                frame.add(bh, BorderLayout.CENTER);
+                frame.setSize(400, 400);
+                frame.setVisible(true);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            }
+        });
+    }
+
+      public class HeightChangeAction implements ChangeListener {
+
+        @Override
+        public void stateChanged(ChangeEvent ce) {
+            JSlider source = (JSlider)ce.getSource();
+            int value = source.getValue();
+            String str = Integer.toString(value);
+            testLabel.setText(str);
+        }
     }
 
     /** This method is called from within the constructor to
@@ -40,8 +102,18 @@ public class BlockHeight extends javax.swing.JPanel implements InfoPanel{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroupYAxis = new javax.swing.ButtonGroup();
         jSeparator1 = new javax.swing.JSeparator();
         backButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jRadioStackPlot = new javax.swing.JRadioButton();
+        jRadioFillPlot = new javax.swing.JRadioButton();
+        jRadioSparsePlot = new javax.swing.JRadioButton();
+        hieghtSlider = new javax.swing.JSlider();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        testLabel = new javax.swing.JLabel();
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.PNG"))); // NOI18N
         backButton.setText("Back");
@@ -54,24 +126,99 @@ public class BlockHeight extends javax.swing.JPanel implements InfoPanel{
             }
         });
 
+        jLabel1.setText("Setting Y-Axis Display");
+
+        buttonGroupYAxis.add(jRadioStackPlot);
+        jRadioStackPlot.setSelected(true);
+        jRadioStackPlot.setText("Stack Plot");
+        jRadioStackPlot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioStackPlotActionPerformed(evt);
+            }
+        });
+
+        buttonGroupYAxis.add(jRadioFillPlot);
+        jRadioFillPlot.setText("Fill Plot (hieght of dataset to fill chart)");
+        jRadioFillPlot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioFillPlotActionPerformed(evt);
+            }
+        });
+
+        buttonGroupYAxis.add(jRadioSparsePlot);
+        jRadioSparsePlot.setText("Sparse Plot (each dataset same hieght)");
+        jRadioSparsePlot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioSparsePlotActionPerformed(evt);
+            }
+        });
+
+        hieghtSlider.setValue(0);
+
+        jLabel2.setText("Hieght");
+
+        jLabel3.setText("0.0");
+
+        jLabel4.setText("5.5");
+
+        testLabel.setText("5.5");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jRadioSparsePlot, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jRadioStackPlot, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE))
+                            .addComponent(jRadioFillPlot, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel4))
+                                    .addComponent(hieghtSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(131, 131, 131)
+                        .addComponent(testLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(86, 86, 86)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1)
+                .addGap(52, 52, 52)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
-                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jRadioStackPlot)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioFillPlot)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jRadioSparsePlot)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(hieghtSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(32, 32, 32)
+                        .addComponent(testLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -81,12 +228,44 @@ public class BlockHeight extends javax.swing.JPanel implements InfoPanel{
         this.setVisible(false);
 }//GEN-LAST:event_backButtonActionPerformed
 
+    private void jRadioStackPlotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioStackPlotActionPerformed
 
+        JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
+        //   renderer.setBlockHeight(10);
+        //   inFocus.getChart().addLegend(new LegendTitle(renderer));
+        //   PaintScaleLegend legend = inFocus.getChart().getTitle();
+        inFocus.getChart().getSubtitle(0).setPosition(RectangleEdge.TOP);
+        //   renderer.setBlockWidth(WIDTH);
+        //   renderer.setBlockAnchor(RectangleAnchor.TOP);
+
+
+
+
+
+    }//GEN-LAST:event_jRadioStackPlotActionPerformed
+
+    private void jRadioFillPlotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioFillPlotActionPerformed
+        JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
+        inFocus.getChart().getSubtitle(0).setPosition(RectangleEdge.BOTTOM);
+}//GEN-LAST:event_jRadioFillPlotActionPerformed
+
+    private void jRadioSparsePlotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioSparsePlotActionPerformed
+        JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
+        inFocus.getChart().getSubtitle(0).setPosition(RectangleEdge.RIGHT);
+
+}//GEN-LAST:event_jRadioSparsePlotActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
+    private javax.swing.ButtonGroup buttonGroupYAxis;
+    private javax.swing.JSlider hieghtSlider;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JRadioButton jRadioFillPlot;
+    private javax.swing.JRadioButton jRadioSparsePlot;
+    private javax.swing.JRadioButton jRadioStackPlot;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel testLabel;
     // End of variables declaration//GEN-END:variables
-
-
-
 }
