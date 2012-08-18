@@ -104,6 +104,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         metaColumnesName.add("Path");
 
         initComponents();
+        importData3DTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 
         stm = new SortableTableModel(row, columnNames);
         importData3DTable.setModel(stm);
@@ -536,6 +537,10 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 
     private void plotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotButtonActionPerformed
 
+        if (importData3DTable.isEditing()) {
+            importData3DTable.getCellEditor().stopCellEditing();
+        }
+        
         setCursor(waitCursor);
         statusText.setText("Plotting . . . ");
         plotButton.setEnabled(false);
