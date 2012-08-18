@@ -21,7 +21,8 @@
  * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
  * Kasem Bundit University.
  *
- * Author(s):  M Arjeneh, ISIS, Rutherford Appleton Laboratory
+ * Author(s):  Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
+               M Arjeneh, ISIS, Rutherford Appleton Laboratory
  *
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
@@ -35,6 +36,7 @@ import org.jpowder.Jpowder;
 import org.jpowder.chartTools.AnnotationPanel;
 import org.jpowder.chartTools.BlockHeight;
 import org.jpowder.chartTools.ColorBar3D;
+import org.jpowder.chartTools.SmoothingPanel;
 import org.jpowder.dataset.DataSet;
 
 /**
@@ -45,6 +47,7 @@ public class ToolsIcon3D extends javax.swing.JPanel {
 
     private ColorBar3D colorBar = new ColorBar3D(this);
     private BlockHeight blockHeight = new BlockHeight(this);
+    private SmoothingPanel smoothing = new SmoothingPanel(this);
     private Transforming_XAxis_3D braggsLow3D = new Transforming_XAxis_3D(this);
     private Jpowder jpowder;
     private AnnotationPanel annoPanel = new AnnotationPanel(this);
@@ -229,6 +232,10 @@ public class ToolsIcon3D extends javax.swing.JPanel {
 
     private void smoothingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smoothingButtonActionPerformed
         // TODO add your handling code here:
+        jpowder.getToolsTab3D().add(smoothing, "1");
+        smoothing.setVisible(true);
+        this.setVisible(false);
+        Jpowder.jpowderInfoPanelUpdate(smoothing);
     }//GEN-LAST:event_smoothingButtonActionPerformed
 
     private void changeXAxisButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeXAxisButtonActionPerformed
@@ -256,23 +263,24 @@ public class ToolsIcon3D extends javax.swing.JPanel {
 
             jpowder.getToolsTab3D().add(braggsLow3D, "1");
             braggsLow3D.updateTableModel(fileNames, colName);
-            braggsLow3D.setVisible( true);
+            braggsLow3D.setVisible(true);
             this.setVisible(false);
+
         } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(this,"Plot something first");
+            JOptionPane.showMessageDialog(this, "Plot something first");
             // probably don't bother doing clean up
         } finally {
             // carry on as if nothing went wrong
         }
     }//GEN-LAST:event_changeXAxisButtonActionPerformed
 
-       /**
+    /**
      * @return the annoPanel
      */
     public AnnotationPanel getAnnoPanel() {
         return annoPanel;
     }
-    
+
     private void annotationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annotationButtonActionPerformed
         // TODO add your handling code here:
         jpowder.getToolsTab3D().add(getAnnoPanel(), "1");

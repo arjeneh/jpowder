@@ -33,6 +33,7 @@ package org.jpowder;
 import org.jpowder.InernalFrame.JpowderInternalframe2D;
 import org.jpowder.InernalFrame.JpowderInternalframe;
 import java.beans.PropertyVetoException;
+import org.jpowder.chartTools.SmoothingPanel;
 import org.jpowder.tree.Tree;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -74,6 +75,7 @@ import org.jpowder.tree.JpowderFileSystemTreeModel;
  *
  */
 public class Jpowder extends JFrame implements DropTargetListener {
+
 
     private JpowderFileSystemTreeModel treeModel = new JpowderFileSystemTreeModel();
     private Tree tree = new Tree(treeModel);

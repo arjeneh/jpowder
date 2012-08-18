@@ -32,6 +32,7 @@
 package org.jpowder.chartTools;
 
 import java.awt.BorderLayout;
+import javax.swing.BoundedRangeModel;
 import javax.swing.JFrame;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
@@ -57,6 +58,16 @@ public class BlockHeight extends javax.swing.JPanel implements InfoPanel {
     public BlockHeight() {
         initComponents();
         hieghtSlider.addChangeListener(new HeightChangeAction());
+        
+        BoundedRangeModel model = hieghtSlider.getModel();
+        model.addChangeListener(new ChangeListener() {
+
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                BoundedRangeModel m = (BoundedRangeModel) e.getSource();
+                System.out.println("Slider position changed to " + m.getValue());
+            }
+        });
     }
 
     @Override
@@ -82,11 +93,11 @@ public class BlockHeight extends javax.swing.JPanel implements InfoPanel {
         });
     }
 
-      public class HeightChangeAction implements ChangeListener {
+    public class HeightChangeAction implements ChangeListener {
 
         @Override
         public void stateChanged(ChangeEvent ce) {
-            JSlider source = (JSlider)ce.getSource();
+            JSlider source = (JSlider) ce.getSource();
             int value = source.getValue();
             String str = Integer.toString(value);
             testLabel.setText(str);
