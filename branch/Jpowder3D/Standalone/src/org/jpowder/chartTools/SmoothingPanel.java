@@ -39,6 +39,10 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import org.jpowder.Analysis.ToolsIcon3D;
 import org.jpowder.InfoPanel;
+import org.jpowder.Jpowder;
+import org.jpowder.InernalFrame.JpowderInternalframe3D;
+import java.util.Vector;
+import java.lang.Math;
 
 
 public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel{
@@ -93,8 +97,12 @@ public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel{
         jLabel1.setText("Moving average, numer of points to AVG over:");
 
         comboInput.setMaximumRowCount(10);
-        comboInput.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboInput.setSelectedIndex(0);
+        comboInput.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "3", "5", "7", "9", "11" }));
+        comboInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboInputActionPerformed(evt);
+            }
+        });
 
         executeButton.setText("execute");
         executeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -149,38 +157,58 @@ public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel{
     }// </editor-fold>//GEN-END:initComponents
 
     private void executeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_executeButtonActionPerformed
-        // call the algorithm:
+        // KREECHA NOT USED THIS ONE FOR NOW, BUT PLEASE MOVE CODE BELOW INTO
+        // THIS CLASS IF YOU LIKE
         MovingAverage mva = new MovingAverage();
 
-        /*
-        numberOfPointsEitherSize = (n - 1) / 2  // number of points to include either size
-        // of the point in question when calculate
-        // the new average value at that point
-        yNew = initialize to zero array of size m
-        eNew = initialize to zero array of size m
-        for (int i = 1; i <= m; i++)
-        for (int j = max(0, i-numberOfPointsEitherSize);
-        j <= min(m,i+numberOfPointsEitherSize); j++)
-        {
-        yNew[i] += y[j];
-        eNew[i] += e[j]*e[j];
-        }
-        eNew[i] = sqrt(eNew[i]);
+        JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
+
+        // Calculate moving average for each dataset
+        for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
+            // get number of data points for this dataset
+            int numY = inFocus.getPowderDataSet().elementAt(i).getY().size();
+        
+            int numberOfPointsEitherSize = 10; //  PLEASE RATHER THAN HARDCODED NUMBER USE NUMBER FROM COMBOBOX
+
+            // For convenience store y-values in variable y
+            Vector<Double> y = inFocus.getPowderDataSet().elementAt(i).getY();
+
+            // To store new calculated average values
+            Vector<Double> yNew = new Vector<Double>();
+
+            // calculate new average value for each data point
+            for (int ii = 0; ii < numY; ii++) {
+                Double sum = 0.0;
+                // here calculate sum over the neighboring points +- numberOfPointsEitherSize either side of point ii
+                // Of course where ii is near an edge this sum will be over fewer points as done below
+                for (int jj = Math.max(0, ii-numberOfPointsEitherSize); jj <= Math.min(numY-1,ii+numberOfPointsEitherSize); jj++) {
+                    sum += y.get(jj);
+                }
+                // add new average value
+                yNew.add(sum/numberOfPointsEitherSize);
+            }
+
+            // finally replace original data values with newly calculated
+            // averaged values
+            for (int ii = 0; ii < numY; ii++)
+            {
+                inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(yNew.get(ii), ii);
+            }
         }
 
-        // finally replace original data values with newly calculated
-        // averaged values
-        for (int i = 1; i <= m; i++)
-        {
-        y[i] = yNew[i];
-        e[i] = eNew[i];
-        }*/
+        // FOR SOME REASON THE CHART DOES NOT GET UPDATED - I DON'T UNDERSTAND THIS
+        inFocus.getChartPanel().restoreAutoBounds();
+        inFocus.getChart().setNotify(true);
     }//GEN-LAST:event_executeButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 
         this.setVisible(false);
 }//GEN-LAST:event_backButtonActionPerformed
+
+    private void comboInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboInputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboInputActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;

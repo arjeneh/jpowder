@@ -46,7 +46,7 @@ public abstract class DataSet {
     private double waveLength;
     private GSAS_Instrument gsasInst = null;
     private boolean isTOF = false;
-    private Vector<Double> z;
+    //private Vector<Double> z;
     // holds meta data for the DataSet in pairs
     // of name of meta-data-item, e.g. temperature, and its value.
     private HashMap<String, MetaData> meta;
@@ -87,13 +87,13 @@ public abstract class DataSet {
         this.y = y;
     }
 
-    public void setZ(Vector<Double> z) {
-        this.z = z;
-    }
+    //public void setZ(Vector<Double> z) {
+    //    this.z = z;
+    //}
 
-    public Vector<Double> getZ() {
-        return z;
-    }
+    //public Vector<Double> getZ() {
+    //    return z;
+    //}
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
@@ -149,7 +149,7 @@ public abstract class DataSet {
         result.append(this.getClass().getName() + " Object {" + NEW_LINE);
         result.append(" X value: " + this.x + NEW_LINE);
         result.append(" Y value: " + this.y + NEW_LINE);
-        result.append(" Z value: " + this.z + NEW_LINE);
+        //result.append(" Z value: " + this.z + NEW_LINE);
         result.append(" Filename: " + this.fileName + NEW_LINE);
         result.append(" Wavelength: " + this.waveLength + NEW_LINE);
         result.append(" HashMap: " + this.meta + NEW_LINE);
