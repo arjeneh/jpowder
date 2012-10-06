@@ -59,7 +59,7 @@ public class SmoothingComboBoxModel extends AbstractListModel implements ComboBo
 
     @Override
     public void setSelectedItem(Object anItem) {
-        selection = (String) anItem; 
+        selection = (String) anItem.toString();
     } 
 
     // Methods implemented from the interface ComboBoxModel

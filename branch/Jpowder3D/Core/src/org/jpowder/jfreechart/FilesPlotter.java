@@ -139,14 +139,14 @@ public class FilesPlotter extends DatasetPlotter implements Serializable {
         // get a reference to the plot for further customisation...
         JpowderXYLineAndShapeRender renderer1 = new JpowderXYLineAndShapeRender();
         renderer1.setSeriesPaint(0, DefaultSeriesColours.getSeriesColors(0));
+
         JpowderXYErrorRender renderer2 = new JpowderXYErrorRender();
         renderer2.setSeriesPaint(0, DefaultSeriesColours.getSeriesColors(0));
 
         //Displaying the X&Y in Tooltip
         XYToolTipGenerator tooltip = new StandardXYToolTipGenerator(
                 "{1},{2}", new DecimalFormat("0.000"), new DecimalFormat("0.000"));
-        renderer2.setToolTipGenerator(tooltip);
-        renderer1.setToolTipGenerator(tooltip);
+       
 
         if (datasets.elementAt(0) instanceof DataSetNoErrors) {
 
@@ -162,6 +162,7 @@ public class FilesPlotter extends DatasetPlotter implements Serializable {
         for (int i = 1; i < datasets.size(); i++) {
             JpowderXYLineAndShapeRender renderer3 = new JpowderXYLineAndShapeRender();
             renderer3.setSeriesPaint(0, DefaultSeriesColours.getSeriesColors(i));
+
             JpowderXYErrorRender renderer4 = new JpowderXYErrorRender();
             renderer4.setSeriesPaint(0, DefaultSeriesColours.getSeriesColors(i));
 
@@ -173,6 +174,7 @@ public class FilesPlotter extends DatasetPlotter implements Serializable {
                 plot.setRenderer(i, renderer4);
             }
         }
+
         plot.setBackgroundPaint(ChartColor.lightGray);
         plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
 //        plot.setAxisOffset(RectangleInsets.ZERO_INSETS);
@@ -190,10 +192,7 @@ public class FilesPlotter extends DatasetPlotter implements Serializable {
         chart = new JFreeChart(null, null, plot, false);// for getting the chart header
         chart.setBackgroundPaint(Color.white);
         chart.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000, Color.BLACK, true));
-//         plot.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000,Color.BLUE,true));
         chart.setAntiAlias(true);
-
-
         return chart;
     }
 

@@ -42,22 +42,22 @@ import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 import org.jpowder.InernalFrame.JpowderInternalframe3D;
 import java.util.Vector;
-import java.lang.Math;
 
-
-public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel{
+public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel {
 
     private ToolsIcon3D toolsIcon3D;
+    private SmoothingComboBoxModel model = new SmoothingComboBoxModel();
 
     /** Creates new form SmoothingPanel */
     public SmoothingPanel() {
         initComponents();
-        comboInput.setModel(new SmoothingComboBoxModel());
+        comboInput.setModel(model);
     }
 
     public SmoothingPanel(ToolsIcon3D aThis) {
         initComponents();
         comboInput.setModel(new SmoothingComboBoxModel());
+        comboInput.setSelectedIndex(model.getSize() - 1);
         this.toolsIcon3D = aThis;
     }
 
@@ -167,7 +167,7 @@ public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel{
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             // get number of data points for this dataset
             int numY = inFocus.getPowderDataSet().elementAt(i).getY().size();
-        
+
             int numberOfPointsEitherSize = 10; //  PLEASE RATHER THAN HARDCODED NUMBER USE NUMBER FROM COMBOBOX
 
             // For convenience store y-values in variable y
@@ -181,24 +181,31 @@ public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel{
                 Double sum = 0.0;
                 // here calculate sum over the neighboring points +- numberOfPointsEitherSize either side of point ii
                 // Of course where ii is near an edge this sum will be over fewer points as done below
-                for (int jj = Math.max(0, ii-numberOfPointsEitherSize); jj <= Math.min(numY-1,ii+numberOfPointsEitherSize); jj++) {
+                for (int jj = Math.max(0, ii - numberOfPointsEitherSize); jj <= Math.min(numY - 1, ii + numberOfPointsEitherSize); jj++) {
                     sum += y.get(jj);
                 }
                 // add new average value
-                yNew.add(sum/numberOfPointsEitherSize);
+                yNew.add(sum / numberOfPointsEitherSize);
             }
 
             // finally replace original data values with newly calculated
             // averaged values
-            for (int ii = 0; ii < numY; ii++)
-            {
+            for (int ii = 0; ii < numY; ii++) {
                 inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(yNew.get(ii), ii);
             }
         }
 
-        // FOR SOME REASON THE CHART DOES NOT GET UPDATED - I DON'T UNDERSTAND THIS
-        inFocus.getChartPanel().restoreAutoBounds();
-        inFocus.getChart().setNotify(true);
+        // FOR SOME REASON THE CHART DOES NOT GET UPDATED - I DON'T UNDERSTAND THIS.
+        inFocus.refreshChart();
+        inFocus.getXYPlot().getDomainAxis().setLabel("Done");
+//        inFocus.getChartPanel().restoreAutoBounds();
+//        inFocus.getChart().setNotify(true);
+
+        //    ChartPanel chartPanel = new ChartPanel(aChart);
+//    jPanel_GraphicsTop.setLayout(new BorderLayout());
+//    jPanel_GraphicsTop.add(chartPanel);
+//    jPanel_GraphicsTop.repaint(); // This method makes the new chart appear
+
     }//GEN-LAST:event_executeButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -209,7 +216,6 @@ public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel{
     private void comboInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboInputActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboInputActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.JComboBox comboInput;
@@ -219,6 +225,5 @@ public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel{
 
     @Override
     public void update() {
-       
     }
 }

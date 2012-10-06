@@ -64,8 +64,9 @@ public class JpowderInternalframe extends JInternalFrame {
     private static final String key1 = "Width", key2 = "Highet";
     //
     private DataVisibleInChart dataVisibleInChartPanel;
-    private Vector<DataSet> vectorDatasets;
-    private XYPlot xYPlot;  // hold reference to plot created from dataset in constructor.
+
+    protected Vector<DataSet> vectorDatasets;
+    protected XYPlot xYPlot;  // hold reference to plot created from dataset in constructor.
     //
     protected DatasetPlotter plotMultiCol;
     //

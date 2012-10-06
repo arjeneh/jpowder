@@ -248,12 +248,14 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
     public void resetXaxis() {
         double maxX = 0;
         double minX = 0;
+
         JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
         for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
             maxX = (Double) Collections.max(inFocus.getPowderDataSet().elementAt(i).getX());
             minX = (Double) Collections.min(inFocus.getPowderDataSet().elementAt(i).getX());
 //            System.out.println("max y" + maxY);
         }
+
         NumberAxis axis = (NumberAxis) inFocus.getXYPlot().getDomainAxis();
         axis.setLowerBound(minX);
         axis.setUpperBound(maxX);
@@ -519,8 +521,6 @@ public class Transforming_XAxis extends javax.swing.JPanel implements InfoPanel 
                     unitComboBox2.getSelectedItem().toString().equals("d")) {
                 return;
             }
-
-
 
             if (inFocus.getXYPlot().getDomainAxis().getLabel().equals("d [Å]") &&
                     unitComboBox1.getSelectedItem().toString().equals("2Ө")) {

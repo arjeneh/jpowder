@@ -31,6 +31,7 @@ package org.jpowder.dataset;
 
 import java.util.HashMap;
 import java.util.Vector;
+import org.jfree.data.xy.AbstractXYDataset;
 import org.jpowder.util.VectorMiscUtil;
 
 /**
@@ -90,11 +91,9 @@ public abstract class DataSet {
     //public void setZ(Vector<Double> z) {
     //    this.z = z;
     //}
-
     //public Vector<Double> getZ() {
     //    return z;
     //}
-
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
@@ -130,8 +129,8 @@ public abstract class DataSet {
 
     public MetaData getMetaData(String name) {
         MetaData data = meta.get(name);
-        System.out.println("in " + this.getClass().getName() + " Meta data is: " + meta +
-                " under name = " + name + " and data = " + data);
+//        System.out.println("in " + this.getClass().getName() + " Meta data is: " + meta +
+//                " under name = " + name + " and data = " + data);
         return data;
     }
 
@@ -159,13 +158,13 @@ public abstract class DataSet {
     }
 
     public static void main(String[] args) {
-        DataSet ds = new DataSet(new Vector(), "hello") {
-
-            @Override
-            public String description() {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        };
+//        DataSet ds = new DataSet(new Vector(), "hello") {
+//
+//            @Override
+//            public String description() {
+//                throw new UnsupportedOperationException("Not supported yet.");
+//            }
+//        };
     }
 //
 //    public DataSet() {

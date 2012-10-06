@@ -30,46 +30,35 @@ package org.jpowder.InernalFrame;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import org.jpowder.*;
 import java.util.Vector;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.GrayPaintScale;
+import org.jfree.data.xy.XYDataset;
 import org.jpowder.Annotation.BalloonFrame;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.jfreechart.EditAnnotationFrame;
 import org.jpowder.jfreechart.FilesPlotter3D;
+import org.jpowder.jfreechart.JpowderXYBlockRenderer;
 import org.jpowder.jfreechart.PointAnno;
 
 /**
  *
  * Internal Frame 3D
+ *
+ * This needs to be a listener of DataSetChangeEvent
  */
 public class JpowderInternalframe3D extends JpowderInternalframe {
 
-    private XYPlot xYPlot;  // hold reference to plot created from dataset in constructor
     private JFreeChart chart;
     private String selectedMetaItem;
     private HashMap fileNameAndPath;
-
-    /**
-     *
-     * @param dataVisibleInChartPanel
-     * @param data
-     */
-    public JpowderInternalframe3D(DataVisibleInChart dataVisibleInChartPanel,
-            Vector<DataSet> data, String selectedMetaItem) {
-        //
-        super(dataVisibleInChartPanel, data);
-        this.doStuff(selectedMetaItem);
-        xYPlot = this.getXYPlot();
-        chart = FilesPlotter3D.getChart();
-        this.selectedMetaItem = selectedMetaItem;
-    }
 
     /*
      * @param
@@ -83,7 +72,6 @@ public class JpowderInternalframe3D extends JpowderInternalframe {
         this.fileNameAndPath = fileNameAndPath;
         doStuff(this.selectedMetaItem, this.fileNameAndPath);
 
-        xYPlot = this.getXYPlot();
         chart = FilesPlotter3D.getChart();
     }
 
@@ -95,7 +83,7 @@ public class JpowderInternalframe3D extends JpowderInternalframe {
         return chart;
     }
 
-       /**
+    /**
      *
      * @param frameName the annotation for datasets in the framename only will be displayed.
      *
@@ -156,5 +144,60 @@ public class JpowderInternalframe3D extends JpowderInternalframe {
      */
     public void setFileNameAndPath(HashMap fileNameAndPath) {
         this.fileNameAndPath = fileNameAndPath;
+    }
+
+    public void refreshChart() {
+
+        //get the JFreeChart
+//        System.out.println("Hoorey changed " + chart.isNotify());
+//        //get the Dataset.
+        XYDataset dataset = chart.getXYPlot().getDataset();
+//        //how many in dataset
+        int numDataset = dataset.getSeriesCount();
+        System.out.println("XYDataset dataset has " + numDataset + " dataset in it.");
+
+
+        // Create the lower and upper values for each dataset block height
+//        Vector<Double> blockHeigth_minus = new Vector<Double>();
+//        Vector<Double> blockHeigth_plus = new Vector<Double>();
+//
+//        for (int i = 0; i < numDataset; i++) {
+//            blockHeigth_minus.add(0.5);
+//            blockHeigth_plus.add(0.5);
+//        }
+
+        JpowderXYBlockRenderer renderer = (JpowderXYBlockRenderer) chart.getXYPlot().getRenderer();
+//        if (dataset.getSeriesCount() >= 1) {
+//            double width1stDataPoint = dataset.getXValue(0, 1) - dataset.getXValue(0, 0);
+//            if (width1stDataPoint <= 0.0) {
+//                width1stDataPoint = 1.0;
+//            }
+//            renderer.setBlockWidth(width1stDataPoint);
+//        }
+//        //renderer.setBlockHeight(blockHeigth_minus, blockHeigth_plus);
+
+        //XYPlot plot = (XYPlot) chart.getPlot();
+//        //plot.setDataset(dataset);
+//        //plot.setRenderer(renderer);
+//
+        double maxY = 0;
+        double minY = 0;
+
+        XYPlot plot = (XYPlot) chart.getPlot();
+
+        for (int i = 0; i < plot.getDatasetCount(); i++) {
+            maxY = (Double) Collections.max(super.vectorDatasets.get(i).getY());
+            minY = (Double) Collections.min(super.vectorDatasets.get(i).getY());
+        }
+
+        //System.out.println("I have " + this.data);
+        System.out.println("maxY =  " + maxY + " and minY = " + minY);
+
+        GrayPaintScale colourScale = new GrayPaintScale(minY, maxY);
+        //GrayPaintScale colourScale = new GrayPaintScale(0, 10000.0); //debuging.
+        renderer.setPaintScale(colourScale);
+        renderer.setBlockHeight(1);
+        renderer.setBlockWidth(1);
+        renderer.clearSeriesPaints(true);
     }
 }

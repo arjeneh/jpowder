@@ -82,7 +82,7 @@ public class FilesPlotter3D extends DatasetPlotter {
             fileNames.add(FilesPlotter3D.datasets.get(i).getFileName());
         }
 
-         if (selectedMetaItem.equalsIgnoreCase("name")) {
+        if (selectedMetaItem.equalsIgnoreCase("name")) {
             isMetaNameEqualName = true;
             System.out.println("Plot using Name metaData in the constructor()");
         }
@@ -142,6 +142,7 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         boolean isMetaDataString = false;
         int numDataset = datasets.size();
+        //System.out.println("In FilePlotter3D Vector<DataSet> datasets has " + numDataset + " in it.");
 
         Vector<MetaData> metaValues = new Vector<MetaData>();
 
@@ -150,9 +151,8 @@ public class FilesPlotter3D extends DatasetPlotter {
         }
         //KP - this can be in above logic.
         for (int i = 0; i < numDataset; i++) {
-            if ( metaValues.elementAt(i).getValue() instanceof String )
-            {
-                 isMetaDataString = true;
+            if (metaValues.elementAt(i).getValue() instanceof String) {
+                isMetaDataString = true;
             }
         }
 
@@ -192,7 +192,7 @@ public class FilesPlotter3D extends DatasetPlotter {
 
             yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
             yAxis.setRange(0 - blockHeigth_minus.firstElement(),
-                    numDataset-1 + blockHeigth_plus.lastElement());
+                    numDataset - 1 + blockHeigth_plus.lastElement());
             System.out.println("Plot using Name metaData");
             //else display metaname and values
         } else {
@@ -206,8 +206,7 @@ public class FilesPlotter3D extends DatasetPlotter {
                 // just position the block +- 0.5 around the meta value
                 blockHeigth_minus.add(0.5);
                 blockHeigth_plus.add(0.5);
-            } 
-            else {
+            } else {
                 // aim to have meta data value centered somewhere near-ish to the centre of block
                 // other suggestions welcome here
                 blockHeigth_minus.add((metaDouble.elementAt(1) - metaDouble.elementAt(0)) / 2.0);
@@ -261,12 +260,13 @@ public class FilesPlotter3D extends DatasetPlotter {
         renderer.clearSeriesPaints(true);
 
         plot = new XYPlot(dataset, xAxis, yAxis, renderer);
+        //plot = new XYPlot(dataset, xAxis, yAxis, null);
         plot.setBackgroundPaint(Color.lightGray);
         plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
         plot.setDomainGridlinePaint(Color.white);
         plot.setRangeGridlinePaint(Color.white);
-        //plot.getRangeAxis().setAutoRange(true); -- comment out by KP 18/08/2012 to plot properly.
-       
+        plot.getRangeAxis().setAutoRange(true); //-- comment out by KP 18/08/2012 to plot properly.
+
         chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
 
         // Find the min and max y value and use these values
@@ -278,6 +278,7 @@ public class FilesPlotter3D extends DatasetPlotter {
             maxY = (Double) Collections.max(datasets.elementAt(i).getY());
             minY = (Double) Collections.min(datasets.elementAt(i).getY());
         }
+
         GrayPaintScale colourScale = new GrayPaintScale(minY, maxY);
         renderer.setPaintScale(colourScale);
 
@@ -318,9 +319,8 @@ public class FilesPlotter3D extends DatasetPlotter {
             metaValues.add(datasets.get(i).getMetaData(selectedMetaItem));
         }
         for (int i = 0; i < numDataset; i++) {
-            if ( metaValues.elementAt(i).getValue() instanceof String )
-            {
-                 isMetaDataString = true;
+            if (metaValues.elementAt(i).getValue() instanceof String) {
+                isMetaDataString = true;
             }
         }
 
@@ -331,11 +331,11 @@ public class FilesPlotter3D extends DatasetPlotter {
 
                 data[0][j] = (Double) datasets.elementAt(i).getX().get(j);  // x
                 MetaData meta = datasets.get(i).getMetaData(selectedMetaItem);
-                if ( isMetaDataString )
-                  data[1][j] = (double) i; // y (meta value, including possible file-number)
-                else
-                  data[1][j] = (Double) meta.getValue(); // y (meta value, including possible file-number)
-
+                if (isMetaDataString) {
+                    data[1][j] = (double) i; // y (meta value, including possible file-number)
+                } else {
+                    data[1][j] = (Double) meta.getValue(); // y (meta value, including possible file-number)
+                }
                 data[2][j] = (Double) datasets.elementAt(i).getY().get(j);  // Colour
 
             }
@@ -378,7 +378,7 @@ public class FilesPlotter3D extends DatasetPlotter {
         //NumberAxis yAxis = new NumberAxis("Y");
         //yAxis.setLabel(selectedMetaItem);
         //ValueAxis yAxis = new SymbolAxis("Symbol", HashMapHelper.convertKeyToArray(fileNames));
-         ValueAxis yAxis = new SymbolAxis("Symbol", (String[]) fileNames.toArray());
+        ValueAxis yAxis = new SymbolAxis("Symbol", (String[]) fileNames.toArray());
         //yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         yAxis.setLowerMargin(0.0);
         yAxis.setUpperMargin(0.0);
@@ -475,5 +475,20 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         return dataset;
 
+    }
+
+    /**
+     * refresh the chart.
+     */
+    private void refreshChart(){
+//        jPanel_GraphicsTop.removeAll();
+//        jPanel_GraphicsTop.revalidate(); // This removes the old chart
+//        aChart = createChart();
+//        aChart.removeLegend();
+//
+//        ChartPanel chartPanel = new ChartPanel(aChart);
+//        jPanel_GraphicsTop.setLayout(new BorderLayout());
+//        jPanel_GraphicsTop.add(chartPanel);
+//        jPanel_GraphicsTop.repaint(); // This method makes the new chart appear
     }
 }
