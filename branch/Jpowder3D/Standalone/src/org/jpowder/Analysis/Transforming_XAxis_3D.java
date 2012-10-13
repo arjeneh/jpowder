@@ -666,13 +666,17 @@ public class Transforming_XAxis_3D extends javax.swing.JPanel implements InfoPan
                             " spacing = " + spacing + " theta = " + theta);
 
                     if (item1.equals("2Ө") && item2.equals("d")) {
+                        // TODO: as in JPowderInternalframe3D.java refreshPanel.
                         inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(spacing, j);
+                        //inFocus.refreshChart();
                         inFocus.getXYPlot().getDomainAxis().setLabel("d [Å]");
                         setDomainAxis();
                     }
 
                     if (item1.equals("d") && item2.equals("2Ө")) {
+                        // TODO: as in JPowderInternalframe3D.java refreshPanel.
                         inFocus.getPowderDataSet().elementAt(i).getX().setElementAt(theta, j);
+                         //inFocus.refreshChart();
                         inFocus.getXYPlot().getDomainAxis().setLabel(x.toUpperCase());
                         setDomainAxis();
                     }//if 2Ө

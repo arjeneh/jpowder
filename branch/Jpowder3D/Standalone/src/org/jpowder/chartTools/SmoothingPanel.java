@@ -157,55 +157,12 @@ public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void executeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_executeButtonActionPerformed
-        // KREECHA NOT USED THIS ONE FOR NOW, BUT PLEASE MOVE CODE BELOW INTO
-        // THIS CLASS IF YOU LIKE
-        MovingAverage mva = new MovingAverage();
 
         JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
+        int selectedValue = Integer.parseInt(comboInput.getSelectedItem().toString());
 
-        // Calculate moving average for each dataset
-        for (int i = 0; i < inFocus.getXYPlot().getDatasetCount(); i++) {
-            // get number of data points for this dataset
-            int numY = inFocus.getPowderDataSet().elementAt(i).getY().size();
-
-            int numberOfPointsEitherSize = 10; //  PLEASE RATHER THAN HARDCODED NUMBER USE NUMBER FROM COMBOBOX
-
-            // For convenience store y-values in variable y
-            Vector<Double> y = inFocus.getPowderDataSet().elementAt(i).getY();
-
-            // To store new calculated average values
-            Vector<Double> yNew = new Vector<Double>();
-
-            // calculate new average value for each data point
-            for (int ii = 0; ii < numY; ii++) {
-                Double sum = 0.0;
-                // here calculate sum over the neighboring points +- numberOfPointsEitherSize either side of point ii
-                // Of course where ii is near an edge this sum will be over fewer points as done below
-                for (int jj = Math.max(0, ii - numberOfPointsEitherSize); jj <= Math.min(numY - 1, ii + numberOfPointsEitherSize); jj++) {
-                    sum += y.get(jj);
-                }
-                // add new average value
-                yNew.add(sum / numberOfPointsEitherSize);
-            }
-
-            // finally replace original data values with newly calculated
-            // averaged values
-            for (int ii = 0; ii < numY; ii++) {
-                inFocus.getPowderDataSet().elementAt(i).getY().setElementAt(yNew.get(ii), ii);
-            }
-        }
-
-        // FOR SOME REASON THE CHART DOES NOT GET UPDATED - I DON'T UNDERSTAND THIS.
-        inFocus.refreshChart();
-        inFocus.getXYPlot().getDomainAxis().setLabel("Done");
-//        inFocus.getChartPanel().restoreAutoBounds();
-//        inFocus.getChart().setNotify(true);
-
-        //    ChartPanel chartPanel = new ChartPanel(aChart);
-//    jPanel_GraphicsTop.setLayout(new BorderLayout());
-//    jPanel_GraphicsTop.add(chartPanel);
-//    jPanel_GraphicsTop.repaint(); // This method makes the new chart appear
-
+        MovingAverage mva = new MovingAverage(selectedValue);
+        mva.execute(inFocus);
     }//GEN-LAST:event_executeButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed

@@ -200,6 +200,7 @@ public class ToolsIcon2D extends javax.swing.JPanel {
         jLabel10.setFont(jLabel10.getFont().deriveFont(jLabel10.getFont().getSize()-3f));
         jLabel10.setText("Chart Format");
 
+        annotationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Annotation.png"))); // NOI18N
         annotationButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 annotationButtonActionPerformed(evt);
@@ -232,13 +233,13 @@ public class ToolsIcon2D extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addGap(4, 4, 4))
-                            .addComponent(backGroundButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, Short.MAX_VALUE))
+                            .addComponent(backGroundButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, Short.MAX_VALUE)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, Short.MAX_VALUE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(10, 10, 10)
                                         .addComponent(jLabel9)
@@ -256,31 +257,27 @@ public class ToolsIcon2D extends javax.swing.JPanel {
                                 .addGap(11, 11, 11)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(changeXAxisButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, Short.MAX_VALUE)
+                            .addComponent(changeXAxisButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
                                 .addComponent(jLabel5))
-                            .addComponent(legendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, Short.MAX_VALUE)
+                            .addComponent(legendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(22, 22, 22)
                                 .addComponent(jLabel7))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(2, 2, 2)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(axisFormatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, Short.MAX_VALUE)
+                                    .addComponent(axisFormatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, Short.MAX_VALUE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(10, 10, 10)
-                                        .addComponent(jLabel6)))))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addContainerGap(257, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(annotationButton, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                        .addGap(222, 222, 222))))
+                                        .addComponent(jLabel6))))))
+                    .addComponent(jLabel11)
+                    .addComponent(annotationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {appearanceButton, axisFormatButton, backGroundButton, changeXAxisButton, jButton1, legendButton, peakButton, rescaleButton, zoomButton});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {annotationButton, appearanceButton, axisFormatButton, backGroundButton, changeXAxisButton, jButton1, legendButton, peakButton, rescaleButton, zoomButton});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -338,7 +335,7 @@ public class ToolsIcon2D extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel9)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(annotationButton, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                .addComponent(annotationButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(11, 11, 11)
                 .addComponent(jLabel11))
         );
