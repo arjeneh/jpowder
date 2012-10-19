@@ -108,7 +108,8 @@ public class MovingAverage {
             // get number of data points for this dataset
             int numY = frame.getPowderDataSet().elementAt(i).getY().size();
 
-            int numberOfPointsEitherSize = this.numberOfPointToAVGOver;
+            // number of points either of each point.
+            int numberOfPointsEitherSide = this.numberOfPointToAVGOver/2;
 
             // For convenience store y-values in variable y
             Vector<Double> y = frame.getPowderDataSet().elementAt(i).getY();
@@ -121,11 +122,14 @@ public class MovingAverage {
                 Double sum = 0.0;
                 // here calculate sum over the neighboring points +- numberOfPointsEitherSize either side of point ii
                 // Of course where ii is near an edge this sum will be over fewer points as done below
-                for (int jj = Math.max(0, ii - numberOfPointsEitherSize); jj <= Math.min(numY - 1, ii + numberOfPointsEitherSize); jj++) {
+                int actualNumberOfPointAVGOver = 0; // counting the actualy number of point averaged over
+                for (int jj = Math.max(0, ii - numberOfPointsEitherSide); jj <= Math.min(numY - 1, ii + numberOfPointsEitherSide); jj++)
+                {
+                    actualNumberOfPointAVGOver = actualNumberOfPointAVGOver + 1;
                     sum += y.get(jj);
                 }
                 // add new average value
-                yNew.add(sum / numberOfPointsEitherSize);
+                yNew.add(sum / actualNumberOfPointAVGOver);
             }
 
             // finally replace original data values with newly calculated averaged values
@@ -136,34 +140,12 @@ public class MovingAverage {
 
 
         XYDataset dataset = frame.getChart().getXYPlot().getDataset();
-//        //how many in dataset
+        //how many in dataset
         int numDataset = dataset.getSeriesCount();
         System.out.println("XYDataset dataset has " + numDataset + " dataset in it.");
 
-
-        // Create the lower and upper values for each dataset block height
-//        Vector<Double> blockHeigth_minus = new Vector<Double>();
-//        Vector<Double> blockHeigth_plus = new Vector<Double>();
-//
-//        for (int i = 0; i < numDataset; i++) {
-//            blockHeigth_minus.add(0.5);
-//            blockHeigth_plus.add(0.5);
-//        }
-
         JpowderXYBlockRenderer renderer = (JpowderXYBlockRenderer) frame.getChart().getXYPlot().getRenderer();
-//        if (dataset.getSeriesCount() >= 1) {
-//            double width1stDataPoint = dataset.getXValue(0, 1) - dataset.getXValue(0, 0);
-//            if (width1stDataPoint <= 0.0) {
-//                width1stDataPoint = 1.0;
-//            }
-//            renderer.setBlockWidth(width1stDataPoint);
-//        }
-//        //renderer.setBlockHeight(blockHeigth_minus, blockHeigth_plus);
 
-        //XYPlot plot = (XYPlot) chart.getPlot();
-//        //plot.setDataset(dataset);
-//        //plot.setRenderer(renderer);
-//
         double maxY = 0;
         double minY = 0;
 
@@ -180,10 +162,6 @@ public class MovingAverage {
         GrayPaintScale colourScale = new GrayPaintScale(minY, maxY);
         renderer.setPaintScale(colourScale);
 
-        //Anders may be we have to do BlockHieght, BlockWidth, blockHeigth_minus, blockHeigth_plus??
-        //Now i just default everything as 1 which is why it is wrong i am sure.
-        renderer.setBlockHeight(1);
-        renderer.setBlockWidth(1);
         renderer.clearSeriesPaints(true);
     }
 }
