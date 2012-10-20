@@ -35,6 +35,7 @@ import java.awt.Color;
 import java.awt.GradientPaint;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.Collections;
 import java.util.Vector;
 import org.jfree.chart.ChartColor;
 import org.jfree.chart.ChartPanel;
@@ -45,6 +46,7 @@ import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.chart.plot.DatasetRenderingOrder;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.ui.RectangleInsets;
+import org.jpowder.util.VectorMiscUtil;
 
 /**
  * Implements DatasetPlotter interface. Creates chart container data from
@@ -130,9 +132,20 @@ public class FilesPlotter extends DatasetPlotter implements Serializable {
     @SuppressWarnings("static-access")
     public JFreeChart createChart() {
 
-
         String x = "2\u03D1";//unicode 2thetha
         NumberAxis xAxis = new NumberAxis(datasets.get(0).getXUnit());
+        // TODO: Set Range we need to find min and max to set range.
+        // Calculate moving average for each dataset
+        double maxX = 0;
+        double minX = 0;
+
+        for (int i = 0; i < datasets.size(); i++) {
+            maxX = (Double) Collections.max(datasets.get(i).getX());
+            minX = (Double) Collections.min(datasets.get(i).getX());
+        }
+
+        xAxis.setRange(minX, maxX);
+
         NumberAxis yAxis = new NumberAxis("Intensity");
         yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
@@ -146,7 +159,7 @@ public class FilesPlotter extends DatasetPlotter implements Serializable {
         //Displaying the X&Y in Tooltip
         XYToolTipGenerator tooltip = new StandardXYToolTipGenerator(
                 "{1},{2}", new DecimalFormat("0.000"), new DecimalFormat("0.000"));
-       
+
 
         if (datasets.elementAt(0) instanceof DataSetNoErrors) {
 
