@@ -36,17 +36,20 @@
 package org.jpowder.chartTools;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import javax.swing.JFrame;
 import org.jpowder.Analysis.ToolsIcon3D;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 import org.jpowder.InernalFrame.JpowderInternalframe3D;
-import java.util.Vector;
+import javax.swing.SwingUtilities;
 
 public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel {
 
     private ToolsIcon3D toolsIcon3D;
     private SmoothingComboBoxModel model = new SmoothingComboBoxModel();
+    private Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
+    private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
 
     /** Creates new form SmoothingPanel */
     public SmoothingPanel() {
@@ -158,11 +161,41 @@ public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel {
 
     private void executeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_executeButtonActionPerformed
 
-        JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
-        int selectedValue = Integer.parseInt(comboInput.getSelectedItem().toString());
+        setCursor(waitCursor);
+        executeButton.setText("Plotting . . . ");
+        executeButton.setEnabled(false);
+        // We're going to do something that takes a long time, so we spin off a thread and update the display when we're done.
+        Thread worker = new Thread() {
 
-        MovingAverage mva = new MovingAverage(selectedValue);
-        mva.execute(inFocus);
+            @Override
+            public void run() {
+                // Something that takes a long time. In real life, this might be a DB
+                // query, remote method invocation, etc.
+                try {
+                    JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
+                    int selectedValue = Integer.parseInt(comboInput.getSelectedItem().toString());
+
+                    MovingAverage mva = new MovingAverage(selectedValue);
+                    mva.execute(inFocus);
+
+                    Thread.sleep(5000);
+                } catch (InterruptedException ex) {
+                }
+                // Report the result using invokeLater( ).
+                SwingUtilities.invokeLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        executeButton.setText("execute");
+                        executeButton.setEnabled(true);
+                        setCursor(defaultCursor);
+                    }
+                });
+            }
+        };
+        worker.start(); // So we don't hold up the dispatch thread
+
+
     }//GEN-LAST:event_executeButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed

@@ -33,6 +33,7 @@ import java.util.Collections;
 import java.util.Vector;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.GrayPaintScale;
+import org.jfree.chart.renderer.PaintScale;
 import org.jfree.data.xy.XYDataset;
 import org.jpowder.InernalFrame.JpowderInternalframe3D;
 import org.jpowder.jfreechart.JpowderXYBlockRenderer;
@@ -138,9 +139,8 @@ public class MovingAverage {
             }
         }
 
-
         XYDataset dataset = frame.getChart().getXYPlot().getDataset();
-        //how many in dataset
+        //how many in dataset.
         int numDataset = dataset.getSeriesCount();
         System.out.println("XYDataset dataset has " + numDataset + " dataset in it.");
 
@@ -150,7 +150,6 @@ public class MovingAverage {
         double minY = 0;
 
         XYPlot plot = (XYPlot) frame.getChart().getPlot();
-
         for (int i = 0; i < plot.getDatasetCount(); i++) {
             maxY = (Double) Collections.max(frame.getPowderDataSet().get(i).getY());
             minY = (Double) Collections.min(frame.getPowderDataSet().get(i).getY());
@@ -159,9 +158,9 @@ public class MovingAverage {
         //System.out.println("I have " + this.data);
         System.out.println("maxY =  " + maxY + " and minY = " + minY);
 
-        GrayPaintScale colourScale = new GrayPaintScale(minY, maxY);
-        renderer.setPaintScale(colourScale);
-
+        //This needs to be casted to any other colours.
+        PaintScale greyScale = new GrayPaintScale(minY, maxY);
+        renderer.setPaintScale(greyScale);
         renderer.clearSeriesPaints(true);
     }
 }
