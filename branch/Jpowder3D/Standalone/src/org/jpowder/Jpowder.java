@@ -79,7 +79,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
     private JpowderFileSystemTreeModel treeModel = new JpowderFileSystemTreeModel();
     private Tree tree = new Tree(treeModel);
-    public DataVisibleInChart dataVisibleInChart = new DataVisibleInChart();
+    private DataVisibleInChartPanel dataVisibleInChart = new DataVisibleInChartPanel();
     private PowderFileCabinet mPowderFileCabinet;
     private java.awt.dnd.DropTarget dropTarget;    // for desktop dragging and dropping
     private ToolsIcon2D toolsIcon2D = new ToolsIcon2D(this);
@@ -106,7 +106,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         dropTarget = new DropTarget(chartPlotterPane2D, this);
 
         dataVisibleInChartPanel.add(dataVisibleInChart);
-        dropTarget = new DropTarget(chartPlotterPane3D, new DragAndDrop3D(dataVisibleInChart));
+        dropTarget = new DropTarget(chartPlotterPane3D, new DragAndDrop3D(getDataVisibleInChart()));
         explorertab.add(tree, "1");
         toolstab2D.add(toolsIcon2D, "1");
         toolstab3D.add(toolsIcon3D, "1");
@@ -121,8 +121,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 //        JButton butt = new JButton();
 //        plotsTab.add(butt);
         for (int i = 0; i < 2; i++) {
-            plotsTab.setTabComponentAt(i,
-                    new PlotsTabButton(plotsTab));
+            plotsTab.setTabComponentAt(i, new PlotsTabButton(plotsTab));
         }
     }
 
@@ -303,7 +302,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
         return plotsTab;
     }
 
-    public DataVisibleInChart getDataVisibleInChart() {
+    public DataVisibleInChartPanel getDataVisibleInChart() {
         return dataVisibleInChart;
     }
 
@@ -1341,7 +1340,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
             if (plotsTab.getSelectedIndex() == 1) {
 
-                Import3DFilesTable filesTable = new Import3DFilesTable(dataVisibleInChart);
+                Import3DFilesTable filesTable = new Import3DFilesTable(getDataVisibleInChart());
                   filesTable.addFilesToTable(selectedFiles);
                   filesTable.setVisible(true);
 
@@ -1354,10 +1353,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
 //                internalframe3D.addInternalFrameListener(internalFrameListener);
             }
             if (plotsTab.getSelectedIndex() == 0) {
-                internalframe = new JpowderInternalframe2D(dataVisibleInChart, datasets);
+                internalframe = new JpowderInternalframe2D(getDataVisibleInChart(),datasets);
                 chartPlotterPane2D.add(internalframe);
                 Jpowder.updateJPowderInternalFrame(internalframe);
-                InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
+                InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(getDataVisibleInChart());
                 internalframe.addInternalFrameListener(internalFrameListener);
             }
 
@@ -1403,7 +1402,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     }//GEN-LAST:event_pdfForPublicationActionPerformed
 
     private void importTable3DActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importTable3DActionPerformed
-        new Import3DFilesTable(dataVisibleInChart).setVisible(true);
+        new Import3DFilesTable(getDataVisibleInChart()).setVisible(true);
         plotsTab.setSelectedComponent(chartPlotterPane3D);
     }//GEN-LAST:event_importTable3DActionPerformed
 
@@ -1597,10 +1596,10 @@ public class Jpowder extends JFrame implements DropTargetListener {
         }
 
         // finally plot the data
-        JpowderInternalframe2D internalframe = new JpowderInternalframe2D(dataVisibleInChart, datasets);
+        JpowderInternalframe2D internalframe = new JpowderInternalframe2D(getDataVisibleInChart(),datasets);
 //        Jpowder.updateJPowderInternalFrame(internalframe);
 
-        InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
+        InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(getDataVisibleInChart());
 
         internalframe.addInternalFrameListener(internalFrameListener);
 
@@ -1686,4 +1685,11 @@ public class Jpowder extends JFrame implements DropTargetListener {
     private javax.swing.JMenuItem undoMenu;
     private javax.swing.JMenu windowMenu;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @param dataVisibleInChart the dataVisibleInChart to set
+     */
+    public void setDataVisibleInChart(DataVisibleInChartPanel dataVisibleInChart) {
+        this.dataVisibleInChart = dataVisibleInChart;
+    }
 }

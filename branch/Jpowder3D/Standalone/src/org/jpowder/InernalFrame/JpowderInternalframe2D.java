@@ -68,7 +68,7 @@ import org.jpowder.jfreechart.PointAnno;
  */
 public class JpowderInternalframe2D extends JpowderInternalframe implements DropTargetListener {
 
-    private DataVisibleInChart dataVisibleInChartPanel;
+    private DataVisibleInChartPanel dataVisibleInChartPanel;
     private Vector<DataSet> m_data;
     private java.awt.dnd.DropTarget dropTarget;  // to drop to this frame
     private XYPlot xYPlot;  // hold reference to plot created from dataset in constructor
@@ -85,7 +85,7 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
      * @param dataVisibleInChartPanel
      * @param data
      */
-    public JpowderInternalframe2D(DataVisibleInChart dataVisibleInChartPanel, Vector<DataSet> data) {
+    public JpowderInternalframe2D(DataVisibleInChartPanel dataVisibleInChartPanel, Vector<DataSet> data) {
         super(dataVisibleInChartPanel, data);
         doStuff("xxx");
         m_data = data;

@@ -16,8 +16,6 @@ import java.util.Vector;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jpowder.dataset.DataSet;
-import org.jpowder.dataset.DataSetNoErrors;
-import org.jpowder.dataset.DataSetWithErrors;
 import org.jpowder.fileCabinet.PowderFileCabinet;
 
 /**

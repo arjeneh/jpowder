@@ -31,7 +31,7 @@ package org.jpowder.InernalFrame;
 
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import org.jpowder.DataVisibleInChart;
+import org.jpowder.DataVisibleInChartPanel;
 import org.jpowder.Jpowder;
 
 /**
@@ -41,14 +41,14 @@ import org.jpowder.Jpowder;
  */
 public class InternalFrameIconifyListener extends InternalFrameAdapter {
 
-    private DataVisibleInChart dataVisibleInChart;
+    private DataVisibleInChartPanel dataVisibleInChart;
     private JpowderInternalframe jpowderinternalframe;
 
     /**
      *
      * @param visibleInChart
      */
-    public InternalFrameIconifyListener(DataVisibleInChart visibleInChart) {
+    public InternalFrameIconifyListener(DataVisibleInChartPanel visibleInChart) {
         this.dataVisibleInChart = visibleInChart;
     }
 

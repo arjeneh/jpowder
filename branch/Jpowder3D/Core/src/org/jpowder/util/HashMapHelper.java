@@ -26,7 +26,6 @@
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
  */
-
 package org.jpowder.util;
 
 import java.util.HashMap;
@@ -70,6 +69,16 @@ public class HashMapHelper {
         return null;
     }
 
+    public static String[][] convertMapTo2DArray(Map map) {
+        Map<String, String> memoMap = map;
+        String[][] data = new String[memoMap.size()][];
+        int ii = 0;
+        for (Map.Entry<String, String> entry : memoMap.entrySet()) {
+            data[ii++] = new String[]{entry.getKey(), entry.getValue()};
+        }
+        return data;
+        //final DefaultTableModel model = new DefaultTableModel(data, new String[]{"Memo", "ID"});
+    }
 //    public static void main(String[] args) {
 //
 //        HashMap<Integer, Human> newMap = new HashMap<Integer, Human>();

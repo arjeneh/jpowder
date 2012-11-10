@@ -48,6 +48,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -81,7 +82,8 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     JFileChooser chooser = new JFileChooser(new File("C:/Documents and Settings/qyt21516/Desktop/My Dropbox"));
     private Vector<String> columnNames = new Vector<String>();
     private Vector<String> row = new Vector<String>();
-    private DataVisibleInChart dataVisibleInChart = new DataVisibleInChart();
+    private DataVisibleInChartPanel dataVisibleInChart = new DataVisibleInChartPanel();
+    // use to ignore the Path column and display in combobox model.
     private Vector<String> metaColumnesName = new Vector<String>();
     private Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
     private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
@@ -90,7 +92,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
     private TableRowSorter<TableModel> sorter;
 
     /** Creates new form FilesTable */
-    public Import3DFilesTable(DataVisibleInChart dvic) {
+    public Import3DFilesTable(DataVisibleInChartPanel dvic) {
         this.dataVisibleInChart = dvic;
 
         if (stm != null) {
@@ -602,10 +604,12 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                         hm.put("Name", new MetaData<String>(stm.getValueAt(i, 0).toString()));
                         // ignore Path column but see if any other meta data defined
                         for (int iCol = 2; iCol < importData3DTable.getColumnCount(); iCol++) {
+                            //Put Double value in HashMap.
                             try {
                                 Double metaD = Double.parseDouble(stm.getValueAt(i, iCol).toString());
                                 hm.put(stm.getColumnName(iCol), new MetaData<Double>(metaD));
                             } catch (NumberFormatException e) {
+                                //Put String value in HashMap.
                                 hm.put(stm.getColumnName(iCol), new MetaData<String>(stm.getValueAt(i, iCol).toString()));
                             }
                         }
@@ -645,6 +649,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                         plotButton.setEnabled(true);
                         setVisible(false);
                         setCursor(defaultCursor);
+                        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     }
                 });
             }

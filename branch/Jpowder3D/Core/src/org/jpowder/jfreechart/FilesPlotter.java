@@ -134,6 +134,7 @@ public class FilesPlotter extends DatasetPlotter implements Serializable {
 
         String x = "2\u03D1";//unicode 2thetha
         NumberAxis xAxis = new NumberAxis(datasets.get(0).getXUnit());
+
         // TODO: Set Range we need to find min and max to set range.
         // Calculate moving average for each dataset
         double maxX = 0;
@@ -146,6 +147,7 @@ public class FilesPlotter extends DatasetPlotter implements Serializable {
 
         xAxis.setRange(minX, maxX);
 
+        // for Y Axis
         NumberAxis yAxis = new NumberAxis("Intensity");
         yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 

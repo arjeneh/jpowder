@@ -48,9 +48,9 @@ import java.util.logging.Logger;
  */
 public class DragAndDrop3D implements DropTargetListener {
 
-    private DataVisibleInChart dvic = new DataVisibleInChart();
+    private DataVisibleInChartPanel dvic = new DataVisibleInChartPanel();
 
-    public DragAndDrop3D(DataVisibleInChart dvic) {
+    public DragAndDrop3D(DataVisibleInChartPanel dvic) {
         this.dvic=dvic;
     }
 

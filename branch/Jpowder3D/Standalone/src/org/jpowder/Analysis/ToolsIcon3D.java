@@ -34,7 +34,7 @@ import javax.swing.JOptionPane;
 import org.jpowder.InernalFrame.JpowderInternalframe3D;
 import org.jpowder.Jpowder;
 import org.jpowder.chartTools.AnnotationPanel;
-import org.jpowder.chartTools.BlockHeight;
+import org.jpowder.chartTools.YAxisDisplay;
 import org.jpowder.chartTools.ColorBar3D;
 import org.jpowder.chartTools.SmoothingPanel;
 import org.jpowder.dataset.DataSet;
@@ -46,7 +46,7 @@ import org.jpowder.dataset.DataSet;
 public class ToolsIcon3D extends javax.swing.JPanel {
 
     private ColorBar3D colorBar = new ColorBar3D(this);
-    private BlockHeight blockHeight = new BlockHeight(this);
+    private YAxisDisplay blockHeight = new YAxisDisplay(this);
     private SmoothingPanel smoothing = new SmoothingPanel(this);
     private Transforming_XAxis_3D braggsLow3D = new Transforming_XAxis_3D(this);
     private Jpowder jpowder;

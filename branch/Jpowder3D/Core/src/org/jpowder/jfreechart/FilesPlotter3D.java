@@ -180,7 +180,7 @@ public class FilesPlotter3D extends DatasetPlotter {
                 strings[i] = metaValues.elementAt(i).getValue().toString();
             }
 
-            yAxis = new SymbolAxis("", strings);
+            yAxis = new SymbolAxis(selectedMetaItem, strings);
             // set width of each dataset, i.e. in fact it height (y-axis width)
 
             // here dataset block height selected such data each y-axis label
@@ -194,8 +194,9 @@ public class FilesPlotter3D extends DatasetPlotter {
             yAxis.setRange(0 - blockHeigth_minus.firstElement(),
                     numDataset - 1 + blockHeigth_plus.lastElement());
             System.out.println("Plot using Name metaData");
-            //else display metaname and values
+           
         } else {
+            //if the metaname is equal Number
             Vector<Double> metaDouble = new Vector<Double>();
             for (int i = 0; i < numDataset; i++) {
                 metaDouble.add((Double) metaValues.elementAt(i).getValue());
@@ -217,7 +218,7 @@ public class FilesPlotter3D extends DatasetPlotter {
                 }
                 blockHeigth_minus.add((metaDouble.elementAt(numDataset - 1) - metaDouble.elementAt(numDataset - 2)) / 2.0);
                 blockHeigth_plus.add((metaDouble.elementAt(numDataset - 1) - metaDouble.elementAt(numDataset - 2)) / 2.0);
-            }
+            }//end numDataset is equal to 1
 
             yAxis = new NumberAxis(selectedMetaItem);
             // try to fix the actual y-axis range to the correct length, although
@@ -229,7 +230,7 @@ public class FilesPlotter3D extends DatasetPlotter {
 
             yAxis.setRange(metaDouble.firstElement() - blockHeigth_minus.firstElement(),
                     metaDouble.lastElement() + blockHeigth_plus.lastElement());
-        }
+        }//end if the metaname is equal Number
 
         // Setup the block renderer
         JpowderXYBlockRenderer renderer = new JpowderXYBlockRenderer();
@@ -253,14 +254,14 @@ public class FilesPlotter3D extends DatasetPlotter {
             if (width1stDataPoint <= 0.0) {
                 width1stDataPoint = 1.0;
             }
-            renderer.setBlockWidth(width1stDataPoint);
+            renderer.setBlockWidth(width1stDataPoint * 0.1);
         }
+
         renderer.setBlockHeight(blockHeigth_minus, blockHeigth_plus);
         // don't know what this one is for?
         renderer.clearSeriesPaints(true);
 
         plot = new XYPlot(dataset, xAxis, yAxis, renderer);
-        //plot = new XYPlot(dataset, xAxis, yAxis, null);
         plot.setBackgroundPaint(Color.lightGray);
         plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
         plot.setDomainGridlinePaint(Color.white);

@@ -28,7 +28,6 @@
  */
 package org.jpowder.InernalFrame;
 
-
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,15 +62,13 @@ public class JpowderInternalframe extends JInternalFrame {
     private Preferences myPrefs = preferences.node("Jpowder/InternalFrame/Dimension");
     private static final String key1 = "Width", key2 = "Highet";
     //
-    private DataVisibleInChart dataVisibleInChartPanel;
-
+    private DataVisibleInChartPanel dataVisibleInChartPanel;
     protected Vector<DataSet> vectorDatasets;
     protected XYPlot xYPlot;  // hold reference to plot created from dataset in constructor.
     //
     protected DatasetPlotter plotMultiCol;
     //
     protected ChartPanel jfreeChartPanel;
-    
     //Balloontip to be used with BalloonFrame.java for editing and deleting Annotation
     //in JpowderInternalframe2D/3D frames.
     protected ArrayList<BalloonFrame> balloonTips = new ArrayList<BalloonFrame>();//this should not be new but for testing 23/06/2012
@@ -162,7 +159,7 @@ public class JpowderInternalframe extends JInternalFrame {
         ChartPanel jfreeChartPanels = plotMultiCol.createPowderChart();
         jfreeChartPanels.add(new JpowderPopupMenu(jfreeChartPanels));
         this.jfreeChartPanel = jfreeChartPanels;
-         //need to add name for the chart panel, so it can be a reference to Annotation later.
+        //need to add name for the chart panel, so it can be a reference to Annotation later.
         this.jfreeChartPanel.setName(getNames());
 
         xYPlot = jfreeChartPanels.getChart().getXYPlot();
@@ -199,13 +196,21 @@ public class JpowderInternalframe extends JInternalFrame {
         });
     }
 
-//    protected void showAnnotation(String frameName ){
-//
-//    }
-
-    public JpowderInternalframe(DataVisibleInChart dataVisibleInChartPanel, Vector<DataSet> data) {
-
+    /**
+     *
+     * @param dataVisibleInChartPanel
+     * @param data
+     */
+    public JpowderInternalframe(DataVisibleInChartPanel dataVisibleInChartPanel, Vector<DataSet> data) {
         this.dataVisibleInChartPanel = dataVisibleInChartPanel;
+        vectorDatasets = data;
+    }
+
+    /**
+     *
+     * @param data
+     */
+    public JpowderInternalframe(Vector<DataSet> data) {
         vectorDatasets = data;
     }
 
@@ -253,7 +258,7 @@ public class JpowderInternalframe extends JInternalFrame {
         return god;
     }
 
-    public String getNames( int i) {
+    public String getNames(int i) {
         return vectorDatasets.elementAt(i).getFileName();
     }
 
@@ -279,14 +284,14 @@ public class JpowderInternalframe extends JInternalFrame {
      * @return super.add(comp)
      */
     @Override
-    public Component add( Component comp) {
+    public Component add(Component comp) {
         return super.add(comp);
     }
 
     /**
      * @return the chtpnl
      */
-    public DataVisibleInChart getDataVisibleInChartPanel() {
+    public DataVisibleInChartPanel getDataVisibleInChartPanel() {
         return dataVisibleInChartPanel;
     }
 

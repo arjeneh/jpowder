@@ -123,12 +123,12 @@ public abstract class DataSet {
     }
 
     public void addMetaData(HashMap<String, MetaData> meta) {
-        this.meta = meta;
+        this.setMeta(meta);
 
     }
 
     public MetaData getMetaData(String name) {
-        MetaData data = meta.get(name);
+        MetaData data = getMeta().get(name);
 //        System.out.println("in " + this.getClass().getName() + " Meta data is: " + meta +
 //                " under name = " + name + " and data = " + data);
         return data;
@@ -151,7 +151,7 @@ public abstract class DataSet {
         //result.append(" Z value: " + this.z + NEW_LINE);
         result.append(" Filename: " + this.fileName + NEW_LINE);
         result.append(" Wavelength: " + this.waveLength + NEW_LINE);
-        result.append(" HashMap: " + this.meta + NEW_LINE);
+        result.append(" HashMap: " + this.getMeta() + NEW_LINE);
         result.append("}");
 
         return result.toString();
@@ -165,6 +165,20 @@ public abstract class DataSet {
 //                throw new UnsupportedOperationException("Not supported yet.");
 //            }
 //        };
+    }
+
+    /**
+     * @return the meta
+     */
+    public HashMap<String, MetaData> getMeta() {
+        return meta;
+    }
+
+    /**
+     * @param meta the meta to set
+     */
+    public void setMeta(HashMap<String, MetaData> meta) {
+        this.meta = meta;
     }
 //
 //    public DataSet() {
