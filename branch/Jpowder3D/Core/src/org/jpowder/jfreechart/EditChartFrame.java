@@ -29,7 +29,9 @@
  */
 package org.jpowder.jfreechart;
 
+import org.jfree.chart.JFreeChart;
 import org.jpowder.util.ScreenUtil;
+import org.jpowder.util.StringUtil;
 
 /*
  * Pops-up chart when double click
@@ -47,17 +49,43 @@ public class EditChartFrame extends javax.swing.JFrame {
     public EditChartFrame(org.jfree.chart.JFreeChart chart) {
         initComponents();
         jFreeChart = chart;
+
         chartPanel = new org.jfree.chart.ChartPanel(jFreeChart);
-//        chartPanel.add(new JpowderPopupMenu(chartPanel));
+        System.out.println("In class: " + this.getClass().getName() + " Copy named: "
+                + chartPanel.getName()
+               // + StringUtil.getFileTitle(FilesPlotter3D.fileNames)
+                );
+
+        //chartPanel.add(new JpowderPopupMenu(chartPanel));
         bigChartPanel.add(chartPanel);
     }
 
-    public EditChartFrame(org.jfree.chart.JFreeChart chart, org.jfree.chart.ChartPanel cp) {
+    public EditChartFrame(org.jfree.chart.JFreeChart plot_copy, org.jfree.chart.ChartPanel cp) {
         initComponents();
-        jFreeChart = chart;
+        jFreeChart = plot_copy;
         chartPanel = cp;
+         System.out.println("In class: " + this.getClass().getName() + " Copy named: "
+                + chartPanel.getName()
+               // + StringUtil.getFileTitle(FilesPlotter3D.fileNames)
+                );
         chartPanel.setPreferredSize(bigChartPanel.getSize());
         bigChartPanel.add(chartPanel);
+        setTitle( chartPanel.getName()  );
+    }
+
+    /**
+     *
+     * @param plot_copy of JFreechart
+     * @param name name to appear in the JFrame
+     */
+    public EditChartFrame(JFreeChart plot_copy, String name) {
+         initComponents();
+        jFreeChart = plot_copy;
+        chartPanel = new org.jfree.chart.ChartPanel(jFreeChart);
+        chartPanel.setName(name);
+        chartPanel.setPreferredSize(bigChartPanel.getSize());
+        bigChartPanel.add(chartPanel);
+        setTitle( chartPanel.getName()  );
     }
 
     public EditChartFrame getSingletonObject(org.jfree.chart.JFreeChart jFreeChart) {
@@ -83,18 +111,10 @@ public class EditChartFrame extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 
-
-
-
         bigChart_sp = new javax.swing.JScrollPane();
         bigChartPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-
-
-
-
 
         bigChart_sp.setMinimumSize(new java.awt.Dimension(800, 465));
         bigChart_sp.setPreferredSize(new java.awt.Dimension(screenSize.width, 465));

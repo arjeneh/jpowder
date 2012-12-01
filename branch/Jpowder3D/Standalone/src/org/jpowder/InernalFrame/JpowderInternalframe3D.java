@@ -22,6 +22,7 @@
  * Kasem Bundit University.
  *
  * Author(s):  M Arjeneh, ISIS, Rutherford Appleton Laboratory
+ *             Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
  *
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
@@ -29,6 +30,7 @@
 package org.jpowder.InernalFrame;
 
 import java.awt.Point;
+import java.awt.dnd.DropTarget;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -55,9 +57,13 @@ public class JpowderInternalframe3D extends JpowderInternalframe {
     private String selectedMetaItem;
     private HashMap fileNameAndPath;
 
-    /*
-     * @param
-     * */
+    /**
+     *
+     * @param dataVisibleInChartPanel
+     * @param data
+     * @param selectedMetaItem
+     * @param fileNameAndPath
+     */
     public JpowderInternalframe3D(DataVisibleInChartPanel dataVisibleInChartPanel,
             Vector<DataSet> data, String selectedMetaItem, HashMap fileNameAndPath) {
         //
@@ -72,18 +78,15 @@ public class JpowderInternalframe3D extends JpowderInternalframe {
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry) it.next();
             System.out.println("----" + pairs.getKey() + " = " + pairs.getValue());
-            //it.remove();
         }
-
         chart = FilesPlotter3D.getChart();
     }
 
-     public JpowderInternalframe3D(DataVisibleInChartPanel dataVisibleInChartPanel, Vector<DataSet> data, String selectedMetaItem) {
+    public JpowderInternalframe3D(DataVisibleInChartPanel dataVisibleInChartPanel, Vector<DataSet> data, String selectedMetaItem) {
         //
-       super(dataVisibleInChartPanel, data);
+        super(dataVisibleInChartPanel, data);
 
         this.selectedMetaItem = selectedMetaItem;
-
         doStuff(this.selectedMetaItem);
 
         chart = FilesPlotter3D.getChart();

@@ -71,7 +71,7 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
     private DataVisibleInChartPanel dataVisibleInChartPanel;
     private Vector<DataSet> m_data;
     private java.awt.dnd.DropTarget dropTarget;  // to drop to this frame
-    private XYPlot xYPlot;  // hold reference to plot created from dataset in constructor
+    private XYPlot xyPlot;  // hold reference to plot created from dataset in constructor
     private Vector<Double> markedPeakPosition = new Vector<Double>();
     private List<Marker> peakRangeMarker = new ArrayList<Marker>();
     private List<Marker> peakDomainMarker = new ArrayList<Marker>();
@@ -90,10 +90,9 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
         doStuff("xxx");
         m_data = data;
         this.dataVisibleInChartPanel = dataVisibleInChartPanel;
-        xYPlot = this.getXYPlot();
+        xyPlot = this.getXYPlot();
         chart = FilesPlotter.getChart();
         dropTarget = new DropTarget(this, this);
-
     }
 
     public static int getnumberOfJpowderInternalframe() {
@@ -293,8 +292,8 @@ public class JpowderInternalframe2D extends JpowderInternalframe implements Drop
             }
         }
         if (numGoodFilenames > 0) {
-            FilesPlotter.addDataToJpowderInternalFrame(xYPlot, toPass);
-            dataVisibleInChartPanel.newChartInFocus(xYPlot, this.getPowderDataSet());
+            FilesPlotter.addDataToJpowderInternalFrame(xyPlot, toPass);
+            dataVisibleInChartPanel.newChartInFocus(xyPlot, this.getPowderDataSet());
         }
         Jpowder.updateJPowderInternalFrame(this);
         Jpowder.memoryChecker();

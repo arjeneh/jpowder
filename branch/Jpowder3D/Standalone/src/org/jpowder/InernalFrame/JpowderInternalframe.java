@@ -56,8 +56,8 @@ import org.jpowder.util.NaturalOrderComparator;
  */
 public class JpowderInternalframe extends JInternalFrame {
 
-    private static int INTERNALFRAME_WIDTH = 400, INTERNALFRAME_HEIGHT = 200;
     public Stack<JInternalFrame> internalframeStackes = new Stack<JInternalFrame>();
+    //
     private Preferences preferences = Preferences.userRoot();
     private Preferences myPrefs = preferences.node("Jpowder/InternalFrame/Dimension");
     private static final String key1 = "Width", key2 = "Highet";
@@ -105,6 +105,7 @@ public class JpowderInternalframe extends JInternalFrame {
         this.add(jfreeChartPanels);
 
         internalframeStackes.push(this);
+
         this.setTitle(getNames());
         this.setVisible(true);
         this.setClosable(true);
@@ -112,14 +113,19 @@ public class JpowderInternalframe extends JInternalFrame {
         this.setResizable(true);
         this.setIconifiable(true);
         this.setFrameIcon(new ImageIcon(getClass().getResource("/images/JpowderLogo.png")));
-        this.setSize(myPrefs.getInt(key1, Jpowder.getChartPlotter2D().getWidth() / 2),
-                myPrefs.getInt(key2, INTERNALFRAME_HEIGHT));
+
+//        this.setSize(
+//                myPrefs.getInt(key1, Jpowder.getChartPlotter2D().getWidth() / 2),
+//                myPrefs.getInt(key2, INTERNALFRAME_HEIGHT)
+//                );
         this.setLocation((int) Jpowder.getDropLocationX(), (int) Jpowder.getDropLocationY());
+        this.pack();
+        
         SwingUtilities.invokeLater(new Runnable() {
 
             @Override
             public void run() {
-                select();
+                makeActiveMoveFront();
             }
         });
 
@@ -170,18 +176,17 @@ public class JpowderInternalframe extends JInternalFrame {
         this.setVisible(true);
         this.setClosable(true);
         this.setMaximizable(true);
-        this.setResizable(true);
+        this.setResizable(true);//disable this to false to make the JFreeChart not redraw.
         this.setIconifiable(true);
         this.setFrameIcon(new ImageIcon(getClass().getResource("/images/JpowderLogo.png")));
-        this.setSize(myPrefs.getInt(key1, Jpowder.getChartPlotter2D().getWidth() / 2),
-                myPrefs.getInt(key2, INTERNALFRAME_HEIGHT));
         this.setLocation((int) Jpowder.getDropLocationX(), (int) Jpowder.getDropLocationY());
+        this.pack();
 
         SwingUtilities.invokeLater(new Runnable() {
 
             @Override
             public void run() {
-                select();
+                makeActiveMoveFront();
             }
         });
 
@@ -191,7 +196,6 @@ public class JpowderInternalframe extends JInternalFrame {
             public void internalFrameClosed(InternalFrameEvent e) {
                 myPrefs.putInt(key1, getWidth());
                 myPrefs.putInt(key2, getHeight());
-
             }
         });
     }
@@ -204,6 +208,7 @@ public class JpowderInternalframe extends JInternalFrame {
     public JpowderInternalframe(DataVisibleInChartPanel dataVisibleInChartPanel, Vector<DataSet> data) {
         this.dataVisibleInChartPanel = dataVisibleInChartPanel;
         vectorDatasets = data;
+        //this.makeActiveMoveFront(); //move the frame to the front.
     }
 
     /**
@@ -212,17 +217,20 @@ public class JpowderInternalframe extends JInternalFrame {
      */
     public JpowderInternalframe(Vector<DataSet> data) {
         vectorDatasets = data;
+        //this.makeActiveMoveFront(); //move the frame to the front.
     }
 
     /**
      * moves the last created internal frame to the front and sets it selected.
      */
-    public void select() {
+    public void makeActiveMoveFront() {
         try {
-            this.moveToFront();
-            this.setSelected(true);
+            moveToFront();
+            setVisible(true);
+            setSelected(true);
         } catch (java.beans.PropertyVetoException e) {
         }
+        requestFocus();
     }
 
     public JInternalFrame getFrame() {

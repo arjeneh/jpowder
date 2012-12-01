@@ -1,3 +1,33 @@
+/* ===========================================================
+ * This file is part of Jpowder, see <http://www.jpowder.org/>
+ * ===========================================================
+ *
+ * Jpowder is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jpowder is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ---------
+ * JpowderXYBlockRenderer.java
+ * ---------
+ * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
+ * Kasem Bundit University.
+ *
+ * Author(s):  M Arjeneh, ISIS, Rutherford Appleton Laboratory
+ *             Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
+ *
+ * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
+ *
+ */
+
 package org.jpowder.jfreechart;
 
 import java.awt.BasicStroke;
@@ -37,6 +67,7 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
      * The block height (defaults to 1.0).
      */
     private double blockHeight = 1.0;
+
     private Vector<Double> blockHeightLower;
     private Vector<Double> blockHeightUpper;
     /**
@@ -164,6 +195,8 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
         updateOffsets();
         fireChangeEvent();
     }
+
+
 
     /**
      * Returns the paint scale used by the renderer.
@@ -306,13 +339,10 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
         double y = dataset.getYValue(series, item);
         double z = 0.0;
 
-
-
         //This if statement controls the visbility of data in xyblockrenderer.
         if (!getItemVisible(series, item)) {
             return;
         }
-
 
         if (!isSeriesVisible(series)) {
             return;
@@ -390,6 +420,16 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
             return false;
         }
         return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 83 * hash + (int) (Double.doubleToLongBits(this.blockWidth) ^ (Double.doubleToLongBits(this.blockWidth) >>> 32));
+        hash = 83 * hash + (int) (Double.doubleToLongBits(this.blockHeight) ^ (Double.doubleToLongBits(this.blockHeight) >>> 32));
+        hash = 83 * hash + (this.blockAnchor != null ? this.blockAnchor.hashCode() : 0);
+        hash = 83 * hash + (this.paintScale != null ? this.paintScale.hashCode() : 0);
+        return hash;
     }
 
     /**

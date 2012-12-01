@@ -90,6 +90,7 @@ public class Jpowder extends JFrame implements DropTargetListener {
     public static String plotAreaInFocus;
     private JPowderDesktopManager jPowderDesktopManager = new JPowderDesktopManager();
     public static InfoPanel infoPanelInfocus;
+    //undo and redo.
     public static JPowderStack jPowderStackUndo = new JPowderStack(3);
     public static JPowderStack jPowderStackRedo = new JPowderStack(3);
     private static double dropLocationX, dropLocationY;
@@ -204,21 +205,15 @@ public class Jpowder extends JFrame implements DropTargetListener {
      *
      * @param internalFrame
      */
-    public static void updateJPowderInternalFrame(JpowderInternalframe internalFrame) {
+    public static void updateJPowderInternalFrame(JpowderInternalframe internalFrame)  {
 
-        if (internalFrame instanceof JpowderInternalframe2D) {
-            if (internalFrame != internalFrameInFocus2D) {
+        if (internalFrame instanceof JpowderInternalframe2D) {  
                 internalFrameInFocus2D = (JpowderInternalframe2D) internalFrame;
-//            chartInFocus = internalFrame.getchart();
-            }
-        }
-        if (internalFrame instanceof JpowderInternalframe3D) {
-            if (internalFrame != internalFrameInFocus3D) {
-                internalFrameInFocus3D = (JpowderInternalframe3D) internalFrame;
-//            chartInFocus = internalFrame.getchart();
-            }
         }
 
+        if (internalFrame instanceof JpowderInternalframe3D) {
+                internalFrameInFocus3D = (JpowderInternalframe3D) internalFrame;
+        }
 
         if (infoPanelInfocus != null) {
             infoPanelInfocus.update();
@@ -246,8 +241,6 @@ public class Jpowder extends JFrame implements DropTargetListener {
                 chartPlotterPane3D.remove(messageLabel3D);
                 chartPlotterPane3D.repaint();
             }
-
-
         }
     }
 
@@ -1630,10 +1623,9 @@ public class Jpowder extends JFrame implements DropTargetListener {
 
 
         Jpowder jpowder = new Jpowder();
+        jpowder.pack();
         jpowder.setLocationRelativeTo(null);
         jpowder.setVisible(true);
-
-
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar JpowderMenuBar;

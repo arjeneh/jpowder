@@ -543,18 +543,17 @@ public class Import3DFilesTable extends javax.swing.JFrame {
             importData3DTable.getCellEditor().stopCellEditing();
         }
         
-        setCursor(waitCursor);
-        statusText.setText("Plotting . . . ");
-        plotButton.setEnabled(false);
+//        setCursor(waitCursor);
+//        statusText.setText("Plotting . . . ");
+//        plotButton.setEnabled(false);
         // We're going to do something that takes a long time, so we spin off a
         // thread and update the display when we're done.
-        Thread worker = new Thread() {
-
-            @Override
-            public void run() {
-                // Something that takes a long time. In real life, this might be a DB
-                // query, remote method invocation, etc.
-                try {
+//        Thread worker = new Thread() {
+//
+//            @Override
+//            public void run() {
+//                 Something that takes a long time.
+//                try {
                     //multiple datasets
                     Vector<DataSet> datasets = new Vector<DataSet>();
                     // map linking filenames and paths.
@@ -568,7 +567,6 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                         // assume in this loop for now that path the 2nd column
                         fileNameAndPathMap.put(String.valueOf(stm.getValueAt(i, 0)),
                                 String.valueOf(stm.getValueAt(i, 1)));
-
                     }//for
 
                     for (Map.Entry<String, String> entry : fileNameAndPathMap.entrySet()) {
@@ -616,45 +614,52 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                         datasets.get(i).addMetaData(hm);
                     }
 
-                    // finally plot the data
+                    //Finally plot the data
                     String plotAsFunctionOf = plotAsComboBox.getSelectedItem().toString();
                     //Plot in 3D
 
                     //Plot 3D with extra fileNameAndPath 10/03/2012.
-                    JpowderInternalframe3D internalframe = new JpowderInternalframe3D(
+                    final JpowderInternalframe3D internalframe = new JpowderInternalframe3D(
                             dataVisibleInChart, datasets, plotAsFunctionOf, fileNameAndPathMap);
 
                     //make sure the file name from start - finish is displayed on the title bar.
                     String[] files = HashMapHelper.convertKeyToArray(fileNameAndPathMap);
                     String first = files[0];
                     String last = files[files.length - 1];
+                    int numOfFile = files.length;
+                    System.out.println("file size is: " + numOfFile );
 
-                    internalframe.setTitle(first + " - " + last);
+                    if (numOfFile > 1) {
+                        internalframe.setTitle(first + " - " + last);
+                    } else{
+                        internalframe.setTitle(first);
+                    }
 
                     //
-                    Jpowder.updateJPowderInternalFrame(internalframe);
                     InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
                     internalframe.addInternalFrameListener(internalFrameListener);
                     Jpowder.getChartPlotter3D().add(internalframe);
 
-                    Thread.sleep(5000);
-                } catch (InterruptedException ex) {
-                }
+                    Jpowder.updateJPowderInternalFrame(internalframe);
+                    this.dispose();
+ //                   Thread.sleep(500);
+//                } catch (InterruptedException ex) {
+//                }
                 // Report the result using invokeLater( ).
-                SwingUtilities.invokeLater(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        statusText.setText("Ready");
-                        plotButton.setEnabled(true);
-                        setVisible(false);
-                        setCursor(defaultCursor);
+//                SwingUtilities.invokeLater(new Runnable() {
+//
+//                    @Override
+//                    public void run() {
+//                        statusText.setText("Ready");
+//                        plotButton.setEnabled(true);
+//                        setVisible(false);
+//                        setCursor(defaultCursor);
                         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    }
-                });
-            }
-        };
-        worker.start(); // So we don't hold up the dispatch thread
+//                    }
+//                });
+//            }
+//        };
+//        worker.start(); // So we don't hold up the dispatch thread
 
     }//GEN-LAST:event_plotButtonActionPerformed
 

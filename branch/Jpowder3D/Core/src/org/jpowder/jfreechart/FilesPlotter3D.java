@@ -31,7 +31,13 @@
 package org.jpowder.jfreechart;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GradientPaint;
+import java.awt.Point;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.Collections;
 import java.util.Vector;
 import org.jfree.chart.ChartFrame;
@@ -53,6 +59,8 @@ import org.jfree.ui.RectangleInsets;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
 import org.jpowder.dataset.MetaData;
+import org.jpowder.util.ProportionalDimension;
+import org.jpowder.util.StringUtil;
 import org.jpowder.util.VectorMiscUtil;
 
 /**
@@ -86,6 +94,8 @@ public class FilesPlotter3D extends DatasetPlotter {
             isMetaNameEqualName = true;
             System.out.println("Plot using Name metaData in the constructor()");
         }
+
+        System.out.println("in " + this.getClass().getName() + " DataSet is: " + fileNames);
     }
 
     public FilesPlotter3D(DataSet d) {
@@ -112,7 +122,16 @@ public class FilesPlotter3D extends DatasetPlotter {
 
     @Override
     public ChartPanel createPowderChart() {
+        final double proportion;
+
         chart = createChart(createDataset());
+        /* bad performance
+        chart.setAntiAlias(true);
+        chart.setNotify(true);
+         * */
+
+        chart.setAntiAlias(false);
+        chart.setNotify(false);// to see it will stop rendering while stretched.
 
         for (int i = 0; i < plot.getDatasetCount(); i++) {
             if (datasets.get(i).getFileName().endsWith("gss")) {
@@ -120,11 +139,44 @@ public class FilesPlotter3D extends DatasetPlotter {
             }
         }
 
-        ChartPanel chartPanel = new ChartPanel(chart, true);
+        final ChartPanel chartPanel = new ChartPanel(chart, true);
+        chartPanel.setName(StringUtil.getFileTitle(fileNames));
+        chartPanel.setRefreshBuffer(true);
 
+        chartPanel.setPreferredSize(new Dimension(640, 480));
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
         chartPanel.addChartMouseListener(new PowderChartMouseObserver(chartPanel));
+
+        chartPanel.setMinimumDrawWidth(0);
+        chartPanel.setMinimumDrawHeight(0);
+//        chartPanel.setMaximumDrawWidth(640);
+//        chartPanel.setMaximumDrawHeight(480);
+
+        //get the prefered size.
+        Dimension d = chartPanel.getPreferredSize();
+        double x = d.width;
+        double y = d.height;
+
+        //find the proportion factor.
+        proportion = x / y;
+
+        //Check to see the size changed and adjust to the right proportion.
+        // TODO: still does not work.
+        chartPanel.addComponentListener(new ComponentAdapter() {
+
+            @Override
+            public void componentResized(ComponentEvent e) {
+                Component c = (Component) e.getSource();
+                Dimension curD = c.getSize();
+
+                Dimension newSize = new ProportionalDimension(curD, proportion);
+                c.setSize(newSize);
+                System.out.println("In " + this.getClass().getName() +
+                        " new size is: " + newSize + " proportion is: " + proportion);
+                super.componentResized(e);
+            }
+        });
         return chartPanel;
     }
 
@@ -194,7 +246,7 @@ public class FilesPlotter3D extends DatasetPlotter {
             yAxis.setRange(0 - blockHeigth_minus.firstElement(),
                     numDataset - 1 + blockHeigth_plus.lastElement());
             System.out.println("Plot using Name metaData");
-           
+
         } else {
             //if the metaname is equal Number
             Vector<Double> metaDouble = new Vector<Double>();
@@ -269,6 +321,7 @@ public class FilesPlotter3D extends DatasetPlotter {
         plot.getRangeAxis().setAutoRange(true); //-- comment out by KP 18/08/2012 to plot properly.
 
         chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
+
 
         // Find the min and max y value and use these values
         // to set the colour scale
@@ -481,7 +534,7 @@ public class FilesPlotter3D extends DatasetPlotter {
     /**
      * refresh the chart.
      */
-    private void refreshChart(){
+    private void refreshChart() {
 //        jPanel_GraphicsTop.removeAll();
 //        jPanel_GraphicsTop.revalidate(); // This removes the old chart
 //        aChart = createChart();

@@ -283,7 +283,6 @@ public class UpdateMetaDataFrame extends javax.swing.JFrame {
         } else {
             return;
         }
-
     }
 
     /**
@@ -490,7 +489,7 @@ public class UpdateMetaDataFrame extends javax.swing.JFrame {
 
                     JpowderInternalframe3D internalframe = new JpowderInternalframe3D(
                             powderFrame.getDataVisibleInChartPanel(), existingDatasets, plotAsFunctionOf);
-                    internalframe.setTitle(powderFrame.getNames());
+                    //internalframe.setTitle(powderFrame.getNames());
 
                     Jpowder.updateJPowderInternalFrame(internalframe);
                     InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);

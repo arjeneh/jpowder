@@ -30,7 +30,9 @@
 package org.jpowder.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Vector;
 import java.util.regex.Pattern;
 
 public class StringUtil {
@@ -90,5 +92,30 @@ public class StringUtil {
 //            System.out.println(temp[i]);
 //        }
         return temp;
+    }
+
+    /**
+     * return a string with First - Last file names
+     * First.xye - Last.xye
+     *
+     * @param fileNames
+     * @return
+     */
+    public static String getFileTitle(Vector<String> fileNames) {
+        String output;
+
+        String[] files = (String[]) fileNames.toArray(new String[0]);
+        //String[] files = (String[]) fileNames.toArray();
+        String first = files[0];
+        String last = files[files.length - 1];
+
+        int numOfFile = files.length;
+
+        if (numOfFile > 1) {
+           output = first + " - " + last;
+        } else {
+           output = first;
+        }
+        return output;
     }
 }
