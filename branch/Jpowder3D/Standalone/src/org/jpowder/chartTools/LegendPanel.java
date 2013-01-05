@@ -34,7 +34,7 @@ import javax.swing.table.DefaultTableModel;
 import org.jfree.ui.RectangleEdge;
 import org.jpowder.Analysis.TableRenderer;
 import org.jpowder.Analysis.ToolsIcon2D;
-import org.jpowder.InernalFrame.JpowderInternalframe2D;
+import org.jpowder.InternalFrame.JpowderInternalframe2D;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 

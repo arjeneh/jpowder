@@ -31,13 +31,8 @@
 package org.jpowder.jfreechart;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GradientPaint;
-import java.awt.Point;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.util.Collections;
 import java.util.Vector;
 import org.jfree.chart.ChartFrame;
@@ -59,7 +54,6 @@ import org.jfree.ui.RectangleInsets;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.DatasetPlotter;
 import org.jpowder.dataset.MetaData;
-import org.jpowder.util.ProportionalDimension;
 import org.jpowder.util.StringUtil;
 import org.jpowder.util.VectorMiscUtil;
 
@@ -125,13 +119,10 @@ public class FilesPlotter3D extends DatasetPlotter {
         final double proportion;
 
         chart = createChart(createDataset());
-        /* bad performance
-        chart.setAntiAlias(true);
-        chart.setNotify(true);
-         * */
 
         chart.setAntiAlias(false);
-        chart.setNotify(false);// to see it will stop rendering while stretched.
+        chart.setNotify(true); //this must be enable otherwise update wont be called.
+
 
         for (int i = 0; i < plot.getDatasetCount(); i++) {
             if (datasets.get(i).getFileName().endsWith("gss")) {
@@ -146,7 +137,7 @@ public class FilesPlotter3D extends DatasetPlotter {
         chartPanel.setPreferredSize(new Dimension(640, 480));
         chartPanel.setDisplayToolTips(false);
         chartPanel.getChartRenderingInfo().setEntityCollection(null);
-        chartPanel.addChartMouseListener(new PowderChartMouseObserver(chartPanel));
+        //chartPanel.addChartMouseListener(new PowderChartMouseObserver(chartPanel));
 
         chartPanel.setMinimumDrawWidth(0);
         chartPanel.setMinimumDrawHeight(0);
@@ -154,29 +145,29 @@ public class FilesPlotter3D extends DatasetPlotter {
 //        chartPanel.setMaximumDrawHeight(480);
 
         //get the prefered size.
-        Dimension d = chartPanel.getPreferredSize();
-        double x = d.width;
-        double y = d.height;
-
-        //find the proportion factor.
-        proportion = x / y;
+//        Dimension d = chartPanel.getPreferredSize();
+//        double x = d.width;
+//        double y = d.height;
+//
+//        //find the proportion factor.
+//        proportion = x / y;
 
         //Check to see the size changed and adjust to the right proportion.
         // TODO: still does not work.
-        chartPanel.addComponentListener(new ComponentAdapter() {
-
-            @Override
-            public void componentResized(ComponentEvent e) {
-                Component c = (Component) e.getSource();
-                Dimension curD = c.getSize();
-
-                Dimension newSize = new ProportionalDimension(curD, proportion);
-                c.setSize(newSize);
-                System.out.println("In " + this.getClass().getName() +
-                        " new size is: " + newSize + " proportion is: " + proportion);
-                super.componentResized(e);
-            }
-        });
+//        //chartPanel.addComponentListener(new ComponentAdapter() {
+//
+//            @Override
+//            public void componentResized(ComponentEvent e) {
+//                Component c = (Component) e.getSource();
+//                Dimension curD = c.getSize();
+//
+//                Dimension newSize = new ProportionalDimension(curD, proportion);
+//                c.setSize(newSize);
+//                System.out.println("In " + this.getClass().getName() +
+//                        " new size is: " + newSize + " proportion is: " + proportion);
+//                super.componentResized(e);
+//            }
+//        });
         return chartPanel;
     }
 
@@ -368,19 +359,24 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         boolean isMetaDataString = false;
         int numDataset = datasets.size();
+
         Vector<MetaData> metaValues = new Vector<MetaData>();
+
         for (int i = 0; i < numDataset; i++) {
             metaValues.add(datasets.get(i).getMetaData(selectedMetaItem));
         }
+
         for (int i = 0; i < numDataset; i++) {
             if (metaValues.elementAt(i).getValue() instanceof String) {
                 isMetaDataString = true;
             }
         }
 
+        //actaul value updating.
         for (int i = 0; i < datasets.size(); i++) {
 
             double[][] data = new double[3][datasets.elementAt(i).getX().size()];
+
             for (int j = 0; j < datasets.elementAt(i).getX().size(); j++) {
 
                 data[0][j] = (Double) datasets.elementAt(i).getX().get(j);  // x
@@ -531,18 +527,4 @@ public class FilesPlotter3D extends DatasetPlotter {
 
     }
 
-    /**
-     * refresh the chart.
-     */
-    private void refreshChart() {
-//        jPanel_GraphicsTop.removeAll();
-//        jPanel_GraphicsTop.revalidate(); // This removes the old chart
-//        aChart = createChart();
-//        aChart.removeLegend();
-//
-//        ChartPanel chartPanel = new ChartPanel(aChart);
-//        jPanel_GraphicsTop.setLayout(new BorderLayout());
-//        jPanel_GraphicsTop.add(chartPanel);
-//        jPanel_GraphicsTop.repaint(); // This method makes the new chart appear
-    }
 }

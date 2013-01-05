@@ -31,7 +31,6 @@ package org.jpowder.dataset;
 
 import java.util.HashMap;
 import java.util.Vector;
-import org.jfree.data.xy.AbstractXYDataset;
 import org.jpowder.util.VectorMiscUtil;
 
 /**
@@ -51,6 +50,7 @@ public abstract class DataSet {
     // holds meta data for the DataSet in pairs
     // of name of meta-data-item, e.g. temperature, and its value.
     private HashMap<String, MetaData> meta;
+    private Vector<Vector> data;
 
     /**
      * 
@@ -58,6 +58,7 @@ public abstract class DataSet {
      * @param filename,  filename of powder diffraction file
      */
     public DataSet(Vector<Vector> data, String filename) {
+        this.data = data;
         this.fileName = filename;
 
         //obtain data and assign x and y values to this class
@@ -146,6 +147,7 @@ public abstract class DataSet {
         String NEW_LINE = System.getProperty("line.separator");
 
         result.append(this.getClass().getName() + " Object {" + NEW_LINE);
+        result.append(" Vector of Vector data value: " + this.data + NEW_LINE);
         result.append(" X value: " + this.x + NEW_LINE);
         result.append(" Y value: " + this.y + NEW_LINE);
         //result.append(" Z value: " + this.z + NEW_LINE);
@@ -179,6 +181,20 @@ public abstract class DataSet {
      */
     public void setMeta(HashMap<String, MetaData> meta) {
         this.meta = meta;
+    }
+
+    /**
+     * @return the data
+     */
+    public Vector<Vector> getData() {
+        return data;
+    }
+
+    /**
+     * @param data the data to set
+     */
+    public void setData(Vector<Vector> data) {
+        this.data = data;
     }
 //
 //    public DataSet() {

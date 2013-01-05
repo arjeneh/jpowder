@@ -34,7 +34,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import org.jpowder.Jpowder;
-import org.jpowder.InernalFrame.JpowderInternalframe2D;
+import org.jpowder.InternalFrame.JpowderInternalframe2D;
 
 /**
  * Renderer class which adds colour to each file name listed in a

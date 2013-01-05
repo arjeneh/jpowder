@@ -34,7 +34,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import org.jpowder.Jpowder;
-import org.jpowder.InernalFrame.JpowderInternalframe2D;
+import org.jpowder.InternalFrame.JpowderInternalframe2D;
 
 /**
  * This Class allow user to select a colour for a plot.

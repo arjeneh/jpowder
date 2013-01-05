@@ -31,9 +31,10 @@ package org.jpowder.Analysis;
 
 import java.util.Vector;
 import javax.swing.JOptionPane;
-import org.jpowder.InernalFrame.JpowderInternalframe3D;
+import org.jpowder.InternalFrame.JpowderInternalframe3D;
 import org.jpowder.Jpowder;
-import org.jpowder.chartTools.AnnotationPanel;
+import org.jpowder.Annotation.AnnotationPanel;
+import org.jpowder.chartTools.BiningPanel;
 import org.jpowder.chartTools.YAxisDisplay;
 import org.jpowder.chartTools.ColorBar3D;
 import org.jpowder.chartTools.SmoothingPanel;
@@ -47,6 +48,7 @@ public class ToolsIcon3D extends javax.swing.JPanel {
 
     private ColorBar3D colorBar = new ColorBar3D(this);
     private YAxisDisplay blockHeight = new YAxisDisplay(this);
+    private BiningPanel binning = new BiningPanel(this);
     private SmoothingPanel smoothing = new SmoothingPanel(this);
     private Transforming_XAxis_3D braggsLow3D = new Transforming_XAxis_3D(this);
     private Jpowder jpowder;
@@ -108,7 +110,7 @@ public class ToolsIcon3D extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setText("No be decided");
+        jLabel4.setText("Binning");
 
         smoothingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MA.png"))); // NOI18N
         smoothingButton.addActionListener(new java.awt.event.ActionListener() {
@@ -158,8 +160,7 @@ public class ToolsIcon3D extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(16, 16, 16)
-                                .addComponent(jLabel7)
-                                .addGap(43, 43, 43))
+                                .addComponent(jLabel7))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(annotationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -179,7 +180,8 @@ public class ToolsIcon3D extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(jLabel4))
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,6 +231,10 @@ public class ToolsIcon3D extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        jpowder.getToolsTab3D().add(binning, "1");
+        binning.setVisible(true);
+        this.setVisible(false);
+        Jpowder.jpowderInfoPanelUpdate(binning);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void smoothingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smoothingButtonActionPerformed

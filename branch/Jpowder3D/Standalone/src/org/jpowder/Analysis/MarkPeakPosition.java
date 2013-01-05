@@ -54,7 +54,7 @@ import org.jfree.chart.plot.ValueMarker;
 import org.jfree.ui.TextAnchor;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
-import org.jpowder.InernalFrame.JpowderInternalframe2D;
+import org.jpowder.InternalFrame.JpowderInternalframe2D;
 import org.jpowder.chartTools.Magnifier;
 
 /**

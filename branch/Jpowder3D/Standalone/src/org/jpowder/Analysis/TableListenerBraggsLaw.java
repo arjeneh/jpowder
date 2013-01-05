@@ -31,7 +31,7 @@ package org.jpowder.Analysis;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import org.jpowder.Jpowder;
-import org.jpowder.InernalFrame.JpowderInternalframe2D;
+import org.jpowder.InternalFrame.JpowderInternalframe2D;
 
 /**
  * listen for change event in the table and if value is changed then

@@ -44,7 +44,7 @@ import org.jpowder.Jpowder;
 import org.jpowder.InternalFrame.JpowderInternalframe3D;
 import javax.swing.SwingUtilities;
 
-public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel {
+public class BiningPanel extends javax.swing.JPanel implements InfoPanel {
 
     private ToolsIcon3D toolsIcon3D;
     private SmoothingComboBoxModel model = new SmoothingComboBoxModel();
@@ -52,12 +52,12 @@ public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel {
     private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
 
     /** Creates new form SmoothingPanel */
-    public SmoothingPanel() {
+    public BiningPanel() {
         initComponents();
         comboInput.setModel(model);
     }
 
-    public SmoothingPanel(ToolsIcon3D aThis) {
+    public BiningPanel(ToolsIcon3D aThis) {
         initComponents();
         comboInput.setModel(new SmoothingComboBoxModel());
         comboInput.setSelectedIndex(model.getSize() - 1);
@@ -73,7 +73,7 @@ public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel {
             @Override
             public void run() {
                 JFrame frame = new JFrame("Smoothing Frame");
-                SmoothingPanel bh = new SmoothingPanel();
+                BiningPanel bh = new BiningPanel();
                 frame.add(bh, BorderLayout.CENTER);
                 frame.setSize(800, 400);
                 frame.setVisible(true);
@@ -97,7 +97,7 @@ public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel {
         executeButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
 
-        jLabel1.setText("Moving average, numer of points to AVG over:");
+        jLabel1.setText("Bining number factor:");
 
         comboInput.setMaximumRowCount(10);
         comboInput.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "3", "5", "7", "9", "11" }));
@@ -142,7 +142,7 @@ public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,8 +175,11 @@ public class SmoothingPanel extends javax.swing.JPanel implements InfoPanel {
                     JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
                     int selectedValue = Integer.parseInt(comboInput.getSelectedItem().toString());
 
-                    MovingAverage mva = new MovingAverage(selectedValue);
-                    mva.execute(inFocus);
+                    //MovingAverage mva = new MovingAverage(selectedValue);
+                    //mva.execute(inFocus);
+                    BinOptimizer bo = new BinOptimizer(selectedValue);
+                    //BinOptimizer bo = new BinOptimizer(this.jFreeChart, binFactorTxt.getText());
+                    bo.execute(inFocus);
 
                     Thread.sleep(5000);
                 } catch (InterruptedException ex) {

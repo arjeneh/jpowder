@@ -29,7 +29,7 @@
 package org.jpowder;
 
 import org.jfree.chart.ChartMouseEvent;
-import org.jpowder.InernalFrame.JpowderInternalframe2D;
+import org.jpowder.InternalFrame.JpowderInternalframe2D;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Rectangle;
@@ -67,7 +67,7 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.ui.ExtensionFileFilter;
 import org.jfree.ui.RectangleEdge;
-import org.jpowder.jfreechart.EditAnnotationFrame;
+import org.jpowder.Annotation.EditAnnotationFrame;
 
 /**
  * This class creates some new popupMenu and also modifies some of the

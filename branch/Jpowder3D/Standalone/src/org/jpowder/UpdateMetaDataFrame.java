@@ -30,7 +30,7 @@
 package org.jpowder;
 
 import java.awt.Cursor;
-import org.jpowder.InernalFrame.JpowderInternalframe3D;
+import org.jpowder.InternalFrame.JpowderInternalframe3D;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -50,7 +50,7 @@ import javax.swing.event.InternalFrameListener;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import org.jpowder.InernalFrame.InternalFrameIconifyListener;
+import org.jpowder.InternalFrame.InternalFrameIconifyListener;
 import org.jpowder.TableHelper.SortableTableModel;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.util.NaturalOrderComparator;
@@ -161,21 +161,6 @@ public class UpdateMetaDataFrame extends javax.swing.JFrame {
             stm.addRow(row);
         }
 
-        //Setting meta-data hashmap in dataset
-//        for (int i = 0; i < existingDatasets.size(); i++) {
-//            HashMap<String, MetaData> hm = new HashMap<String, MetaData>();
-//            hm.put("Name", new MetaData<String>(stm.getValueAt(i, 0).toString()));
-//            // ignore Path column but see if any other meta data defined
-//            for (int iCol = 2; iCol < table.getColumnCount(); iCol++) {
-//                try {
-//                    Double metaD = Double.parseDouble(stm.getValueAt(i, iCol).toString());
-//                    hm.put(stm.getColumnName(iCol), new MetaData<Double>(metaD));
-//                } catch (NumberFormatException e) {
-//                    hm.put(stm.getColumnName(iCol), new MetaData<String>(stm.getValueAt(i, iCol).toString()));
-//                }
-//            }
-//            existingDatasets.get(i).addMetaData(hm);
-//        }
         table.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 
         //KP 28 April second try to reordering rows.

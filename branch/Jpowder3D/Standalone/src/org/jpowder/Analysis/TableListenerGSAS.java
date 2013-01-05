@@ -31,7 +31,7 @@ package org.jpowder.Analysis;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import org.jpowder.InernalFrame.JpowderInternalframe2D;
+import org.jpowder.InternalFrame.JpowderInternalframe2D;
 import org.jpowder.Jpowder;
 import org.jpowder.dataset.GSAS_Instrument;
 

@@ -42,7 +42,7 @@ import org.jfree.chart.renderer.PaintScale;
 import org.jfree.chart.title.PaintScaleLegend;
 import org.jfree.ui.RectangleEdge;
 import org.jpowder.Analysis.ToolsIcon3D;
-import org.jpowder.InernalFrame.JpowderInternalframe3D;
+import org.jpowder.InternalFrame.JpowderInternalframe3D;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 import org.jpowder.jfreechart.GreenishPaintScale;

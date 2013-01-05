@@ -335,6 +335,7 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
             ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
             int series, int item, CrosshairState crosshairState, int pass) {
 
+
         double x = dataset.getXValue(series, item);
         double y = dataset.getYValue(series, item);
         double z = 0.0;
@@ -361,13 +362,14 @@ public class JpowderXYBlockRenderer extends AbstractXYItemRenderer
                 this.xOffset, dataArea, plot.getDomainAxisEdge());
         double yy1 = rangeAxis.valueToJava2D(y + this.blockHeightUpper.get(series)+
                 this.yOffset, dataArea, plot.getRangeAxisEdge());
+
         Rectangle2D block;
         PlotOrientation orientation = plot.getOrientation();
         if (orientation.equals(PlotOrientation.HORIZONTAL)) {
             block = new Rectangle2D.Double(Math.min(yy0, yy1),
                     Math.min(xx0, xx1), Math.abs(yy1 - yy0),
                     Math.abs(xx0 - xx1));
-        
+
         } else {
             block = new Rectangle2D.Double(Math.min(xx0, xx1),
                     Math.min(yy0, yy1), Math.abs(xx1 - xx0),

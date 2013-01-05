@@ -35,7 +35,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.GrayPaintScale;
 import org.jfree.chart.renderer.PaintScale;
 import org.jfree.data.xy.XYDataset;
-import org.jpowder.InernalFrame.JpowderInternalframe3D;
+import org.jpowder.InternalFrame.JpowderInternalframe3D;
 import org.jpowder.jfreechart.JpowderXYBlockRenderer;
 
 /**
@@ -56,10 +56,9 @@ public class MovingAverage {
         average = 0;
     }
 
-     public MovingAverage(int selectedValue) {
+    public MovingAverage(int selectedValue) {
         numberOfPointToAVGOver = selectedValue;
     }
-
 
     public MovingAverage(JpowderInternalframe3D jf) {
         count = 0;
@@ -103,17 +102,18 @@ public class MovingAverage {
     }
 
     public void execute(JpowderInternalframe3D frame) {
+        this.internal3dFrame = frame;
 
         // Calculate moving average for each dataset
-        for (int i = 0; i < frame.getXYPlot().getDatasetCount(); i++) {
+        for (int i = 0; i < this.internal3dFrame.getXYPlot().getDatasetCount(); i++) {
             // get number of data points for this dataset
-            int numY = frame.getPowderDataSet().elementAt(i).getY().size();
+            int numY = this.internal3dFrame.getPowderDataSet().elementAt(i).getY().size();
 
             // number of points either of each point.
-            int numberOfPointsEitherSide = this.numberOfPointToAVGOver/2;
+            int numberOfPointsEitherSide = this.numberOfPointToAVGOver / 2;
 
             // For convenience store y-values in variable y
-            Vector<Double> y = frame.getPowderDataSet().elementAt(i).getY();
+            Vector<Double> y = this.internal3dFrame.getPowderDataSet().elementAt(i).getY();
 
             // To store new calculated average values
             Vector<Double> yNew = new Vector<Double>();
@@ -124,8 +124,7 @@ public class MovingAverage {
                 // here calculate sum over the neighboring points +- numberOfPointsEitherSize either side of point ii
                 // Of course where ii is near an edge this sum will be over fewer points as done below
                 int actualNumberOfPointAVGOver = 0; // counting the actualy number of point averaged over
-                for (int jj = Math.max(0, ii - numberOfPointsEitherSide); jj <= Math.min(numY - 1, ii + numberOfPointsEitherSide); jj++)
-                {
+                for (int jj = Math.max(0, ii - numberOfPointsEitherSide); jj <= Math.min(numY - 1, ii + numberOfPointsEitherSide); jj++) {
                     actualNumberOfPointAVGOver = actualNumberOfPointAVGOver + 1;
                     sum += y.get(jj);
                 }
@@ -135,11 +134,11 @@ public class MovingAverage {
 
             // finally replace original data values with newly calculated averaged values
             for (int ii = 0; ii < numY; ii++) {
-                frame.getPowderDataSet().elementAt(i).getY().setElementAt(yNew.get(ii), ii);
+                this.internal3dFrame.getPowderDataSet().elementAt(i).getY().setElementAt(yNew.get(ii), ii);
             }
         }
 
-        XYDataset dataset = frame.getChart().getXYPlot().getDataset();
+        XYDataset dataset = this.internal3dFrame.getChart().getXYPlot().getDataset();
         //how many in dataset.
         int numDataset = dataset.getSeriesCount();
         System.out.println("XYDataset dataset has " + numDataset + " dataset in it.");
@@ -155,8 +154,7 @@ public class MovingAverage {
             minY = (Double) Collections.min(frame.getPowderDataSet().get(i).getY());
         }
 
-        //System.out.println("I have " + this.data);
-        System.out.println("maxY =  " + maxY + " and minY = " + minY);
+        System.out.println("in " + this.getClass().getName() + "maxY =  " + maxY + " and minY = " + minY);
 
         //This needs to be casted to any other colours.
         PaintScale greyScale = new GrayPaintScale(minY, maxY);

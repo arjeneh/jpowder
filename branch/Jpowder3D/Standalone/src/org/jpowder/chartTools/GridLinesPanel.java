@@ -35,7 +35,7 @@ import javax.swing.JColorChooser;
 import org.jpowder.Analysis.ToolsIcon2D;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
-import org.jpowder.InernalFrame.JpowderInternalframe2D;
+import org.jpowder.InternalFrame.JpowderInternalframe2D;
 
 /**
  * Enabling and disabling grid lines and set width and colour of them.

@@ -39,7 +39,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.jfree.ui.RectangleEdge;
 import org.jpowder.Analysis.ToolsIcon3D;
-import org.jpowder.InernalFrame.JpowderInternalframe3D;
+import org.jpowder.InternalFrame.JpowderInternalframe3D;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 

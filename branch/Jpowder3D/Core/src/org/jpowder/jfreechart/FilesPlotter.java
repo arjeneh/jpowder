@@ -102,6 +102,7 @@ public class FilesPlotter extends DatasetPlotter implements Serializable {
                 plot.getDomainAxis().setLabel("TOF");
             }
         }
+        
         // create panel from chart and set some panel attributes
         ChartPanel chartPanel = new ChartPanel(chart, true);
         chartPanel.setDisplayToolTips(false);
@@ -109,7 +110,7 @@ public class FilesPlotter extends DatasetPlotter implements Serializable {
 
         //chartPanel.add(new JpowderPopupMenu(chartPanel));
         //User click and it brings up a new Frame for editing the chart.
-        chartPanel.addChartMouseListener(new PowderChartMouseObserver(chartPanel));
+        //chartPanel.addChartMouseListener(new PowderChartMouseObserver(chartPanel));
         return chartPanel;
     }
 

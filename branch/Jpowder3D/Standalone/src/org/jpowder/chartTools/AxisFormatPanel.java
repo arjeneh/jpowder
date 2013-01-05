@@ -40,7 +40,7 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.ui.RectangleInsets;
 import org.jpowder.Analysis.ToolsIcon2D;
-import org.jpowder.InernalFrame.JpowderInternalframe2D;
+import org.jpowder.InternalFrame.JpowderInternalframe2D;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 

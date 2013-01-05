@@ -36,7 +36,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import org.jfree.chart.plot.XYPlot;
-import org.jpowder.InernalFrame.JpowderInternalframe3D;
+import org.jpowder.InternalFrame.JpowderInternalframe3D;
 import org.jpowder.Jpowder;
 import org.jpowder.jfreechart.JpowderXYBlockRenderer;
 

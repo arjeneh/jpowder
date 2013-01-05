@@ -28,7 +28,7 @@
  */
 package org.jpowder;
 
-import org.jpowder.InernalFrame.JpowderInternalframe2D;
+import org.jpowder.InternalFrame.JpowderInternalframe2D;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
@@ -40,7 +40,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.XYPlot;
-import org.jpowder.InernalFrame.JpowderInternalframe;
+import org.jpowder.InternalFrame.JpowderInternalframe;
 import org.jpowder.chartTools.CreateLegend;
 
 /**

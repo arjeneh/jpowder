@@ -80,21 +80,5 @@ public abstract class DatasetPlotter {
         return new FilesPlotter3D(datasets, meta);
     }
 
-//    public static DatasetPlotter createDatasetPlotter(Vector<DataSet> datasets, String meta, HashMap file) {
-//        return new FilesPlotter3D(datasets, meta, file);
-//    }
-
-    /**
-     * create DatasetPlotter and store the data that are can then be plotted
-     * using the method createPowderChart()
-     * @param datasets Contains the data of one powder diffraction file
-     */
-    public static DatasetPlotter createDatasetPlotter(DataSet dataset) {
-        if (dataset != null) {
-            return new FilesPlotter(dataset);
-        } else {
-            return null;
-        }
-    }
 }
 

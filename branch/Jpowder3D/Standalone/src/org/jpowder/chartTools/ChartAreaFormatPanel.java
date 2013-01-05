@@ -34,7 +34,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import org.jpowder.Analysis.ToolsIcon2D;
-import org.jpowder.InernalFrame.JpowderInternalframe2D;
+import org.jpowder.InternalFrame.JpowderInternalframe2D;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 

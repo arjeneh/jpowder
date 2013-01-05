@@ -30,8 +30,8 @@
  */
 package org.jpowder;
 
-import org.jpowder.InernalFrame.JpowderInternalframe2D;
-import org.jpowder.InernalFrame.JpowderInternalframe;
+import org.jpowder.InternalFrame.JpowderInternalframe2D;
+import org.jpowder.InternalFrame.JpowderInternalframe;
 import java.beans.PropertyVetoException;
 import org.jpowder.chartTools.SmoothingPanel;
 import org.jpowder.tree.Tree;
@@ -66,8 +66,8 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import org.jfree.chart.ChartColor;
 import org.jpowder.Analysis.ToolsIcon3D;
-import org.jpowder.InernalFrame.InternalFrameIconifyListener;
-import org.jpowder.InernalFrame.JpowderInternalframe3D;
+import org.jpowder.InternalFrame.InternalFrameIconifyListener;
+import org.jpowder.InternalFrame.JpowderInternalframe3D;
 import org.jpowder.tree.JpowderFileSystemTreeModel;
 
 /**

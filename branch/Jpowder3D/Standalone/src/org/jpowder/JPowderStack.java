@@ -29,7 +29,7 @@
  */
 package org.jpowder;
 
-import org.jpowder.InernalFrame.JpowderInternalframe;
+import org.jpowder.InternalFrame.JpowderInternalframe;
 import java.util.Stack;
 
 /**

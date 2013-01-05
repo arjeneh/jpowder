@@ -52,7 +52,7 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.data.xy.XYDataset;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
-import org.jpowder.InernalFrame.JpowderInternalframe3D;
+import org.jpowder.InternalFrame.JpowderInternalframe3D;
 import org.jpowder.TableHelper.TableCellUpdatedListener;
 import org.jpowder.dataset.DataSet;
 import org.jpowder.dataset.GSASInstrument_Reader;

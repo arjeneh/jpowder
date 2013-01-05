@@ -37,7 +37,7 @@ import javax.swing.JOptionPane;
 import org.jfree.data.xy.XYDataset;
 import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
-import org.jpowder.InernalFrame.JpowderInternalframe2D;
+import org.jpowder.InternalFrame.JpowderInternalframe2D;
 import org.jpowder.chartTools.ComboBoxRenderer;
 
 /**

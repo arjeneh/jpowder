@@ -35,7 +35,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
-import org.jpowder.InernalFrame.JpowderInternalframe3D;
+import org.jpowder.InternalFrame.JpowderInternalframe3D;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -60,7 +60,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import org.jpowder.InernalFrame.InternalFrameIconifyListener;
+import org.jpowder.InternalFrame.InternalFrameIconifyListener;
 import org.jpowder.MetaFile.IO_MetaFile;
 import org.jpowder.TableHelper.ListRowHeader;
 import org.jpowder.TableHelper.SortableTableModel;
@@ -542,6 +542,8 @@ public class Import3DFilesTable extends javax.swing.JFrame {
         if (importData3DTable.isEditing()) {
             importData3DTable.getCellEditor().stopCellEditing();
         }
+
+        // TODO: Split these lines into methods, it is so long!
         
 //        setCursor(waitCursor);
 //        statusText.setText("Plotting . . . ");
@@ -594,7 +596,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                             javax.swing.JOptionPane.showMessageDialog(null, "Only ASCII file please.");
                             break;
                         }
-                    }
+                    }//for
 
                     //Setting meta-data hashmap in dataset
                     for (int i = 0; i < datasets.size(); i++) {
@@ -622,7 +624,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
                     final JpowderInternalframe3D internalframe = new JpowderInternalframe3D(
                             dataVisibleInChart, datasets, plotAsFunctionOf, fileNameAndPathMap);
 
-                    //make sure the file name from start - finish is displayed on the title bar.
+                    //Make sure the file name from start - finish is displayed on the title bar.
                     String[] files = HashMapHelper.convertKeyToArray(fileNameAndPathMap);
                     String first = files[0];
                     String last = files[files.length - 1];
@@ -654,7 +656,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
 //                        plotButton.setEnabled(true);
 //                        setVisible(false);
 //                        setCursor(defaultCursor);
-                        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 //                    }
 //                });
 //            }

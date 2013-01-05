@@ -46,8 +46,8 @@ public class ProportionalDimension extends Dimension {
             height = (int) (x / proportion);
         }
 
-        System.out.println("In " + this.getClass().getName() +
-                " x is: " + width + " y is: " +  height );
+//        System.out.println("In " + this.getClass().getName() +
+//                " x is: " + width + " y is: " +  height );
 
     }
 }

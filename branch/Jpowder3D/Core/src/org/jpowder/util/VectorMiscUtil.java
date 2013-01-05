@@ -224,8 +224,7 @@ public class VectorMiscUtil {
     /*
      * for unit testing purposes
      * */
-
-     public static Vector initFilePaths() {
+    public static Vector initFilePaths() {
         Vector row1 = new Vector();
         row1.add("zopdih_dehy_RampNo1_1");
         row1.add(171.863);
@@ -313,6 +312,66 @@ public class VectorMiscUtil {
         return data;
     }
 
+    public static Vector initXYData2() {
+        Vector row1 = new Vector();
+        row1.add(1.00200000000000);
+        row1.add(67.712713130286);
+
+        Vector row2 = new Vector();
+        row2.add(1.00500000000000);
+        row2.add(67.26309355070109);
+
+        Vector row3 = new Vector();
+        row3.add(1.00800000000000);
+        row3.add(66.28325500490233);
+
+        Vector row4 = new Vector();
+        row4.add(1.01100000000000);
+        row4.add(65.07813059011724);
+
+
+        Vector row5 = new Vector();
+        row5.add(1.01400000000000);
+        row5.add(63.99647883264032);
+
+
+        Vector row6 = new Vector();
+        row6.add(1.01700000000000);
+        row6.add(63.29973926750616);
+
+
+        Vector row7 = new Vector();
+        row7.add(1.02000000000000);
+        row7.add(63.07052906750048);
+
+        //
+        Vector row8 = new Vector();
+        row8.add(1.02300000000000);
+        row8.add(63.1992179421328);
+
+        Vector row9 = new Vector();
+        row9.add(1.02600000000000);
+        row9.add(63.45395860161319);
+
+        Vector row10 = new Vector();
+        row10.add(1.02900000000000);
+        row10.add(63.60228157334541);
+
+
+        Vector data = new Vector();
+        data.add(row1);
+        data.add(row2);
+        data.add(row3);
+        data.add(row4);
+        data.add(row5);
+        data.add(row6);
+        data.add(row7);
+        data.add(row8);
+        data.add(row9);
+        data.add(row10);
+        return data;
+    }
+
     /**
      * Get a specific column
      * 
@@ -340,12 +399,12 @@ public class VectorMiscUtil {
         Vector output = new Vector();
         Vector vRow = new Vector();
         Vector vLastColumn = new Vector();
-        //Get the last column oof Vector.
-        for (int i = 0; i < ori.size(); i++) {
-            vRow = (Vector) (ori.elementAt(i));
-            for (int j = 0; j < vRow.size(); j++) {
-                Object s = vRow.elementAt(j);
-                if (j == vRow.size() - 1) {
+        //Get the last column of Vector.
+        for (int row = 0; row < ori.size(); row++) {
+            vRow = (Vector) (ori.elementAt(row));
+            for (int column = 0; column < vRow.size(); column++) {
+                Object s = vRow.elementAt(column);
+                if (column == vRow.size() - 1) {
                     vLastColumn.add(s);
                 }
             }
@@ -363,7 +422,6 @@ public class VectorMiscUtil {
             vRow = (Vector) (ori.elementAt(i));
             for (int j = 0; j < vRow.size(); j++) {
                 Double s = (Double) vRow.elementAt(j);
-
             }
             output.add(vRow);
         }
@@ -390,12 +448,14 @@ public class VectorMiscUtil {
             col = vrow.size();
             break;
         }
-
-
         return col;
-
     }
 
+    /**
+     * 3d data but we want just X and Y without Error
+     * @param ori
+     * @return
+     */
     public static Vector copyBeforeLastColumnsOf2DVector(Vector<Vector> ori) {
         //Parse the data from vectors which has differnt type of objects in it
         Vector vOriginalData = ori;
@@ -479,9 +539,7 @@ public class VectorMiscUtil {
                         v.elementAt(j).toString())) {
                     duplicates = true;
                 }
-
             }
-
         }
 
         return duplicates;

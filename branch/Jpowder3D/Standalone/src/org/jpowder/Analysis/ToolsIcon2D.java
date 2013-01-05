@@ -30,7 +30,7 @@
 package org.jpowder.Analysis;
 
 import org.jpowder.Jpowder;
-import org.jpowder.chartTools.AnnotationPanel;
+import org.jpowder.Annotation.AnnotationPanel;
 import org.jpowder.chartTools.AxisFormatPanel;
 import org.jpowder.chartTools.ChartAreaFormatPanel;
 import org.jpowder.chartTools.ChangePlotStyle;

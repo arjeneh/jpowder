@@ -16,44 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * ---------
- * ComboBoxRenderer.java
+ * IMapObserver.java
  * ---------
  * (C) Copyright 2009-2010 STFC Rutherford Appleton Laboratories and
  * Kasem Bundit University.
  *
- * Author(s):  M Arjeneh, ISIS, Rutherford Appleton Laboratory
+ * @author     Kreecha Puphaiboon, Computer Science Lecturer, Kasem Bundit University
  *
  * File change history is stored at: <http://code.google.com/p/jpowder/source/browse>
  *
  */
-package org.jpowder.chartTools;
 
-import java.awt.Color;
-import java.awt.Component;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
-import javax.swing.border.LineBorder;
-import org.jpowder.Jpowder;
-import org.jpowder.InternalFrame.JpowderInternalframe2D;
+package org.jpowder.Annotation;
 
 /**
- * To add colour to names in ComboBoxes.
+ *
+ * @author Toshiba
  */
-public class ComboBoxRenderer implements ListCellRenderer {
+public interface IMapObserver {
+    public void updateMap(IMapSubject o);
 
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-        JLabel label = new JLabel(value.toString());
-        label.setOpaque(isSelected);
-        if (index >= 0) {
-
-            label.setForeground((Color) inFocus.getXYPlot().getRenderer(index).getSeriesPaint(0));
-        }
-        if (isSelected) {
-            label.setBorder(LineBorder.createBlackLineBorder());
-
-        }
-        return label;
-    }
 }
