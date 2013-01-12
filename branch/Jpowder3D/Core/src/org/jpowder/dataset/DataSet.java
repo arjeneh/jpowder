@@ -193,8 +193,12 @@ public abstract class DataSet {
     /**
      * @param data the data to set
      */
-    public void setData(Vector<Vector> data) {
+    public synchronized void setData(Vector<Vector> data) {
         this.data = data;
+               //obtain data and assign x and y values to this class
+        this.x = VectorMiscUtil.getColumn(this.data, 0);
+        this.y = VectorMiscUtil.getColumn(this.data, 1);
+        notifyAll();
     }
 //
 //    public DataSet() {

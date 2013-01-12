@@ -65,7 +65,7 @@
                               <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                               <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jButton3" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+                          <Component id="binningButton" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -82,7 +82,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="colourBarButton" min="-2" pref="88" max="-2" attributes="0"/>
                   <Component id="yAxisButton" min="-2" pref="88" max="-2" attributes="0"/>
-                  <Component id="jButton3" min="-2" pref="88" max="-2" attributes="0"/>
+                  <Component id="binningButton" min="-2" pref="88" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -151,9 +151,9 @@
         <Property name="text" type="java.lang.String" value="Y-axis display"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="binningButton">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="binningButtonActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">

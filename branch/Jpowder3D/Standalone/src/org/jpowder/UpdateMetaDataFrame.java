@@ -188,8 +188,7 @@ public class UpdateMetaDataFrame extends javax.swing.JFrame {
      */
     private Vector<String> getPlotableColumnNames(Vector<String> names) {
         Vector<String> retVal = new Vector<String>();
-        for (int i = 0; i <
-                names.size(); i++) {
+        for (int i = 0; i <  names.size(); i++) {
             String bob = names.get(i);
             // add just Name
             if (bob.trim().equalsIgnoreCase("MetaData Name")) {
@@ -465,12 +464,11 @@ public class UpdateMetaDataFrame extends javax.swing.JFrame {
 
                     for (int i = 0; i < existingDatasets.size(); i++) {
                         Vector x = existingDatasets.get(i).getX();
-                        System.out.println("Value in X is: " + x);
+                        //System.out.println("Value in X is: " + x);
 
                         Vector y = existingDatasets.get(i).getY();
-                        System.out.println("Value in Y is: " + y);
+                        //System.out.println("Value in Y is: " + y);
                     }
-
 
                     JpowderInternalframe3D internalframe = new JpowderInternalframe3D(
                             powderFrame.getDataVisibleInChartPanel(), existingDatasets, plotAsFunctionOf);

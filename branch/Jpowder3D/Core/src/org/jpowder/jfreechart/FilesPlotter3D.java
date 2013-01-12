@@ -191,9 +191,7 @@ public class FilesPlotter3D extends DatasetPlotter {
 
         for (int i = 0; i < numDataset; i++) {
             metaValues.add(datasets.get(i).getMetaData(selectedMetaItem));
-        }
-        //KP - this can be in above logic.
-        for (int i = 0; i < numDataset; i++) {
+
             if (metaValues.elementAt(i).getValue() instanceof String) {
                 isMetaDataString = true;
             }
@@ -214,7 +212,7 @@ public class FilesPlotter3D extends DatasetPlotter {
         Vector<Double> blockHeigth_minus = new Vector<Double>();
         Vector<Double> blockHeigth_plus = new Vector<Double>();
 
-        //if the metaname is equal Name. 21/04/2012
+        //if the metaname is equal Name/Filename. 21/04/2012
         if (isMetaDataString) {
             //display file names on the Y axis instead of 0..n.
             //yAxis = new SymbolAxis("", HashMapHelper.convertKeyToArray(fileNames));
@@ -239,7 +237,7 @@ public class FilesPlotter3D extends DatasetPlotter {
             System.out.println("Plot using Name metaData");
 
         } else {
-            //if the metaname is equal Number
+            //if the metaname is equal Number/Wavelength
             Vector<Double> metaDouble = new Vector<Double>();
             for (int i = 0; i < numDataset; i++) {
                 metaDouble.add((Double) metaValues.elementAt(i).getValue());
@@ -309,10 +307,9 @@ public class FilesPlotter3D extends DatasetPlotter {
         plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
         plot.setDomainGridlinePaint(Color.white);
         plot.setRangeGridlinePaint(Color.white);
-        plot.getRangeAxis().setAutoRange(true); //-- comment out by KP 18/08/2012 to plot properly.
+        plot.getRangeAxis().setAutoRange(true); 
 
         chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
-
 
         // Find the min and max y value and use these values
         // to set the colour scale
@@ -526,5 +523,4 @@ public class FilesPlotter3D extends DatasetPlotter {
         return dataset;
 
     }
-
 }

@@ -543,7 +543,7 @@ public class Import3DFilesTable extends javax.swing.JFrame {
             importData3DTable.getCellEditor().stopCellEditing();
         }
 
-        // TODO: Split these lines into methods, it is so long!
+        // TODO: Split these lines into methods, as it is so long!
         
 //        setCursor(waitCursor);
 //        statusText.setText("Plotting . . . ");

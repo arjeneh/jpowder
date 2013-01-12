@@ -42,10 +42,19 @@ public class SmoothingComboBoxModel extends AbstractListModel implements ComboBo
 
     //in case future the model requires dynamic in and out.
     private Vector<Integer> inputs = new Vector<Integer>();
-
-    // today 18/08/2012 just array of 9 elements, as Anders wanted.
-    private int[] comboInputs = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    
+    private int[] comboInputs;
     private String selection = null;
+
+    public SmoothingComboBoxModel(int[] num) {
+        this.comboInputs = num;
+    }
+
+
+    // Default 9, today 18/08/2012 just array of 9 elements, as Anders wanted.
+    public SmoothingComboBoxModel() {
+        comboInputs = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    }
 
     @Override
     public Object getElementAt(int index) {
@@ -60,7 +69,7 @@ public class SmoothingComboBoxModel extends AbstractListModel implements ComboBo
     @Override
     public void setSelectedItem(Object anItem) {
         selection = (String) anItem.toString();
-    } 
+    }
 
     // Methods implemented from the interface ComboBoxModel
     @Override

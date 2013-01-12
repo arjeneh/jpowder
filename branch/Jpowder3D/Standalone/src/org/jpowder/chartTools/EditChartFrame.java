@@ -60,7 +60,7 @@ public class EditChartFrame extends javax.swing.JFrame {
 
     private JFreeChart jFreeChart;
     private ChartPanel chartPanel;
-    private EditChartFrame_Bkk singletonObject;
+    private EditChartFrame singletonObject;
     private double proportion;
     //
     private static final int N = 8;

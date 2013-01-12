@@ -43,13 +43,16 @@ import org.jpowder.InfoPanel;
 import org.jpowder.Jpowder;
 import org.jpowder.InternalFrame.JpowderInternalframe3D;
 import javax.swing.SwingUtilities;
+import org.jpowder.DataVisibleInChartPanel;
 
 public class BiningPanel extends javax.swing.JPanel implements InfoPanel {
 
     private ToolsIcon3D toolsIcon3D;
-    private SmoothingComboBoxModel model = new SmoothingComboBoxModel();
+    private SmoothingComboBoxModel model = new SmoothingComboBoxModel(
+            new int[]{2, 4, 6});
     private Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
     private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+    private DataVisibleInChartPanel dataVisibleInChart;
 
     /** Creates new form SmoothingPanel */
     public BiningPanel() {
@@ -59,8 +62,8 @@ public class BiningPanel extends javax.swing.JPanel implements InfoPanel {
 
     public BiningPanel(ToolsIcon3D aThis) {
         initComponents();
-        comboInput.setModel(new SmoothingComboBoxModel());
-        comboInput.setSelectedIndex(model.getSize() - 1);
+        comboInput.setModel(new SmoothingComboBoxModel(new int[]{2, 4, 6}));
+        comboInput.setSelectedIndex(1);
         this.toolsIcon3D = aThis;
     }
 
@@ -100,7 +103,7 @@ public class BiningPanel extends javax.swing.JPanel implements InfoPanel {
         jLabel1.setText("Bining number factor:");
 
         comboInput.setMaximumRowCount(10);
-        comboInput.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "3", "5", "7", "9", "11" }));
+        comboInput.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2", "4", "6", "8" }));
         comboInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboInputActionPerformed(evt);
@@ -175,10 +178,7 @@ public class BiningPanel extends javax.swing.JPanel implements InfoPanel {
                     JpowderInternalframe3D inFocus = Jpowder.internalFrameInFocus3D;
                     int selectedValue = Integer.parseInt(comboInput.getSelectedItem().toString());
 
-                    //MovingAverage mva = new MovingAverage(selectedValue);
-                    //mva.execute(inFocus);
                     BinOptimizer bo = new BinOptimizer(selectedValue);
-                    //BinOptimizer bo = new BinOptimizer(this.jFreeChart, binFactorTxt.getText());
                     bo.execute(inFocus);
 
                     Thread.sleep(5000);
@@ -218,5 +218,19 @@ public class BiningPanel extends javax.swing.JPanel implements InfoPanel {
 
     @Override
     public void update() {
+    }
+
+    /**
+     * @return the dataVisibleInChart
+     */
+    public DataVisibleInChartPanel getDataVisibleInChart() {
+        return dataVisibleInChart;
+    }
+
+    /**
+     * @param dataVisibleInChart the dataVisibleInChart to set
+     */
+    public void setDataVisibleInChart(DataVisibleInChartPanel dataVisibleInChart) {
+        this.dataVisibleInChart = dataVisibleInChart;
     }
 }

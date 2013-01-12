@@ -31,16 +31,24 @@ package org.jpowder.chartTools;
  */
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.event.InternalFrameListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.GrayPaintScale;
 import org.jfree.chart.renderer.PaintScale;
 import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jpowder.DataVisibleInChartPanel;
+import org.jpowder.InternalFrame.InternalFrameIconifyListener;
 import org.jpowder.InternalFrame.JpowderInternalframe3D;
+import org.jpowder.Jpowder;
 import org.jpowder.dataset.DataSet;
+import org.jpowder.dataset.MetaData;
 import org.jpowder.jfreechart.JpowderXYBlockRenderer;
 import org.jpowder.util.VectorMiscUtil;
 
@@ -50,6 +58,7 @@ public class BinOptimizer {
     private JFreeChart jFreeChart;
     private int factor;
     private ChartPanel panel;
+    private DataVisibleInChartPanel dataVisibleInChartPanel;
 
     public BinOptimizer(JFreeChart jf) {
         this.jFreeChart = jf;
@@ -81,48 +90,107 @@ public class BinOptimizer {
      * @param frame
      */
     public void execute(JpowderInternalframe3D frame) {
- 
+
         // 1. get the existing data.
         this.internal3dFrame = frame;
 
-        int dSize = this.internal3dFrame.getPowderDataSet().size();
-        //System.out.println("in " + this.getClass().getName() + " size = " + dSize);
-        Vector<Vector<Double>> binData = new Vector<Vector<Double>>();
+        Vector<DataSet> existingDatasets = this.internal3dFrame.getPowderDataSet();
 
-        // 2. Find newly Binning value.
+        int dSize = this.internal3dFrame.getPowderDataSet().size();
+
+
+        // 2. Find newly Binning value of each DataSet.
         for (int i = 0; i < dSize; i++) {
-            Vector<Vector> original = this.internal3dFrame.getPowderDataSet().elementAt(i).getData();
+            Vector<Vector> original = existingDatasets.elementAt(i).getData();
             Vector<Vector> copy = VectorMiscUtil.copyBeforeLastColumnsOf2DVector(original);
 
             // To store new calculated binning values.
-            Vector outCome = new Vector(binVector(copy, this.factor));
-            //System.out.println("Outcome " + outCome);
-            for (int x = 0; x < outCome.size(); x++) {
-                binData.add((Vector<Double>) outCome.get(x));
+            Vector<Vector> binOutCome = new Vector<Vector>(binVector(copy, this.factor));
+            System.out.println("In DataSet " + i + " Binned Outcome " + binOutCome);
+
+            //replace original with new binned value
+            DataSet ds = existingDatasets.elementAt(i);
+            ds.setData(binOutCome);
+
+        }
+
+        //??????????????? How to handle if FileName or MetaData comes??????????????????
+        //??? For binning i am not sure, KP
+        //------------ Handle JFreechart update -----------------------------//
+        XYPlot plot = this.internal3dFrame.getChart().getXYPlot();
+        //plot.setDataset(null);
+
+        XYDataset defaultXYZDataset = plot.getDataset();
+        int numSeries = defaultXYZDataset.getSeriesCount();
+        // loop through each series
+        for (int i = 0; i < dSize; i++) {
+            // Get the values
+            for (int j = 0; j < defaultXYZDataset.getItemCount(i); j++) {
+                Number x = defaultXYZDataset.getX(i, j);
+                Number y = defaultXYZDataset.getY(i, j);
+                System.out.println("x " + x + " y " + y);
             }
         }
 
-        System.out.println("in " + this.getClass().getName() + " with factor of " + factor + " binData =  " + binData);
-        System.out.println("Bin size = " + binData.size());
+        //how many in dataset.
+        int numDataset = defaultXYZDataset.getSeriesCount();
+        //see the value is using the new Binned value yet.
 
-        //Loop for each file dataset
-        for (int y = 0; y < dSize; y++) {
-            //Create a new Dataset by Copying the old one
-            //and modify with the new rebinning data
-            DataSet ds = this.internal3dFrame.getPowderDataSet().elementAt(y);
-            System.out.println("in " + this.getClass().getName() + " DataSet " + y + " size =  "  + ds.getData());
-            System.out.println("in " + this.getClass().getName() + " DataSet size =  " + ds.getData().size());
-            
-            //Replace original data values with newly rebinned values
-            int dsSize = ds.getData().size();
-            for (int ii = 0; ii < dsSize; ii++) {
-                Vector v = ds.getData();
-                //this.internal3dFrame.getPowderDataSet().elementAt(ii).getY().setElementAt(yNew.get(ii), ii);
-            }
+        //Set up X axis?
+        ValueAxis xAxis = plot.getDomainAxis();
+        xAxis.setLowerMargin(0.0);
+        xAxis.setUpperMargin(0.0);
+
+        //Set up Y axis?
+        ValueAxis yAxis = plot.getRangeAxis();
+
+        // Create the lower and upper values for each dataset block height
+        Vector<Double> blockHeigth_minus = new Vector<Double>();
+        Vector<Double> blockHeigth_plus = new Vector<Double>();
+
+        JpowderXYBlockRenderer renderer = (JpowderXYBlockRenderer) frame.getChart().getXYPlot().getRenderer();
+
+        double maxY = 0;
+        double minY = 0;
+
+        for (int i = 0; i < plot.getDatasetCount(); i++) {
+            maxY = (Double) Collections.max(frame.getPowderDataSet().get(i).getY());
+            minY = (Double) Collections.min(frame.getPowderDataSet().get(i).getY());
         }
 
-        //this.internal3dFrame.setPowderDataSet(binData);
-    }
+        //This needs to be casted to any other colours.
+        PaintScale greyScale = new GrayPaintScale(minY, maxY);
+        renderer.setPaintScale(greyScale);
+        renderer.clearSeriesPaints(true);
+
+        // 3. See newly Binning value in each DataSet or not.
+        String plotAsFunctionOf = null;
+
+        for (int i = 0; i < dSize; i++) {
+            //replace original with new value
+            DataSet ds = this.internal3dFrame.getPowderDataSet().elementAt(i);
+            //plotAsFunctionOf = ds.getMeta();
+
+            HashMap<String, MetaData> map = ds.getMeta();
+            //iterating over keys only
+            for (String key : map.keySet()) {
+                plotAsFunctionOf = key;
+                System.out.println("plotAsFunctionOf Key = " + key);
+            }
+
+            System.out.println("New Binned dataset has " + ds);
+        }
+
+//        //Trial - This is a copy of UpdateMetaDataFrame.
+//        JpowderInternalframe3D internalframe = new JpowderInternalframe3D(
+//                powderFrame.getDataVisibleInChartPanel(), existingDatasets, plotAsFunctionOf);
+//        //internalframe.setTitle(powderFrame.getNames());
+//
+//        Jpowder.updateJPowderInternalFrame(internalframe);
+//        InternalFrameListener internalFrameListener = new InternalFrameIconifyListener(dataVisibleInChart);
+//        internalframe.addInternalFrameListener(internalFrameListener);
+//        Jpowder.getChartPlotter3D().add(internalframe);
+    }//execute
 
     /**
      *
