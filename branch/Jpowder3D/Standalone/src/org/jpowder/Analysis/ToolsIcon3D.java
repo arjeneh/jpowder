@@ -91,8 +91,7 @@ public class ToolsIcon3D extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14));
-        jLabel1.setText("3D tools testing..........");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         yAxisButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/3DPlotType.png"))); // NOI18N
         yAxisButton.addActionListener(new java.awt.event.ActionListener() {
@@ -105,6 +104,7 @@ public class ToolsIcon3D extends javax.swing.JPanel {
 
         jLabel3.setText("Y-axis display");
 
+        binningButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Binning.png"))); // NOI18N
         binningButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 binningButtonActionPerformed(evt);

@@ -95,7 +95,6 @@ public class BinOptimizer {
         this.internal3dFrame = frame;
 
         Vector<DataSet> existingDatasets = this.internal3dFrame.getPowderDataSet();
-
         int dSize = this.internal3dFrame.getPowderDataSet().size();
 
 
@@ -108,7 +107,7 @@ public class BinOptimizer {
             Vector<Vector> binOutCome = new Vector<Vector>(binVector(copy, this.factor));
             System.out.println("In DataSet " + i + " Binned Outcome " + binOutCome);
 
-            //replace original with new binned value
+            // Replace original with new binned value
             DataSet ds = existingDatasets.elementAt(i);
             ds.setData(binOutCome);
 
@@ -118,19 +117,7 @@ public class BinOptimizer {
         //??? For binning i am not sure, KP
         //------------ Handle JFreechart update -----------------------------//
         XYPlot plot = this.internal3dFrame.getChart().getXYPlot();
-        //plot.setDataset(null);
-
         XYDataset defaultXYZDataset = plot.getDataset();
-        int numSeries = defaultXYZDataset.getSeriesCount();
-        // loop through each series
-        for (int i = 0; i < dSize; i++) {
-            // Get the values
-            for (int j = 0; j < defaultXYZDataset.getItemCount(i); j++) {
-                Number x = defaultXYZDataset.getX(i, j);
-                Number y = defaultXYZDataset.getY(i, j);
-                System.out.println("x " + x + " y " + y);
-            }
-        }
 
         //how many in dataset.
         int numDataset = defaultXYZDataset.getSeriesCount();
@@ -169,7 +156,6 @@ public class BinOptimizer {
         for (int i = 0; i < dSize; i++) {
             //replace original with new value
             DataSet ds = this.internal3dFrame.getPowderDataSet().elementAt(i);
-            //plotAsFunctionOf = ds.getMeta();
 
             HashMap<String, MetaData> map = ds.getMeta();
             //iterating over keys only

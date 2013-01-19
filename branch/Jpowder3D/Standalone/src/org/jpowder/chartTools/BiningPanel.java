@@ -181,7 +181,7 @@ public class BiningPanel extends javax.swing.JPanel implements InfoPanel {
                     BinOptimizer bo = new BinOptimizer(selectedValue);
                     bo.execute(inFocus);
 
-                    Thread.sleep(5000);
+                    Thread.sleep(50);
                 } catch (InterruptedException ex) {
                 }
                 // Report the result using invokeLater( ).
@@ -197,8 +197,6 @@ public class BiningPanel extends javax.swing.JPanel implements InfoPanel {
             }
         };
         worker.start(); // So we don't hold up the dispatch thread
-
-
     }//GEN-LAST:event_executeButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
