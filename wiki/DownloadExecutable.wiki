@@ -1,4 +1,6 @@
 #labels Featured
-In addition to downloading the source code an Jpowder executable can be downloaded from http://www.jpowder.org. 
+Jpowder Web Start can be downloaded from http://www.jpowder.org. 
 
-Also, !JpowderApplet is downloadable from http://code.google.com/p/jpowder/downloads/list.
+Jpowder application is downloadable from http://code.google.com/p/jpowder/downloads/list. Select Jpowder.jar
+
+Also, JpowderApplet is downloadable from http://code.google.com/p/jpowder/downloads/list.Select JpowderApplet.jar
