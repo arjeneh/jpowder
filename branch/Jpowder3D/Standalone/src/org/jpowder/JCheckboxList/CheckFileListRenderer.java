@@ -51,13 +51,14 @@ public class CheckFileListRenderer extends CheckFileRenderer implements ListCell
         check.setSelected(((CheckableFileItem) value).isSelected());
         if (Jpowder.getPlotsTab().getSelectedIndex() == 0) {
             JpowderInternalframe2D inFocus = Jpowder.internalFrameInFocus2D;
-            label.setForeground((Color) inFocus.getXYPlot().getRenderer(index).getSeriesPaint(0));
+            //if condition to fix issue #78, where no Frame is created then do not paint. KP
+            if (inFocus != null) {
+                label.setForeground((Color) inFocus.getXYPlot().getRenderer(index).getSeriesPaint(0));
+            }
 
         }
         if (Jpowder.getPlotsTab().getSelectedIndex() == 1) {
-
             label.setForeground(Color.BLACK);
-
         }
 
         label.setSelected(true);//hilighting the string
