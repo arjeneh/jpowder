@@ -1,0 +1,14 @@
+# Steps #
+
+1) Download [JpowderApplet](http://jpowder.googlecode.com/files/JpowderApplet.jar) onto server where the database is hosted
+
+2) User makes a request to your database and a HTML page is returned to the user. Where appropriate in the returned HTML page include html code:
+
+```xml
+<applet code="JpowderApplet.class" codebase = "." name="Jpowder" alt="alternative text" width="510" height="311" align="middle" id="Jpowder" archive="JpowderApplet.jar"><PARAM name="PATH" value="requestedData.xye">
+
+Unknown end tag for &lt;/applet&gt;
+
+```
+
+where requestedData.xye in value="requestedData.xye" should be substituted with the data file requested by the user.

@@ -1,0 +1,7 @@
+# Naming Conventions #
+
+Use the naming conventions of Sun (put in link), which includes:
+
+  * Class Names - Class names will be in CamelCase (starting with a upper case character and capital for each later word).
+  * Function Names - function names will be in camelCase (starting with a lower case character and capital for each later word).
+  * Constants - must be entirely in capital letters

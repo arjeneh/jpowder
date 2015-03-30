@@ -1,0 +1,5 @@
+Jpowder 3D application (v. 2.0) is downloadable from http://code.google.com/p/jpowder/downloads/list and select Jpowder.jar
+
+Jpowder (v. 1.0) is downloadable from https://code.google.com/p/jpowder/source/browse/JpowderWebSite/WebStart/Jpowder.jar
+
+Also, JpowderApplet (v. 1.0) is downloadable from http://code.google.com/p/jpowder/downloads/list and select JpowderApplet.jar

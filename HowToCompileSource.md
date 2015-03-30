@@ -1,0 +1,14 @@
+#How to compile the source code.
+
+# How to compile the source code #
+The source code contains the project files for Netbeans version 6.7, which is compatable with version 6.7.1, and therefore the quickest way to compile Jpowder is to first install one of these version of Netbeans from
+
+> http://www.netbeans.info/downloads/dev.php
+
+On this web site select 6.7.1 from the ‘NetBeans version’ combobox on the right hand side and then hit the 'continue' button situated below this combobox. You will then be forwarded to a web-page where you will be presented with a number of download options. You can pick any of the download options which includes 'Java SE'.
+
+The source code is available from http://code.google.com/p/jpowder/source/checkout.
+
+A description of the source code tree structure is available form DirectoryStructure. For example the sub-directories Standalone and Core contain Netbeans project folders.
+
+Please note we have so far had limited success with using Netbeans versions newer than 6.7.1. However, we would be interested in anyone who may have had a diferent experience with a newer version of Netbeans or found another IDE for developing Java code better.

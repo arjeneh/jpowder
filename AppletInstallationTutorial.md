@@ -1,0 +1,33 @@
+## Introduction ##
+
+This page will tell you how to install a Jpowder Applet displaying one piece of data on your html page. In this, you will need to use Dropbox, but there is already an account set up specifically for this reason. This tutorial will walk you through the code required to install the applet, as well as how to add a file to the Dropbox public folder. For this tutorial, all data files need to be saved as a .ser file. To save a file as .ser, right click the graph in Jpowder, and click save as Jpowder-Applet format (as illustrated below.)
+http://jpowder.googlecode.com/svn/wiki/pictures/demo_save_applet_format.PNG
+
+# Dropbox #
+
+https://www.dropbox.com
+
+Note: Dropbox does NOT need installing, everything to do with dropbox can be done through the browser.
+
+So that users can install single file Jpowder applets to their webpage as easily as possible, a Dropbox account has been set up for users to add their files to. This will enable the data to publish over the internet without the user requiring a server.
+
+Dropbox is a filesharing website. To set up a Dropbox account requires each user to provide a user name and password. For the purpose of demonstration here we assume that a user has set up an account under the name Applet@Jpowder.org.
+
+All data should be stored in the public folder, so it is accessible. The Dropbox public folder looks like this:
+![http://jpowder.googlecode.com/svn/wiki/pictures/DropboxPublic2.png](http://jpowder.googlecode.com/svn/wiki/pictures/DropboxPublic2.png)
+
+The JpowderApplet.jar is the most important file there, as it contains the code which actually runs the applet.
+![http://jpowder.googlecode.com/svn/wiki/pictures/DropboxPublicJar.png](http://jpowder.googlecode.com/svn/wiki/pictures/DropboxPublicJar.png)
+The other two files are the data files. These run through the applet, so require the .jar file to run properly.
+
+To add your data file to dropbox, simply drag and drop into the dropbox window on your browser. This will then upload the file directly to dropbox, and it is then ready to use!
+
+# The Code #
+
+![http://jpowder.googlecode.com/svn/wiki/pictures/AppletCode.png](http://jpowder.googlecode.com/svn/wiki/pictures/AppletCode.png)
+This is the code that should be typed out exactly like it is here into the code in the area it is wanted.
+
+A more detailed diagram (Below) dissecting the code and explaining simply what needs changing from each line.
+![http://jpowder.googlecode.com/svn/wiki/pictures/AppletCodedetails.png](http://jpowder.googlecode.com/svn/wiki/pictures/AppletCodedetails.png)
+
+Once this code is added, run the webpage to test if it works. Happy Jpowdering!
