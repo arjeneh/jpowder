@@ -12,3 +12,5 @@ Aspects of this tool are demonstrated in:
 * Jpowder Version 2: For the Display and Examination of Powder Diffraction Data Using Stack Plot, Journal of Software Engineering and Applications, 2013, https://doi.org/10.4236/jsea.2013.64021
 
 Jpowder uses the following software libraries: JFreeChart, iText and JXLayer.
+
+Code was previously hosted on Google Code and using SVN. For some reason the SVN history from Mar 16 2017 (SVN commit 1) to 24th May 2018 2007 (SVN commit 52) was not transferred over when the Google Code SVN repo was moved to Github. For these commit see: https://code.google.com/archive/p/jpowder/source. 
